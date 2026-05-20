@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Your Plan — Daisy's Guide Designed Screens</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-07">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v2 · 28 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="02-sign-up.html"><span class="screen-num">02</span>Sign Up</a>
+  <a class="sidebar-item" href="03-otp-verification.html"><span class="screen-num">03</span>OTP Verification</a>
+  <a class="sidebar-item" href="04-log-in.html"><span class="screen-num">04</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="05-partner-linking.html"><span class="screen-num">05</span>Partner Linking</a>
+  <a class="sidebar-item" href="06-onboarding-intro.html"><span class="screen-num">06</span>Onboarding Intro</a>
+  <a class="sidebar-item" href="07-onboarding-quiz.html"><span class="screen-num">07</span>Onboarding Quiz</a>
+  <a class="sidebar-item active" href="08-building-your-plan.html"><span class="screen-num">08</span>Building Your Plan</a>
+  <a class="sidebar-item" href="09-personalized-results.html"><span class="screen-num">09</span>Personalized Results</a>
+  <a class="sidebar-item" href="10-customize-your-plan.html"><span class="screen-num">10</span>Customize Your Plan</a>
+  <div class="sidebar-section-label">Paywall</div>
+  <a class="sidebar-item" href="11-paywall.html"><span class="screen-num">11</span>Paywall</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="12-home.html"><span class="screen-num">12</span>Home</a>
+  <a class="sidebar-item" href="23-progress.html"><span class="screen-num">23</span>Progress</a>
+  <a class="sidebar-item" href="24-settings.html"><span class="screen-num">24</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-topic-intro.html"><span class="screen-num">14</span>Topic Intro</a>
+  <a class="sidebar-item" href="15-topic-article.html"><span class="screen-num">15</span>Topic Article</a>
+  <a class="sidebar-item" href="16-question.html"><span class="screen-num">16</span>Question</a>
+  <a class="sidebar-item" href="17-waiting-for-partner.html"><span class="screen-num">17</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="18-alignment-reveal.html"><span class="screen-num">18</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="19-post-reveal-reflection.html"><span class="screen-num">19</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="20-re-answer-flow.html"><span class="screen-num">20</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="21-completed-topic.html"><span class="screen-num">21</span>Completed Topic</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="22-prediction-card.html"><span class="screen-num">22</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="25-empty-home.html"><span class="screen-num">25</span>Empty Home</a>
+  <a class="sidebar-item" href="26-empty-topic-list.html"><span class="screen-num">26</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="27-payment-failure.html"><span class="screen-num">27</span>Payment Failure</a>
+  <a class="sidebar-item" href="28-connection-error.html"><span class="screen-num">28</span>Connection Error</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Building Your Plan</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="07-onboarding-quiz.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">8 / 28</span>
+        <a class="topbar-btn" href="09-personalized-results.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 08 · Onboarding</div>
+    <div class="page-title">Building Your Plan</div>
+    <div class="page-desc">Processing screen after quiz. 2–3 second animated sequence. Makes personalization feel earned.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="07-onboarding-quiz.html">← Screen 07: Onboarding Quiz</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="09-personalized-results.html">Screen 09: Personalized Results →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-step1" onclick="showState('step1')">Step 1</button>
+      <button class="state-tab" id="tab-step2" onclick="showState('step2')">Step 2</button>
+      <button class="state-tab" id="tab-step3" onclick="showState('step3')">Step 3</button>
+      <button class="state-tab" id="tab-done" onclick="showState('done')">Done</button>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="anim-slot" id="anim-slot">
+          <div class="anim-spinner" id="anim-spinner"></div>
+          <div class="anim-done" id="anim-done" style="display:none;">🌼</div>
+        </div>
+
+        <div class="screen-heading" id="screen-heading">Building your plan...</div>
+        <div class="screen-body" id="screen-body">Filtering out the stuff that doesn't apply to you. Won't be a second.</div>
+
+        <div class="step-list">
+
+          <div class="step-item" id="step1">
+            <div class="step-icon" id="icon1"><div class="step-icon-pending"></div></div>
+            <div class="step-text">Filtering irrelevant topics...</div>
+          </div>
+
+          <div class="step-item pending" id="step2">
+            <div class="step-icon" id="icon2"><div class="step-icon-pending"></div></div>
+            <div class="step-text">Sequencing by your timeline...</div>
+          </div>
+
+          <div class="step-item pending" id="step3">
+            <div class="step-icon" id="icon3"><div class="step-icon-pending"></div></div>
+            <div class="step-text">Setting up your couple profile...</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Navigation flow</div>
+      <div class="flow-map">
+        <div class="flow-node from">07 Onboarding Quiz</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">08 Building Your Plan</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">09 Personalized Results</div>
+      </div>
+      <div class="info-box">
+        <strong>No user interaction on this screen.</strong> No back button, no bottom nav. Auto-advances to Screen 09 when the sequence completes (~2–3 seconds). The user cannot skip or interrupt it.
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Screen copy</div>
+      <table class="spec-table">
+        <tr><td>Heading (during)</td><td>"Building your plan..." · Grandstander 24px bold · centered</td></tr>
+        <tr><td>Body (during)</td><td>"Filtering out the stuff that doesn't apply to you. Won't be a second." · DM Sans 15px · <code>text-secondary</code> · centered · max-width 280px</td></tr>
+        <tr><td>Heading (done)</td><td>"Your plan is ready." · same style</td></tr>
+        <tr><td>Body (done)</td><td>"We found 28 topics worth having together." · personalized with actual count</td></tr>
+        <tr><td>Tone</td><td>Warm and playful — never "Loading..." or "Please wait"</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Step checklist — states</div>
+      <div class="step-legend">
+        <div class="step-legend-row">
+          <div class="legend-icon">
+            <span style="font-size:14px;color:#157a46;font-weight:700;">✓</span>
+          </div>
+          <div>
+            <div class="legend-text">Done</div>
+            <div class="legend-sub"><code>opacity: 0.5</code> · green ✓ icon · step has completed</div>
+          </div>
+        </div>
+        <div class="step-legend-row">
+          <div class="legend-icon">
+            <div style="width:16px;height:16px;border:2px solid rgba(95,69,242,0.2);border-top-color:#5f45f2;border-radius:50%;animation:spin 0.9s linear infinite;"></div>
+          </div>
+          <div>
+            <div class="legend-text">Active</div>
+            <div class="legend-sub"><code>opacity: 1</code> · purple spinner · currently processing</div>
+          </div>
+        </div>
+        <div class="step-legend-row">
+          <div class="legend-icon">
+            <div style="width:14px;height:14px;border:2px solid rgba(26,26,26,0.15);border-radius:50%;"></div>
+          </div>
+          <div>
+            <div class="legend-text">Pending</div>
+            <div class="legend-sub"><code>opacity: 0.3</code> · empty circle · not yet started</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Step checklist — spec</div>
+      <table class="spec-table">
+        <tr><td>Step 1</td><td>"Filtering irrelevant topics..."</td></tr>
+        <tr><td>Step 2</td><td>"Sequencing by your timeline..."</td></tr>
+        <tr><td>Step 3</td><td>"Setting up your couple profile..."</td></tr>
+        <tr><td>Step card bg</td><td><code>surface-card</code> (white) · <code>radius-lg</code> · <code>shadow-sm</code> · 14px 16px padding</td></tr>
+        <tr><td>Step text</td><td>DM Sans 14px medium · <code>text-primary</code></td></tr>
+        <tr><td>Gap between steps</td><td>10px</td></tr>
+        <tr><td>Timing</td><td>Each step active for ~700ms before completing. Total: ~2–3 seconds.</td></tr>
+        <tr><td>Transition</td><td><code>opacity 0.3s ease</code> on state change</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Animation slot</div>
+      <table class="spec-table">
+        <tr><td>Container</td><td>80×80px circle · white bg · <code>shadow-md</code></td></tr>
+        <tr><td>During processing</td><td>Purple spinner — 40px · 3px border · <code>purple-500</code> top segment · <code>rgba(95,69,242,0.15)</code> rest · spin 0.9s linear infinite</td></tr>
+        <tr><td>When done</td><td>Spinner replaced by 🌼 emoji at 36px · brief scale-in animation (0.2s)</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Loading / Processing State</span>
+        <span class="component-tag">Step checklist</span>
+        <span class="component-tag">Spinner animation</span>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>No user interaction. Screen auto-advances to Screen 09 when sequence completes.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Steps complete in order — Step 1 → Step 2 → Step 3. Each active for ~700ms.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>If the actual API call completes in under 2 seconds, hold on this screen until the animation finishes — don't skip ahead.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>If API takes longer than 3 seconds, loop Step 3 spinner until it resolves.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Heading and body copy update to "done" state when all 3 steps complete.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav. No back button.</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v2 · Screen 08 of 24</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="07-onboarding-quiz.html">← Screen 07: Onboarding Quiz</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="09-personalized-results.html">Screen 09: Personalized Results →</a>
+  </div>
+</div>
+
+<script>
+function showState(state) {
+  ['step1','step2','step3','done'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const s1 = document.getElementById('step1');
+  const s2 = document.getElementById('step2');
+  const s3 = document.getElementById('step3');
+  const i1 = document.getElementById('icon1');
+  const i2 = document.getElementById('icon2');
+  const i3 = document.getElementById('icon3');
+  const spinner = document.getElementById('anim-spinner');
+  const done = document.getElementById('anim-done');
+  const heading = document.getElementById('screen-heading');
+  const body = document.getElementById('screen-body');
+
+  const spinnerHtml = '<div class="step-icon-spinner"></div>';
+  const doneHtml = '<span class="step-icon-done">✓</span>';
+  const pendingHtml = '<div class="step-icon-pending"></div>';
+
+  if (state === 'step1') {
+    s1.className = 'step-item active'; i1.innerHTML = spinnerHtml;
+    s2.className = 'step-item pending'; i2.innerHTML = pendingHtml;
+    s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
+    spinner.style.display = 'block'; done.style.display = 'none';
+    heading.textContent = 'Building your plan...';
+    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+  } else if (state === 'step2') {
+    s1.className = 'step-item done'; i1.innerHTML = doneHtml;
+    s2.className = 'step-item active'; i2.innerHTML = spinnerHtml;
+    s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
+    spinner.style.display = 'block'; done.style.display = 'none';
+    heading.textContent = 'Building your plan...';
+    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+  } else if (state === 'step3') {
+    s1.className = 'step-item done'; i1.innerHTML = doneHtml;
+    s2.className = 'step-item done'; i2.innerHTML = doneHtml;
+    s3.className = 'step-item active'; i3.innerHTML = spinnerHtml;
+    spinner.style.display = 'block'; done.style.display = 'none';
+    heading.textContent = 'Building your plan...';
+    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+  } else if (state === 'done') {
+    s1.className = 'step-item done'; i1.innerHTML = doneHtml;
+    s2.className = 'step-item done'; i2.innerHTML = doneHtml;
+    s3.className = 'step-item done'; i3.innerHTML = doneHtml;
+    spinner.style.display = 'none'; done.style.display = 'block';
+    heading.textContent = 'Your plan is ready.';
+    body.textContent = 'We found 28 topics worth having together.';
+  }
+}
+
+showState('step1');
+</script>
+    </div>
+  </div>
+</div>
+<script>
+
+function showState(state) {
+  ['step1','step2','step3','done'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const s1 = document.getElementById('step1');
+  const s2 = document.getElementById('step2');
+  const s3 = document.getElementById('step3');
+  const i1 = document.getElementById('icon1');
+  const i2 = document.getElementById('icon2');
+  const i3 = document.getElementById('icon3');
+  const spinner = document.getElementById('anim-spinner');
+  const done = document.getElementById('anim-done');
+  const heading = document.getElementById('screen-heading');
+  const body = document.getElementById('screen-body');
+
+  const spinnerHtml = '<div class="step-icon-spinner"></div>';
+  const doneHtml = '<span class="step-icon-done">✓</span>';
+  const pendingHtml = '<div class="step-icon-pending"></div>';
+
+  if (state === 'step1') {
+    s1.className = 'step-item active'; i1.innerHTML = spinnerHtml;
+    s2.className = 'step-item pending'; i2.innerHTML = pendingHtml;
+    s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
+    spinner.style.display = 'block'; done.style.display = 'none';
+    heading.textContent = 'Building your plan...';
+    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+  } else if (state === 'step2') {
+    s1.className = 'step-item done'; i1.innerHTML = doneHtml;
+    s2.className = 'step-item active'; i2.innerHTML = spinnerHtml;
+    s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
+    spinner.style.display = 'block'; done.style.display = 'none';
+    heading.textContent = 'Building your plan...';
+    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+  } else if (state === 'step3') {
+    s1.className = 'step-item done'; i1.innerHTML = doneHtml;
+    s2.className = 'step-item done'; i2.innerHTML = doneHtml;
+    s3.className = 'step-item active'; i3.innerHTML = spinnerHtml;
+    spinner.style.display = 'block'; done.style.display = 'none';
+    heading.textContent = 'Building your plan...';
+    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+  } else if (state === 'done') {
+    s1.className = 'step-item done'; i1.innerHTML = doneHtml;
+    s2.className = 'step-item done'; i2.innerHTML = doneHtml;
+    s3.className = 'step-item done'; i3.innerHTML = doneHtml;
+    spinner.style.display = 'none'; done.style.display = 'block';
+    heading.textContent = 'Your plan is ready.';
+    body.textContent = 'We found 28 topics worth having together.';
+  }
+}
+
+showState('step1');
+
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

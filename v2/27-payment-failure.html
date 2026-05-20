@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Failure — Daisy's Guide Designed Screens</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-26">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v2 · 28 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="02-sign-up.html"><span class="screen-num">02</span>Sign Up</a>
+  <a class="sidebar-item" href="03-otp-verification.html"><span class="screen-num">03</span>OTP Verification</a>
+  <a class="sidebar-item" href="04-log-in.html"><span class="screen-num">04</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="05-partner-linking.html"><span class="screen-num">05</span>Partner Linking</a>
+  <a class="sidebar-item" href="06-onboarding-intro.html"><span class="screen-num">06</span>Onboarding Intro</a>
+  <a class="sidebar-item" href="07-onboarding-quiz.html"><span class="screen-num">07</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="08-building-your-plan.html"><span class="screen-num">08</span>Building Your Plan</a>
+  <a class="sidebar-item" href="09-personalized-results.html"><span class="screen-num">09</span>Personalized Results</a>
+  <a class="sidebar-item" href="10-customize-your-plan.html"><span class="screen-num">10</span>Customize Your Plan</a>
+  <div class="sidebar-section-label">Paywall</div>
+  <a class="sidebar-item" href="11-paywall.html"><span class="screen-num">11</span>Paywall</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="12-home.html"><span class="screen-num">12</span>Home</a>
+  <a class="sidebar-item" href="23-progress.html"><span class="screen-num">23</span>Progress</a>
+  <a class="sidebar-item" href="24-settings.html"><span class="screen-num">24</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-topic-intro.html"><span class="screen-num">14</span>Topic Intro</a>
+  <a class="sidebar-item" href="15-topic-article.html"><span class="screen-num">15</span>Topic Article</a>
+  <a class="sidebar-item" href="16-question.html"><span class="screen-num">16</span>Question</a>
+  <a class="sidebar-item" href="17-waiting-for-partner.html"><span class="screen-num">17</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="18-alignment-reveal.html"><span class="screen-num">18</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="19-post-reveal-reflection.html"><span class="screen-num">19</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="20-re-answer-flow.html"><span class="screen-num">20</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="21-completed-topic.html"><span class="screen-num">21</span>Completed Topic</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="22-prediction-card.html"><span class="screen-num">22</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="25-empty-home.html"><span class="screen-num">25</span>Empty Home</a>
+  <a class="sidebar-item" href="26-empty-topic-list.html"><span class="screen-num">26</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item active" href="27-payment-failure.html"><span class="screen-num">27</span>Payment Failure</a>
+  <a class="sidebar-item" href="28-connection-error.html"><span class="screen-num">28</span>Connection Error</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Payment Failure</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="26-empty-topic-list.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">27 / 28</span>
+        <a class="topbar-btn" href="28-connection-error.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag error-tag">Screen 27 · New</div>
+    <div class="page-title">Payment Failure + Restore</div>
+    <div class="page-desc">Failed payment on Paywall (App Store compliance). Inline error banner + retry CTA. Restore Previous Purchase flow included.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="26-empty-topic-list.html">← Screen 26: Empty Topic List</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="28-connection-error.html">Screen 28: Connection Error →</a>
+  </div>
+</div>
+
+<div class="two-col">
+  <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-fail" onclick="showState('fail')">Payment failed</button>
+      <button class="state-tab" id="tab-restore" onclick="showState('restore')">Restore flow</button>
+      <button class="state-tab" id="tab-success" onclick="showState('success')">Restore success</button>
+    </div>
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="screen-header">
+          <div class="back-btn">‹</div>
+        </div>
+        <div class="scroll-area" id="scroll-area">
+          <!-- Payment failed state (default) -->
+          <div class="state-badge error" id="state-indicator">● Payment failed</div>
+          <div class="paywall-title">Unlock your full guide.</div>
+          <div class="paywall-sub">One purchase. Both partners. All topics.</div>
+
+          <div id="error-banner" class="error-banner">
+            <div class="error-icon">⚠️</div>
+            <div>
+              <div class="error-banner-text">
+                <div class="error-banner-title">Payment didn't go through.</div>
+                Check your card details or try a different payment method.
+              </div>
+            </div>
+          </div>
+
+          <div id="restore-success-banner" class="restore-success-banner" style="display:none;">
+            <div style="font-size:18px;">✓</div>
+            <div class="restore-success-text">
+              <div class="restore-success-title">Purchase restored.</div>
+              You're back in. All topics are unlocked.
+            </div>
+          </div>
+
+          <div class="price-card">
+            <div class="price-amount">$49</div>
+            <div class="price-sub">Lifetime access · All guides · Both partners</div>
+            <div class="feature-list">
+              <div class="feature-item"><span class="feature-check">✓</span> All 7 topic categories</div>
+              <div class="feature-item"><span class="feature-check">✓</span> Alignment reveals for both of you</div>
+              <div class="feature-item"><span class="feature-check">✓</span> Expert-backed guides from Daisy</div>
+              <div class="feature-item"><span class="feature-check">✓</span> Both partners, one purchase</div>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="main-cta">Try again</button>
+          <button class="btn-secondary" id="alt-btn">Try a different payment method</button>
+          <a class="restore-link" id="restore-link" onclick="showState('restore')">Restore previous purchase</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+    <div class="spec-card">
+      <div class="spec-card-title">Screen context</div>
+      <div class="flow-map">
+        <div class="flow-node from">11 Paywall</div>
+        <div class="flow-arrow">→ (failed payment)</div>
+        <div class="flow-node current">27 Payment Failure</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">12 Home (on success)</div>
+      </div>
+      <div style="margin-top:14px;">
+        <table>
+          <tr><td>Entered from</td><td>Paywall (Screen 11) — after a failed App Store / Stripe payment attempt</td></tr>
+          <tr><td>Exits to</td><td>Home (Screen 12) on successful retry or restore · stays on this screen on continued failure</td></tr>
+          <tr><td>Bottom nav</td><td>Hidden — user is in a payment flow</td></tr>
+          <tr><td>App Store requirement</td><td>App Store Review requires visible "Restore Purchases" affordance on any paywall screen. This is that affordance.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Payment failed state — error banner</div>
+      <table>
+        <tr><td>Background</td><td><code>status-error-surface</code> (rgba 255,145,145,0.12)</td></tr>
+        <tr><td>Border</td><td><code>1px solid status-error</code> (#ff9191)</td></tr>
+        <tr><td>Border radius</td><td><code>radius-lg</code> (12px)</td></tr>
+        <tr><td>Icon</td><td>⚠️ · decorative · left-aligned</td></tr>
+        <tr><td>Title</td><td>"Payment didn't go through." · 13px DM Sans bold · <code>status-error-text</code> (#c0392b)</td></tr>
+        <tr><td>Body</td><td>"Check your card details or try a different payment method." · 13px · <code>status-error-text</code></td></tr>
+        <tr><td>Position</td><td>Above price card — user sees the problem before the purchase UI</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">CTAs — payment failed state</div>
+      <table>
+        <tr><td>Primary CTA</td><td>"Try again" · full-width pill · <code>action-primary</code> fill · triggers same payment method retry via App Store</td></tr>
+        <tr><td>Secondary CTA</td><td>"Try a different payment method" · full-width secondary button · opens App Store payment sheet</td></tr>
+        <tr><td>Restore link</td><td>"Restore previous purchase" · 13px · <code>text-link</code> · centered · triggers restore flow</td></tr>
+        <tr><td>Order logic</td><td>Retry first — most users want to fix the same card. Alternative method second. Restore last — it's a different user intent.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Restore previous purchase flow</div>
+      <table>
+        <tr><td>Trigger</td><td>Tap "Restore previous purchase" — initiates App Store receipt validation</td></tr>
+        <tr><td>Processing</td><td>Show loading state on the restore link (spinner, disabled) while validating</td></tr>
+        <tr><td>On success</td><td>Green success banner replaces error banner: "Purchase restored. You're back in." · auto-navigate to Home after 2s</td></tr>
+        <tr><td>On failure</td><td>Error banner updates: "No previous purchase found. If you think this is wrong, contact support." · support link inline</td></tr>
+        <tr><td>Accessibility</td><td>Required by Apple App Store Review Guidelines section 3.1.1 — must be present on any screen with in-app purchase</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Restore success banner</div>
+      <table>
+        <tr><td>Background</td><td>rgba(119,234,175,0.18) — green-400 tint</td></tr>
+        <tr><td>Border</td><td>1px solid <code>status-success-surface</code> (#77eaaf)</td></tr>
+        <tr><td>Icon</td><td>✓ checkmark · <code>status-success-text</code> color (#157a46)</td></tr>
+        <tr><td>Title</td><td>"Purchase restored." · bold · <code>status-success-text</code></td></tr>
+        <tr><td>Body</td><td>"You're back in. All topics are unlocked." · 13px · <code>status-success-text</code></td></tr>
+        <tr><td>Auto-dismiss</td><td>Navigate to Home after 2s — don't leave user on paywall after success</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components used</div>
+      <span class="component-tag">Screen Header</span>
+      <span class="component-tag">Price / Purchase Card</span>
+      <span class="component-tag">Button (primary + secondary)</span>
+      <span class="component-tag">Toast / Snackbar pattern</span>
+    </div>
+
+    <div class="info-box">
+      <strong>App Store compliance note:</strong> "Restore Purchases" must be discoverable without scrolling on any paywall. This layout ensures the restore link is always visible above the fold. Do not move it below the price card.
+    </div>
+  </div>
+</div>
+
+<div style="max-width:900px; margin: 32px auto 0; display:flex; justify-content:space-between;">
+  <a class="nav-pill" style="cursor:pointer;"  href="26-empty-topic-list.html">← Screen 26: Empty Topic List</a>
+  <a class="nav-pill next" style="cursor:pointer;"  href="28-connection-error.html">Screen 28: Connection Error →</a>
+</div>
+
+<script>
+function showState(state) {
+  ['fail','restore','success'].forEach(s => {
+    const el = document.getElementById('tab-' + s);
+    if (el) el.classList.toggle('active', s === state);
+  });
+
+  const indicator = document.getElementById('state-indicator');
+  const errorBanner = document.getElementById('error-banner');
+  const successBanner = document.getElementById('restore-success-banner');
+  const mainCta = document.getElementById('main-cta');
+  const altBtn = document.getElementById('alt-btn');
+  const restoreLink = document.getElementById('restore-link');
+
+  if (state === 'fail') {
+    indicator.className = 'state-badge error'; indicator.textContent = '● Payment failed';
+    errorBanner.style.display = 'flex';
+    errorBanner.innerHTML = `<div class="error-icon">⚠️</div><div><div class="error-banner-text"><div class="error-banner-title">Payment didn't go through.</div>Check your card details or try a different payment method.</div></div>`;
+    successBanner.style.display = 'none';
+    mainCta.textContent = 'Try again';
+    altBtn.style.display = 'block';
+    restoreLink.style.display = 'block';
+
+  } else if (state === 'restore') {
+    indicator.className = 'state-badge'; indicator.style.background = 'rgba(26,26,26,0.07)'; indicator.style.color = 'rgba(26,26,26,0.5)'; indicator.textContent = '⏳ Restoring…';
+    errorBanner.style.display = 'flex';
+    errorBanner.style.background = 'rgba(26,26,26,0.04)';
+    errorBanner.style.borderColor = 'rgba(26,26,26,0.15)';
+    errorBanner.innerHTML = `<div class="error-icon">⏳</div><div><div class="error-banner-text" style="color:var(--text-secondary)"><div style="font-weight:700;margin-bottom:2px;">Checking your purchase history…</div>This usually takes a moment.</div></div>`;
+    successBanner.style.display = 'none';
+    mainCta.textContent = 'Restoring…'; mainCta.disabled = true; mainCta.style.opacity = '0.5';
+    altBtn.style.display = 'none';
+    restoreLink.style.display = 'none';
+
+  } else if (state === 'success') {
+    indicator.className = 'state-badge success'; indicator.textContent = '✓ Restored';
+    errorBanner.style.display = 'none';
+    successBanner.style.display = 'flex';
+    mainCta.textContent = 'Continue to your guide →'; mainCta.disabled = false; mainCta.style.opacity = '1';
+    altBtn.style.display = 'none';
+    restoreLink.style.display = 'none';
+  }
+}
+</script>
+    </div>
+  </div>
+</div>
+<script>
+
+function showState(state) {
+  ['fail','restore','success'].forEach(s => {
+    const el = document.getElementById('tab-' + s);
+    if (el) el.classList.toggle('active', s === state);
+  });
+
+  const indicator = document.getElementById('state-indicator');
+  const errorBanner = document.getElementById('error-banner');
+  const successBanner = document.getElementById('restore-success-banner');
+  const mainCta = document.getElementById('main-cta');
+  const altBtn = document.getElementById('alt-btn');
+  const restoreLink = document.getElementById('restore-link');
+
+  if (state === 'fail') {
+    indicator.className = 'state-badge error'; indicator.textContent = '● Payment failed';
+    errorBanner.style.display = 'flex';
+    errorBanner.innerHTML = `<div class="error-icon">⚠️</div><div><div class="error-banner-text"><div class="error-banner-title">Payment didn't go through.</div>Check your card details or try a different payment method.</div></div>`;
+    successBanner.style.display = 'none';
+    mainCta.textContent = 'Try again';
+    altBtn.style.display = 'block';
+    restoreLink.style.display = 'block';
+
+  } else if (state === 'restore') {
+    indicator.className = 'state-badge'; indicator.style.background = 'rgba(26,26,26,0.07)'; indicator.style.color = 'rgba(26,26,26,0.5)'; indicator.textContent = '⏳ Restoring…';
+    errorBanner.style.display = 'flex';
+    errorBanner.style.background = 'rgba(26,26,26,0.04)';
+    errorBanner.style.borderColor = 'rgba(26,26,26,0.15)';
+    errorBanner.innerHTML = `<div class="error-icon">⏳</div><div><div class="error-banner-text" style="color:var(--text-secondary)"><div style="font-weight:700;margin-bottom:2px;">Checking your purchase history…</div>This usually takes a moment.</div></div>`;
+    successBanner.style.display = 'none';
+    mainCta.textContent = 'Restoring…'; mainCta.disabled = true; mainCta.style.opacity = '0.5';
+    altBtn.style.display = 'none';
+    restoreLink.style.display = 'none';
+
+  } else if (state === 'success') {
+    indicator.className = 'state-badge success'; indicator.textContent = '✓ Restored';
+    errorBanner.style.display = 'none';
+    successBanner.style.display = 'flex';
+    mainCta.textContent = 'Continue to your guide →'; mainCta.disabled = false; mainCta.style.opacity = '1';
+    altBtn.style.display = 'none';
+    restoreLink.style.display = 'none';
+  }
+}
+
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

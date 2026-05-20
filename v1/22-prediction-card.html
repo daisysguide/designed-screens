@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction Card — Daisy's Guide Designed Screens</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-21">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v1 · 28 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="02-sign-up.html"><span class="screen-num">02</span>Sign Up</a>
+  <a class="sidebar-item" href="03-otp-verification.html"><span class="screen-num">03</span>OTP Verification</a>
+  <a class="sidebar-item" href="04-log-in.html"><span class="screen-num">04</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="05-partner-linking.html"><span class="screen-num">05</span>Partner Linking</a>
+  <a class="sidebar-item" href="06-onboarding-intro.html"><span class="screen-num">06</span>Onboarding Intro</a>
+  <a class="sidebar-item" href="07-onboarding-quiz.html"><span class="screen-num">07</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="08-building-your-plan.html"><span class="screen-num">08</span>Building Your Plan</a>
+  <a class="sidebar-item" href="09-personalized-results.html"><span class="screen-num">09</span>Personalized Results</a>
+  <a class="sidebar-item" href="10-customize-your-plan.html"><span class="screen-num">10</span>Customize Your Plan</a>
+  <div class="sidebar-section-label">Paywall</div>
+  <a class="sidebar-item" href="11-paywall.html"><span class="screen-num">11</span>Paywall</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="12-home.html"><span class="screen-num">12</span>Home</a>
+  <a class="sidebar-item" href="23-progress.html"><span class="screen-num">23</span>Progress</a>
+  <a class="sidebar-item" href="24-settings.html"><span class="screen-num">24</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-topic-intro.html"><span class="screen-num">14</span>Topic Intro</a>
+  <a class="sidebar-item" href="15-topic-article.html"><span class="screen-num">15</span>Topic Article</a>
+  <a class="sidebar-item" href="16-question.html"><span class="screen-num">16</span>Question</a>
+  <a class="sidebar-item" href="17-waiting-for-partner.html"><span class="screen-num">17</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="18-alignment-reveal.html"><span class="screen-num">18</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="19-post-reveal-reflection.html"><span class="screen-num">19</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="20-re-answer-flow.html"><span class="screen-num">20</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="21-completed-topic.html"><span class="screen-num">21</span>Completed Topic</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item active" href="22-prediction-card.html"><span class="screen-num">22</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="25-empty-home.html"><span class="screen-num">25</span>Empty Home</a>
+  <a class="sidebar-item" href="26-empty-topic-list.html"><span class="screen-num">26</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="27-payment-failure.html"><span class="screen-num">27</span>Payment Failure</a>
+  <a class="sidebar-item" href="28-connection-error.html"><span class="screen-num">28</span>Connection Error</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Prediction Card</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="21-completed-topic.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">22 / 28</span>
+        <a class="topbar-btn" href="23-progress.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 22 · Topic Flow</div>
+    <div class="page-title">Prediction Card</div>
+    <div class="page-desc">Special topic type. Answers locked at a milestone date, then revealed. Bridge to post-birth retention.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="21-completed-topic.html">← Screen 21: Completed Topic</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="23-progress.html">Screen 23: Progress →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-answering" onclick="showState('answering')">Answering</button>
+      <button class="state-tab" id="tab-locked" onclick="showState('locked')">Locked</button>
+      <button class="state-tab" id="tab-reveal" onclick="showState('reveal')">Reveal ready</button>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="back-btn">‹ Topics</div>
+
+        <!-- Prediction header -->
+        <div class="prediction-header" id="prediction-header">
+          <div class="prediction-label">🔮 Prediction card</div>
+          <div class="prediction-sublabel" id="prediction-sublabel">Sealed until after baby arrives</div>
+        </div>
+
+        <!-- Content area -->
+        <div id="content-area">
+          <!-- Answering state by default -->
+          <div class="question-card">
+            <div class="question-text">Who do you think will do more night feeds?</div>
+            <div class="partner-note">Be honest. Jordan's answering this independently.</div>
+            <div class="answer-opts">
+              <button class="answer-opt" onclick="selectOpt(this)">Probably me, honestly</button>
+              <button class="answer-opt" onclick="selectOpt(this)">My partner — they're more of a night owl</button>
+              <button class="answer-opt" onclick="selectOpt(this)">We'll split it pretty evenly</button>
+              <button class="answer-opt" onclick="selectOpt(this)">Whoever wakes up first — survival mode</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-primary disabled" id="cta-btn">Lock in my prediction →</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Navigation flow</div>
+      <div class="flow-map">
+        <div class="flow-node from">13 Topic List</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">22 Prediction Card</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">17 Waiting</div>
+      </div>
+      <div class="info-box">
+        Appears in the Topic List as a visually distinct card. After answering → Screen 17 Waiting (same flow as regular topics). At the milestone date, app sends a push and navigates to Screen 18 Reveal. <strong>No bottom nav.</strong>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Three screen states</div>
+      <table class="spec-table">
+        <tr><td>Answering</td><td>Normal question card + options. Prediction header: dashed border, cream-tinted bg. CTA: "Lock in my prediction →" — disabled until option selected.</td></tr>
+              <tr><td>Locked</td><td>Question card replaced by sealed card (🔒 icon, "Your prediction is sealed." heading, body + reveal date pill). Prediction header: solid border strengthened slightly, subdued bg. CTA becomes "Back to topics" — enabled. No countdown UI — reveal date pill communicates timeline.</td></tr>
+              <tr><td>Reveal ready</td><td>Sealed card shows 🔮 icon, "Time to find out." heading, body confirming milestone hit. Prediction header: solid purple border + purple-tinted bg — signals the card is now active. CTA: "See your predictions →" — enabled, full weight.</td></tr>
+        <tr><td>Locked</td><td>Answers submitted. Lock icon + sealed message + reveal date shown. No editing.</td></tr>
+        <tr><td>Reveal ready</td><td>Milestone date reached. CTA changes to "See your predictions →" which plays the reveal animation (Screen 18).</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Prediction Header Card</div>
+      <table class="spec-table">
+        <tr><td>Border</td><td><code>2px dashed border-strong</code> — dashed signals special/non-standard topic type</td></tr>
+        <tr><td>Background</td><td><code>rgba(26,26,26,0.02)</code></td></tr>
+        <tr><td>Border radius</td><td><code>radius-lg</code> (12px)</td></tr>
+        <tr><td>Label</td><td>"🔮 PREDICTION CARD" · 11px DM Sans bold · ALL CAPS · <code>text-tertiary</code></td></tr>
+        <tr><td>Sublabel</td><td>"Sealed until after baby arrives" · 12px · <code>text-tertiary</code></td></tr>
+        <tr><td>Position</td><td>Always sits above the question card on this screen type</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Locked state</div>
+      <table class="spec-table">
+        <tr><td>Lock icon</td><td>🔒 at 40px · centered</td></tr>
+        <tr><td>Heading</td><td>"Your prediction is sealed." · Grandstander 18px bold</td></tr>
+        <tr><td>Body</td><td>"Both answers will be revealed 3 months after baby arrives. A reminder is already set." · 13px · <code>text-secondary</code></td></tr>
+        <tr><td>Reveal date pill</td><td>"Reveals: [Month Year]" · soft purple pill · <code>rgba(95,69,242,0.08)</code> · <code>purple-500</code> text</td></tr>
+        <tr><td>No editing</td><td>Answers cannot be changed once locked. No "update" button.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Milestone timing</div>
+      <table class="spec-table">
+        <tr><td>Reveal trigger</td><td>3 months postpartum — auto-calculated from due date entered in onboarding quiz</td></tr>
+        <tr><td>Reminder push</td><td>Sent to both partners when the reveal date is reached</td></tr>
+        <tr><td>If no due date</td><td>User manually sets reveal date in Settings or on this screen</td></tr>
+      </table>
+      <div class="info-box"><strong>Bridge to retention.</strong> This screen's purpose extends beyond the question — it creates a reason to return to the app months after onboarding.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Prediction Card Header</span>
+        <span class="component-tag">Question Card</span>
+        <span class="component-tag">Answer Options (MC)</span>
+        <span class="component-tag">Locked state card</span>
+        <span class="component-tag">Button — Primary (lg)</span>
+        <span class="component-tag">Screen Header (back)</span>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>Dashed border on prediction header signals this is a special topic type — distinct from regular topics throughout the app.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Once locked, answers cannot be changed. The locked state is permanent until the reveal date.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Reveal date is auto-set from onboarding due date. Shown to user in the locked state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>At milestone: push notification → "It's time. See what you both predicted." → Screen 18 Reveal.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v1 · Screen 22 of 24</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="21-completed-topic.html">← Screen 21: Completed Topic</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="23-progress.html">Screen 23: Progress →</a>
+  </div>
+</div>
+
+<script>
+function selectOpt(el) {
+  document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('cta-btn').classList.remove('disabled');
+}
+
+function showState(state) {
+  ['answering','locked','reveal'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const content = document.getElementById('content-area');
+  const cta = document.getElementById('cta-btn');
+  const sublabel = document.getElementById('prediction-sublabel');
+
+  const predHeader = document.getElementById('prediction-header');
+  if (state === 'answering') {
+    predHeader.className = 'prediction-header';
+    sublabel.textContent = 'Sealed until after baby arrives';
+    content.innerHTML = `
+      <div class="question-card">
+        <div class="question-text">Who do you think will do more night feeds?</div>
+        <div class="partner-note">Be honest. Jordan's answering this independently.</div>
+        <div class="answer-opts">
+          <button class="answer-opt" onclick="selectOpt(this)">Probably me, honestly</button>
+          <button class="answer-opt" onclick="selectOpt(this)">My partner — they're more of a night owl</button>
+          <button class="answer-opt" onclick="selectOpt(this)">We'll split it pretty evenly</button>
+          <button class="answer-opt" onclick="selectOpt(this)">Whoever wakes up first — survival mode</button>
+        </div>
+      </div>`;
+    cta.textContent = 'Lock in my prediction →';
+    cta.classList.add('disabled');
+
+  } else if (state === 'locked') {
+    predHeader.className = 'prediction-header state-locked';
+    sublabel.textContent = 'Sealed until after baby arrives';
+    content.innerHTML = `
+      <div class="locked-card">
+        <div class="lock-icon">🔒</div>
+        <div class="locked-heading">Your prediction is sealed.</div>
+        <div class="locked-body">Both answers will be revealed 3 months after baby arrives. A reminder is already set.</div>
+        <div class="reveal-date">Reveals: November 2025</div>
+      </div>`;
+    cta.textContent = 'Back to topics';
+    cta.classList.remove('disabled');
+
+  } else if (state === 'reveal') {
+    predHeader.className = 'prediction-header state-reveal';
+    sublabel.textContent = 'The moment has arrived 🎉';
+    content.innerHTML = `
+      <div class="locked-card">
+        <div class="lock-icon">🔮</div>
+        <div class="locked-heading">Time to find out.</div>
+        <div class="locked-body">It's been 3 months. You both made a prediction — now see how it played out.</div>
+        <div class="reveal-date" style="background:rgba(95,69,242,0.15);">Today's the day</div>
+      </div>`;
+    cta.textContent = 'See your predictions →';
+    cta.classList.remove('disabled');
+  }
+}
+</script>
+    </div>
+  </div>
+</div>
+<script>
+
+function selectOpt(el) {
+  document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('cta-btn').classList.remove('disabled');
+}
+
+function showState(state) {
+  ['answering','locked','reveal'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const content = document.getElementById('content-area');
+  const cta = document.getElementById('cta-btn');
+  const sublabel = document.getElementById('prediction-sublabel');
+
+  const predHeader = document.getElementById('prediction-header');
+  if (state === 'answering') {
+    predHeader.className = 'prediction-header';
+    sublabel.textContent = 'Sealed until after baby arrives';
+    content.innerHTML = `
+      <div class="question-card">
+        <div class="question-text">Who do you think will do more night feeds?</div>
+        <div class="partner-note">Be honest. Jordan's answering this independently.</div>
+        <div class="answer-opts">
+          <button class="answer-opt" onclick="selectOpt(this)">Probably me, honestly</button>
+          <button class="answer-opt" onclick="selectOpt(this)">My partner — they're more of a night owl</button>
+          <button class="answer-opt" onclick="selectOpt(this)">We'll split it pretty evenly</button>
+          <button class="answer-opt" onclick="selectOpt(this)">Whoever wakes up first — survival mode</button>
+        </div>
+      </div>`;
+    cta.textContent = 'Lock in my prediction →';
+    cta.classList.add('disabled');
+
+  } else if (state === 'locked') {
+    predHeader.className = 'prediction-header state-locked';
+    sublabel.textContent = 'Sealed until after baby arrives';
+    content.innerHTML = `
+      <div class="locked-card">
+        <div class="lock-icon">🔒</div>
+        <div class="locked-heading">Your prediction is sealed.</div>
+        <div class="locked-body">Both answers will be revealed 3 months after baby arrives. A reminder is already set.</div>
+        <div class="reveal-date">Reveals: November 2025</div>
+      </div>`;
+    cta.textContent = 'Back to topics';
+    cta.classList.remove('disabled');
+
+  } else if (state === 'reveal') {
+    predHeader.className = 'prediction-header state-reveal';
+    sublabel.textContent = 'The moment has arrived 🎉';
+    content.innerHTML = `
+      <div class="locked-card">
+        <div class="lock-icon">🔮</div>
+        <div class="locked-heading">Time to find out.</div>
+        <div class="locked-body">It's been 3 months. You both made a prediction — now see how it played out.</div>
+        <div class="reveal-date" style="background:rgba(95,69,242,0.15);">Today's the day</div>
+      </div>`;
+    cta.textContent = 'See your predictions →';
+    cta.classList.remove('disabled');
+  }
+}
+
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
