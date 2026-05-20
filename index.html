@@ -11,20 +11,25 @@ html, body { height: 100%; font-family: 'DM Sans', -apple-system, sans-serif; ba
 .picker { text-align: center; padding: 48px 32px; }
 .brand { font-family: 'Grandstander', cursive; font-size: 28px; color: #5f45f2; letter-spacing: -0.02em; margin-bottom: 8px; }
 .sub { font-size: 13px; color: #888; margin-bottom: 48px; letter-spacing: 0.02em; }
-.versions { display: flex; gap: 16px; justify-content: center; }
+.section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #aaa; margin-bottom: 12px; }
+.versions { display: flex; gap: 16px; justify-content: center; margin-bottom: 32px; }
+.reference { display: flex; gap: 16px; justify-content: center; }
 .version-card { background: #fff; border: 1px solid #e0dbd4; border-radius: 16px; padding: 32px 40px; cursor: pointer; text-decoration: none; color: inherit; transition: box-shadow 0.15s, border-color 0.15s; min-width: 180px; }
 .version-card:hover { box-shadow: 0 4px 20px rgba(95,69,242,0.12); border-color: #5f45f2; }
 .version-label { font-family: 'Grandstander', cursive; font-size: 36px; color: #5f45f2; font-weight: 700; }
+.ref-label { font-family: 'Grandstander', cursive; font-size: 22px; color: #5f45f2; font-weight: 700; }
 .version-desc { font-size: 13px; color: #888; margin-top: 8px; }
 .version-badge { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; margin-top: 12px; }
 .badge-frozen { background: #f0ece6; color: #888; }
 .badge-active { background: rgba(95,69,242,0.1); color: #5f45f2; }
+.badge-ref { background: #f0ece6; color: #888; }
 </style>
 </head>
 <body>
 <div class="picker">
   <div class="brand">daisy's guide</div>
-  <div class="sub">Designed Screens — Choose a version</div>
+  <div class="sub">Design artifacts — choose a destination</div>
+  <div class="section-label">Designed Screens</div>
   <div class="versions">
     <a class="version-card" href="v1/01-swipeable-intro.html">
       <div class="version-label">v1</div>
@@ -35,6 +40,14 @@ html, body { height: 100%; font-family: 'DM Sans', -apple-system, sans-serif; ba
       <div class="version-label">v2</div>
       <div class="version-desc">28 screens · In progress</div>
       <div class="version-badge badge-active">Active</div>
+    </a>
+  </div>
+  <div class="section-label">Reference</div>
+  <div class="reference">
+    <a class="version-card" href="design system.html">
+      <div class="ref-label">Design System</div>
+      <div class="version-desc">Tokens, components & patterns</div>
+      <div class="version-badge badge-ref">Reference</div>
     </a>
   </div>
 </div>
