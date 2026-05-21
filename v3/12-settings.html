@@ -70,17 +70,26 @@
   <div>
     <div class="screen-tag">Screen 12 · Home Base</div>
     <div class="page-title">Settings</div>
-    <div class="page-desc">Notifications, pacing, plan, partner, account. Phone number shown (not password). Settings tab active.</div>
+    <div class="page-desc">Notifications, pacing, plan, partner, account. Name + phone shown. Q1 tab controls date row visibility in Pacing.</div>
   </div>
   <div class="nav-pills">
-    <a class="nav-pill" style="cursor:pointer;"  href="11-progress.html">← Screen 11: Progress</a>
-    <div class="nav-pill next" style="opacity:0.35;pointer-events:none;">Last screen</div>
+    <a class="nav-pill" style="cursor:pointer;" href="11-progress.html">← Screen 11: Progress</a>
+    <a class="nav-pill next" style="cursor:pointer;" href="13-topic-list.html">Screen 13: Topic List →</a>
   </div>
 </div>
 
 <div class="main-layout">
 
   <div class="phone-wrap">
+
+    <!-- Q1 state tabs — controls Pacing date row label + visibility -->
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Q1 answer</span>
+      <button id="q1tab-0" onclick="setQ1(0)" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Pregnant / Again</button>
+      <button id="q1tab-1" onclick="setQ1(1)" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Baby is here</button>
+      <button id="q1tab-2" onclick="setQ1(2)" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Thinking about trying</button>
+    </div>
+
     <div class="phone" style="position:relative;">
       <div class="phone-notch"></div>
       <div class="phone-screen">
@@ -116,9 +125,10 @@
                 <div class="toggle-thumb"></div>
               </div>
             </div>
-            <div class="list-row">
-              <div class="row-label">Due date</div>
-              <div class="row-value">Aug 14, 2025</div>
+            <!-- Date row — standalone, always visible when Q1 applies; hidden for "Thinking about trying" -->
+            <div class="list-row" id="date-row">
+              <div class="row-label" id="date-label">Due date</div>
+              <div class="row-value" id="date-value">Aug 14, 2025</div>
               <div class="row-chevron">›</div>
             </div>
           </div>
@@ -169,21 +179,40 @@
             </div>
           </div>
 
+          <!-- App version — below Legal card, not tappable -->
+          <div style="text-align:center;margin-top:16px;margin-bottom:8px;font-size:11px;font-family:'DM Sans',sans-serif;color:rgba(26,26,26,0.38);line-height:1.4;">Version 1.0.0 (42)</div>
+
           <!-- Account -->
           <div class="section-header">Account</div>
           <div class="list-group">
+            <!-- 1. Name (new) -->
+            <div class="list-row" onclick="openEditName()" style="cursor:pointer;">
+              <div class="row-label">Name</div>
+              <div class="row-value" id="name-row-value">Sarah</div>
+              <div class="row-chevron">›</div>
+            </div>
+            <!-- 2. Phone number -->
             <div class="list-row">
               <div class="row-label">Phone number</div>
               <div class="row-value">+1 604 555 0182</div>
               <div class="row-chevron">›</div>
             </div>
+            <!-- 3. Restore purchase (new) -->
+            <div class="list-row" id="restore-row" onclick="handleRestore(event)" style="cursor:pointer;">
+              <div class="row-label" data-restore-label style="color:#5f45f2;">Restore purchase</div>
+              <span id="restore-spinner" style="display:none;margin-left:auto;"><svg width="16" height="16" viewBox="0 0 16 16" style="animation:spin 0.8s linear infinite;display:block;"><circle cx="8" cy="8" r="6" fill="none" stroke="#5f45f2" stroke-width="2.5" stroke-dasharray="20 12"/></svg></span>
+            </div>
+            <!-- 4. Delete account -->
             <div class="list-row" onclick="openDeleteSheet()" style="cursor:pointer;">
               <div class="row-label-destructive">Delete account</div>
             </div>
+            <!-- 5. Log out -->
             <div class="list-row">
               <div class="row-label-destructive">Log out</div>
             </div>
           </div>
+
+          <div style="height:32px;"></div>
 
         </div>
 
@@ -207,6 +236,25 @@
           </div>
         </div>
 
+      </div><!-- /.phone-screen -->
+
+      <!-- Edit name overlay (full-screen push) -->
+      <div id="edit-name-overlay" style="display:none;position:absolute;inset:0;background:#fbefe1;z-index:15;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);border-radius:inherit;overflow:hidden;">
+        <!-- Nav bar -->
+        <div style="height:54px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(26,26,26,0.08);background:#fbefe1;position:relative;">
+          <button onclick="closeEditName()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
+            <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
+          </button>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:17px;font-weight:700;color:#1a1a1a;">Edit name</span>
+        </div>
+        <!-- Content -->
+        <div style="padding:32px 24px;">
+          <input id="edit-name-input" type="text" value="Sarah"
+            autocomplete="given-name" autocorrect="off" autocapitalize="words" spellcheck="false"
+            style="width:100%;height:48px;border-radius:8px;border:1.5px solid #5f45f2;box-shadow:0 0 0 3px rgba(95,69,242,0.12);background:white;padding:0 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:#1a1a1a;outline:none;box-sizing:border-box;">
+          <div style="height:24px;"></div>
+          <button onclick="saveEditName()" style="width:100%;height:56px;border-radius:100px;background:#5f45f2;color:white;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;">Save</button>
+        </div>
       </div>
 
       <!-- Delete account overlay -->
@@ -219,7 +267,7 @@
         <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
           <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your answers and reveals are permanently deleted.</div>
           <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your partner keeps their account, but the connection between you is removed — their slot will show as Disconnected.</div>
-          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your $49 purchase is non-refundable. If you reinstall, use 'Restore previous purchase' to recover access.</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your $49 purchase is non-refundable. If you reinstall, use 'Restore purchase' in Settings to recover access.</div>
         </div>
         <button id="delete-confirm-btn" onclick="handleDeleteAccount()" style="width:100%;height:56px;background:#ff9191;color:#fff;border:none;border-radius:100px;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
           Yes, delete my account
@@ -229,11 +277,17 @@
         <button onclick="closeDeleteSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
       </div>
 
-      <!-- Error toast -->
+      <!-- Restore purchase: success toast (green) -->
+      <div id="restore-success-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#1c7d3e;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">Purchase restored. You're all set.</div>
+
+      <!-- Restore purchase: error toast -->
+      <div id="restore-error-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#1a1a1a;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">No previous purchase found. Contact support at guarantee@daisysguide.com</div>
+
+      <!-- Delete account: error toast -->
       <div id="delete-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#1a1a1a;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">Something went wrong. Try again or contact support.</div>
 
-    </div>
-  </div>
+    </div><!-- /.phone -->
+  </div><!-- /.phone-wrap -->
 
   <!-- SPEC PANEL -->
   <div class="spec-panel">
@@ -241,11 +295,11 @@
     <div class="spec-card">
       <div class="spec-card-title">Navigation flow</div>
       <div class="flow-map">
-        <div class="flow-node current">24 Settings</div>
+        <div class="flow-node current">12 Settings</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">10 Customize Plan</div>
+        <div class="flow-node dest">14 Manage Topics</div>
       </div>
-      <div class="info-box">Settings tab is active. "Manage topics" → Screen 10 Customize Your Plan. "Partner" row → Partner detail/invite screen. No other outbound nav in V1.</div>
+      <div class="info-box">Settings tab is active. "Manage topics" → Screen 14 Manage Topics. "Partner" row → Partner detail/invite screen. "Name" row → Edit Name sub-screen (push). No other outbound nav in V1.</div>
     </div>
 
     <div class="spec-card">
@@ -255,10 +309,10 @@
         <div class="settings-row">Nudge frequency <span class="settings-row-value">Picker → Daily / Twice a week / Weekly / Off</span></div>
         <div class="settings-row">Funny push notifications <span class="settings-row-value">Toggle · On by default</span></div>
         <div class="settings-section-label">Pacing</div>
-        <div class="settings-row">Guided timeline <span class="settings-row-value">Toggle · On = due date sequencing · Off = self-directed</span></div>
-        <div class="settings-row">Due date <span class="settings-row-value">Date picker · shown when guided timeline is on</span></div>
+        <div class="settings-row">Guided timeline <span class="settings-row-value">Toggle · On = due date sequencing · Off = self-directed · always visible</span></div>
+        <div class="settings-row">Due date / Baby's birthday <span class="settings-row-value">Standalone date row · always visible (when Q1 applies) · independent of Guided timeline toggle</span></div>
         <div class="settings-section-label">Your plan</div>
-        <div class="settings-row">Manage topics <span class="settings-row-value">→ Screen 10 · "28 active" count shown</span></div>
+        <div class="settings-row">Manage topics <span class="settings-row-value">→ Screen 14 · "28 active" count shown</span></div>
         <div class="settings-section-label">Partner</div>
         <div class="settings-row">Partner row <span class="settings-row-value">Avatar + name + "Connected ✓" or "Invite pending"</span></div>
         <div class="settings-section-label">Support</div>
@@ -267,8 +321,11 @@
         <div class="settings-section-label">Legal</div>
         <div class="settings-row">Privacy Policy <span class="settings-row-value">→ opens web URL in-app browser</span></div>
         <div class="settings-row">Terms of Service <span class="settings-row-value">→ opens web URL in-app browser</span></div>
+        <div class="settings-section-label" style="font-style:italic;opacity:0.6;">— Version line (outside card) —</div>
         <div class="settings-section-label">Account</div>
+        <div class="settings-row">Name <span class="settings-row-value">Tappable · opens Edit Name sub-screen · value = first name</span></div>
         <div class="settings-row">Phone number <span class="settings-row-value">Editable · no password field — passwordless app</span></div>
+        <div class="settings-row">Restore purchase <span class="settings-row-value">Purple label · no chevron · calls restorePurchase() · success/error toasts</span></div>
         <div class="settings-row">Delete account <span class="settings-row-value">Destructive · #ff9191 label · no chevron · opens Account Deletion bottom sheet</span></div>
         <div class="settings-row">Log out <span class="settings-row-value">Destructive · status-error pink label · no chevron</span></div>
       </div>
@@ -310,16 +367,72 @@
     </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">Q1-conditional Date Row (Pacing section)</div>
+      <div class="info-box" style="margin-bottom:14px;">This row is always visible when applicable — it is <strong>not</strong> tied to the Guided timeline toggle state. The toggle controls topic sequencing behavior; this row is the date input.</div>
+      <table class="spec-table">
+        <tr><td>Q1 = "Currently pregnant" or "Expecting again"</td><td>Row label: <strong>"Due date"</strong> · Value: formatted date e.g. "Aug 14, 2025" · Chevron: yes → native date picker · max date: 12 months from today</td></tr>
+        <tr><td>Q1 = "Baby is already here"</td><td>Row label: <strong>"Baby's birthday"</strong> · Value: formatted date e.g. "Mar 3, 2025" · Chevron: yes → native date picker · max date: today</td></tr>
+        <tr><td>Q1 = "Thinking about trying"</td><td>Row <strong>hidden entirely</strong> — no due date is applicable</td></tr>
+        <tr><td>Date format</td><td>"MMM D, YYYY" — e.g. "Aug 14, 2025"</td></tr>
+        <tr><td>Value style</td><td>13px DM Sans regular · <code>text-secondary</code></td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Name row — Edit Name sub-screen</div>
+      <table class="spec-table">
+        <tr><td>Row label</td><td>"Name" · 15px DM Sans regular · <code>text-primary</code></td></tr>
+        <tr><td>Row value</td><td>User's first name · 13px DM Sans regular · <code>text-secondary</code></td></tr>
+        <tr><td>Chevron</td><td>Yes — row is navigable</td></tr>
+        <tr><td>On tap</td><td>Push Edit Name screen (slides in from right)</td></tr>
+        <tr><td>Edit screen nav bar</td><td>Back chevron "‹ Back" · <code>purple-500</code> · 15px semibold · "Edit name" centered title · Grandstander 17px bold</td></tr>
+        <tr><td>Edit screen input</td><td>Pre-filled with current first name · same field spec as Screen 05b (white bg, 1.5px border-default, radius-md 8px, 48px height, 14px horizontal padding, DM Sans 15px) · auto-focused on push · border-focus on mount</td></tr>
+        <tr><td>Save button</td><td>Primary · 56px · <code>radius-full</code> · full width · always active (input is pre-filled)</td></tr>
+        <tr><td>On save</td><td>Trim whitespace · save to user profile · pop back to Settings · Name row value updates immediately</td></tr>
+        <tr><td>Back button</td><td>Pops without saving · no confirmation needed</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Restore Purchase</div>
+      <table class="spec-table">
+        <tr><td>Row label</td><td>"Restore purchase" · <code>purple-500</code> (#5f45f2) · 15px DM Sans regular</td></tr>
+        <tr><td>No chevron</td><td>Action row — not a navigation destination</td></tr>
+        <tr><td>No value</td><td>Right side empty in default state</td></tr>
+        <tr><td>On tap</td><td>Disable row + show inline spinner (purple, right-aligned) · call <code>restorePurchase()</code></td></tr>
+        <tr><td>On success</td><td>Green toast at bottom of phone: "Purchase restored. You're all set." · bg <code>#1c7d3e</code> · auto-dismiss after 3s · row re-enables</td></tr>
+        <tr><td>On failure</td><td>Dark toast: "No previous purchase found. Contact support at guarantee@daisysguide.com" · auto-dismiss after 4s · row re-enables</td></tr>
+        <tr><td><code>restorePurchase()</code></td><td>Stub — connect to App Store / Play Store restore API</td></tr>
+        <tr><td>Demo behavior</td><td>Tap row in preview → simulates success (green toast) after 1.5s</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">App Version</div>
+      <table class="spec-table">
+        <tr><td>Position</td><td>Between Legal section card and Account section header · outside any card group</td></tr>
+        <tr><td>Content</td><td>"Version {APP_VERSION} ({BUILD_NUMBER})" · e.g. "Version 1.0.0 (42)"</td></tr>
+        <tr><td>Font</td><td>11px DM Sans regular · <code>text-tertiary</code> · centered</td></tr>
+        <tr><td>Not tappable</td><td>Read-only — no interaction, no press state</td></tr>
+        <tr><td>Top margin</td><td>16px from Legal card bottom</td></tr>
+        <tr><td>Bottom margin</td><td>32px (to Account section header / safe area breathing room)</td></tr>
+        <tr><td>Values</td><td>Populated from app config / build environment at compile time</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Key settings notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span><strong>Nudge frequency</strong> is the most important setting for retention — it's first in the list for a reason.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Guided timeline</strong> has an explainer subtext — "When on, we sequence topics based on your due date. Turn off to work through them at your own pace in any order." The subtext is essential because the toggle isn't self-explanatory.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Guided timeline</strong> has an explainer subtext — "When on, we sequence topics based on your due date." The date row is now always shown (when Q1 applies) regardless of toggle state. The toggle controls sequencing logic only.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Name</strong> appears at the top of Account — it's the most personal and frequently referenced field. Tapping pushes a lightweight edit screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Phone number</strong> shown instead of password — consistent with the passwordless auth model throughout the app.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Restore purchase</strong> is purple (positive action) — not destructive. Placed between phone number and Delete account so it's easy to find but clearly separated from destructive actions.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Log out</strong> uses <code>status-error</code> (pink) label, not red — stays on brand even for destructive actions.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Delete account</strong> is placed above Log Out — it is more permanent and warrants its own bottom sheet confirmation before anything happens.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>The Account Deletion bottom sheet is interactive in the preview — tap "Delete account" to open it. Success/failure states are stubbed; the sheet animates in and dismisses on swipe, Cancel, or overlay tap.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>On deletion, the partner's account is fully preserved. Their partner slot transitions to a Disconnected state — grey avatar, "Partner disconnected" label — using the existing pending/no-partner UI as a base.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The Account Deletion bottom sheet is interactive in the preview — tap "Delete account" to open it. Swipe down, tap Cancel, or tap the overlay to dismiss.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The two toggles (Funny push notifications, Guided timeline) are interactive — tap them in the preview.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab above the phone controls the Pacing date row: label, value, and visibility all change. This reflects data set during onboarding — users cannot change their Q1 answer from Settings directly.</span></div>
       </div>
     </div>
 
@@ -332,7 +445,7 @@
         <tr><td>Heading</td><td>"Delete your account?" · Grandstander 20px bold · <code>text-primary</code> · 16px margin-bottom</td></tr>
         <tr><td>Body line 1</td><td>"Your answers and reveals are permanently deleted."</td></tr>
         <tr><td>Body line 2</td><td>"Your partner keeps their account, but the connection between you is removed — their slot will show as Disconnected."</td></tr>
-        <tr><td>Body line 3</td><td>"Your $49 purchase is non-refundable. If you reinstall, use 'Restore previous purchase' to recover access."</td></tr>
+        <tr><td>Body line 3</td><td>"Your $49 purchase is non-refundable. If you reinstall, use 'Restore purchase' in Settings to recover access."</td></tr>
         <tr><td>Body style</td><td>13px DM Sans regular · <code>text-secondary</code> · 12px gap between lines · 24px gap below</td></tr>
         <tr><td>Destructive CTA</td><td>"Yes, delete my account" · full width · 56px · <code>radius-full</code> · bg <code>#ff9191</code> · white label · 15px semibold</td></tr>
         <tr><td>Cancel button</td><td>"Cancel" · full width · 56px · <code>radius-full</code> · <code>1.5px solid rgba(26,26,26,0.20)</code> border · <code>text-primary</code> label</td></tr>
@@ -352,10 +465,15 @@
         <span class="component-tag">List Row — toggle</span>
         <span class="component-tag">List Row — with avatar</span>
         <span class="component-tag">List Row — destructive</span>
+        <span class="component-tag">List Row — purple action</span>
         <span class="component-tag">Bottom Sheet — Account Deletion</span>
+        <span class="component-tag">Sub-screen — Edit Name (push)</span>
         <span class="component-tag">Section Header</span>
         <span class="component-tag">Toggle / Switch</span>
         <span class="component-tag">Avatar (partner)</span>
+        <span class="component-tag">Toast — success (green)</span>
+        <span class="component-tag">Toast — error</span>
+        <span class="component-tag">Version line</span>
         <span class="component-tag">Bottom Nav (Settings active)</span>
       </div>
     </div>
@@ -366,23 +484,95 @@
 <div class="page-footer">
   <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 12 of 29</span>
   <div class="nav-pills">
-    <a class="nav-pill" style="cursor:pointer;"  href="11-progress.html">← Screen 11: Progress</a>
-    <div class="nav-pill next" style="opacity:0.35;pointer-events:none;">Last screen</div>
+    <a class="nav-pill" style="cursor:pointer;" href="11-progress.html">← Screen 11: Progress</a>
+    <a class="nav-pill next" style="cursor:pointer;" href="13-topic-list.html">Screen 13: Topic List →</a>
   </div>
 </div>
     </div>
   </div>
 </div>
-<script src="nav.js"></script>
 <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 <script>
+/* ── Q1 tab: controls Pacing date row ── */
+function setQ1(idx) {
+  [0, 1, 2].forEach(i => {
+    const btn = document.getElementById('q1tab-' + i);
+    const active = i === idx;
+    btn.style.background    = active ? '#5f45f2' : 'white';
+    btn.style.color         = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    btn.style.borderColor   = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+  const row   = document.getElementById('date-row');
+  const label = document.getElementById('date-label');
+  const value = document.getElementById('date-value');
+  if (idx === 0) {
+    row.style.display    = '';
+    label.textContent    = 'Due date';
+    value.textContent    = 'Aug 14, 2025';
+  } else if (idx === 1) {
+    row.style.display    = '';
+    label.textContent    = "Baby's birthday";
+    value.textContent    = 'Mar 3, 2025';
+  } else {
+    row.style.display    = 'none';
+  }
+}
+
+/* ── Edit Name overlay ── */
+function openEditName() {
+  const overlay = document.getElementById('edit-name-overlay');
+  overlay.style.display = 'block';
+  requestAnimationFrame(() => { overlay.style.transform = 'translateX(0)'; });
+  setTimeout(() => { document.getElementById('edit-name-input').focus(); }, 300);
+}
+function closeEditName() {
+  const overlay = document.getElementById('edit-name-overlay');
+  overlay.style.transform = 'translateX(100%)';
+  setTimeout(() => { overlay.style.display = 'none'; }, 280);
+}
+function saveEditName() {
+  const val = document.getElementById('edit-name-input').value.trim() || 'Sarah';
+  document.getElementById('name-row-value').textContent = val;
+  closeEditName();
+}
+
+/* ── Restore Purchase ── */
+function restorePurchase() {
+  return new Promise(resolve => setTimeout(resolve, 1500));
+}
+function handleRestore(e) {
+  const row     = document.getElementById('restore-row');
+  const label   = row.querySelector('[data-restore-label]');
+  const spinner = document.getElementById('restore-spinner');
+  row.style.pointerEvents = 'none';
+  spinner.style.display   = 'inline';
+  label.style.opacity     = '0.5';
+  restorePurchase()
+    .then(() => {
+      spinner.style.display   = 'none';
+      label.style.opacity     = '1';
+      row.style.pointerEvents = '';
+      const t = document.getElementById('restore-success-toast');
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3000);
+    })
+    .catch(() => {
+      spinner.style.display   = 'none';
+      label.style.opacity     = '1';
+      row.style.pointerEvents = '';
+      const t = document.getElementById('restore-error-toast');
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 4000);
+    });
+}
+
+/* ── Delete Account ── */
 function openDeleteSheet() {
   document.getElementById('delete-overlay').style.display = 'block';
   const sheet = document.getElementById('delete-sheet');
   sheet.style.display = 'block';
   requestAnimationFrame(() => { sheet.style.transform = 'translateY(0)'; });
 }
-
 function closeDeleteSheet() {
   const sheet = document.getElementById('delete-sheet');
   sheet.style.transform = 'translateY(100%)';
@@ -391,17 +581,14 @@ function closeDeleteSheet() {
     document.getElementById('delete-overlay').style.display = 'none';
   }, 280);
 }
-
 function deleteAccount() {
-  // Stub — connect to account deletion API endpoint
   return new Promise((_resolve, _reject) => {});
 }
-
 function handleDeleteAccount() {
-  const btn = document.getElementById('delete-confirm-btn');
+  const btn     = document.getElementById('delete-confirm-btn');
   const spinner = document.getElementById('delete-spinner');
-  btn.disabled = true;
-  spinner.style.display = 'inline';
+  btn.disabled           = true;
+  spinner.style.display  = 'inline';
   deleteAccount()
     .then(() => {
       closeDeleteSheet();
@@ -409,22 +596,21 @@ function handleDeleteAccount() {
     })
     .catch(() => {
       spinner.style.display = 'none';
-      btn.disabled = false;
+      btn.disabled          = false;
       const toast = document.getElementById('delete-toast');
       toast.style.display = 'block';
       setTimeout(() => { toast.style.display = 'none'; }, 4000);
     });
 }
 
-// Swipe down to dismiss
+/* ── Swipe down to dismiss delete sheet ── */
 document.addEventListener('DOMContentLoaded', () => {
   const sheet = document.getElementById('delete-sheet');
   let startY = 0;
-  sheet.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; }, { passive: true });
-  sheet.addEventListener('touchend', (e) => {
-    if (e.changedTouches[0].clientY - startY > 60) { closeDeleteSheet(); }
-  });
+  sheet.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+  sheet.addEventListener('touchend',   e => { if (e.changedTouches[0].clientY - startY > 60) closeDeleteSheet(); });
 });
 </script>
+<script src="nav.js"></script>
 </body>
 </html>
