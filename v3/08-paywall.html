@@ -95,7 +95,7 @@
         <div class="price-card">
           <div class="price-eyebrow">One-time purchase</div>
           <div class="price-amount">$49</div>
-          <div class="price-sublabel">Lifetime access · All guides · Both partners</div>
+          <div class="price-sublabel">Lifetime access · One-time charge · Does not renew</div>
           <div class="feature-divider"></div>
           <div class="feature-list">
             <div class="feature-item">
@@ -126,12 +126,28 @@
           <div class="cred-text">Every guide was created by <strong>Dr. Daisy, MD</strong> — a practicing pediatrician and the mother behind Daisy's Guide. Real expertise, not generic advice.</div>
         </div>
 
-
+        <!-- Restore banners — hidden until restore attempt resolves -->
+        <div id="restore-success" style="display:none;background:rgba(119,234,175,0.18);border:1px solid #77eaaf;border-radius:10px;padding:10px 14px;font-size:13px;color:#157a46;text-align:center;margin-top:12px;">✓ Purchase restored. You're all set.</div>
+        <div id="restore-error" style="display:none;background:rgba(255,145,145,0.12);border:1px solid #ff9191;border-radius:10px;padding:10px 14px;font-size:13px;color:#c0392b;text-align:center;margin-top:12px;">No previous purchase found. If you think this is wrong, <a href="https://daisysguide.com/support" style="color:#c0392b;text-decoration:none;">contact support</a>.</div>
 
         <div class="spacer"></div>
 
+        <!-- 1. CTA -->
         <button class="btn-primary">Get full access — $49</button>
-        <div class="social-proof"><span class="stars">★★★★★</span> 4.9 · Trusted by 4,000+ couples</div>
+
+        <!-- 2. Terms + Privacy -->
+        <div style="font-size:11px;color:rgba(26,26,26,0.45);text-align:center;margin-top:8px;line-height:1.5;">By purchasing you agree to our <a href="https://daisysguide.com/terms" style="color:#5f45f2;text-decoration:none;">Terms of Service</a> and <a href="https://daisysguide.com/privacy" style="color:#5f45f2;text-decoration:none;">Privacy Policy</a></div>
+
+        <!-- 3. Restore purchase -->
+        <div style="text-align:center;margin-top:10px;">
+          <a id="restore-link" href="#" onclick="handleRestore(event)" style="font-size:13px;color:#5f45f2;text-decoration:none;">Restore previous purchase<span id="restore-spinner" style="display:none;margin-left:6px;vertical-align:middle;"><svg width="12" height="12" viewBox="0 0 12 12" style="animation:spin 0.8s linear infinite;display:inline-block;vertical-align:middle;"><circle cx="6" cy="6" r="4.5" fill="none" stroke="#5f45f2" stroke-width="2" stroke-dasharray="14 8"/></svg></span></a>
+        </div>
+
+        <!-- 4. Social proof -->
+        <div class="social-proof"><span class="stars">★★★★★</span> Rated 4.9 on Amazon</div>
+
+        <!-- 5. Promo code affordance -->
+        <button style="width:100%;height:44px;margin-top:6px;background:transparent;border:1px solid rgba(26,26,26,0.18);border-radius:100px;font-size:14px;font-family:inherit;color:rgba(26,26,26,0.55);cursor:pointer;">Have a promo code?</button>
 
       </div>
     </div>
@@ -161,7 +177,9 @@
         <tr><td>Heading</td><td>"Your plan is ready" · Grandstander 26px bold</td></tr>
         <tr><td>Body</td><td>"Get full access to all 28 of your personalized topics, the side-by-side reveal, and everything that follows." · topic count is dynamic</td></tr>
         <tr><td>CTA</td><td>"Get full access — $49" · price is a templated string from the data layer · if promo applied: "Get full access — $[discounted]"</td></tr>
-        <tr><td>Social proof</td><td>"★★★★★ 4.9 · Trusted by 4,000+ couples" · replace with real numbers when available</td></tr>
+        <tr><td>Terms line</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy" · 11px · <code>text-tertiary</code> · centered · links in <code>purple-500</code> · open in-app browser</td></tr>
+        <tr><td>Restore link</td><td>"Restore previous purchase" · 13px · <code>purple-500</code> · centered · no underline</td></tr>
+        <tr><td>Social proof</td><td>"★★★★★ Rated 4.9 on Amazon" · 13px DM Sans · <code>text-secondary</code> · centered</td></tr>
       </table>
     </div>
 
@@ -174,7 +192,7 @@
         <tr><td>Padding</td><td>24px 20px</td></tr>
         <tr><td>Eyebrow</td><td>"One-time purchase" · 12px DM Sans regular · <code>text-secondary</code> · centered</td></tr>
         <tr><td>Price</td><td>Grandstander 48px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code> · centered</td></tr>
-        <tr><td>Sub-label</td><td>"Lifetime access · All guides · Both partners" · 13px · <code>text-secondary</code> · centered</td></tr>
+        <tr><td>Sub-label</td><td>"Lifetime access · One-time charge · Does not renew" · 13px · <code>text-secondary</code> · centered</td></tr>
         <tr><td>Divider</td><td><code>1px solid border-default</code> · 16px margin above feature list</td></tr>
         <tr><td>Feature checkmark</td><td>"✓" · <code>#157a46</code> (green) · 14px bold</td></tr>
         <tr><td>Feature text</td><td>14px DM Sans regular · <code>text-primary</code></td></tr>
@@ -188,6 +206,30 @@
         <tr><td>Style</td><td><code>1.5px dashed border-strong</code> · <code>radius-lg</code> · <code>rgba(26,26,26,0.02)</code> bg · same dashed treatment as AI Summary Card — signals "authored content"</td></tr>
         <tr><td>Copy</td><td>"Every guide was created by Dr. Daisy, MD — a practicing pediatrician and the mother behind Daisy's Guide. Real expertise, not generic advice."</td></tr>
         <tr><td>"Dr. Daisy, MD"</td><td>Bold · <code>text-primary</code> · the credential lands harder with the name</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Terms + Privacy line</div>
+      <table class="spec-table">
+        <tr><td>Position</td><td>Directly below the primary CTA button</td></tr>
+        <tr><td>Copy</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy"</td></tr>
+        <tr><td>Style</td><td>11px DM Sans · <code>text-tertiary</code> · centered · 8px margin-top</td></tr>
+        <tr><td>"Terms of Service" link</td><td><code>purple-500</code> (#5f45f2) · no underline · opens <code>https://daisysguide.com/terms</code> in in-app browser</td></tr>
+        <tr><td>"Privacy Policy" link</td><td><code>purple-500</code> (#5f45f2) · no underline · opens <code>https://daisysguide.com/privacy</code> in in-app browser</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Restore purchase</div>
+      <table class="spec-table">
+        <tr><td>Position</td><td>Directly below the Terms + Privacy line</td></tr>
+        <tr><td>Label</td><td>"Restore previous purchase" · 13px DM Sans · <code>purple-500</code> · centered · no underline</td></tr>
+        <tr><td>On tap</td><td>Disable link + show inline spinner · call <code>restorePurchase()</code></td></tr>
+        <tr><td><code>restorePurchase()</code></td><td>Stub — will connect to Apple StoreKit (iOS) or backend receipt verification (web)</td></tr>
+        <tr><td>Success state</td><td>Inline banner above price card · bg <code>rgba(119,234,175,0.18)</code> · border <code>1px solid #77eaaf</code> · text <code>#157a46</code> · "✓ Purchase restored. You're all set." · auto-navigate to Home after 2s</td></tr>
+        <tr><td>Failure state</td><td>Inline banner above price card · bg <code>rgba(255,145,145,0.12)</code> · border <code>1px solid #ff9191</code> · text <code>#c0392b</code> · "No previous purchase found. If you think this is wrong, contact support." · "contact support" links to <code>https://daisysguide.com/support</code></td></tr>
+        <tr><td>Spinner</td><td>12px SVG · <code>purple-500</code> · inline right of label · CSS rotation animation</td></tr>
       </table>
     </div>
 
@@ -209,6 +251,9 @@
         <span class="component-tag">Button — Primary (lg)</span>
         <span class="component-tag">Credibility card (dashed)</span>
         <span class="component-tag">Screen Header (eyebrow)</span>
+        <span class="component-tag">Terms + Privacy line</span>
+        <span class="component-tag">Restore Purchase</span>
+        <span class="component-tag">Promo code affordance</span>
       </div>
     </div>
 
@@ -218,7 +263,8 @@
         <div class="note-item"><div class="note-bullet"></div><span>Single price, single CTA. No tiers, no free trial, no "maybe later" in V1.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Topic count (28) in heading and body is dynamic — matches the user's personalized plan.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Promo code expands inline on tap — no sheet or modal. Collapses if user taps away without applying.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Social proof numbers ("4,000+ couples") should be replaced with real data once available.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Terms of Service and Privacy Policy links open <code>daisysguide.com/terms</code> and <code>daisysguide.com/privacy</code> in the in-app browser — same URLs as Settings → Legal.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Restore purchase: disables link and shows spinner while <code>restorePurchase()</code> runs. Success shows green banner and navigates to Home after 2s. Failure shows red banner with support link. Link re-enables on failure so user can retry.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Successful purchase → Screen 12 Home. No bottom nav on this screen.</span></div>
       </div>
     </div>
@@ -237,5 +283,34 @@
   </div>
 </div>
 <script src="nav.js"></script>
+<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+<script>
+function restorePurchase() {
+  // Stub — connect to Apple StoreKit (iOS) or backend receipt verification (web)
+  return new Promise((_resolve, _reject) => {});
+}
+
+function handleRestore(e) {
+  e.preventDefault();
+  const link = document.getElementById('restore-link');
+  const spinner = document.getElementById('restore-spinner');
+  link.style.pointerEvents = 'none';
+  link.style.opacity = '0.5';
+  spinner.style.display = 'inline';
+
+  restorePurchase()
+    .then(() => {
+      spinner.style.display = 'none';
+      document.getElementById('restore-success').style.display = 'block';
+      setTimeout(() => { window.location.href = '10-home.html'; }, 2000);
+    })
+    .catch(() => {
+      spinner.style.display = 'none';
+      link.style.pointerEvents = '';
+      link.style.opacity = '';
+      document.getElementById('restore-error').style.display = 'block';
+    });
+}
+</script>
 </body>
 </html>
