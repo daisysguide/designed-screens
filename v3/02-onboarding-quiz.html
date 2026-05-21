@@ -69,7 +69,7 @@
   <div>
     <div class="screen-tag">Screen 02 · Intro</div>
     <div class="page-title">Onboarding Quiz</div>
-    <div class="page-desc">8 questions, one per screen. Drives personalization. Progress bar tracks position.</div>
+    <div class="page-desc">6–8 questions depending on Q1. Drives personalization. Progress bar and count are dynamic.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="01-swipeable-intro.html">← Screen 01: Swipeable Intro</a>
@@ -91,7 +91,7 @@
           <div class="progress-track">
             <div class="progress-fill" id="progress-fill" style="width:14%;"></div>
           </div>
-          <div class="progress-label" id="progress-label">1 of 8</div>
+          <div class="progress-label" id="progress-label">1 of ?</div>
         </div>
 
         <!-- Question card -->
@@ -106,7 +106,7 @@
         <!-- Actions -->
         <div class="action-region">
           <button class="btn-continue disabled" id="continue-btn">Continue</button>
-          <button class="btn-skip">Skip this question</button>
+          <button class="btn-skip" id="skip-btn">Skip this question</button>
         </div>
 
       </div>
@@ -119,77 +119,94 @@
     <div class="spec-card">
       <div class="spec-card-title">Navigation flow</div>
       <div class="flow-map">
-        <div class="flow-node from">06 Onboarding Intro</div>
+        <div class="flow-node from">01 Swipeable Intro</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node current">07 Onboarding Quiz</div>
+        <div class="flow-node current">02 Onboarding Quiz</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">08 Building Your Plan</div>
+        <div class="flow-node dest">03 Building Your Plan</div>
       </div>
       <div class="info-box">
-        8 questions shown one at a time on the same screen template. Back chevron in header returns to previous question (or Screen 06 from Q1). Completing all 8 → Screen 08.
+        Question count is dynamic: <strong>6 questions</strong> (Thinking about trying) · <strong>7 questions</strong> (Expecting again — Q3 auto-set) · <strong>8 questions</strong> (Currently pregnant / Baby is already here). Back chevron returns to previous question in sequence; from Q1, returns to Screen 01. Completing all questions → Screen 03. Quiz state is persisted to localStorage after each answer and cleared on completion or back past Q1.
       </div>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">All 8 questions</div>
+      <div class="spec-card-title">All questions + conditional logic</div>
       <div class="q-list">
         <div class="q-row">
           <div class="q-num">Q1</div>
           <div>
             <div class="q-text">Where are you in your journey?</div>
-            <div class="q-note">Options: Thinking about trying · Currently pregnant · Baby is already here · Expecting again</div>
+            <div class="q-note">Options: Thinking about trying · Currently pregnant · Baby is already here · Expecting again · <strong>Required — no skip</strong> · Determines entire question sequence</div>
           </div>
         </div>
         <div class="q-row">
           <div class="q-num">Q2</div>
           <div>
             <div class="q-text">When is your due date?</div>
-            <div class="q-note">Native date picker · Only shown if Q1 = "Currently pregnant"</div>
+            <div class="q-note">Native date picker · Min date: today · Label: "Due date" · Shown when Q1 = "Currently pregnant" OR "Expecting again" · <strong>Required — no skip</strong></div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q2b</div>
+          <div>
+            <div class="q-text">When was baby born?</div>
+            <div class="q-note">Native date picker · Max date: today · Label: "Baby's birthday" · Shown when Q1 = "Baby is already here" · Used for age-appropriate topic sequencing · <strong>Required — no skip</strong></div>
           </div>
         </div>
         <div class="q-row">
           <div class="q-num">Q3</div>
           <div>
             <div class="q-text">Is this your first baby?</div>
-            <div class="q-note">Options: Yes · No</div>
+            <div class="q-note">Options: Yes, first time · No, we've done this before · Shown when Q1 = "Currently pregnant" or "Baby is already here" · <strong>Skipped (auto-set "No")</strong> when Q1 = "Expecting again" · <strong>Skipped entirely</strong> when Q1 = "Thinking about trying" · <strong>Required when shown — no skip</strong></div>
           </div>
         </div>
         <div class="q-row">
           <div class="q-num">Q4</div>
           <div>
-            <div class="q-text">Do you know the sex of your baby?</div>
-            <div class="q-note">Filters circumcision topic · Options: Yes · No · Not finding out</div>
+            <div class="q-text">Have you found out the baby's sex yet?</div>
+            <div class="q-note">Options: Yes, it's a girl · Yes, it's a boy · Not yet · We're not finding out · Filters circumcision topic (excluded only for "Yes, it's a girl") · Optional · Skip = treat as "We're not finding out" (circumcision topic included)</div>
           </div>
         </div>
         <div class="q-row">
           <div class="q-num">Q5</div>
           <div>
             <div class="q-text">Will you be sharing a last name?</div>
-            <div class="q-note">Filters last name topic · Options: Yes · No · Still deciding</div>
+            <div class="q-note">Options: Yes · No · Still deciding · Filters last name topic · Optional · Skip = treat as "Still deciding" (last name topic included)</div>
           </div>
         </div>
         <div class="q-row">
           <div class="q-num">Q6</div>
           <div>
             <div class="q-text">Are cultural or religious traditions important to you?</div>
-            <div class="q-note">Options: Yes, very · Somewhat · Not really</div>
+            <div class="q-note">Options: Yes, very · Somewhat · Not really · Optional · Skip = treat as "Somewhat"</div>
           </div>
         </div>
         <div class="q-row">
           <div class="q-num">Q7</div>
           <div>
             <div class="q-text">How often would you like us to nudge you?</div>
-            <div class="q-note">Options: Daily · A few times a week · Weekly · Don't nudge me</div>
+            <div class="q-note">Options: Daily · A few times a week · Weekly · Don't nudge me · Optional · Skip = "A few times a week" · Skip label: "Skip — I'll set this in Settings later"</div>
           </div>
         </div>
         <div class="q-row">
           <div class="q-num">Q8</div>
           <div>
             <div class="q-text">How do you want to work through your topics?</div>
-            <div class="q-note">Options: Guided timeline · Self-directed</div>
+            <div class="q-note">Options: Guided timeline · Self-directed · Optional · Skip = "Guided timeline" · Skip label: "Skip — I'll set this in Settings later"</div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Question sequence by Q1 answer</div>
+      <table class="spec-table">
+        <tr><td>Thinking about trying</td><td>Q1 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(6 questions)</em></td></tr>
+        <tr><td>Currently pregnant</td><td>Q1 → Q2 → Q3 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(8 questions)</em></td></tr>
+        <tr><td>Baby is already here</td><td>Q1 → Q2b → Q3 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(8 questions)</em></td></tr>
+        <tr><td>Expecting again</td><td>Q1 → Q2 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(7 questions — Q3 auto-set "No")</em></td></tr>
+      </table>
     </div>
 
     <div class="spec-card">
@@ -228,40 +245,56 @@
       <table class="spec-table">
         <tr><td>Track height</td><td>6px · <code>radius-full</code> · <code>rgba(26,26,26,0.10)</code></td></tr>
         <tr><td>Fill</td><td><code>purple-500</code> · <code>radius-full</code> · <code>width 0.4s ease</code> on change</td></tr>
-        <tr><td>Label</td><td>"X of 8" · 12px DM Sans medium · <code>text-secondary</code> · right of bar</td></tr>
-        <tr><td>Q1 fill</td><td>14% (1/8 × ~110% to show start)</td></tr>
+        <tr><td>Label</td><td>"X of N" · 12px DM Sans medium · <code>text-secondary</code> · right of bar · N is dynamic (calculated after Q1 answer) · shows "1 of ?" before Q1 is answered</td></tr>
+        <tr><td>Fill %</td><td><code>(currentIndex + 1) / totalQuestions × 100</code> — recalculated whenever sequence changes</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Continue + Skip</div>
+      <div class="spec-card-title">Skip discipline — required vs optional</div>
       <table class="spec-table">
-        <tr><td>"Continue"</td><td>Primary · 56px · <code>radius-full</code> · disabled (<code>opacity: 0.4</code>) until an option is selected</td></tr>
-        <tr><td>"Skip this question"</td><td>40px · no border · <code>text-tertiary</code> · 14px · always active · skips without saving an answer</td></tr>
-        <tr><td>Auto-advance</td><td>Never. User must explicitly tap Continue. This app is about considered decisions.</td></tr>
+        <tr><td>Required (no skip button)</td><td>Q1 · Q2 · Q2b · Q3</td></tr>
+        <tr><td>Optional — "Skip this question"</td><td>Q4 (default: "We're not finding out") · Q5 (default: "Still deciding") · Q6 (default: "Somewhat")</td></tr>
+        <tr><td>Optional — "Skip — I'll set this in Settings later"</td><td>Q7 (default: "A few times a week") · Q8 (default: "Guided timeline")</td></tr>
+        <tr><td>Skip behavior</td><td>Applies the default silently to the data layer and advances. The user can always update Q7/Q8 in Settings.</td></tr>
+        <tr><td>"Continue"</td><td>Primary · 56px · <code>radius-full</code> · disabled (<code>opacity: 0.4</code>) until an option is selected or date is set</td></tr>
+        <tr><td>Auto-advance</td><td>Never. User must tap Continue. This app is about considered decisions.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Local storage persistence</div>
+      <table class="spec-table">
+        <tr><td>Key</td><td><code>dg_onboarding_quiz_v3</code></td></tr>
+        <tr><td>Saves</td><td>All answers to date + current question index · written after every answer and skip</td></tr>
+        <tr><td>Resumes</td><td>On app relaunch mid-quiz: restore answers, rebuild sequence from Q1 answer, advance to last unanswered question with previous answers pre-selected</td></tr>
+        <tr><td>Clears</td><td>On quiz completion · on back past Q1 (user returns to Screen 01)</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
-        <span class="component-tag">Progress Bar — labeled</span>
+        <span class="component-tag">Progress Bar — labeled, dynamic</span>
         <span class="component-tag">Question Card</span>
         <span class="component-tag">Answer Options</span>
+        <span class="component-tag">Date Picker (Q2, Q2b)</span>
         <span class="component-tag">Button — Primary (lg)</span>
         <span class="component-tag">Screen Header (back)</span>
-        <span class="component-tag">Skip (tertiary)</span>
+        <span class="component-tag">Skip (tertiary, context-aware label)</span>
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>One question per screen — same template reused for all 8.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Q2 (due date) only appears if Q1 = "Currently pregnant". Conditional rendering.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Selection persists if user navigates back and returns to a question.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Tapping a selected option deselects it — Continue returns to disabled.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Back chevron returns to previous question. From Q1 it returns to Screen 06.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>One question per screen — same template reused for all questions in the sequence.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Q1 answer immediately determines the full sequence and updates the progress bar total. Sequence and progress label recalculate before advancing to Q2/Q2b.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Expecting again" silently sets Q3 = "No" in the data layer without showing the question. The user's second-time parent status is inferred.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Q4 circumcision filtering: excluded <em>only</em> when answer is "Yes, it's a girl". All other answers (Yes, it's a boy / Not yet / We're not finding out / skipped) keep the topic included.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Saved state is restored on relaunch — previous answers are pre-selected. User resumes at the first unanswered question.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Tapping a selected option deselects it — Continue returns to disabled state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Back chevron returns to previous question in the current sequence. From Q1, returns to Screen 01 and clears saved state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
       </div>
     </div>
@@ -276,259 +309,245 @@
     <a class="nav-pill next" style="cursor:pointer;"  href="03-building-your-plan.html">Screen 03: Building Your Plan →</a>
   </div>
 </div>
-
-<script>
-const questions = [
-  {
-    num: 1, progress: '14%',
-    text: 'Where are you in your journey?',
-    sub: "We'll use this to set the right pace and prioritize the right topics.",
-    options: ['💭 Thinking about trying', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again']
-  },
-  {
-    num: 2, progress: '25%',
-    text: 'When is your due date?',
-    sub: "We\'ll use this to sequence topics at the right time.",
-    options: null,
-    datePicker: true
-  },
-  {
-    num: 3, progress: '38%',
-    text: 'Is this your first baby?',
-    sub: "This helps us decide which topics are most relevant for you.",
-    options: ['Yes, first time', "No, we've done this before"]
-  },
-  {
-    num: 4, progress: '50%',
-    text: "Do you know the sex of your baby?",
-    sub: "We use this to filter a small number of topics — nothing else.",
-    options: ['Yes, we know', 'No, not yet', 'Not finding out']
-  },
-  {
-    num: 5, progress: '63%',
-    text: 'Will you be sharing a last name?',
-    sub: "This lets us filter one topic if it doesn't apply to you.",
-    options: ['Yes', 'No', 'Still deciding']
-  },
-  {
-    num: 6, progress: '75%',
-    text: 'Are cultural or religious traditions important to you?',
-    sub: "We won't make assumptions — just want to prioritize the right topics.",
-    options: ['Yes, very', 'Somewhat', 'Not really']
-  },
-  {
-    num: 7, progress: '88%',
-    text: 'How often would you like us to nudge you?',
-    sub: "You can always change this in Settings.",
-    options: ['Daily', 'A few times a week', 'Weekly', "Don't nudge me"]
-  },
-  {
-    num: 8, progress: '100%',
-    text: 'How do you want to work through your topics?',
-    sub: "You can always change this in Settings.",
-    options: ['Guided timeline — sequence topics based on my due date', "Self-directed — I'll work through them in my own order"]
-  }
-];
-
-let selectedOpt = null;
-
-function showQuestion(n) {
-  const q = questions[n - 1];
-  selectedOpt = null;
-
-  // Tabs
-  document.querySelectorAll('.state-tab').forEach((t, i) => {
-    t.classList.toggle('active', i + 1 === n);
-  });
-
-  // Progress
-  document.getElementById('progress-fill').style.width = q.progress;
-  document.getElementById('progress-label').textContent = `${q.num} of 8`;
-
-  // Question
-  document.getElementById('q-text').textContent = q.text;
-  document.getElementById('q-subtext').textContent = q.sub;
-
-  // Options
-  const container = document.getElementById('answer-options');
-  container.innerHTML = '';
-
-  if (q.datePicker) {
-    // Date picker UI
-    const wrap = document.createElement('div');
-    wrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
-    wrap.innerHTML = `
-      <div style="font-size:13px;font-weight:600;color:rgba(26,26,26,0.6);margin-bottom:4px;">Due date</div>
-      <div style="display:flex;gap:8px;">
-        <div style="flex:1;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Month</div>
-        <div style="width:72px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Day</div>
-        <div style="width:80px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Year</div>
-      </div>
-      <div style="font-size:12px;color:rgba(26,26,26,0.4);margin-top:4px;">Opens native date picker on device</div>
-    `;
-    container.appendChild(wrap);
-    // Date picker auto-enables continue once any date is set
-    document.getElementById('continue-btn').classList.remove('disabled');
-    return;
-  }
-
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'answer-opt';
-    btn.textContent = opt;
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.answer-opt').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selectedOpt = i;
-      document.getElementById('continue-btn').classList.remove('disabled');
-    });
-    container.appendChild(btn);
-  });
-
-  // Continue
-  document.getElementById('continue-btn').classList.add('disabled');
-}
-
-// Build tabs
-const tabRow = document.getElementById('q-tabs');
-questions.forEach((q, i) => {
-  const btn = document.createElement('button');
-  btn.className = 'state-tab' + (i === 0 ? ' active' : '');
-  btn.textContent = `Q${q.num}`;
-  btn.addEventListener('click', () => showQuestion(q.num));
-  tabRow.appendChild(btn);
-});
-
-showQuestion(1);
-</script>
     </div>
   </div>
 </div>
 <script>
-
-const questions = [
-  {
-    num: 1, progress: '14%',
+// --- Question definitions ---
+const QUESTIONS = {
+  q1: {
+    id: 'q1', label: 'Q1',
     text: 'Where are you in your journey?',
     sub: "We'll use this to set the right pace and prioritize the right topics.",
-    options: ['💭 Thinking about trying', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again']
+    options: ['💭 Thinking about trying', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again'],
+    required: true
   },
-  {
-    num: 2, progress: '25%',
+  q2: {
+    id: 'q2', label: 'Q2',
     text: 'When is your due date?',
-    sub: "We\'ll use this to sequence topics at the right time.",
-    options: null,
-    datePicker: true
+    sub: "We'll use this to sequence topics at the right time.",
+    datePicker: true, pickerLabel: 'Due date', minToday: true,
+    required: true
   },
-  {
-    num: 3, progress: '38%',
+  q2b: {
+    id: 'q2b', label: 'Q2b',
+    text: 'When was baby born?',
+    sub: "We'll use this to sequence age-appropriate topics.",
+    datePicker: true, pickerLabel: "Baby's birthday", maxToday: true,
+    required: true
+  },
+  q3: {
+    id: 'q3', label: 'Q3',
     text: 'Is this your first baby?',
     sub: "This helps us decide which topics are most relevant for you.",
-    options: ['Yes, first time', "No, we've done this before"]
+    options: ['Yes, first time', "No, we've done this before"],
+    required: true
   },
-  {
-    num: 4, progress: '50%',
-    text: "Do you know the sex of your baby?",
-    sub: "We use this to filter a small number of topics — nothing else.",
-    options: ['Yes, we know', 'No, not yet', 'Not finding out']
+  q4: {
+    id: 'q4', label: 'Q4',
+    text: "Have you found out the baby's sex yet?",
+    sub: "We use this to filter out topics that won't apply to you.",
+    options: ["Yes, it's a girl", "Yes, it's a boy", 'Not yet', "We're not finding out"],
+    required: false, skipLabel: 'Skip this question', skipDefault: "We're not finding out"
   },
-  {
-    num: 5, progress: '63%',
+  q5: {
+    id: 'q5', label: 'Q5',
     text: 'Will you be sharing a last name?',
     sub: "This lets us filter one topic if it doesn't apply to you.",
-    options: ['Yes', 'No', 'Still deciding']
+    options: ['Yes', 'No', 'Still deciding'],
+    required: false, skipLabel: 'Skip this question', skipDefault: 'Still deciding'
   },
-  {
-    num: 6, progress: '75%',
+  q6: {
+    id: 'q6', label: 'Q6',
     text: 'Are cultural or religious traditions important to you?',
     sub: "We won't make assumptions — just want to prioritize the right topics.",
-    options: ['Yes, very', 'Somewhat', 'Not really']
+    options: ['Yes, very', 'Somewhat', 'Not really'],
+    required: false, skipLabel: 'Skip this question', skipDefault: 'Somewhat'
   },
-  {
-    num: 7, progress: '88%',
+  q7: {
+    id: 'q7', label: 'Q7',
     text: 'How often would you like us to nudge you?',
     sub: "You can always change this in Settings.",
-    options: ['Daily', 'A few times a week', 'Weekly', "Don't nudge me"]
+    options: ['Daily', 'A few times a week', 'Weekly', "Don't nudge me"],
+    required: false, skipLabel: "Skip — I'll set this in Settings later", skipDefault: 'A few times a week'
   },
-  {
-    num: 8, progress: '100%',
+  q8: {
+    id: 'q8', label: 'Q8',
     text: 'How do you want to work through your topics?',
     sub: "You can always change this in Settings.",
-    options: ['Guided timeline — sequence topics based on my due date', "Self-directed — I'll work through them in my own order"]
+    options: ['Guided timeline — sequence topics based on my due date', "Self-directed — I'll work through them in my own order"],
+    required: false, skipLabel: "Skip — I'll set this in Settings later", skipDefault: 'Guided timeline'
   }
-];
+};
 
+// Build question sequence based on Q1 answer index
+// 0=Thinking about trying, 1=Currently pregnant, 2=Baby is already here, 3=Expecting again
+function buildSequence(q1Idx) {
+  const { q1, q2, q2b, q3, q4, q5, q6, q7, q8 } = QUESTIONS;
+  switch (q1Idx) {
+    case 0: return [q1, q4, q5, q6, q7, q8];           // Thinking about trying
+    case 1: return [q1, q2, q3, q4, q5, q6, q7, q8];  // Currently pregnant
+    case 2: return [q1, q2b, q3, q4, q5, q6, q7, q8]; // Baby is already here
+    case 3: return [q1, q2, q4, q5, q6, q7, q8];       // Expecting again
+    default: return [q1, q4, q5, q6, q7, q8];          // Unknown — conservative default
+  }
+}
+
+// State
+const STORAGE_KEY = 'dg_onboarding_quiz_v3';
+let answers = {};
+let sequence = [QUESTIONS.q1, QUESTIONS.q4, QUESTIONS.q5, QUESTIONS.q6, QUESTIONS.q7, QUESTIONS.q8];
+let currentIdx = 0;
 let selectedOpt = null;
 
-function showQuestion(n) {
-  const q = questions[n - 1];
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const state = JSON.parse(saved);
+    answers = state.answers || {};
+    if (answers.q1 !== undefined) sequence = buildSequence(answers.q1);
+    currentIdx = Math.min(state.currentIdx || 0, sequence.length - 1);
+  } catch (e) {}
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ answers, currentIdx })); } catch (e) {}
+}
+
+function clearState() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+}
+
+function rebuildTabs() {
+  const tabRow = document.getElementById('q-tabs');
+  tabRow.innerHTML = '';
+  sequence.forEach((q, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'state-tab' + (i === currentIdx ? ' active' : '');
+    btn.textContent = q.label;
+    btn.addEventListener('click', () => showQuestion(i));
+    tabRow.appendChild(btn);
+  });
+}
+
+function showQuestion(idx) {
+  currentIdx = idx;
+  const q = sequence[idx];
+  const total = sequence.length;
   selectedOpt = null;
 
   // Tabs
-  document.querySelectorAll('.state-tab').forEach((t, i) => {
-    t.classList.toggle('active', i + 1 === n);
-  });
+  document.querySelectorAll('.state-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
 
-  // Progress
-  document.getElementById('progress-fill').style.width = q.progress;
-  document.getElementById('progress-label').textContent = `${q.num} of 8`;
+  // Progress — show "1 of ?" until Q1 answered
+  const pct = Math.round(((idx + 1) / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  const knownTotal = answers.q1 !== undefined ? total : '?';
+  document.getElementById('progress-label').textContent = `${idx + 1} of ${knownTotal}`;
 
-  // Question
+  // Question text
   document.getElementById('q-text').textContent = q.text;
-  document.getElementById('q-subtext').textContent = q.sub;
+  document.getElementById('q-subtext').textContent = q.sub || '';
+
+  // Skip button visibility and label
+  const skipBtn = document.getElementById('skip-btn');
+  if (q.required) {
+    skipBtn.style.display = 'none';
+  } else {
+    skipBtn.style.display = '';
+    skipBtn.textContent = q.skipLabel || 'Skip this question';
+  }
 
   // Options
   const container = document.getElementById('answer-options');
   container.innerHTML = '';
 
   if (q.datePicker) {
-    // Date picker UI
+    const label = q.pickerLabel || 'Date';
+    const hint = q.maxToday ? 'Max date: today' : (q.minToday ? 'Min date: today' : '');
     const wrap = document.createElement('div');
     wrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
     wrap.innerHTML = `
-      <div style="font-size:13px;font-weight:600;color:rgba(26,26,26,0.6);margin-bottom:4px;">Due date</div>
+      <div style="font-size:13px;font-weight:600;color:rgba(26,26,26,0.6);margin-bottom:4px;">${label}</div>
       <div style="display:flex;gap:8px;">
         <div style="flex:1;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Month</div>
         <div style="width:72px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Day</div>
         <div style="width:80px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Year</div>
       </div>
-      <div style="font-size:12px;color:rgba(26,26,26,0.4);margin-top:4px;">Opens native date picker on device</div>
+      <div style="font-size:12px;color:rgba(26,26,26,0.4);margin-top:4px;">Opens native date picker on device${hint ? ' · ' + hint : ''}</div>
     `;
     container.appendChild(wrap);
-    // Date picker auto-enables continue once any date is set
     document.getElementById('continue-btn').classList.remove('disabled');
     return;
   }
 
+  // Pre-select saved answer
+  const savedAnswer = answers[q.id];
   q.options.forEach((opt, i) => {
     const btn = document.createElement('button');
-    btn.className = 'answer-opt';
+    btn.className = 'answer-opt' + (savedAnswer === i ? ' selected' : '');
     btn.textContent = opt;
     btn.addEventListener('click', () => {
       document.querySelectorAll('.answer-opt').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       selectedOpt = i;
+      answers[q.id] = i;
+
+      // Q1 special: rebuild sequence immediately and update tabs + progress total
+      if (q.id === 'q1') {
+        sequence = buildSequence(i);
+        if (i === 3) answers.q3 = 1; // Expecting again → auto-set Q3="No"
+        rebuildTabs();
+        // Update progress label now that total is known
+        const newTotal = sequence.length;
+        document.getElementById('progress-fill').style.width = Math.round((1 / newTotal) * 100) + '%';
+        document.getElementById('progress-label').textContent = `1 of ${newTotal}`;
+      }
+
       document.getElementById('continue-btn').classList.remove('disabled');
+      saveState();
     });
     container.appendChild(btn);
   });
 
-  // Continue
-  document.getElementById('continue-btn').classList.add('disabled');
+  if (savedAnswer !== undefined) {
+    selectedOpt = savedAnswer;
+    document.getElementById('continue-btn').classList.remove('disabled');
+  } else {
+    document.getElementById('continue-btn').classList.add('disabled');
+  }
 }
 
-// Build tabs
-const tabRow = document.getElementById('q-tabs');
-questions.forEach((q, i) => {
-  const btn = document.createElement('button');
-  btn.className = 'state-tab' + (i === 0 ? ' active' : '');
-  btn.textContent = `Q${q.num}`;
-  btn.addEventListener('click', () => showQuestion(q.num));
-  tabRow.appendChild(btn);
+// Continue
+document.getElementById('continue-btn').addEventListener('click', () => {
+  if (document.getElementById('continue-btn').classList.contains('disabled')) return;
+  saveState();
+  if (currentIdx < sequence.length - 1) {
+    showQuestion(currentIdx + 1);
+  } else {
+    clearState();
+    window.location.href = '03-building-your-plan.html';
+  }
 });
 
-showQuestion(1);
+// Skip
+document.getElementById('skip-btn').addEventListener('click', () => {
+  const q = sequence[currentIdx];
+  if (q.skipDefault !== undefined) answers[q.id] = q.skipDefault;
+  saveState();
+  if (currentIdx < sequence.length - 1) {
+    showQuestion(currentIdx + 1);
+  } else {
+    clearState();
+    window.location.href = '03-building-your-plan.html';
+  }
+});
 
+// Init
+loadState();
+rebuildTabs();
+showQuestion(currentIdx);
 </script>
 <script src="nav.js"></script>
 </body>
