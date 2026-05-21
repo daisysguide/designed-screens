@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Name Entry — Daisy's Guide Designed Screens v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Screen 05b: Name Entry (page-28) ── */
+body.page-28 {
+  --cream: #fbefe1; --white: #ffffff;
+  --purple-500: #5f45f2; --purple-600: #4c35d4;
+  --text-primary: rgba(26,26,26,1);
+  --text-secondary: rgba(26,26,26,0.55);
+  --text-tertiary: rgba(26,26,26,0.38);
+  --border-default: rgba(26,26,26,0.15);
+  --border-focus: #5f45f2;
+  --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-full: 9999px;
+  --shadow-sm: 0 1px 3px rgba(26,26,26,0.08);
+}
+body.page-28 .screen-root,
+body.page-28 .screen-root * { box-sizing: border-box; margin: 0; padding: 0; }
+body.page-28 .screen-root {
+  padding: 32px 40px 40px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+}
+
+/* ── Page header ── */
+body.page-28 .screen-root .page-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 32px; gap: 24px;
+}
+body.page-28 .screen-root .screen-tag {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 6px;
+}
+body.page-28 .screen-root .page-title {
+  font-family: 'Grandstander', cursive; font-size: 28px; font-weight: 700;
+  color: var(--text-primary); line-height: 1.1;
+}
+body.page-28 .screen-root .page-desc {
+  font-size: 14px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5;
+}
+body.page-28 .screen-root .nav-pills { display: flex; gap: 8px; flex-shrink: 0; }
+body.page-28 .screen-root .nav-pill {
+  display: inline-flex; align-items: center; padding: 8px 14px;
+  border-radius: var(--radius-full); border: 1.5px solid var(--border-default);
+  font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  text-decoration: none; white-space: nowrap;
+}
+body.page-28 .screen-root .nav-pill:hover { background: var(--cream); }
+body.page-28 .screen-root .nav-pill.next {
+  background: var(--purple-500); border-color: var(--purple-500); color: white;
+}
+body.page-28 .screen-root .nav-pill.next:hover { background: var(--purple-600); }
+
+/* ── Layout ── */
+body.page-28 .screen-root .main-layout {
+  display: grid; grid-template-columns: 390px 1fr;
+  gap: 48px; align-items: start;
+}
+body.page-28 .screen-root .phone-wrap { position: sticky; top: 32px; }
+
+/* ── State tabs ── */
+body.page-28 .screen-root .state-tab-row { display: flex; gap: 8px; margin-bottom: 12px; }
+body.page-28 .screen-root .state-tab {
+  padding: 6px 14px; border-radius: var(--radius-full);
+  border: 1.5px solid var(--border-default); background: var(--white);
+  font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+}
+body.page-28 .screen-root .state-tab.active {
+  background: var(--purple-500); border-color: var(--purple-500); color: white;
+}
+
+/* ── Phone shell ── */
+body.page-28 .screen-root .phone {
+  width: 390px; height: 812px;
+  background: var(--cream); border-radius: 52px;
+  box-shadow: 0 32px 80px rgba(26,26,26,0.22), 0 0 0 1.5px rgba(26,26,26,0.12);
+  overflow: hidden; position: relative;
+}
+body.page-28 .screen-root .phone-notch {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 126px; height: 30px; background: #0a0a0a;
+  border-radius: 0 0 20px 20px; z-index: 10;
+}
+
+/* ── Phone screen — vertically centered content ── */
+body.page-28 .screen-root .phone-screen {
+  height: 812px; padding: 30px 0 40px;
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--cream);
+}
+body.page-28 .screen-root .name-content {
+  padding: 0 24px;
+}
+
+/* Daisy mark */
+body.page-28 .screen-root .daisy-mark {
+  display: flex; justify-content: center; margin-bottom: 8px;
+}
+
+/* Heading */
+body.page-28 .screen-root .name-heading {
+  font-family: 'Grandstander', cursive;
+  font-size: 26px; font-weight: 700;
+  color: var(--text-primary); text-align: center; line-height: 1.2;
+}
+
+/* Subtext */
+body.page-28 .screen-root .name-subtext {
+  font-size: 15px; color: var(--text-secondary);
+  text-align: center; line-height: 1.5;
+  margin-top: 16px; margin-bottom: 24px;
+}
+
+/* Input field */
+body.page-28 .screen-root .name-field {
+  width: 100%; height: 48px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-default);
+  background: var(--white);
+  padding: 0 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; color: var(--text-primary);
+  outline: none; display: flex; align-items: center;
+  margin-bottom: 24px;
+}
+body.page-28 .screen-root .name-field.placeholder { color: var(--text-tertiary); }
+body.page-28 .screen-root .name-field.focused {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(95,69,242,0.12);
+}
+
+/* CTA button */
+body.page-28 .screen-root .name-cta {
+  width: 100%; height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--purple-500); color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px; font-weight: 600;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+body.page-28 .screen-root .name-cta.disabled { opacity: 0.4; pointer-events: none; }
+
+/* ── Spec panel ── */
+body.page-28 .screen-root .spec-panel { display: flex; flex-direction: column; gap: 20px; }
+body.page-28 .screen-root .spec-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  padding: 20px; box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-default);
+}
+body.page-28 .screen-root .spec-card-title {
+  font-size: 13px; font-weight: 700; color: var(--text-primary);
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;
+}
+body.page-28 .screen-root .spec-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+body.page-28 .screen-root .spec-table td {
+  padding: 6px 0; vertical-align: top; line-height: 1.45;
+}
+body.page-28 .screen-root .spec-table td:first-child {
+  color: var(--text-secondary); white-space: nowrap;
+  padding-right: 16px; width: 38%;
+}
+body.page-28 .screen-root .spec-table tr + tr td { border-top: 1px solid var(--border-default); }
+body.page-28 .screen-root .spec-table code {
+  background: rgba(95,69,242,0.07); color: var(--purple-500);
+  border-radius: 4px; padding: 1px 5px;
+  font-size: 12px; font-family: 'SF Mono', monospace;
+}
+body.page-28 .screen-root .flow-map {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px;
+}
+body.page-28 .screen-root .flow-node {
+  padding: 6px 12px; border-radius: var(--radius-full);
+  font-size: 12px; font-weight: 600;
+}
+body.page-28 .screen-root .flow-node.from { background: var(--cream); color: var(--text-secondary); }
+body.page-28 .screen-root .flow-node.current { background: var(--purple-500); color: white; }
+body.page-28 .screen-root .flow-node.dest { background: var(--cream); color: var(--text-secondary); }
+body.page-28 .screen-root .flow-arrow { color: var(--text-tertiary); font-size: 14px; }
+body.page-28 .screen-root .info-box {
+  background: var(--cream); border-radius: var(--radius-md);
+  padding: 12px 14px; font-size: 13px; color: var(--text-secondary); line-height: 1.55;
+}
+body.page-28 .screen-root .note-list { display: flex; flex-direction: column; gap: 10px; }
+body.page-28 .screen-root .note-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+}
+body.page-28 .screen-root .note-bullet {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--purple-500); flex-shrink: 0; margin-top: 5px;
+}
+body.page-28 .screen-root .component-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+body.page-28 .screen-root .component-tag {
+  padding: 4px 10px; border-radius: var(--radius-full);
+  background: rgba(95,69,242,0.08); color: var(--purple-500);
+  font-size: 12px; font-weight: 600;
+}
+body.page-28 .screen-root .routing-note {
+  background: rgba(95,69,242,0.06); border: 1px solid rgba(95,69,242,0.18);
+  border-radius: var(--radius-md); padding: 12px 14px;
+  font-size: 13px; color: var(--text-secondary); line-height: 1.55;
+  margin-top: 12px;
+}
+body.page-28 .screen-root .routing-note strong { color: var(--text-primary); }
+
+/* ── Footer ── */
+body.page-28 .screen-root .page-footer {
+  margin-top: 48px; padding-top: 24px;
+  border-top: 1px solid var(--border-default);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-tertiary); }
+</style>
+</head>
+<body class="page-28">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 29 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item active" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
+  <a class="sidebar-item" href="08-paywall.html"><span class="screen-num">08</span>Paywall</a>
+  <a class="sidebar-item" href="09-partner-linking.html"><span class="screen-num">09</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="10-home.html"><span class="screen-num">10</span>Home</a>
+  <a class="sidebar-item" href="11-progress.html"><span class="screen-num">11</span>Progress</a>
+  <a class="sidebar-item" href="12-settings.html"><span class="screen-num">12</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-manage-topics.html"><span class="screen-num">14</span>Manage Topics</a>
+  <a class="sidebar-item" href="15-topic-intro.html"><span class="screen-num">15</span>Topic Intro</a>
+  <a class="sidebar-item" href="16-topic-article.html"><span class="screen-num">16</span>Topic Article</a>
+  <a class="sidebar-item" href="17-question.html"><span class="screen-num">17</span>Question</a>
+  <a class="sidebar-item" href="18-waiting-for-partner.html"><span class="screen-num">18</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="19-alignment-reveal.html"><span class="screen-num">19</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="24-empty-home.html"><span class="screen-num">24</span>Empty Home</a>
+  <a class="sidebar-item" href="25-empty-topic-list.html"><span class="screen-num">25</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="26-payment-failure.html"><span class="screen-num">26</span>Payment Failure</a>
+  <a class="sidebar-item" href="27-connection-error.html"><span class="screen-num">27</span>Connection Error</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="28-onboarding-intro.html"><span class="screen-num">28</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Name Entry</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="05-otp-verification.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">05b / 29</span>
+        <a class="topbar-btn" href="06-log-in.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 05b · Auth</div>
+    <div class="page-title">Name Entry</div>
+    <div class="page-desc">Phone/email sign-up only. Apple and Google sign-in skip this screen — name comes from auth provider.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;" href="05-otp-verification.html">← Screen 05: OTP Verification</a>
+    <a class="nav-pill next" style="cursor:pointer;" href="06-log-in.html">Screen 06: Log In →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-empty"   onclick="showState('empty')">Empty</button>
+      <button class="state-tab"        id="tab-focused" onclick="showState('focused')">Focused</button>
+      <button class="state-tab"        id="tab-filled"  onclick="showState('filled')">Filled</button>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="name-content">
+
+          <!-- Daisy mark (daisy.png asset) -->
+          <div class="daisy-mark">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(24,24)">
+                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(0)"/>
+                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(45)"/>
+                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(90)"/>
+                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(135)"/>
+                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(225)"/>
+                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(270)"/>
+                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(315)"/>
+                <circle cx="0" cy="0" r="8.5" fill="#f5c842" stroke="#e0a800" stroke-width="0.75"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="name-heading">What should we call you?</div>
+          <div class="name-subtext">Just your first name — we'll use it throughout the app.</div>
+
+          <div class="name-field placeholder" id="name-field">Your first name</div>
+
+          <button class="name-cta disabled" id="name-cta">Let's go →</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Routing</div>
+      <div class="flow-map">
+        <div class="flow-node from">05 OTP</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">05b Name Entry</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">07 Personalized Results</div>
+      </div>
+      <div class="routing-note">
+        <strong>Phone / email sign-up:</strong> OTP success → this screen → Screen 07 Personalized Results.<br><br>
+        <strong>Apple / Google sign-in:</strong> Auth success → Screen 07 directly. Name comes from the auth provider. This screen is never shown.
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Screen copy</div>
+      <table class="spec-table">
+        <tr><td>Heading</td><td>"What should we call you?" · Grandstander 26px bold · <code>text-primary</code> · centered</td></tr>
+        <tr><td>Sub-text</td><td>"Just your first name — we'll use it throughout the app." · DM Sans 15px · <code>text-secondary</code> · centered · 16px below heading</td></tr>
+        <tr><td>Placeholder</td><td>"Your first name" · 15px DM Sans · <code>text-tertiary</code></td></tr>
+        <tr><td>CTA label</td><td>"Let's go →" · 16px DM Sans semibold</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Layout</div>
+      <table class="spec-table">
+        <tr><td>Background</td><td><code>surface-page</code> (cream)</td></tr>
+        <tr><td>Back button</td><td>None — no back affordance on this screen</td></tr>
+        <tr><td>Bottom nav</td><td>None</td></tr>
+        <tr><td>Content alignment</td><td>Vertically centered within the screen</td></tr>
+        <tr><td>Horizontal padding</td><td>24px on both sides</td></tr>
+        <tr><td>Daisy mark</td><td>48px · centered · <code>daisy.png</code> asset · 48px above heading</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Input field</div>
+      <table class="spec-table">
+        <tr><td>Type</td><td><code>type="text"</code></td></tr>
+        <tr><td>Attributes</td><td><code>autocomplete="given-name"</code> · <code>autocorrect="off"</code> · <code>autocapitalize="words"</code> · <code>spellcheck="false"</code></td></tr>
+        <tr><td>Height</td><td>48px</td></tr>
+        <tr><td>Border radius</td><td><code>radius-md</code> (8px)</td></tr>
+        <tr><td>Background</td><td><code>surface-card</code> (white) — always</td></tr>
+        <tr><td>Border (default)</td><td><code>1.5px solid border-default</code></td></tr>
+        <tr><td>Border (focused)</td><td><code>1.5px solid border-focus</code> (purple-500) + <code>0 0 0 3px rgba(95,69,242,0.12)</code> ring</td></tr>
+        <tr><td>Padding</td><td>0 14px (horizontal)</td></tr>
+        <tr><td>Font</td><td>DM Sans 15px · <code>text-primary</code></td></tr>
+        <tr><td>Auto-focus</td><td>On screen mount — keyboard opens immediately</td></tr>
+        <tr><td>Gap below</td><td>24px to CTA button</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">CTA button</div>
+      <table class="spec-table">
+        <tr><td>Label</td><td>"Let's go →"</td></tr>
+        <tr><td>Style</td><td>Primary · 56px height · <code>radius-full</code> · <code>purple-500</code></td></tr>
+        <tr><td>Disabled</td><td><code>opacity: 0.4</code> · <code>pointer-events: none</code> · when input is empty</td></tr>
+        <tr><td>Active</td><td>Full opacity once any character is entered</td></tr>
+        <tr><td>On tap</td><td>Trim whitespace · save first name to user profile · navigate to Screen 07 Personalized Results</td></tr>
+        <tr><td>No skip</td><td>Name is required — no skip affordance on this screen</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>Input auto-focuses on mount — the keyboard should open immediately without any user tap.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>CTA is disabled (opacity 0.4) when the input is empty. It becomes active the moment any character is typed.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>On tap: trim leading/trailing whitespace before saving. If the result is an empty string, keep the CTA disabled.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Name is saved to the user profile and used as [firstName] throughout the app (e.g., "Now let's get [firstName] in here" on Screen 09).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Apple and Google sign-in users never see this screen. Their display name comes from the auth provider and is saved during the sign-in handshake.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No back button. If the user needs to correct their phone/email they must use the OS gesture (swipe back) — the back gesture is not available on this screen in the production flow.</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Daisy Mark (48px)</span>
+        <span class="component-tag">Text Input</span>
+        <span class="component-tag">Button — Primary (lg)</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 05b of 29</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;" href="05-otp-verification.html">← Screen 05: OTP Verification</a>
+    <a class="nav-pill next" style="cursor:pointer;" href="06-log-in.html">Screen 06: Log In →</a>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function showState(state) {
+  ['empty','focused','filled'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const field = document.getElementById('name-field');
+  const cta   = document.getElementById('name-cta');
+
+  field.classList.remove('placeholder','focused');
+
+  if (state === 'empty') {
+    field.textContent = 'Your first name';
+    field.classList.add('placeholder');
+    cta.classList.add('disabled');
+  } else if (state === 'focused') {
+    field.textContent = 'Your first name';
+    field.classList.add('placeholder', 'focused');
+    cta.classList.add('disabled');
+  } else {
+    field.textContent = 'Sarah';
+    cta.classList.remove('disabled');
+  }
+}
+
+showState('empty');
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
