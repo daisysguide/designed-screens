@@ -176,7 +176,8 @@
 
         <!-- Sticky CTA -->
         <div class="sticky-cta">
-          <button class="btn-primary">Looks good →</button>
+          <button class="btn-primary">Unlock my plan →</button>
+          <!-- isOnboarding=true → "Unlock my plan →" · isOnboarding=false → "Save changes" -->
         </div>
 
       </div>
@@ -189,14 +190,14 @@
     <div class="spec-card">
       <div class="spec-card-title">Navigation flow</div>
       <div class="flow-map">
-        <div class="flow-node from">09 Personalized Results</div>
+        <div class="flow-node from">07 Personalized Results</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node current">10 Manage Topics</div>
+        <div class="flow-node current">14 Manage Topics</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">11 Paywall</div>
+        <div class="flow-node dest">08 Paywall</div>
       </div>
       <div class="info-box">
-        Also reachable from <strong>Topic List</strong> via "Manage topics" link, and from <strong>Settings</strong>. "Looks good →" → Screen 11 Paywall during onboarding. In post-onboarding context, "Save" returns to wherever the user came from.
+        Also reachable from <strong>Topic List</strong> via "Manage topics" link, and from <strong>Settings</strong>. CTA is context-aware via <code>isOnboarding</code> prop — "Unlock my plan →" during first-time onboarding (pre-purchase), "Save changes" in post-purchase contexts.
       </div>
     </div>
 
@@ -251,7 +252,8 @@
         <tr><td>Category headers</td><td>11px DM Sans bold · ALL CAPS · <code>text-secondary</code> · count badge right</td></tr>
         <tr><td>Count badge</td><td>"X of Y" · neutral gray pill · updates live</td></tr>
         <tr><td>Topic rows</td><td>10px padding · <code>1px solid rgba(26,26,26,0.06)</code> bottom border · last child no border</td></tr>
-        <tr><td>Sticky CTA</td><td>Pinned to bottom · cream bg · <code>border-top: 1px solid border-default</code> · 12px 20px 24px padding</td></tr>
+        <tr><td>Sticky CTA</td><td>Pinned to bottom · cream bg · <code>border-top: 1px solid border-default</code> · 12px 20px 24px padding · label is context-aware (see <code>isOnboarding</code> below)</td></tr>
+        <tr><td><code>isOnboarding</code> prop</td><td>Passed from routing layer based on purchase state · <code>true</code> = pre-purchase onboarding → CTA label "Unlock my plan →" · <code>false</code> = post-purchase → CTA label "Save changes"</td></tr>
       </table>
     </div>
 
@@ -283,7 +285,8 @@
         <div class="note-item"><div class="note-bullet"></div><span>Categories are collapsible — tapping the category header collapses/expands the topic rows.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>All categories shown — user scrolls through all 7. "5 more below" hint prompts scrolling.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Tapping a "we hid" topic adds it back as included. Tapping an included topic moves it to "you hid".</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>"Looks good →" → Screen 11 Paywall. User has just invested effort in their plan — highest conversion moment.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When <code>isOnboarding=true</code>: CTA is "Unlock my plan →" → Screen 08 Paywall. User has just invested effort reviewing their plan — highest conversion moment.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When <code>isOnboarding=false</code>: CTA is "Save changes" → returns to the calling screen (Topic List or Settings). <code>isOnboarding</code> is set by the routing layer based on purchase completion state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav in onboarding context. Present in post-onboarding context (accessed from Topic List or Settings).</span></div>
       </div>
     </div>
