@@ -6,6 +6,111 @@
 <title>Question — Daisy's Guide Designed Screens v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* ── Screen 17: Question additions (page-15) ── */
+
+/* Step indicator row */
+body.page-15 .screen-root .q-toprow {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+body.page-15 .screen-root .q-back-btn {
+  font-size: 22px; color: #5f45f2; cursor: pointer;
+  line-height: 1; width: 24px; flex-shrink: 0;
+}
+body.page-15 .screen-root .q-step-label {
+  font-size: 12px; font-weight: 600; color: rgba(26,26,26,0.38);
+  text-align: center; flex: 1;
+}
+
+/* Question sub-text (below question text) */
+body.page-15 .screen-root .question-subtext {
+  font-size: 14px; color: rgba(26,26,26,0.55);
+  line-height: 1.5; margin-top: 6px; margin-bottom: 0;
+}
+
+/* Multi-select: checkmark on selected options */
+body.page-15 .screen-root .answer-opt.multi-opt {
+  display: flex; align-items: center; justify-content: space-between;
+  text-align: left;
+}
+body.page-15 .screen-root .answer-opt.multi-opt .check-icon {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 1.5px solid rgba(26,26,26,0.2);
+  flex-shrink: 0; margin-left: 10px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+body.page-15 .screen-root .answer-opt.multi-opt.selected .check-icon {
+  background: white; border-color: white;
+}
+body.page-15 .screen-root .answer-opt.multi-opt.selected .check-icon::after {
+  content: '✓'; font-size: 11px; font-weight: 700; color: #5f45f2; line-height: 1;
+}
+
+/* Slider */
+body.page-15 .screen-root .slider-container { padding: 4px 0 0; cursor: pointer; }
+body.page-15 .screen-root .slider-value-display {
+  text-align: center;
+  font-family: 'Grandstander', cursive;
+  font-size: 44px; font-weight: 700;
+  color: #5f45f2; line-height: 1; margin-bottom: 14px;
+}
+body.page-15 .screen-root .slider-track {
+  width: 100%; height: 6px;
+  background: #fbefe1; border-radius: 100px;
+  position: relative; cursor: pointer; margin-bottom: 10px;
+}
+body.page-15 .screen-root .slider-fill {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: #5f45f2; border-radius: 100px; pointer-events: none;
+}
+body.page-15 .screen-root .slider-thumb {
+  position: absolute; top: 50%;
+  width: 26px; height: 26px; background: white;
+  border: 2.5px solid #5f45f2; border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 8px rgba(95,69,242,0.28); pointer-events: none;
+}
+body.page-15 .screen-root .slider-labels {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: rgba(26,26,26,0.38); user-select: none;
+}
+
+/* Note step */
+body.page-15 .screen-root .note-heading {
+  font-family: 'Grandstander', cursive; font-size: 20px; font-weight: 700;
+  color: rgba(26,26,26,1); letter-spacing: -0.02em; margin-bottom: 6px;
+}
+body.page-15 .screen-root .note-textarea {
+  width: 100%; min-height: 96px; max-height: 140px;
+  border-radius: 8px; border: 1.5px solid rgba(26,26,26,0.15);
+  background: white; padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px;
+  color: rgba(26,26,26,1); resize: none; outline: none; line-height: 1.5;
+  margin-top: 16px; box-sizing: border-box;
+}
+body.page-15 .screen-root .note-textarea:focus {
+  border-color: #5f45f2; box-shadow: 0 0 0 3px rgba(95,69,242,0.12);
+}
+body.page-15 .screen-root .note-char-count {
+  text-align: right; font-size: 12px; color: rgba(26,26,26,0.38); margin-top: 6px;
+}
+
+/* Schema code blocks in spec panel */
+body.page-15 .screen-root .code-block {
+  background: rgba(26,26,26,0.04); border: 1px solid rgba(26,26,26,0.08);
+  border-radius: 8px; padding: 12px 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11.5px; color: rgba(26,26,26,0.72);
+  line-height: 1.75; white-space: pre; overflow-x: auto;
+  margin-bottom: 14px;
+}
+body.page-15 .screen-root .code-comment { color: rgba(26,26,26,0.38); }
+body.page-15 .screen-root .code-key    { color: #5f45f2; }
+body.page-15 .screen-root .code-type   { color: #1c7d3e; }
+body.page-15 .screen-root .code-val    { color: #c75000; }
+</style>
 </head>
 <body class="page-15">
 <div class="sidebar">
@@ -70,11 +175,11 @@
   <div>
     <div class="screen-tag">Screen 17 · Topic Flow</div>
     <div class="page-title">Question</div>
-    <div class="page-desc">One multiple choice question per topic. Four answer options. "Read guide" always available. No skip in V1.</div>
+    <div class="page-desc">Three question types: single select, multi select, slider. Note step follows the final question. 3–5 questions per topic.</div>
   </div>
   <div class="nav-pills">
-    <a class="nav-pill" style="cursor:pointer;"  href="16-topic-article.html">← Screen 16: Topic Article</a>
-    <a class="nav-pill next" style="cursor:pointer;"  href="18-waiting-for-partner.html">Screen 18: Waiting for Partner →</a>
+    <a class="nav-pill" style="cursor:pointer;" href="16-topic-article.html">← Screen 16: Topic Article</a>
+    <a class="nav-pill next" style="cursor:pointer;" href="18-waiting-for-partner.html">Screen 18: Waiting for Partner →</a>
   </div>
 </div>
 
@@ -82,40 +187,47 @@
 
   <!-- PHONE -->
   <div class="phone-wrap">
+
+    <!-- Question type tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <button id="tab-single_select" onclick="showType('single_select')" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Single select</button>
+      <button id="tab-multi_select"  onclick="showType('multi_select')"  style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Multi select</button>
+      <button id="tab-slider"        onclick="showType('slider')"        style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Slider</button>
+      <button id="tab-note"          onclick="showType('note')"          style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Note step</button>
+    </div>
+
     <div class="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
 
-        <!-- Progress -->
-        <div class="progress-track">
-          <div class="progress-fill" id="progress-fill" style="width:50%;"></div>
+        <!-- Back + step indicator -->
+        <div class="q-toprow">
+          <div class="q-back-btn">‹</div>
+          <div class="q-step-label" id="q-step-label">Q1 of 3</div>
+          <div style="width:24px;"></div><!-- symmetry spacer -->
         </div>
 
-        <!-- Guide link -->
+        <!-- Progress bar -->
+        <div class="progress-track" style="margin-bottom:12px;">
+          <div class="progress-fill" id="progress-fill" style="width:33%;"></div>
+        </div>
+
+        <!-- Read guide link -->
         <div style="display:flex;justify-content:flex-end;margin-bottom:12px;">
-          <div class="guide-link">Read guide</div>
+          <div class="guide-link" id="guide-link">Read guide</div>
         </div>
 
-        <!-- Question card -->
+        <!-- Question / Note card -->
         <div class="question-card">
-          <div class="question-text" id="q-text">Who would you trust to babysit regularly?</div>
-          <div class="partner-note" id="partner-note">Jordan won't see your answer until they've finished too.</div>
-
-          <!-- Answer area — swapped by JS -->
-          <div id="answer-area">
-            <div class="answer-opts">
-              <button class="answer-opt" onclick="selectOpt(this)">Family only, at least at first</button>
-              <button class="answer-opt" onclick="selectOpt(this)">Close friends we both trust</button>
-              <button class="answer-opt" onclick="selectOpt(this)">A professional nanny or sitter</button>
-              <button class="answer-opt" onclick="selectOpt(this)">Honestly, no one for a while</button>
-            </div>
-          </div>
+          <div id="q-text" class="question-text">Who would you trust to babysit regularly?</div>
+          <div id="q-subtext" class="question-subtext" style="display:none;"></div>
+          <div id="partner-note" class="partner-note">Jordan won't see your answer until they've finished too.</div>
+          <div id="answer-area"></div>
         </div>
 
         <div class="spacer"></div>
 
-        <button class="btn-next disabled" id="next-btn">Next →</button>
-
+        <button class="btn-next" id="next-btn">Next →</button>
 
       </div>
     </div>
@@ -125,64 +237,194 @@
   <div class="spec-panel">
 
     <div class="spec-card">
-      <div class="spec-card-title">Navigation flow</div>
+      <div class="spec-card-title">Routing</div>
       <div class="flow-map">
-        <div class="flow-node from">14 Topic Intro</div>
+        <div class="flow-node from">15 Topic Intro</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node current">16 Question</div>
+        <div class="flow-node from">16 Article</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">17 Waiting</div>
+        <div class="flow-node current">17 Questions + Note</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">18 Waiting</div>
       </div>
       <div class="info-box">
-        Same screen template for all question types. Back returns to previous question (or Topic Intro from Q1). Last question → Screen 17 Waiting for Partner. "Read guide" → Screen 15 Article (doesn't lose progress). <strong>No bottom nav.</strong>
+        <strong>Within the question flow:</strong> Q[0] → Q[1] → … → Q[n-1] → Note step → Submit → Screen 18 Waiting for Partner.<br><br>
+        <strong>Back from Q[0]</strong> → Topic Intro (Screen 15).<br>
+        <strong>Back from Q[i &gt; 0]</strong> → Q[i-1].<br>
+        <strong>Back from Note step</strong> → Q[n-1].<br><br>
+        "Read guide" opens Screen 16 Article without losing progress. Back from Article returns to the same question. <strong>No bottom nav.</strong>
       </div>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Three question types</div>
+      <div class="spec-card-title">Question Schema</div>
       <table class="spec-table">
-        <tr><td>Multiple choice</td><td>2–6 answer options · cream bg default · <code>purple-500</code> fill when selected · single-select · shown here as Q2 of 4</td></tr>
-
+        <tr><td><code>id</code></td><td>string · unique question identifier</td></tr>
+        <tr><td><code>type</code></td><td><code>'single_select'</code> | <code>'multi_select'</code> | <code>'slider'</code> · determines UI rendered</td></tr>
+        <tr><td><code>text</code></td><td>string · question text · rendered in Grandstander</td></tr>
+        <tr><td><code>subText?</code></td><td>string? · optional · rendered in DM Sans <code>text-secondary</code> below question text</td></tr>
+        <tr><td><code>options?</code></td><td>Option[] · required for <code>single_select</code> and <code>multi_select</code> · omit for <code>slider</code></td></tr>
+        <tr><td><code>options[].id</code></td><td>string · option identifier · stored in answer value</td></tr>
+        <tr><td><code>options[].text</code></td><td>string · option display text</td></tr>
+        <tr><td><code>slider?</code></td><td>SliderConfig · required for <code>slider</code> type only</td></tr>
+        <tr><td><code>slider.min</code></td><td>1 · always 1</td></tr>
+        <tr><td><code>slider.max</code></td><td>10 · always 10</td></tr>
+        <tr><td><code>slider.minLabel</code></td><td>string · left end label · e.g. <code>"Hard no"</code></td></tr>
+        <tr><td><code>slider.maxLabel</code></td><td>string · right end label · e.g. <code>"Totally fine"</code></td></tr>
       </table>
-      <div class="info-box">V1: multiple choice only. One question per topic. Four options. <strong>No skip.</strong> Open text and slider variants reserved for future versions.</div>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Question card</div>
+      <div class="spec-card-title">Answer Schema</div>
+      <table class="spec-table">
+        <tr><td><code>questionId</code></td><td>string · FK → Question.id</td></tr>
+        <tr><td><code>topicId</code></td><td>string · FK → Topic.id</td></tr>
+        <tr><td><code>userId</code></td><td>string · FK → User.id</td></tr>
+        <tr><td><code>type</code></td><td><code>'single_select'</code> | <code>'multi_select'</code> | <code>'slider'</code> · must match Question.type</td></tr>
+        <tr><td><code>value</code></td><td><strong>single_select:</strong> string (option.id) · <strong>multi_select:</strong> string[] (selected option ids, ≥1) · <strong>slider:</strong> number (integer 1–10)</td></tr>
+        <tr><td><code>answeredAt</code></td><td>timestamp</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Note Schema</div>
+      <table class="spec-table">
+        <tr><td><code>topicId</code></td><td>string · FK → Topic.id</td></tr>
+        <tr><td><code>userId</code></td><td>string · FK → User.id</td></tr>
+        <tr><td><code>text</code></td><td>string · max 280 chars enforced server-side · empty string valid (note is optional)</td></tr>
+        <tr><td><code>isVisibleToPartner</code></td><td>boolean · <code>false</code> until server confirms both users have submitted all answers for this topic · set server-side when reveal conditions are met · never set client-side</td></tr>
+        <tr><td><code>createdAt</code></td><td>timestamp</td></tr>
+        <tr><td><code>updatedAt</code></td><td>timestamp</td></tr>
+      </table>
+      <div class="info-box" style="margin-top:12px;"><code>isVisibleToPartner</code> on the Note flips to <code>true</code> server-side using the same condition that triggers the alignment reveal — both users have submitted answers for this topic. The client reads this flag to decide whether to surface the partner's note in the reveal UI.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Topic Schema update</div>
+      <table class="spec-table">
+        <tr><td><code>questions</code></td><td>Question[] · ordered array · 3–5 questions per topic · rendered in sequence on Screen 17</td></tr>
+        <tr><td>Other fields</td><td>id, title, categoryId, articleContent, etc. — unchanged</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Question types — comparison</div>
+      <table class="spec-table">
+        <tr><td>single_select</td><td>Mutually exclusive options. Tapping a new option deselects the previous. Stored as a single option id string.</td></tr>
+        <tr><td>multi_select</td><td>Any number of options may be selected. Next enabled once ≥1 selected. Stored as array of option ids. Checkmark indicator on each selected option.</td></tr>
+        <tr><td>slider</td><td>Integer scale 1–10 with min/max labels. Tapping the track sets value immediately. Next always enabled (slider always has a value). Stored as integer.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">single_select spec</div>
+      <table class="spec-table">
+        <tr><td>Options</td><td>2–6 buttons · stacked vertically · 8px gap</td></tr>
+        <tr><td>Default state</td><td>Cream bg (<code>surface-nested</code>) · <code>text-primary</code> · 1px border <code>rgba(26,26,26,0.0)</code></td></tr>
+        <tr><td>Selected state</td><td><code>purple-500</code> bg · white text · replaces previous selection</td></tr>
+        <tr><td>Option height</td><td>56px min · 14px vertical padding · 20px horizontal</td></tr>
+        <tr><td>Font</td><td>DM Sans 15px medium — never Grandstander</td></tr>
+        <tr><td>Border radius</td><td><code>radius-lg</code> (12px)</td></tr>
+        <tr><td>Press</td><td><code>transform: scale(0.98)</code></td></tr>
+        <tr><td>Next button</td><td>Disabled until one option selected</td></tr>
+        <tr><td>Auto-advance</td><td>Never — user must tap Next explicitly</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">multi_select spec</div>
+      <table class="spec-table">
+        <tr><td>Options</td><td>Same base style as single_select</td></tr>
+        <tr><td>Selected state</td><td><code>purple-500</code> bg · white text · multiple may be active simultaneously</td></tr>
+        <tr><td>Check indicator</td><td>20×20px circle · right side of option · empty circle (border) when unselected · filled with "✓" (purple on white fill) when selected</td></tr>
+        <tr><td>Next button</td><td>Disabled until ≥1 option selected</td></tr>
+        <tr><td>Answer stored</td><td>Array of all selected option ids in selection order</td></tr>
+        <tr><td>subText</td><td>Always use "Select all that apply." to set expectation</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Slider spec</div>
+      <table class="spec-table">
+        <tr><td>Scale</td><td>1–10 · integer steps only</td></tr>
+        <tr><td>Value display</td><td>Current value in Grandstander 44px bold · <code>purple-500</code> · centered above track</td></tr>
+        <tr><td>Track</td><td>Full width · 6px height · <code>radius-full</code> · cream bg · purple fill from left to thumb</td></tr>
+        <tr><td>Thumb</td><td>26px circle · white · <code>2.5px solid purple-500</code> border · <code>box-shadow: 0 2px 8px rgba(95,69,242,0.28)</code></td></tr>
+        <tr><td>Tap-to-set</td><td>Tapping anywhere on the track sets value to the nearest integer · no drag required in V1</td></tr>
+        <tr><td>Labels</td><td><code>minLabel</code> (left) and <code>maxLabel</code> (right) · 12px <code>text-tertiary</code> · below track</td></tr>
+        <tr><td>Initial state</td><td>Slider starts at midpoint (5) · Next always enabled</td></tr>
+        <tr><td>Answer stored</td><td>Integer 1–10</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Note step spec</div>
+      <table class="spec-table">
+        <tr><td>Position in flow</td><td>After the last question (questions[n-1]) · before Submit → Screen 18</td></tr>
+        <tr><td>Step indicator</td><td>"Note (optional)" · replaces "Q3 of 3" in the step label</td></tr>
+        <tr><td>Progress bar</td><td>100% fill — all questions are done</td></tr>
+        <tr><td>"Read guide"</td><td>Remains visible — user can still review the article</td></tr>
+        <tr><td>Card heading</td><td>"Anything you want to add?" · Grandstander 20px bold · <code>text-primary</code></td></tr>
+        <tr><td>Card subtext</td><td>"Jordan sees this after you both complete this topic." · DM Sans 14px <code>text-secondary</code></td></tr>
+        <tr><td>Textarea</td><td>Full width · min-height 96px · white bg · <code>1.5px border-default</code> · <code>radius-md</code> · DM Sans 15px · <code>border-focus</code> + ring on focus</td></tr>
+        <tr><td>Placeholder</td><td>"Your thoughts, context, or questions for later…"</td></tr>
+        <tr><td>Character count</td><td>"N characters remaining" · 12px <code>text-tertiary</code> · right-aligned below textarea · turns <code>#ff9191</code> below 50 chars remaining</td></tr>
+        <tr><td>Max length</td><td>280 chars · enforced server-side and by <code>maxlength</code> attribute</td></tr>
+        <tr><td>Submit button</td><td>"Submit →" · always active (note may be empty)</td></tr>
+        <tr><td>On submit</td><td>Save note (even if empty) → navigate to Screen 18 Waiting for Partner</td></tr>
+        <tr><td>Partner visibility</td><td>Note is hidden from partner until <code>isVisibleToPartner</code> flips to <code>true</code> server-side (both users completed topic answers)</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Question card spec</div>
       <table class="spec-table">
         <tr><td>Container</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · 24px padding</td></tr>
-        <tr><td>Question text</td><td>Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code> · 8px below</td></tr>
-        <tr><td>Partner note</td><td>"[Name] won't see your answer until they've finished too." · 13px · <code>text-tertiary</code> · 18px below</td></tr>
-        <tr><td>Max options</td><td>6 answer options maximum</td></tr>
+        <tr><td>Question text</td><td>Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
+        <tr><td>subText</td><td>DM Sans 14px · <code>text-secondary</code> · 6px below question text · rendered when Question.subText is set</td></tr>
+        <tr><td>Partner note</td><td>"[Name] won't see your answer until they've finished too." · 13px · <code>text-tertiary</code> · 18px below question text (or subText if present) · hidden on Note step</td></tr>
+        <tr><td>Top padding</td><td>18px between partner note and answer area</td></tr>
+        <tr><td>Max options</td><td>6 answer options maximum per question</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Multiple choice answer options</div>
+      <div class="spec-card-title">Progress & step indicator</div>
       <table class="spec-table">
-        <tr><td>Default bg</td><td><code>surface-nested</code> (cream)</td></tr>
-        <tr><td>Selected bg</td><td><code>purple-500</code> · white text</td></tr>
-        <tr><td>Border radius</td><td><code>radius-lg</code> (12px)</td></tr>
-        <tr><td>Min height</td><td>56px</td></tr>
-        <tr><td>Padding</td><td>14px vertical · 20px horizontal</td></tr>
-        <tr><td>Font</td><td>DM Sans 15px medium — never Grandstander</td></tr>
-        <tr><td>Gap</td><td>8px</td></tr>
-        <tr><td>Press</td><td><code>transform: scale(0.98)</code></td></tr>
-        <tr><td>Auto-advance</td><td>Never. User must tap Next.</td></tr>
+        <tr><td>Step label</td><td>"Q{i} of {n}" (e.g. "Q2 of 4") for question steps · "Note (optional)" for the note step</td></tr>
+        <tr><td>Progress fill</td><td><code>currentStep / totalSteps * 100%</code> · questions count as steps · Note step counts as step n+1 · so a 3-question topic has 4 total steps</td></tr>
+        <tr><td>Track</td><td>Full-width · 4px · cream bg · <code>radius-full</code> · purple fill</td></tr>
+        <tr><td>Animation</td><td><code>transition: width 0.3s ease</code> when advancing</td></tr>
       </table>
     </div>
-
-
 
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>One question per screen. Never show multiple questions at once.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Never auto-advance on selection — user must explicitly tap Next. This app is about considered decisions.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>"Read guide" opens the article (Screen 15) without losing question progress. Back from article returns here.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Selection persists if user navigates back and returns to a question.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Last question in topic → Screen 17 Waiting for Partner.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>One question per screen. Never show multiple questions simultaneously.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Never auto-advance on selection — user must explicitly tap Next. This app is about considered decisions, not quick taps.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Read guide" opens Screen 16 Article without losing question progress. Back from article returns to the same question at the same state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Selection persists if user taps Back and returns to a question. Answers are saved client-side as the user progresses and committed to the server on Submit.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The Note step is the final step. Submit is always enabled — an empty note is valid and saves as an empty string.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Partner note text uses the partner's first name from the linked account, or "Your partner" if not yet linked.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on any question or note step screen.</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Question Card</span>
+        <span class="component-tag">Answer Options — single select</span>
+        <span class="component-tag">Answer Options — multi select</span>
+        <span class="component-tag">Slider (1–10)</span>
+        <span class="component-tag">Note Textarea</span>
+        <span class="component-tag">Character Counter</span>
+        <span class="component-tag">Progress Bar</span>
+        <span class="component-tag">Step Indicator</span>
+        <span class="component-tag">Button — Primary (Next / Submit)</span>
+        <span class="component-tag">Guide Link</span>
+        <span class="component-tag">Back Chevron</span>
       </div>
     </div>
 
@@ -192,29 +434,184 @@
 <div class="page-footer">
   <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 17 of 29</span>
   <div class="nav-pills">
-    <a class="nav-pill" style="cursor:pointer;"  href="16-topic-article.html">← Screen 16: Topic Article</a>
-    <a class="nav-pill next" style="cursor:pointer;"  href="18-waiting-for-partner.html">Screen 18: Waiting for Partner →</a>
+    <a class="nav-pill" style="cursor:pointer;" href="16-topic-article.html">← Screen 16: Topic Article</a>
+    <a class="nav-pill next" style="cursor:pointer;" href="18-waiting-for-partner.html">Screen 18: Waiting for Partner →</a>
   </div>
 </div>
 
-<script>
-function selectOpt(el) {
-  document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  document.getElementById('next-btn').classList.remove('disabled');
-}
-</script>
     </div>
   </div>
 </div>
-<script>
 
-function selectOpt(el) {
-  document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  document.getElementById('next-btn').classList.remove('disabled');
+<script>
+const Q_DATA = {
+  single_select: {
+    stepLabel: 'Q1 of 3', progress: 33,
+    text: 'Who would you trust to babysit regularly?',
+    subText: null,
+    partnerNote: "Jordan won't see your answer until they've finished too.",
+    options: [
+      { id: 'a', text: 'Family only, at least at first' },
+      { id: 'b', text: 'Close friends we both trust' },
+      { id: 'c', text: 'A professional nanny or sitter' },
+      { id: 'd', text: 'Honestly, no one for a while' }
+    ],
+    selected: 'b'
+  },
+  multi_select: {
+    stepLabel: 'Q2 of 3', progress: 66,
+    text: 'What values matter most to you in parenting?',
+    subText: 'Select all that apply.',
+    partnerNote: "Jordan won't see your answer until they've finished too.",
+    options: [
+      { id: 'a', text: 'Independence and self-reliance' },
+      { id: 'b', text: 'Empathy and emotional intelligence' },
+      { id: 'c', text: 'Consistent routines and discipline' },
+      { id: 'd', text: 'Creative and free expression' },
+      { id: 'e', text: 'Academic and career preparation' }
+    ],
+    selected: ['a', 'b']
+  },
+  slider: {
+    stepLabel: 'Q3 of 3', progress: 100,
+    text: 'How strict do you want to be about screen time?',
+    subText: 'There are no wrong answers here.',
+    partnerNote: "Jordan won't see your answer until they've finished too.",
+    slider: { min: 1, max: 10, minLabel: 'No restrictions', maxLabel: 'Screen-free' },
+    selected: 6
+  },
+  note: {
+    stepLabel: 'Note (optional)', progress: 100,
+    heading: 'Anything you want to add?',
+    subText: 'Jordan sees this after you both complete this topic.',
+  }
+};
+
+function showType(key) {
+  ['single_select','multi_select','slider','note'].forEach(k => {
+    const btn = document.getElementById('tab-' + k);
+    const active = k === key;
+    btn.style.background  = active ? '#5f45f2' : 'white';
+    btn.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    btn.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+
+  const d = Q_DATA[key];
+
+  /* progress */
+  document.getElementById('q-step-label').textContent    = d.stepLabel;
+  document.getElementById('progress-fill').style.width   = d.progress + '%';
+
+  /* question text / heading */
+  const textEl = document.getElementById('q-text');
+  if (key === 'note') {
+    textEl.textContent  = d.heading;
+    textEl.className    = 'note-heading';
+  } else {
+    textEl.textContent  = d.text;
+    textEl.className    = 'question-text';
+  }
+
+  /* subtext */
+  const subEl = document.getElementById('q-subtext');
+  if (d.subText) {
+    subEl.textContent   = d.subText;
+    subEl.style.display = 'block';
+  } else {
+    subEl.style.display = 'none';
+  }
+
+  /* partner note */
+  const noteEl = document.getElementById('partner-note');
+  if (key === 'note') {
+    noteEl.style.display = 'none';
+  } else {
+    noteEl.style.display = 'block';
+    noteEl.textContent   = d.partnerNote;
+  }
+
+  /* answer area + next button */
+  const area = document.getElementById('answer-area');
+  const btn  = document.getElementById('next-btn');
+
+  if (key === 'single_select') {
+    area.innerHTML = '<div class="answer-opts">' +
+      d.options.map(o => `<button class="answer-opt${o.id === d.selected ? ' selected' : ''}" data-id="${o.id}" onclick="selectSingle(this)">${o.text}</button>`).join('') +
+      '</div>';
+    btn.className   = 'btn-next';
+    btn.textContent = 'Next →';
+
+  } else if (key === 'multi_select') {
+    area.innerHTML = '<div class="answer-opts">' +
+      d.options.map(o => {
+        const sel = d.selected.includes(o.id) ? ' selected' : '';
+        return `<button class="answer-opt multi-opt${sel}" data-id="${o.id}" onclick="toggleMulti(this)"><span>${o.text}</span><span class="check-icon"></span></button>`;
+      }).join('') +
+      '</div>';
+    btn.className   = 'btn-next';
+    btn.textContent = 'Next →';
+
+  } else if (key === 'slider') {
+    area.innerHTML = `
+      <div class="slider-container">
+        <div class="slider-value-display" id="slider-val">${d.selected}</div>
+        <div class="slider-track" id="slider-track" onclick="handleSliderClick(event)">
+          <div class="slider-fill" id="slider-fill"></div>
+          <div class="slider-thumb" id="slider-thumb"></div>
+        </div>
+        <div class="slider-labels">
+          <span>${d.slider.minLabel}</span>
+          <span>${d.slider.maxLabel}</span>
+        </div>
+      </div>`;
+    setSlider(d.selected, d.slider.min, d.slider.max);
+    btn.className   = 'btn-next';
+    btn.textContent = 'Next →';
+
+  } else {
+    area.innerHTML = `
+      <textarea class="note-textarea" id="note-input" placeholder="Your thoughts, context, or questions for later…" oninput="updateCharCount(this.value.length)" maxlength="280"></textarea>
+      <div class="note-char-count" id="char-count">280 characters remaining</div>`;
+    btn.className   = 'btn-next';
+    btn.textContent = 'Submit →';
+  }
 }
 
+function selectSingle(el) {
+  document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleMulti(el) {
+  el.classList.toggle('selected');
+  const any = document.querySelectorAll('.answer-opt.selected').length > 0;
+  document.getElementById('next-btn').classList.toggle('disabled', !any);
+}
+
+function setSlider(value, min, max) {
+  const pct = ((value - min) / (max - min)) * 100;
+  document.getElementById('slider-val').textContent   = value;
+  document.getElementById('slider-fill').style.width  = pct + '%';
+  document.getElementById('slider-thumb').style.left  = pct + '%';
+}
+
+function handleSliderClick(e) {
+  const track = document.getElementById('slider-track');
+  const rect  = track.getBoundingClientRect();
+  const pct   = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  const value = Math.round(1 + pct * 9);
+  setSlider(value, 1, 10);
+}
+
+function updateCharCount(len) {
+  const remaining = 280 - len;
+  const el = document.getElementById('char-count');
+  if (!el) return;
+  el.textContent = remaining + ' character' + (remaining === 1 ? '' : 's') + ' remaining';
+  el.style.color = remaining < 50 ? '#ff9191' : '';
+}
+
+showType('single_select');
 </script>
 <script src="nav.js"></script>
 </body>
