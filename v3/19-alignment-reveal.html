@@ -53,38 +53,77 @@ body.page-17 .screen-root .reveal-no-note {
   font-style: italic; font-size: 13px; color: rgba(26,26,26,0.38);
 }
 
-/* Multi-select reveal list */
-body.page-17 .screen-root .reveal-ms-list {
-  display: flex; flex-direction: column; gap: 3px; margin-top: 2px;
+/* Multi-select reveal — pill tags */
+body.page-17 .screen-root .ms-pills {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;
 }
-body.page-17 .screen-root .ms-item {
-  font-size: 13px; line-height: 1.4; color: rgba(26,26,26,1);
-  padding-left: 10px; position: relative;
+body.page-17 .screen-root .ms-pill {
+  font-size: 12px; font-weight: 600;
+  border-radius: 100px; padding: 4px 10px; line-height: 1.4;
 }
-body.page-17 .screen-root .ms-item::before {
-  content: '·'; position: absolute; left: 0;
-  color: rgba(26,26,26,0.38);
+body.page-17 .screen-root .ms-pill-shared {
+  background: rgba(119,234,175,0.28); color: #157a46;
+}
+body.page-17 .screen-root .ms-pill-unique {
+  background: rgba(26,26,26,0.07); color: rgba(26,26,26,1);
+}
+body.page-17 .screen-root .ms-shared-badge {
+  text-align: center; font-size: 12px; font-weight: 500;
+  color: #157a46; margin-top: 10px;
 }
 
-/* Slider reveal */
-body.page-17 .screen-root .reveal-slider-val {
+/* Slider reveal — full-width card (srv = slider reveal) */
+body.page-17 .screen-root .slider-reveal-card {
+  background: white; border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(26,26,26,0.10);
+  padding: 20px; width: 100%; box-sizing: border-box;
+}
+body.page-17 .screen-root .srv-values {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+body.page-17 .screen-root .srv-val {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+body.page-17 .screen-root .srv-num {
   font-family: 'Grandstander', cursive;
-  font-size: 26px; font-weight: 700; color: #5f45f2;
-  line-height: 1; margin-top: 2px; margin-bottom: 8px;
+  font-size: 28px; font-weight: 700; line-height: 1;
 }
-body.page-17 .screen-root .mini-track {
-  width: 100%; height: 4px;
-  background: rgba(26,26,26,0.10); border-radius: 100px;
-  position: relative; margin-bottom: 4px;
+body.page-17 .screen-root .srv-num-you     { color: #5f45f2; }
+body.page-17 .screen-root .srv-num-partner { color: rgba(26,26,26,1); }
+body.page-17 .screen-root .srv-num-same    { color: #157a46; }
+body.page-17 .screen-root .srv-name {
+  font-size: 11px; font-weight: 500; color: rgba(26,26,26,0.55);
 }
-body.page-17 .screen-root .mini-fill {
-  position: absolute; left: 0; top: 0; height: 100%;
-  background: #5f45f2; border-radius: 100px;
+body.page-17 .screen-root .srv-name-same {
+  font-size: 13px; font-weight: 500; color: #157a46; margin-top: 4px;
 }
-body.page-17 .screen-root .mini-labels {
+body.page-17 .screen-root .srv-track {
+  width: 100%; height: 6px; border-radius: 100px;
+  background: rgba(26,26,26,0.10); position: relative; margin-bottom: 6px;
+}
+body.page-17 .screen-root .srv-range {
+  position: absolute; top: 0; height: 100%;
+  background: rgba(95,69,242,0.12); border-radius: 100px;
+}
+body.page-17 .screen-root .srv-marker {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 14px; height: 14px; border-radius: 50%;
+}
+body.page-17 .screen-root .srv-marker-you     { background: #5f45f2; z-index: 2; }
+body.page-17 .screen-root .srv-marker-partner {
+  background: white; border: 2px solid rgba(26,26,26,0.38); z-index: 1;
+}
+body.page-17 .screen-root .srv-marker-same {
+  background: #157a46; width: 16px; height: 16px; z-index: 2;
+}
+body.page-17 .screen-root .srv-endlabels {
   display: flex; justify-content: space-between;
-  font-size: 10px; color: rgba(26,26,26,0.38); margin-top: 2px;
+  font-size: 11px; color: rgba(26,26,26,0.38); margin-bottom: 12px;
 }
+body.page-17 .screen-root .srv-delta {
+  text-align: center; font-size: 12px; color: rgba(26,26,26,0.38);
+}
+body.page-17 .screen-root .srv-delta-same { color: #157a46; font-weight: 500; }
 
 /* Staggered reveal animation */
 body.page-17 .screen-root .rev-item {
@@ -303,22 +342,28 @@ body.page-17 .screen-root .rev-item.rev-show {
     <div class="spec-card">
       <div class="spec-card-title">multi_select reveal</div>
       <table class="spec-table">
-        <tr><td>Layout</td><td>Same two-box layout as single_select</td></tr>
-        <tr><td>Answer area</td><td>Selected options rendered as a bulleted list · one item per line · 13px DM Sans regular · text-primary · line-height 1.4</td></tr>
-        <tr><td>Bullets</td><td>Mid-dot "·" · absolute-positioned left · text-tertiary · 10px left padding on items</td></tr>
-        <tr><td>Content</td><td>Each selected option text listed in selection order · verbatim option text</td></tr>
-        <tr><td>Note</td><td>No cross-highlighting of matching selections in V1 — that complexity ships in a later iteration</td></tr>
+        <tr><td>Layout</td><td>Same two-box layout as single_select (white · <code>1.5px solid border-default</code> · <code>radius-lg</code> · 14px padding · min-height 100px · flex: 1 each · 10px gap)</td></tr>
+        <tr><td>Owner labels</td><td>"YOU SELECTED" / "[NAME] SELECTED" · same label spec as single_select boxes</td></tr>
+        <tr><td>Answer area</td><td>Flex-wrap row of pill tags · 6px gap</td></tr>
+        <tr><td>Shared pill</td><td>Option selected by both partners · bg: <code>rgba(119,234,175,0.28)</code> · text: <code>#157a46</code> · <code>radius-full</code> · 4px 10px padding · 12px DM Sans semibold</td></tr>
+        <tr><td>Unique pill</td><td>Option selected by this person only · bg: <code>rgba(26,26,26,0.07)</code> · text: text-primary · same shape and font</td></tr>
+        <tr><td>Shared count badge</td><td>"X in common" · centered below both boxes · 12px DM Sans medium · <code>#157a46</code> · 10px margin above · shown only if overlap &gt; 0</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">slider reveal</div>
       <table class="spec-table">
-        <tr><td>Layout</td><td>Two boxes side by side — one per partner</td></tr>
-        <tr><td>Value display</td><td>Grandstander 26px bold · purple-500 · the integer each person set</td></tr>
-        <tr><td>Mini track</td><td>Full-width · 4px height · <code>rgba(26,26,26,0.10)</code> bg · purple-500 fill from left · shows position visually</td></tr>
-        <tr><td>Labels</td><td>minLabel (left) and maxLabel (right) · 10px DM Sans · text-tertiary · below track</td></tr>
-        <tr><td>No thumb</td><td>No thumb marker in the reveal — fill width alone communicates position</td></tr>
+        <tr><td>Layout</td><td>Full-width card — does NOT use the two-box layout · white bg · <code>radius-xl</code> (16px) · <code>shadow-md</code> · 20px padding</td></tr>
+        <tr><td>Values row</td><td>Your value (Grandstander 28px · purple-500 · "You" label below) left · partner's value (28px · text-primary · "[Name]" label below) right · both 11px DM Sans medium text-secondary</td></tr>
+        <tr><td>Same value</td><td>Single centered value in <code>#157a46</code> · "You both said {n}" 13px DM Sans medium success-text below · replaces two-value layout</td></tr>
+        <tr><td>Track</td><td>Full-width · 6px · <code>rgba(26,26,26,0.10)</code> bg · 16px below values row</td></tr>
+        <tr><td>Range fill</td><td><code>rgba(95,69,242,0.12)</code> between the two marker positions · omitted when same value</td></tr>
+        <tr><td>Your marker</td><td>14px circle · purple-500 fill · z-index 2 (on top)</td></tr>
+        <tr><td>Partner marker</td><td>14px circle · white fill · <code>2px solid border-strong</code> · z-index 1</td></tr>
+        <tr><td>Same-value marker</td><td>Single 16px circle · <code>#157a46</code> fill · replaces both markers</td></tr>
+        <tr><td>End labels</td><td>minLabel left · maxLabel right · 11px DM Sans · text-tertiary · 6px below track</td></tr>
+        <tr><td>Delta label</td><td>Centered · 12px · different: "{n} apart" text-tertiary · same: "Same ✓" 12px medium <code>#157a46</code> · 12px below end labels</td></tr>
       </table>
     </div>
 
@@ -468,37 +513,71 @@ function buildRevealPair(q) {
   }
 
   if (q.type === 'multi_select') {
-    const yourItems    = q.your.map(t    => `<div class="ms-item">${t}</div>`).join('');
-    const partnerItems = q.partner.map(t => `<div class="ms-item">${t}</div>`).join('');
-    return `<div class="reveal-row">
-      <div class="reveal-box">
-        <div class="reveal-label">YOU SAID</div>
-        <div class="reveal-ms-list">${yourItems}</div>
+    const sharedSet = new Set(q.your.filter(t => q.partner.includes(t)));
+    const makePills = arr => arr.map(t => {
+      const cls = sharedSet.has(t) ? 'ms-pill ms-pill-shared' : 'ms-pill ms-pill-unique';
+      return `<span class="${cls}">${t}</span>`;
+    }).join('');
+    const badge = sharedSet.size > 0
+      ? `<div class="ms-shared-badge">${sharedSet.size} in common</div>` : '';
+    return `<div>
+      <div class="reveal-row">
+        <div class="reveal-box">
+          <div class="reveal-label">YOU SELECTED</div>
+          <div class="ms-pills">${makePills(q.your)}</div>
+        </div>
+        <div class="reveal-box">
+          <div class="reveal-label">JORDAN SELECTED</div>
+          <div class="ms-pills">${makePills(q.partner)}</div>
+        </div>
       </div>
-      <div class="reveal-box">
-        <div class="reveal-label">JORDAN SAID</div>
-        <div class="reveal-ms-list">${partnerItems}</div>
-      </div>
+      ${badge}
     </div>`;
   }
 
   if (q.type === 'slider') {
     const range      = q.max - q.min;
-    const yourPct    = ((q.your    - q.min) / range * 100).toFixed(1);
-    const partnerPct = ((q.partner - q.min) / range * 100).toFixed(1);
-    const miniTrack  = (val, pct) => `
-      <div class="reveal-slider-val">${val}</div>
-      <div class="mini-track"><div class="mini-fill" style="width:${pct}%"></div></div>
-      <div class="mini-labels"><span>${q.minLabel}</span><span>${q.maxLabel}</span></div>`;
-    return `<div class="reveal-row">
-      <div class="reveal-box">
-        <div class="reveal-label">YOU SAID</div>
-        ${miniTrack(q.your, yourPct)}
+    const isSame     = q.your === q.partner;
+    const yourPct    = (q.your    - q.min) / range * 100;
+    const partnerPct = (q.partner - q.min) / range * 100;
+    const delta      = Math.abs(q.your - q.partner);
+
+    let valuesRow, trackContent, deltaEl;
+
+    if (isSame) {
+      valuesRow = `<div style="text-align:center;">
+        <div class="srv-num srv-num-same">${q.your}</div>
+        <div class="srv-name srv-name-same">You both said ${q.your}</div>
+      </div>`;
+      trackContent = `<div class="srv-marker srv-marker-same" style="left:${yourPct}%"></div>`;
+      deltaEl = `<div class="srv-delta srv-delta-same">Same ✓</div>`;
+    } else {
+      valuesRow = `<div class="srv-values">
+        <div class="srv-val">
+          <div class="srv-num srv-num-you">${q.your}</div>
+          <div class="srv-name">You</div>
+        </div>
+        <div class="srv-val">
+          <div class="srv-num srv-num-partner">${q.partner}</div>
+          <div class="srv-name">Jordan</div>
+        </div>
+      </div>`;
+      const lo = Math.min(yourPct, partnerPct);
+      const hi = Math.max(yourPct, partnerPct);
+      trackContent = `
+        <div class="srv-range" style="left:${lo}%;width:${hi - lo}%"></div>
+        <div class="srv-marker srv-marker-partner" style="left:${partnerPct}%"></div>
+        <div class="srv-marker srv-marker-you" style="left:${yourPct}%"></div>`;
+      deltaEl = `<div class="srv-delta">${delta} apart</div>`;
+    }
+
+    return `<div class="slider-reveal-card">
+      ${valuesRow}
+      <div class="srv-track" style="margin-top:16px;">${trackContent}</div>
+      <div class="srv-endlabels">
+        <span>${q.minLabel}</span><span>${q.maxLabel}</span>
       </div>
-      <div class="reveal-box">
-        <div class="reveal-label">JORDAN SAID</div>
-        ${miniTrack(q.partner, partnerPct)}
-      </div>
+      ${deltaEl}
     </div>`;
   }
 }
