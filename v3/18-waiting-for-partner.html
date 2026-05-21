@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waiting for Partner — Daisy's Guide Designed Screens v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-16">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 28 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
+  <a class="sidebar-item" href="08-paywall.html"><span class="screen-num">08</span>Paywall</a>
+  <a class="sidebar-item" href="09-partner-linking.html"><span class="screen-num">09</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="10-home.html"><span class="screen-num">10</span>Home</a>
+  <a class="sidebar-item" href="11-progress.html"><span class="screen-num">11</span>Progress</a>
+  <a class="sidebar-item" href="12-settings.html"><span class="screen-num">12</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-manage-topics.html"><span class="screen-num">14</span>Manage Topics</a>
+  <a class="sidebar-item" href="15-topic-intro.html"><span class="screen-num">15</span>Topic Intro</a>
+  <a class="sidebar-item" href="16-topic-article.html"><span class="screen-num">16</span>Topic Article</a>
+  <a class="sidebar-item" href="17-question.html"><span class="screen-num">17</span>Question</a>
+  <a class="sidebar-item active" href="18-waiting-for-partner.html"><span class="screen-num">18</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="19-alignment-reveal.html"><span class="screen-num">19</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="24-empty-home.html"><span class="screen-num">24</span>Empty Home</a>
+  <a class="sidebar-item" href="25-empty-topic-list.html"><span class="screen-num">25</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="26-payment-failure.html"><span class="screen-num">26</span>Payment Failure</a>
+  <a class="sidebar-item" href="27-connection-error.html"><span class="screen-num">27</span>Connection Error</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="28-onboarding-intro.html"><span class="screen-num">28</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Waiting for Partner</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="17-question.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">18 / 28</span>
+        <a class="topbar-btn" href="19-alignment-reveal.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 18 · Topic Flow</div>
+    <div class="page-title">Waiting for Partner</div>
+    <div class="page-desc">User answered. Partner hasn't. Humor is essential here — this is a potential drop-off point.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="17-question.html">← Screen 17: Question</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="19-alignment-reveal.html">Screen 19: Alignment Reveal →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="center-block">
+
+          <!-- Animation slot -->
+          <div class="waiting-anim" id="anim-slot">
+            <div class="waiting-ring" id="waiting-ring"></div>
+          </div>
+
+          <div class="waiting-heading">Your answers are locked in 🔒</div>
+          <div class="waiting-body">Waiting on Jordan to finish their side. The reveal happens the moment you've both answered.</div>
+
+          <!-- In the meantime card -->
+          <div class="meantime-card">
+            <div class="meantime-title">In the meantime</div>
+            <div class="meantime-body">Jordan got a notification. If they need a nudge, you know what to do.</div>
+          </div>
+
+          <!-- Poke button -->
+          <button class="btn-poke" id="poke-btn" onclick="handlePoke()">
+            Poke Jordan 👉
+          </button>
+          <div class="poke-hint" id="poke-hint">
+            Sends a push: <em>"Your partner is waiting. No pressure. (Pressure.)"</em>
+          </div>
+
+        </div>
+
+        <!-- Back to home -->
+        <button class="btn-ghost">Back to home</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Navigation flow</div>
+      <div class="flow-map">
+        <div class="flow-node from">16 Question (last)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">17 Waiting</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">18 Alignment Reveal</div>
+      </div>
+      <div class="info-box">
+        User arrives here automatically after answering the final question. They stay here until partner completes their answers — at which point the app sends a push notification and navigates them to Screen 18. <strong>"Back to home"</strong> lets them leave without feeling stuck — they'll get a push when the reveal is ready. <strong>No bottom nav.</strong>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Screen copy</div>
+      <table class="spec-table">
+        <tr><td>Heading</td><td>"Your answers are locked in 🔒" · Grandstander 24px bold · 🔒 emoji is part of the copy</td></tr>
+        <tr><td>Body</td><td>"Waiting on [partner name] to finish their side. The reveal happens the moment you've both answered." · partner name is dynamic</td></tr>
+        <tr><td>"In the meantime"</td><td>Card title · body: "[Partner name] got a notification. If they need a nudge, you know what to do."</td></tr>
+        <tr><td>Poke label</td><td>"Poke [partner name] 👉" · name is dynamic · 👉 emoji is part of the label</td></tr>
+        <tr><td>Poke push copy</td><td>"Your partner is waiting. No pressure. (Pressure.)" · exact copy · do not change · the humor is intentional</td></tr>
+        <tr><td>"Back to home"</td><td>Secondary ghost button · always visible at bottom</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Waiting animation</div>
+      <table class="spec-table">
+        <tr><td>Container</td><td>88×88px circle · white bg · <code>shadow-md</code></td></tr>
+        <tr><td>State: waiting</td><td>Purple spinner — 60px · slow rotation (2s linear infinite) · communicates "something is happening"</td></tr>
+        <tr><td>State: partner done</td><td>Spinner replaced by 🎉 emoji at 36px · brief scale-in animation (0.2s) · app navigates to reveal immediately after</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Poke button</div>
+      <table class="spec-table">
+        <tr><td>Default state</td><td>Primary style · 52px · <code>radius-full</code> · <code>purple-500</code> · "Poke [name] 👉"</td></tr>
+        <tr><td>After poke</td><td>Changes to neutral gray · label updates to "Poke sent ✓" · disabled for 1 hour · one poke per hour per topic</td></tr>
+        <tr><td>Push notification</td><td>"Your partner is waiting. No pressure. (Pressure.)" — sent to partner's device · fires immediately on tap</td></tr>
+        <tr><td>Auto-push</td><td>A notification is also sent automatically when this screen first loads — the Poke is an optional second nudge</td></tr>
+      </table>
+      <div class="info-box"><strong>The humor here is load-bearing.</strong> This is a potential drop-off point. The "(Pressure.)" callback is what makes this screen feel like the app has a personality rather than being another notification.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Waiting animation slot</span>
+        <span class="component-tag">Info card (meantime)</span>
+        <span class="component-tag">Button — Primary (Poke)</span>
+        <span class="component-tag">Button — Ghost (back)</span>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>Push notification auto-fires to partner the moment this screen loads. Poke button is a second, manual nudge.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Poke limited to once per hour per topic to avoid spamming the partner.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When partner completes their answers, the app sends a push to the user and navigates them to Screen 18 — even if they've left this screen and gone to Home.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Back to home" → Screen 12 Home. User will receive a push notification when partner is done.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 18 of 28</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="17-question.html">← Screen 17: Question</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="19-alignment-reveal.html">Screen 19: Alignment Reveal →</a>
+  </div>
+</div>
+
+<script>
+let poked = false;
+function handlePoke() {
+  if (poked) return;
+  poked = true;
+  const btn = document.getElementById('poke-btn');
+  const hint = document.getElementById('poke-hint');
+  btn.textContent = 'Poke sent ✓';
+  btn.classList.add('sent');
+  hint.textContent = 'Jordan has been poked. You\'ve done your part.';
+}
+</script>
+    </div>
+  </div>
+</div>
+<script>
+
+let poked = false;
+function handlePoke() {
+  if (poked) return;
+  poked = true;
+  const btn = document.getElementById('poke-btn');
+  const hint = document.getElementById('poke-hint');
+  btn.textContent = 'Poke sent ✓';
+  btn.classList.add('sent');
+  hint.textContent = 'Jordan has been poked. You\'ve done your part.';
+}
+
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

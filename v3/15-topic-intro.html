@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topic Intro — Daisy's Guide Designed Screens v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-13">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 28 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
+  <a class="sidebar-item" href="08-paywall.html"><span class="screen-num">08</span>Paywall</a>
+  <a class="sidebar-item" href="09-partner-linking.html"><span class="screen-num">09</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="10-home.html"><span class="screen-num">10</span>Home</a>
+  <a class="sidebar-item" href="11-progress.html"><span class="screen-num">11</span>Progress</a>
+  <a class="sidebar-item" href="12-settings.html"><span class="screen-num">12</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-manage-topics.html"><span class="screen-num">14</span>Manage Topics</a>
+  <a class="sidebar-item active" href="15-topic-intro.html"><span class="screen-num">15</span>Topic Intro</a>
+  <a class="sidebar-item" href="16-topic-article.html"><span class="screen-num">16</span>Topic Article</a>
+  <a class="sidebar-item" href="17-question.html"><span class="screen-num">17</span>Question</a>
+  <a class="sidebar-item" href="18-waiting-for-partner.html"><span class="screen-num">18</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="19-alignment-reveal.html"><span class="screen-num">19</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="24-empty-home.html"><span class="screen-num">24</span>Empty Home</a>
+  <a class="sidebar-item" href="25-empty-topic-list.html"><span class="screen-num">25</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="26-payment-failure.html"><span class="screen-num">26</span>Payment Failure</a>
+  <a class="sidebar-item" href="27-connection-error.html"><span class="screen-num">27</span>Connection Error</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="28-onboarding-intro.html"><span class="screen-num">28</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Topic Intro</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="14-manage-topics.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">15 / 28</span>
+        <a class="topbar-btn" href="16-topic-article.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 15 · Topic Flow</div>
+    <div class="page-title">Topic Intro</div>
+    <div class="page-desc">Hub screen before each topic. Two equal paths — read the guide OR start answering. No forced sequence.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="14-manage-topics.html">← Screen 14: Manage Topics</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="16-topic-article.html">Screen 16: Topic Article →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-fresh" onclick="showState('fresh')">Not started</button>
+      <button class="state-tab" id="tab-answered" onclick="showState('answered')">You answered</button>
+      <button class="state-tab" id="tab-waiting" onclick="showState('waiting')">Waiting on partner</button>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="back-btn">‹ Back to topics</div>
+
+        <!-- Illustration slot -->
+        <div class="illus-slot">
+          <div class="slot-corner tl"></div>
+          <div class="slot-corner br"></div>
+          <div class="illus-label">Illustration asset</div>
+          <div class="illus-desc">Topic illustration · 160px · white card · no shadow</div>
+        </div>
+
+        <!-- Topic meta -->
+        <div class="topic-eyebrow">The Village · Topic 3 of 6</div>
+        <div class="topic-title">Who will we trust to watch the baby?</div>
+        <div class="topic-blurb">Childcare is one of those topics where couples often discover mid-conversation that they have completely different people in mind. Sometimes those people are each other's mothers.</div>
+
+        <!-- Stats card -->
+        <div class="stats-card">
+          <div class="stat-col">
+            <div class="stat-num">4</div>
+            <div class="stat-label">Questions</div>
+          </div>
+          <div class="stat-col">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Min read</div>
+          </div>
+          <div class="stat-col">
+            <div class="stat-num">~3</div>
+            <div class="stat-label">Min quiz</div>
+          </div>
+        </div>
+
+        <!-- Partner status line -->
+        <div class="partner-status-line" id="partner-line">Jordan hasn't answered yet either.</div>
+
+        <div class="spacer"></div>
+
+        <!-- CTAs -->
+        <div class="cta-block" id="cta-block">
+          <button class="btn-primary">Start answering →</button>
+          <button class="btn-secondary">Read the guide first</button>
+          <button class="btn-ghost">Back to topics</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Navigation flow</div>
+      <div class="flow-map">
+        <div class="flow-node from">13 Topic List</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">14 Topic Intro</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">15 Topic Article</div>
+      </div>
+      <div class="flow-map" style="margin-top:8px;">
+        <div class="flow-node from" style="opacity:0;">—</div>
+        <div class="flow-arrow" style="opacity:0;">→</div>
+        <div class="flow-node current" style="opacity:0;">—</div>
+        <div class="flow-arrow">or →</div>
+        <div class="flow-node dest">16 Question</div>
+      </div>
+      <div class="info-box">
+        <strong>Key structural decision:</strong> both paths are equally prominent. No visual hierarchy implying one is required first. Users who've read the book skip straight to answering. New users may want the guide first. The article is also accessible mid-question via a persistent link. <strong>No bottom nav.</strong>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Three screen states</div>
+      <table class="spec-table">
+        <tr><td>Not started</td><td>Both CTAs live. Partner status line: "Jordan hasn't answered yet either." Primary = "Start answering →", Secondary = "Read the guide first"</td></tr>
+        <tr><td>You answered</td><td>Primary changes to "Continue answering →". Partner line: "Waiting for Jordan to finish." Secondary = "Read the guide" (still accessible)</td></tr>
+        <tr><td>Both answered</td><td>Primary changes to "See your results →". Partner line: "Jordan finished — ready to reveal." Secondary = "Read the guide"</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Illustration slot</div>
+      <table class="spec-table">
+        <tr><td>Height</td><td>160px — fixed</td></tr>
+        <tr><td>Background</td><td><code>surface-card</code> (white) sitting on cream page</td></tr>
+        <tr><td>Border radius</td><td><code>radius-xl</code> (16px)</td></tr>
+        <tr><td>Shadow</td><td>None — white-on-cream contrast is the visual anchor</td></tr>
+        <tr><td>Spacing below</td><td>20px</td></tr>
+        <tr><td>Placeholder</td><td>White card with dashed corner marks + label</td></tr>
+        <tr><td>Rule</td><td>Never skip this card — it's a key visual anchor even before illustrations are available</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Stats card (2-col)</div>
+      <table class="spec-table">
+        <tr><td>Background</td><td>White</td></tr>
+        <tr><td>Border radius</td><td><code>radius-lg</code> (12px) — stepped down, nested inside screen</td></tr>
+        <tr><td>Shadow</td><td>None</td></tr>
+        <tr><td>Padding</td><td>16px</td></tr>
+        <tr><td>Layout</td><td>3 equal columns · <code>1px solid border-default</code> between cols</td></tr>
+        <tr><td>Number</td><td>Grandstander 28px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
+        <tr><td>Label</td><td>11px DM Sans medium · ALL CAPS · <code>text-secondary</code> · 4px below number</td></tr>
+        <tr><td>Cols</td><td>Questions · Min read · Min quiz</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Two equal CTAs</div>
+      <table class="spec-table">
+        <tr><td>"Start answering →"</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> · leads to Screen 16 Question</td></tr>
+        <tr><td>"Read the guide first"</td><td>Secondary · 56px · <code>radius-full</code> · <code>border-strong</code> outline · leads to Screen 15 Article</td></tr>
+        <tr><td>Hierarchy</td><td>Visually equal weight — same height, same width. Neither implies the other is required first.</td></tr>
+        <tr><td>"Back to topics"</td><td>Ghost · 44px · <code>text-tertiary</code> · tertiary action at the bottom</td></tr>
+      </table>
+      <div class="info-box">The CTA label updates based on state: "Continue answering →" if in progress, "See your results →" if both have answered.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Topic copy rules</div>
+      <table class="spec-table">
+        <tr><td>Eyebrow</td><td>"[Category] · Topic X of Y" · <code>label-sm</code> uppercase · <code>text-tertiary</code></td></tr>
+        <tr><td>Title</td><td>Grandstander 22px bold · same as the topic question</td></tr>
+        <tr><td>Blurb</td><td>Max 3 sentences · DM Sans 14px · <code>text-secondary</code> · sets emotional context, not instructions</td></tr>
+        <tr><td>Partner line</td><td>12px · <code>text-tertiary</code> · centered · updates based on partner's progress</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Hero Image Card (illustration slot)</span>
+        <span class="component-tag">Stats Card (3-col)</span>
+        <span class="component-tag">Button — Primary (lg)</span>
+        <span class="component-tag">Button — Secondary (lg)</span>
+        <span class="component-tag">Button — Ghost</span>
+        <span class="component-tag">Screen Header (back)</span>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav — user is inside a topic flow.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Back button always returns to Topic List. No "confirm exit" dialog in V1.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The article (Screen 15) is also accessible mid-question via a persistent "Read guide" link — so users aren't forced to commit to an order.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Partner status line is always visible above the CTAs — gives context before committing to answer.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Layout fits without scrolling on most devices. CTA region floats to bottom via spacer — not sticky.</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 15 of 28</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="14-manage-topics.html">← Screen 14: Manage Topics</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="16-topic-article.html">Screen 16: Topic Article →</a>
+  </div>
+</div>
+
+<script>
+function showState(state) {
+  ['fresh','answered','waiting'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const partnerLine = document.getElementById('partner-line');
+  const ctaBlock = document.getElementById('cta-block');
+
+  if (state === 'fresh') {
+    partnerLine.textContent = "Jordan hasn't answered yet either.";
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">Start answering →</button>
+      <button class="btn-secondary">Read the guide first</button>
+      <button class="btn-ghost">Back to topics</button>`;
+  } else if (state === 'answered') {
+    partnerLine.textContent = "Waiting for Jordan to finish.";
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">Continue answering →</button>
+      <button class="btn-secondary">Read the guide</button>
+      <button class="btn-ghost">Back to topics</button>`;
+  } else if (state === 'waiting') {
+    partnerLine.textContent = "Jordan finished — ready to reveal.";
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">See your results →</button>
+      <button class="btn-secondary">Read the guide</button>
+      <button class="btn-ghost">Back to topics</button>`;
+  }
+}
+</script>
+    </div>
+  </div>
+</div>
+<script>
+
+function showState(state) {
+  ['fresh','answered','waiting'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const partnerLine = document.getElementById('partner-line');
+  const ctaBlock = document.getElementById('cta-block');
+
+  if (state === 'fresh') {
+    partnerLine.textContent = "Jordan hasn't answered yet either.";
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">Start answering →</button>
+      <button class="btn-secondary">Read the guide first</button>
+      <button class="btn-ghost">Back to topics</button>`;
+  } else if (state === 'answered') {
+    partnerLine.textContent = "Waiting for Jordan to finish.";
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">Continue answering →</button>
+      <button class="btn-secondary">Read the guide</button>
+      <button class="btn-ghost">Back to topics</button>`;
+  } else if (state === 'waiting') {
+    partnerLine.textContent = "Jordan finished — ready to reveal.";
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">See your results →</button>
+      <button class="btn-secondary">Read the guide</button>
+      <button class="btn-ghost">Back to topics</button>`;
+  }
+}
+
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

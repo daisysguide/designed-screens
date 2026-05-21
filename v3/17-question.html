@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question — Daisy's Guide Designed Screens v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-15">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 28 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
+  <a class="sidebar-item" href="08-paywall.html"><span class="screen-num">08</span>Paywall</a>
+  <a class="sidebar-item" href="09-partner-linking.html"><span class="screen-num">09</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="10-home.html"><span class="screen-num">10</span>Home</a>
+  <a class="sidebar-item" href="11-progress.html"><span class="screen-num">11</span>Progress</a>
+  <a class="sidebar-item" href="12-settings.html"><span class="screen-num">12</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-manage-topics.html"><span class="screen-num">14</span>Manage Topics</a>
+  <a class="sidebar-item" href="15-topic-intro.html"><span class="screen-num">15</span>Topic Intro</a>
+  <a class="sidebar-item" href="16-topic-article.html"><span class="screen-num">16</span>Topic Article</a>
+  <a class="sidebar-item active" href="17-question.html"><span class="screen-num">17</span>Question</a>
+  <a class="sidebar-item" href="18-waiting-for-partner.html"><span class="screen-num">18</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="19-alignment-reveal.html"><span class="screen-num">19</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="24-empty-home.html"><span class="screen-num">24</span>Empty Home</a>
+  <a class="sidebar-item" href="25-empty-topic-list.html"><span class="screen-num">25</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="26-payment-failure.html"><span class="screen-num">26</span>Payment Failure</a>
+  <a class="sidebar-item" href="27-connection-error.html"><span class="screen-num">27</span>Connection Error</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="28-onboarding-intro.html"><span class="screen-num">28</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Question</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="16-topic-article.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">17 / 28</span>
+        <a class="topbar-btn" href="18-waiting-for-partner.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 17 · Topic Flow</div>
+    <div class="page-title">Question</div>
+    <div class="page-desc">One multiple choice question per topic. Four answer options. "Read guide" always available. No skip in V1.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="16-topic-article.html">← Screen 16: Topic Article</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="18-waiting-for-partner.html">Screen 18: Waiting for Partner →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- Progress -->
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:50%;"></div>
+        </div>
+
+        <!-- Guide link -->
+        <div style="display:flex;justify-content:flex-end;margin-bottom:12px;">
+          <div class="guide-link">Read guide</div>
+        </div>
+
+        <!-- Question card -->
+        <div class="question-card">
+          <div class="question-text" id="q-text">Who would you trust to babysit regularly?</div>
+          <div class="partner-note" id="partner-note">Jordan won't see your answer until they've finished too.</div>
+
+          <!-- Answer area — swapped by JS -->
+          <div id="answer-area">
+            <div class="answer-opts">
+              <button class="answer-opt" onclick="selectOpt(this)">Family only, at least at first</button>
+              <button class="answer-opt" onclick="selectOpt(this)">Close friends we both trust</button>
+              <button class="answer-opt" onclick="selectOpt(this)">A professional nanny or sitter</button>
+              <button class="answer-opt" onclick="selectOpt(this)">Honestly, no one for a while</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-next disabled" id="next-btn">Next →</button>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Navigation flow</div>
+      <div class="flow-map">
+        <div class="flow-node from">14 Topic Intro</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">16 Question</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">17 Waiting</div>
+      </div>
+      <div class="info-box">
+        Same screen template for all question types. Back returns to previous question (or Topic Intro from Q1). Last question → Screen 17 Waiting for Partner. "Read guide" → Screen 15 Article (doesn't lose progress). <strong>No bottom nav.</strong>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Three question types</div>
+      <table class="spec-table">
+        <tr><td>Multiple choice</td><td>2–6 answer options · cream bg default · <code>purple-500</code> fill when selected · single-select · shown here as Q2 of 4</td></tr>
+
+      </table>
+      <div class="info-box">V1: multiple choice only. One question per topic. Four options. <strong>No skip.</strong> Open text and slider variants reserved for future versions.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Question card</div>
+      <table class="spec-table">
+        <tr><td>Container</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · 24px padding</td></tr>
+        <tr><td>Question text</td><td>Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code> · 8px below</td></tr>
+        <tr><td>Partner note</td><td>"[Name] won't see your answer until they've finished too." · 13px · <code>text-tertiary</code> · 18px below</td></tr>
+        <tr><td>Max options</td><td>6 answer options maximum</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Multiple choice answer options</div>
+      <table class="spec-table">
+        <tr><td>Default bg</td><td><code>surface-nested</code> (cream)</td></tr>
+        <tr><td>Selected bg</td><td><code>purple-500</code> · white text</td></tr>
+        <tr><td>Border radius</td><td><code>radius-lg</code> (12px)</td></tr>
+        <tr><td>Min height</td><td>56px</td></tr>
+        <tr><td>Padding</td><td>14px vertical · 20px horizontal</td></tr>
+        <tr><td>Font</td><td>DM Sans 15px medium — never Grandstander</td></tr>
+        <tr><td>Gap</td><td>8px</td></tr>
+        <tr><td>Press</td><td><code>transform: scale(0.98)</code></td></tr>
+        <tr><td>Auto-advance</td><td>Never. User must tap Next.</td></tr>
+      </table>
+    </div>
+
+
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>One question per screen. Never show multiple questions at once.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Never auto-advance on selection — user must explicitly tap Next. This app is about considered decisions.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Read guide" opens the article (Screen 15) without losing question progress. Back from article returns here.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Selection persists if user navigates back and returns to a question.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Last question in topic → Screen 17 Waiting for Partner.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav.</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 17 of 28</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="16-topic-article.html">← Screen 16: Topic Article</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="18-waiting-for-partner.html">Screen 18: Waiting for Partner →</a>
+  </div>
+</div>
+
+<script>
+function selectOpt(el) {
+  document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('next-btn').classList.remove('disabled');
+}
+</script>
+    </div>
+  </div>
+</div>
+<script>
+
+function selectOpt(el) {
+  document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('next-btn').classList.remove('disabled');
+}
+
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding Quiz — Daisy's Guide Designed Screens v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-06">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 28 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item active" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
+  <a class="sidebar-item" href="08-paywall.html"><span class="screen-num">08</span>Paywall</a>
+  <a class="sidebar-item" href="09-partner-linking.html"><span class="screen-num">09</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="10-home.html"><span class="screen-num">10</span>Home</a>
+  <a class="sidebar-item" href="11-progress.html"><span class="screen-num">11</span>Progress</a>
+  <a class="sidebar-item" href="12-settings.html"><span class="screen-num">12</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-manage-topics.html"><span class="screen-num">14</span>Manage Topics</a>
+  <a class="sidebar-item" href="15-topic-intro.html"><span class="screen-num">15</span>Topic Intro</a>
+  <a class="sidebar-item" href="16-topic-article.html"><span class="screen-num">16</span>Topic Article</a>
+  <a class="sidebar-item" href="17-question.html"><span class="screen-num">17</span>Question</a>
+  <a class="sidebar-item" href="18-waiting-for-partner.html"><span class="screen-num">18</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="19-alignment-reveal.html"><span class="screen-num">19</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="24-empty-home.html"><span class="screen-num">24</span>Empty Home</a>
+  <a class="sidebar-item" href="25-empty-topic-list.html"><span class="screen-num">25</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="26-payment-failure.html"><span class="screen-num">26</span>Payment Failure</a>
+  <a class="sidebar-item" href="27-connection-error.html"><span class="screen-num">27</span>Connection Error</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="28-onboarding-intro.html"><span class="screen-num">28</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Onboarding Quiz</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="01-swipeable-intro.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">02 / 28</span>
+        <a class="topbar-btn" href="03-building-your-plan.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 02 · Intro</div>
+    <div class="page-title">Onboarding Quiz</div>
+    <div class="page-desc">8 questions, one per screen. Drives personalization. Progress bar tracks position.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="01-swipeable-intro.html">← Screen 01: Swipeable Intro</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="03-building-your-plan.html">Screen 03: Building Your Plan →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="state-tab-row" id="q-tabs"></div>
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- Progress -->
+        <div class="progress-row">
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill" style="width:14%;"></div>
+          </div>
+          <div class="progress-label" id="progress-label">1 of 8</div>
+        </div>
+
+        <!-- Question card -->
+        <div class="question-card">
+          <div class="question-text" id="q-text">Where are you in your journey?</div>
+          <div class="question-subtext" id="q-subtext">We'll use this to set the right pace and prioritize the right topics.</div>
+          <div class="answer-options" id="answer-options"></div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <!-- Actions -->
+        <div class="action-region">
+          <button class="btn-continue disabled" id="continue-btn">Continue</button>
+          <button class="btn-skip">Skip this question</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Navigation flow</div>
+      <div class="flow-map">
+        <div class="flow-node from">06 Onboarding Intro</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">07 Onboarding Quiz</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">08 Building Your Plan</div>
+      </div>
+      <div class="info-box">
+        8 questions shown one at a time on the same screen template. Back chevron in header returns to previous question (or Screen 06 from Q1). Completing all 8 → Screen 08.
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">All 8 questions</div>
+      <div class="q-list">
+        <div class="q-row">
+          <div class="q-num">Q1</div>
+          <div>
+            <div class="q-text">Where are you in your journey?</div>
+            <div class="q-note">Options: Thinking about trying · Currently pregnant · Baby is already here · Expecting again</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q2</div>
+          <div>
+            <div class="q-text">When is your due date?</div>
+            <div class="q-note">Native date picker · Only shown if Q1 = "Currently pregnant"</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q3</div>
+          <div>
+            <div class="q-text">Is this your first baby?</div>
+            <div class="q-note">Options: Yes · No</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q4</div>
+          <div>
+            <div class="q-text">Do you know the sex of your baby?</div>
+            <div class="q-note">Filters circumcision topic · Options: Yes · No · Not finding out</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q5</div>
+          <div>
+            <div class="q-text">Will you be sharing a last name?</div>
+            <div class="q-note">Filters last name topic · Options: Yes · No · Still deciding</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q6</div>
+          <div>
+            <div class="q-text">Are cultural or religious traditions important to you?</div>
+            <div class="q-note">Options: Yes, very · Somewhat · Not really</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q7</div>
+          <div>
+            <div class="q-text">How often would you like us to nudge you?</div>
+            <div class="q-note">Options: Daily · A few times a week · Weekly · Don't nudge me</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q8</div>
+          <div>
+            <div class="q-text">How do you want to work through your topics?</div>
+            <div class="q-note">Options: Guided timeline · Self-directed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Question card spec</div>
+      <table class="spec-table">
+        <tr><td>Background</td><td><code>surface-card</code> (white)</td></tr>
+        <tr><td>Border radius</td><td><code>radius-xl</code> (16px)</td></tr>
+        <tr><td>Shadow</td><td><code>shadow-md</code></td></tr>
+        <tr><td>Padding</td><td>24px all sides</td></tr>
+        <tr><td>Question text</td><td>Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
+        <tr><td>Sub-text</td><td>DM Sans 13px · <code>text-secondary</code> · 6px below question · 16px below sub-text</td></tr>
+        <tr><td>Max options</td><td>6 — never more</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Answer option spec</div>
+      <table class="spec-table">
+        <tr><td>Default bg</td><td><code>surface-nested</code> (cream)</td></tr>
+        <tr><td>Selected bg</td><td><code>action-primary</code> (purple-500)</td></tr>
+        <tr><td>Default text</td><td><code>text-primary</code></td></tr>
+        <tr><td>Selected text</td><td><code>text-on-brand</code> (white)</td></tr>
+        <tr><td>Border radius</td><td><code>radius-lg</code> (12px)</td></tr>
+        <tr><td>Min height</td><td>56px</td></tr>
+        <tr><td>Padding</td><td>14px vertical · 20px horizontal</td></tr>
+        <tr><td>Font</td><td>DM Sans 15px medium — never Grandstander</td></tr>
+        <tr><td>Transition</td><td><code>background 0.15s ease · color 0.15s ease</code></td></tr>
+        <tr><td>Press state</td><td><code>transform: scale(0.98)</code></td></tr>
+        <tr><td>Gap</td><td>8px between options</td></tr>
+        <tr><td>Selection type</td><td>Single-select. Tapping another option deselects previous.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Progress bar</div>
+      <table class="spec-table">
+        <tr><td>Track height</td><td>6px · <code>radius-full</code> · <code>rgba(26,26,26,0.10)</code></td></tr>
+        <tr><td>Fill</td><td><code>purple-500</code> · <code>radius-full</code> · <code>width 0.4s ease</code> on change</td></tr>
+        <tr><td>Label</td><td>"X of 8" · 12px DM Sans medium · <code>text-secondary</code> · right of bar</td></tr>
+        <tr><td>Q1 fill</td><td>14% (1/8 × ~110% to show start)</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Continue + Skip</div>
+      <table class="spec-table">
+        <tr><td>"Continue"</td><td>Primary · 56px · <code>radius-full</code> · disabled (<code>opacity: 0.4</code>) until an option is selected</td></tr>
+        <tr><td>"Skip this question"</td><td>40px · no border · <code>text-tertiary</code> · 14px · always active · skips without saving an answer</td></tr>
+        <tr><td>Auto-advance</td><td>Never. User must explicitly tap Continue. This app is about considered decisions.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Progress Bar — labeled</span>
+        <span class="component-tag">Question Card</span>
+        <span class="component-tag">Answer Options</span>
+        <span class="component-tag">Button — Primary (lg)</span>
+        <span class="component-tag">Screen Header (back)</span>
+        <span class="component-tag">Skip (tertiary)</span>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>One question per screen — same template reused for all 8.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Q2 (due date) only appears if Q1 = "Currently pregnant". Conditional rendering.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Selection persists if user navigates back and returns to a question.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Tapping a selected option deselects it — Continue returns to disabled.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Back chevron returns to previous question. From Q1 it returns to Screen 06.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 02 of 28</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="01-swipeable-intro.html">← Screen 01: Swipeable Intro</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="03-building-your-plan.html">Screen 03: Building Your Plan →</a>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    num: 1, progress: '14%',
+    text: 'Where are you in your journey?',
+    sub: "We'll use this to set the right pace and prioritize the right topics.",
+    options: ['💭 Thinking about trying', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again']
+  },
+  {
+    num: 2, progress: '25%',
+    text: 'When is your due date?',
+    sub: "We\'ll use this to sequence topics at the right time.",
+    options: null,
+    datePicker: true
+  },
+  {
+    num: 3, progress: '38%',
+    text: 'Is this your first baby?',
+    sub: "This helps us decide which topics are most relevant for you.",
+    options: ['Yes, first time', "No, we've done this before"]
+  },
+  {
+    num: 4, progress: '50%',
+    text: "Do you know the sex of your baby?",
+    sub: "We use this to filter a small number of topics — nothing else.",
+    options: ['Yes, we know', 'No, not yet', 'Not finding out']
+  },
+  {
+    num: 5, progress: '63%',
+    text: 'Will you be sharing a last name?',
+    sub: "This lets us filter one topic if it doesn't apply to you.",
+    options: ['Yes', 'No', 'Still deciding']
+  },
+  {
+    num: 6, progress: '75%',
+    text: 'Are cultural or religious traditions important to you?',
+    sub: "We won't make assumptions — just want to prioritize the right topics.",
+    options: ['Yes, very', 'Somewhat', 'Not really']
+  },
+  {
+    num: 7, progress: '88%',
+    text: 'How often would you like us to nudge you?',
+    sub: "You can always change this in Settings.",
+    options: ['Daily', 'A few times a week', 'Weekly', "Don't nudge me"]
+  },
+  {
+    num: 8, progress: '100%',
+    text: 'How do you want to work through your topics?',
+    sub: "You can always change this in Settings.",
+    options: ['Guided timeline — sequence topics based on my due date', "Self-directed — I'll work through them in my own order"]
+  }
+];
+
+let selectedOpt = null;
+
+function showQuestion(n) {
+  const q = questions[n - 1];
+  selectedOpt = null;
+
+  // Tabs
+  document.querySelectorAll('.state-tab').forEach((t, i) => {
+    t.classList.toggle('active', i + 1 === n);
+  });
+
+  // Progress
+  document.getElementById('progress-fill').style.width = q.progress;
+  document.getElementById('progress-label').textContent = `${q.num} of 8`;
+
+  // Question
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-subtext').textContent = q.sub;
+
+  // Options
+  const container = document.getElementById('answer-options');
+  container.innerHTML = '';
+
+  if (q.datePicker) {
+    // Date picker UI
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    wrap.innerHTML = `
+      <div style="font-size:13px;font-weight:600;color:rgba(26,26,26,0.6);margin-bottom:4px;">Due date</div>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:1;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Month</div>
+        <div style="width:72px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Day</div>
+        <div style="width:80px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Year</div>
+      </div>
+      <div style="font-size:12px;color:rgba(26,26,26,0.4);margin-top:4px;">Opens native date picker on device</div>
+    `;
+    container.appendChild(wrap);
+    // Date picker auto-enables continue once any date is set
+    document.getElementById('continue-btn').classList.remove('disabled');
+    return;
+  }
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'answer-opt';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.answer-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedOpt = i;
+      document.getElementById('continue-btn').classList.remove('disabled');
+    });
+    container.appendChild(btn);
+  });
+
+  // Continue
+  document.getElementById('continue-btn').classList.add('disabled');
+}
+
+// Build tabs
+const tabRow = document.getElementById('q-tabs');
+questions.forEach((q, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'state-tab' + (i === 0 ? ' active' : '');
+  btn.textContent = `Q${q.num}`;
+  btn.addEventListener('click', () => showQuestion(q.num));
+  tabRow.appendChild(btn);
+});
+
+showQuestion(1);
+</script>
+    </div>
+  </div>
+</div>
+<script>
+
+const questions = [
+  {
+    num: 1, progress: '14%',
+    text: 'Where are you in your journey?',
+    sub: "We'll use this to set the right pace and prioritize the right topics.",
+    options: ['💭 Thinking about trying', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again']
+  },
+  {
+    num: 2, progress: '25%',
+    text: 'When is your due date?',
+    sub: "We\'ll use this to sequence topics at the right time.",
+    options: null,
+    datePicker: true
+  },
+  {
+    num: 3, progress: '38%',
+    text: 'Is this your first baby?',
+    sub: "This helps us decide which topics are most relevant for you.",
+    options: ['Yes, first time', "No, we've done this before"]
+  },
+  {
+    num: 4, progress: '50%',
+    text: "Do you know the sex of your baby?",
+    sub: "We use this to filter a small number of topics — nothing else.",
+    options: ['Yes, we know', 'No, not yet', 'Not finding out']
+  },
+  {
+    num: 5, progress: '63%',
+    text: 'Will you be sharing a last name?',
+    sub: "This lets us filter one topic if it doesn't apply to you.",
+    options: ['Yes', 'No', 'Still deciding']
+  },
+  {
+    num: 6, progress: '75%',
+    text: 'Are cultural or religious traditions important to you?',
+    sub: "We won't make assumptions — just want to prioritize the right topics.",
+    options: ['Yes, very', 'Somewhat', 'Not really']
+  },
+  {
+    num: 7, progress: '88%',
+    text: 'How often would you like us to nudge you?',
+    sub: "You can always change this in Settings.",
+    options: ['Daily', 'A few times a week', 'Weekly', "Don't nudge me"]
+  },
+  {
+    num: 8, progress: '100%',
+    text: 'How do you want to work through your topics?',
+    sub: "You can always change this in Settings.",
+    options: ['Guided timeline — sequence topics based on my due date', "Self-directed — I'll work through them in my own order"]
+  }
+];
+
+let selectedOpt = null;
+
+function showQuestion(n) {
+  const q = questions[n - 1];
+  selectedOpt = null;
+
+  // Tabs
+  document.querySelectorAll('.state-tab').forEach((t, i) => {
+    t.classList.toggle('active', i + 1 === n);
+  });
+
+  // Progress
+  document.getElementById('progress-fill').style.width = q.progress;
+  document.getElementById('progress-label').textContent = `${q.num} of 8`;
+
+  // Question
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-subtext').textContent = q.sub;
+
+  // Options
+  const container = document.getElementById('answer-options');
+  container.innerHTML = '';
+
+  if (q.datePicker) {
+    // Date picker UI
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    wrap.innerHTML = `
+      <div style="font-size:13px;font-weight:600;color:rgba(26,26,26,0.6);margin-bottom:4px;">Due date</div>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:1;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Month</div>
+        <div style="width:72px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Day</div>
+        <div style="width:80px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Year</div>
+      </div>
+      <div style="font-size:12px;color:rgba(26,26,26,0.4);margin-top:4px;">Opens native date picker on device</div>
+    `;
+    container.appendChild(wrap);
+    // Date picker auto-enables continue once any date is set
+    document.getElementById('continue-btn').classList.remove('disabled');
+    return;
+  }
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'answer-opt';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.answer-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedOpt = i;
+      document.getElementById('continue-btn').classList.remove('disabled');
+    });
+    container.appendChild(btn);
+  });
+
+  // Continue
+  document.getElementById('continue-btn').classList.add('disabled');
+}
+
+// Build tabs
+const tabRow = document.getElementById('q-tabs');
+questions.forEach((q, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'state-tab' + (i === 0 ? ' active' : '');
+  btn.textContent = `Q${q.num}`;
+  btn.addEventListener('click', () => showQuestion(q.num));
+  tabRow.appendChild(btn);
+});
+
+showQuestion(1);
+
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
