@@ -29,37 +29,19 @@ body.page-15 .screen-root .question-subtext {
   line-height: 1.5; margin-top: 6px; margin-bottom: 0;
 }
 
-/* Multi-select: checkmark on selected options */
-body.page-15 .screen-root .answer-opt.multi-opt {
-  display: flex; align-items: center; justify-content: space-between;
-  text-align: left;
-}
-body.page-15 .screen-root .answer-opt.multi-opt .check-icon {
-  width: 20px; height: 20px; border-radius: 50%;
-  border: 1.5px solid rgba(26,26,26,0.2);
-  flex-shrink: 0; margin-left: 10px;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
-}
-body.page-15 .screen-root .answer-opt.multi-opt.selected .check-icon {
-  background: white; border-color: white;
-}
-body.page-15 .screen-root .answer-opt.multi-opt.selected .check-icon::after {
-  content: '✓'; font-size: 11px; font-weight: 700; color: #5f45f2; line-height: 1;
-}
-
 /* Slider */
-body.page-15 .screen-root .slider-container { padding: 4px 0 0; cursor: pointer; }
+body.page-15 .screen-root .slider-container { padding: 4px 0 0; user-select: none; }
 body.page-15 .screen-root .slider-value-display {
   text-align: center;
   font-family: 'Grandstander', cursive;
-  font-size: 44px; font-weight: 700;
-  color: #5f45f2; line-height: 1; margin-bottom: 14px;
+  font-size: 32px; font-weight: 700;
+  color: #5f45f2; line-height: 1;
 }
+body.page-15 .screen-root .slider-gap { height: 24px; }
 body.page-15 .screen-root .slider-track {
   width: 100%; height: 6px;
-  background: #fbefe1; border-radius: 100px;
-  position: relative; cursor: pointer; margin-bottom: 10px;
+  background: rgba(26,26,26,0.12); border-radius: 100px;
+  position: relative; cursor: pointer;
 }
 body.page-15 .screen-root .slider-fill {
   position: absolute; left: 0; top: 0; height: 100%;
@@ -67,14 +49,14 @@ body.page-15 .screen-root .slider-fill {
 }
 body.page-15 .screen-root .slider-thumb {
   position: absolute; top: 50%;
-  width: 26px; height: 26px; background: white;
-  border: 2.5px solid #5f45f2; border-radius: 50%;
+  width: 28px; height: 28px; background: white;
+  border: 2px solid #5f45f2; border-radius: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 2px 8px rgba(95,69,242,0.28); pointer-events: none;
 }
 body.page-15 .screen-root .slider-labels {
   display: flex; justify-content: space-between;
-  font-size: 12px; color: rgba(26,26,26,0.38); user-select: none;
+  font-size: 12px; color: rgba(26,26,26,0.38); margin-top: 8px;
 }
 
 /* Note step */
@@ -203,7 +185,10 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <!-- Back + step indicator -->
         <div class="q-toprow">
           <div class="q-back-btn">‹</div>
-          <div class="q-step-label" id="q-step-label">Q1 of 3</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex:1;">
+            <div class="q-step-label" id="q-step-label">Q1 of 3</div>
+            <div id="optional-pill" style="display:none;padding:4px 8px;border:1px solid rgba(26,26,26,0.15);border-radius:100px;font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(26,26,26,0.38);line-height:1.2;">Optional</div>
+          </div>
           <div style="width:24px;"></div><!-- symmetry spacer -->
         </div>
 
@@ -227,7 +212,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
 
         <div class="spacer"></div>
 
-        <button class="btn-next" id="next-btn">Next →</button>
+        <button class="btn-next" id="next-btn">Continue →</button>
 
       </div>
     </div>
@@ -310,9 +295,9 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     <div class="spec-card">
       <div class="spec-card-title">Question types — comparison</div>
       <table class="spec-table">
-        <tr><td>single_select</td><td>Mutually exclusive options. Tapping a new option deselects the previous. Stored as a single option id string.</td></tr>
-        <tr><td>multi_select</td><td>Any number of options may be selected. Next enabled once ≥1 selected. Stored as array of option ids. Checkmark indicator on each selected option.</td></tr>
-        <tr><td>slider</td><td>Integer scale 1–10 with min/max labels. Tapping the track sets value immediately. Next always enabled (slider always has a value). Stored as integer.</td></tr>
+        <tr><td>single_select</td><td>Mutually exclusive. Tapping a selected option again deselects it (toggle-deselect). Continue disabled when nothing selected. Stored as a single option id string.</td></tr>
+        <tr><td>multi_select</td><td>Any number of options may be selected. Same visual as single_select — no checkmark indicator. Continue enabled once ≥1 selected. Stored as array of option ids.</td></tr>
+        <tr><td>slider</td><td>Integer scale 1–10 with min/max labels. Starts unset — value display and thumb hidden until first drag. Continue disabled until set. Drag anywhere on track; snaps to integer. Stored as integer.</td></tr>
       </table>
     </div>
 
@@ -327,17 +312,17 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Border radius</td><td><code>radius-lg</code> (12px)</td></tr>
         <tr><td>Press</td><td><code>transform: scale(0.98)</code></td></tr>
         <tr><td>Next button</td><td>Disabled until one option selected</td></tr>
-        <tr><td>Auto-advance</td><td>Never — user must tap Next explicitly</td></tr>
+        <tr><td>Toggle-deselect</td><td>Tapping the already-selected option deselects it → Continue becomes disabled again</td></tr>
+        <tr><td>Auto-advance</td><td>Never — user must tap Continue explicitly</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">multi_select spec</div>
       <table class="spec-table">
-        <tr><td>Options</td><td>Same base style as single_select</td></tr>
+        <tr><td>Options</td><td>Same base style as single_select · no visual difference between types — behavior is the only distinction</td></tr>
         <tr><td>Selected state</td><td><code>purple-500</code> bg · white text · multiple may be active simultaneously</td></tr>
-        <tr><td>Check indicator</td><td>20×20px circle · right side of option · empty circle (border) when unselected · filled with "✓" (purple on white fill) when selected</td></tr>
-        <tr><td>Next button</td><td>Disabled until ≥1 option selected</td></tr>
+        <tr><td>Continue button</td><td>Disabled until ≥1 option selected</td></tr>
         <tr><td>Answer stored</td><td>Array of all selected option ids in selection order</td></tr>
         <tr><td>subText</td><td>Always use "Select all that apply." to set expectation</td></tr>
       </table>
@@ -347,12 +332,12 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
       <div class="spec-card-title">Slider spec</div>
       <table class="spec-table">
         <tr><td>Scale</td><td>1–10 · integer steps only</td></tr>
-        <tr><td>Value display</td><td>Current value in Grandstander 44px bold · <code>purple-500</code> · centered above track</td></tr>
-        <tr><td>Track</td><td>Full width · 6px height · <code>radius-full</code> · cream bg · purple fill from left to thumb</td></tr>
-        <tr><td>Thumb</td><td>26px circle · white · <code>2.5px solid purple-500</code> border · <code>box-shadow: 0 2px 8px rgba(95,69,242,0.28)</code></td></tr>
-        <tr><td>Tap-to-set</td><td>Tapping anywhere on the track sets value to the nearest integer · no drag required in V1</td></tr>
-        <tr><td>Labels</td><td><code>minLabel</code> (left) and <code>maxLabel</code> (right) · 12px <code>text-tertiary</code> · below track</td></tr>
-        <tr><td>Initial state</td><td>Slider starts at midpoint (5) · Next always enabled</td></tr>
+        <tr><td>Value display</td><td>Grandstander 32px bold · <code>purple-500</code> · centered above track · <strong>hidden when unset</strong></td></tr>
+        <tr><td>Track</td><td>Full width · 6px height · <code>radius-full</code> · <code>rgba(26,26,26,0.12)</code> bg · purple fill from left to thumb</td></tr>
+        <tr><td>Thumb</td><td>28px circle · white · <code>2px solid purple-500</code> border · <code>box-shadow: 0 2px 8px rgba(95,69,242,0.28)</code> · <strong>hidden when unset</strong></td></tr>
+        <tr><td>Drag interaction</td><td>Mousedown/touchstart on track starts drag · value follows pointer · snaps to integer on each step · haptic pulse (<code>navigator.vibrate(10)</code>) on each integer change</td></tr>
+        <tr><td>Labels</td><td><code>minLabel</code> (left) and <code>maxLabel</code> (right) · 12px <code>text-tertiary</code> · below track · always visible</td></tr>
+        <tr><td>Initial state</td><td>Unset — value display and thumb hidden · Continue disabled until first drag</td></tr>
         <tr><td>Answer stored</td><td>Integer 1–10</td></tr>
       </table>
     </div>
@@ -361,7 +346,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
       <div class="spec-card-title">Note step spec</div>
       <table class="spec-table">
         <tr><td>Position in flow</td><td>After the last question (questions[n-1]) · before Submit → Screen 18</td></tr>
-        <tr><td>Step indicator</td><td>"Note (optional)" · replaces "Q3 of 3" in the step label</td></tr>
+        <tr><td>Step indicator</td><td>"Note" label + "Optional" pill rendered inline beside it · pill hidden on all question steps</td></tr>
         <tr><td>Progress bar</td><td>100% fill — all questions are done</td></tr>
         <tr><td>"Read guide"</td><td>Remains visible — user can still review the article</td></tr>
         <tr><td>Card heading</td><td>"Anything you want to add?" · Grandstander 20px bold · <code>text-primary</code></td></tr>
@@ -391,8 +376,8 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     <div class="spec-card">
       <div class="spec-card-title">Progress & step indicator</div>
       <table class="spec-table">
-        <tr><td>Step label</td><td>"Q{i} of {n}" (e.g. "Q2 of 4") for question steps · "Note (optional)" for the note step</td></tr>
-        <tr><td>Progress fill</td><td><code>currentStep / totalSteps * 100%</code> · questions count as steps · Note step counts as step n+1 · so a 3-question topic has 4 total steps</td></tr>
+        <tr><td>Step label</td><td>"Q{i} of {n}" (e.g. "Q2 of 4") for question steps · "Note" + inline "Optional" pill for the note step</td></tr>
+        <tr><td>Progress fill</td><td>Questions only — <code>currentQuestion / totalQuestions * 100%</code> · Note step holds at 100% (all questions done) · Note step does not extend the bar beyond full</td></tr>
         <tr><td>Track</td><td>Full-width · 4px · cream bg · <code>radius-full</code> · purple fill</td></tr>
         <tr><td>Animation</td><td><code>transition: width 0.3s ease</code> when advancing</td></tr>
       </table>
@@ -478,41 +463,41 @@ const Q_DATA = {
     subText: 'There are no wrong answers here.',
     partnerNote: "Jordan won't see your answer until they've finished too.",
     slider: { min: 1, max: 10, minLabel: 'No restrictions', maxLabel: 'Screen-free' },
-    selected: 6
+    selected: null
   },
   note: {
-    stepLabel: 'Note (optional)', progress: 100,
+    stepLabel: 'Note', progress: 100,
     heading: 'Anything you want to add?',
     subText: 'Jordan sees this after you both complete this topic.',
   }
 };
 
+let sliderDrag = { active: false, lastInt: null };
+
 function showType(key) {
   ['single_select','multi_select','slider','note'].forEach(k => {
-    const btn = document.getElementById('tab-' + k);
+    const tab = document.getElementById('tab-' + k);
     const active = k === key;
-    btn.style.background  = active ? '#5f45f2' : 'white';
-    btn.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
-    btn.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+    tab.style.background  = active ? '#5f45f2' : 'white';
+    tab.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    tab.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
   });
 
   const d = Q_DATA[key];
 
-  /* progress */
-  document.getElementById('q-step-label').textContent    = d.stepLabel;
-  document.getElementById('progress-fill').style.width   = d.progress + '%';
+  document.getElementById('q-step-label').textContent  = d.stepLabel;
+  document.getElementById('progress-fill').style.width = d.progress + '%';
+  document.getElementById('optional-pill').style.display = key === 'note' ? 'block' : 'none';
 
-  /* question text / heading */
   const textEl = document.getElementById('q-text');
   if (key === 'note') {
-    textEl.textContent  = d.heading;
-    textEl.className    = 'note-heading';
+    textEl.textContent = d.heading;
+    textEl.className   = 'note-heading';
   } else {
-    textEl.textContent  = d.text;
-    textEl.className    = 'question-text';
+    textEl.textContent = d.text;
+    textEl.className   = 'question-text';
   }
 
-  /* subtext */
   const subEl = document.getElementById('q-subtext');
   if (d.subText) {
     subEl.textContent   = d.subText;
@@ -521,65 +506,67 @@ function showType(key) {
     subEl.style.display = 'none';
   }
 
-  /* partner note */
   const noteEl = document.getElementById('partner-note');
-  if (key === 'note') {
-    noteEl.style.display = 'none';
-  } else {
-    noteEl.style.display = 'block';
-    noteEl.textContent   = d.partnerNote;
-  }
+  noteEl.style.display = key === 'note' ? 'none' : 'block';
+  if (key !== 'note') noteEl.textContent = d.partnerNote;
 
-  /* answer area + next button */
   const area = document.getElementById('answer-area');
   const btn  = document.getElementById('next-btn');
 
   if (key === 'single_select') {
+    const hasSel = d.selected !== null;
     area.innerHTML = '<div class="answer-opts">' +
-      d.options.map(o => `<button class="answer-opt${o.id === d.selected ? ' selected' : ''}" data-id="${o.id}" onclick="selectSingle(this)">${o.text}</button>`).join('') +
-      '</div>';
-    btn.className   = 'btn-next';
-    btn.textContent = 'Next →';
+      d.options.map(o =>
+        `<button class="answer-opt${o.id === d.selected ? ' selected' : ''}" data-id="${o.id}" onclick="selectSingle(this)">${o.text}</button>`
+      ).join('') + '</div>';
+    btn.textContent = 'Continue →';
+    btn.classList.toggle('disabled', !hasSel);
 
   } else if (key === 'multi_select') {
+    const hasSel = d.selected.length > 0;
     area.innerHTML = '<div class="answer-opts">' +
       d.options.map(o => {
         const sel = d.selected.includes(o.id) ? ' selected' : '';
-        return `<button class="answer-opt multi-opt${sel}" data-id="${o.id}" onclick="toggleMulti(this)"><span>${o.text}</span><span class="check-icon"></span></button>`;
-      }).join('') +
-      '</div>';
-    btn.className   = 'btn-next';
-    btn.textContent = 'Next →';
+        return `<button class="answer-opt${sel}" data-id="${o.id}" onclick="toggleMulti(this)">${o.text}</button>`;
+      }).join('') + '</div>';
+    btn.textContent = 'Continue →';
+    btn.classList.toggle('disabled', !hasSel);
 
   } else if (key === 'slider') {
     area.innerHTML = `
       <div class="slider-container">
-        <div class="slider-value-display" id="slider-val">${d.selected}</div>
-        <div class="slider-track" id="slider-track" onclick="handleSliderClick(event)">
-          <div class="slider-fill" id="slider-fill"></div>
-          <div class="slider-thumb" id="slider-thumb"></div>
+        <div id="slider-val-wrapper" style="display:none;">
+          <div class="slider-value-display" id="slider-val"></div>
+          <div class="slider-gap"></div>
+        </div>
+        <div class="slider-track" id="slider-track">
+          <div class="slider-fill" id="slider-fill" style="width:0;"></div>
+          <div class="slider-thumb" id="slider-thumb" style="display:none;"></div>
         </div>
         <div class="slider-labels">
           <span>${d.slider.minLabel}</span>
           <span>${d.slider.maxLabel}</span>
         </div>
       </div>`;
-    setSlider(d.selected, d.slider.min, d.slider.max);
-    btn.className   = 'btn-next';
-    btn.textContent = 'Next →';
+    btn.textContent = 'Continue →';
+    btn.classList.add('disabled');
+    initSlider();
 
   } else {
     area.innerHTML = `
       <textarea class="note-textarea" id="note-input" placeholder="Your thoughts, context, or questions for later…" oninput="updateCharCount(this.value.length)" maxlength="280"></textarea>
       <div class="note-char-count" id="char-count">280 characters remaining</div>`;
-    btn.className   = 'btn-next';
     btn.textContent = 'Submit →';
+    btn.classList.remove('disabled');
   }
 }
 
 function selectSingle(el) {
+  const wasSelected = el.classList.contains('selected');
   document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
+  if (!wasSelected) el.classList.add('selected');
+  const hasSel = document.querySelectorAll('.answer-opt.selected').length > 0;
+  document.getElementById('next-btn').classList.toggle('disabled', !hasSel);
 }
 
 function toggleMulti(el) {
@@ -588,19 +575,65 @@ function toggleMulti(el) {
   document.getElementById('next-btn').classList.toggle('disabled', !any);
 }
 
-function setSlider(value, min, max) {
-  const pct = ((value - min) / (max - min)) * 100;
-  document.getElementById('slider-val').textContent   = value;
-  document.getElementById('slider-fill').style.width  = pct + '%';
-  document.getElementById('slider-thumb').style.left  = pct + '%';
+function initSlider() {
+  const track = document.getElementById('slider-track');
+  if (!track) return;
+  track.addEventListener('mousedown', startDrag);
+  track.addEventListener('touchstart', startDrag, { passive: false });
 }
 
-function handleSliderClick(e) {
+function startDrag(e) {
+  e.preventDefault();
+  sliderDrag = { active: true, lastInt: null };
+  document.addEventListener('mousemove', moveDrag);
+  document.addEventListener('mouseup', endDrag);
+  document.addEventListener('touchmove', moveDrag, { passive: false });
+  document.addEventListener('touchend', endDrag);
+  moveDrag(e);
+}
+
+function moveDrag(e) {
+  if (!sliderDrag.active) return;
   const track = document.getElementById('slider-track');
-  const rect  = track.getBoundingClientRect();
-  const pct   = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-  const value = Math.round(1 + pct * 9);
-  setSlider(value, 1, 10);
+  if (!track) return;
+  const rect    = track.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const pct     = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+  const value   = Math.round(1 + pct * 9);
+  if (value !== sliderDrag.lastInt) { sliderDrag.lastInt = value; triggerHaptic(); }
+  setSlider(value);
+}
+
+function endDrag(e) {
+  if (!sliderDrag.active) return;
+  sliderDrag.active = false;
+  document.removeEventListener('mousemove', moveDrag);
+  document.removeEventListener('mouseup', endDrag);
+  document.removeEventListener('touchmove', moveDrag);
+  document.removeEventListener('touchend', endDrag);
+  const track = document.getElementById('slider-track');
+  if (!track) return;
+  const rect    = track.getBoundingClientRect();
+  const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+  const pct     = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+  setSlider(Math.round(1 + pct * 9));
+}
+
+function setSlider(value) {
+  const pct     = ((value - 1) / 9) * 100;
+  const wrapper = document.getElementById('slider-val-wrapper');
+  const valEl   = document.getElementById('slider-val');
+  const fillEl  = document.getElementById('slider-fill');
+  const thumbEl = document.getElementById('slider-thumb');
+  if (wrapper) wrapper.style.display = 'block';
+  if (valEl)   valEl.textContent = value;
+  if (fillEl)  fillEl.style.width = pct + '%';
+  if (thumbEl) { thumbEl.style.display = 'block'; thumbEl.style.left = pct + '%'; }
+  document.getElementById('next-btn').classList.remove('disabled');
+}
+
+function triggerHaptic() {
+  if (navigator.vibrate) navigator.vibrate(10);
 }
 
 function updateCharCount(len) {
