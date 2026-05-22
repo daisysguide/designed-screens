@@ -194,6 +194,10 @@
         </tr>
       </table>
       <div class="info-box">Everything else — social auth buttons, divider, toggle, input field, "Send code" button — is <strong>identical</strong> to Screen 02. Reuse the same components.</div>
+      <div class="info-box" style="margin-top:14px;">
+        <strong>Returning users with completed purchase:</strong> OTP success → Screen 10 Home.<br><br>
+        <strong>Returning users without completed purchase:</strong> OTP success → Screen 07 Personalized Results → Manage Topics → Paywall (skip the "Building your plan" animation since their plan already exists). This re-creates the emotional pre-paywall sequence before the conversion ask.
+      </div>
     </div>
 
     <div class="spec-card">
@@ -256,7 +260,7 @@ function showState(state) {
   } else {
     field.classList.add('focused');
     content.className = 'field-value';
-    content.textContent = '+1 (604) 555-';
+    content.textContent = '+1 (972) 555-';
     btn.classList.remove('disabled');
   }
 }
@@ -303,7 +307,7 @@ function showState(state) {
   } else {
     field.classList.add('focused');
     content.className = 'field-value';
-    content.textContent = '+1 (604) 555-';
+    content.textContent = '+1 (972) 555-';
     btn.classList.remove('disabled');
   }
 }

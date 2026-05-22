@@ -73,7 +73,7 @@
   <div>
     <div class="screen-tag">Screen 13 · Topic Flow</div>
     <div class="page-title">Topic List</div>
-    <div class="page-desc">All 7 categories. Four topic states. Collapsible groups. "Manage topics" top right.</div>
+    <div class="page-desc">All 7 categories. Five topic states + Locked. Category / Stage grouping toggle. Collapsible groups. "Manage topics" top right.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="12-settings.html">← Screen 12: Settings</a>
@@ -130,6 +130,16 @@
                 <div class="state-dot waiting"></div>
                 <div class="topic-label-wrap"><div class="topic-name dimmed">Health insurance</div></div>
                 <div class="topic-right"><span class="status-pill pill-waiting">⏳ Waiting</span></div>
+              </div>
+              <div class="topic-row">
+                <div class="state-dot pending"></div>
+                <div class="topic-label-wrap"><div class="topic-name">Do we have life insurance?</div></div>
+                <div class="topic-right"><span class="status-pill pill-pending">Pending</span></div>
+              </div>
+              <div class="topic-row">
+                <div class="state-dot resolved"></div>
+                <div class="topic-label-wrap"><div class="topic-name">Where will we raise our family?</div></div>
+                <div class="topic-right"><span class="status-pill pill-resolved">✓ Resolved</span></div>
               </div>
               <div class="topic-row">
                 <div class="state-dot locked"></div>
@@ -209,7 +219,7 @@
             <div class="nav-tab-label">Home</div>
           </div>
           <div class="nav-tab active">
-            <div class="nav-tab-icon">📋</div>
+            <div class="nav-tab-icon">📚</div>
             <div class="nav-tab-label" style="color:var(--purple-500);">Topics</div>
           </div>
           <div class="nav-tab">
@@ -244,38 +254,46 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Four topic states</div>
+      <div class="spec-card-title">Five topic states</div>
       <div class="state-legend">
         <div class="state-legend-row">
-          <div class="state-legend-dot" style="background:#157a46;"></div>
+          <div class="state-legend-dot" style="background:rgba(26,26,26,0.18);"></div>
           <div>
-            <div class="legend-label">Complete</div>
-            <div class="legend-sub">Green dot · "✓ Complete" green pill · full opacity · both partners have answered and revealed</div>
+            <div class="legend-label">Not started</div>
+            <div class="legend-sub">Neutral gray dot · "Not started" neutral pill · neither partner has answered</div>
           </div>
         </div>
         <div class="state-legend-row">
           <div class="state-legend-dot" style="background:var(--purple-500);"></div>
           <div>
             <div class="legend-label">Your turn</div>
-            <div class="legend-sub">Purple dot · "Your turn" filled purple pill · topic name bold · partner has answered, user hasn't</div>
+            <div class="legend-sub">Purple dot · filled <code>purple-500</code> "Your turn" pill · topic name <strong>bold</strong> · partner has answered, user hasn't</div>
           </div>
         </div>
         <div class="state-legend-row">
           <div class="state-legend-dot" style="background:rgba(26,26,26,0.25);"></div>
           <div>
-            <div class="legend-label">Waiting on partner</div>
+            <div class="legend-label">Waiting</div>
             <div class="legend-sub">Gray dot · "⏳ Waiting" neutral pill · user has answered, partner hasn't</div>
           </div>
         </div>
         <div class="state-legend-row">
-          <div class="state-legend-dot" style="background:rgba(26,26,26,0.12);"></div>
+          <div class="state-legend-dot" style="background:#d8a23a;"></div>
           <div>
-            <div class="legend-label">Locked</div>
-            <div class="legend-sub">Faint dot · "🔒 Locked" muted pill · <code>opacity: 0.55</code> · non-interactive · no tap navigation</div>
+            <div class="legend-label">Pending</div>
+            <div class="legend-sub">Amber dot · "Pending" amber soft-fill pill · both answered + revealed, user hasn't picked Resolved yet. Uses same amber yellow as the badge notification card on Screen 10.</div>
+          </div>
+        </div>
+        <div class="state-legend-row">
+          <div class="state-legend-dot" style="background:#157a46;"></div>
+          <div>
+            <div class="legend-label">Resolved</div>
+            <div class="legend-sub">Green dot · "✓ Resolved" pill · <code>#157a46</code> text · <code>rgba(119,234,175,0.28)</code> bg · user picked Resolved on Screen 20</div>
           </div>
         </div>
       </div>
-      <div class="info-box">Priority order in list: <strong>Your turn</strong> first, then available, then waiting, then complete, then locked.</div>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-top:14px;"><strong>Locked</strong> — prediction cards only. 🔒 muted pill · <code>opacity: 0.55</code> · non-interactive · no tap navigation. Not a regular topic state.</p>
+      <div class="info-box">Sort priority: <strong>Your turn</strong> → Not started → Waiting → Pending → Resolved → Locked.</div>
     </div>
 
     <div class="spec-card">
@@ -308,13 +326,39 @@
         <tr><td>Title</td><td>"Your topics" · Grandstander 22px bold</td></tr>
         <tr><td>Subtitle</td><td>"28 topics · 10 complete" · 13px · <code>text-secondary</code> · live count</td></tr>
         <tr><td>"Manage topics"</td><td>Right-aligned · 13px DM Sans bold · <code>purple-500</code> · underline · → Screen 14</td></tr>
+        <tr><td>Grouping toggle</td><td>Right-aligned · below "Manage topics" · segment toggle · "By category" default — see Grouping toggle spec</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Grouping toggle</div>
+      <table class="spec-table">
+        <tr><td>Position</td><td>Right side of screen header, below "Manage topics" link</td></tr>
+        <tr><td>Options</td><td>"By category" | "By stage"</td></tr>
+        <tr><td>Style</td><td>Segment toggle · <code>radius-full</code> · <code>1.5px solid border-default</code> outline · white bg · 32px height (compact)</td></tr>
+        <tr><td>Default</td><td>"By category"</td></tr>
+        <tr><td>Active option</td><td><code>purple-500</code> fill · white text</td></tr>
+        <tr><td>Inactive option</td><td>transparent · <code>text-secondary</code></td></tr>
+        <tr><td>On switch</td><td>Re-group the topic list using the new key. Smooth transition; no full re-render.</td></tr>
+        <tr><td>State persistence</td><td>Per-user, per-screen. Remembered separately from Progress screen's toggle.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Stage groupings (By stage view)</div>
+      <table class="spec-table">
+        <tr><td>Stage labels</td><td>Mirror the book's alternative TOC ordering — content team to provide exact labels</td></tr>
+        <tr><td>Within-stage order</td><td>Topics in the order they appear in the book's alt-TOC</td></tr>
+        <tr><td>Visual</td><td>Same group-header style as categories · "X topics" count badge inline</td></tr>
+        <tr><td>Includes prediction cards</td><td>Yes, sorted into whichever stage they belong to</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
-        <span class="component-tag">Topic rows ×4 states</span>
+        <span class="component-tag">Topic rows ×5 states</span>
+        <span class="component-tag">Segment Toggle (grouping)</span>
         <span class="component-tag">Category group headers</span>
         <span class="component-tag">Badge / Status Pill</span>
         <span class="component-tag">Bottom Nav (Topics active)</span>
@@ -327,7 +371,8 @@
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>All 7 categories present. Default: first category with actionable topics expanded, rest collapsed.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Tapping a category header toggles expand/collapse with chevron animation.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Locked topics: no tap, no navigation. Visually de-emphasized at ~55% opacity.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Sort priority within each group: Your turn → Not started → Waiting → Pending → Resolved → Locked.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Locked topics: no tap, no navigation. Visually de-emphasized at ~55% opacity. Applies to prediction cards only.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Manage topics" link always visible top right — never scrolls away.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Topic count in subtitle ("28 topics · 10 complete") updates live as topics are completed.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim — same as throughout the app.</span></div>

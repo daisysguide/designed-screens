@@ -5748,7 +5748,7 @@ body.page-20 .screen-root .summary-label {
 
 body.page-20 .screen-root .summary-text { font-size: 14px; color: var(--text-primary); line-height: 1.6; }
 
-body.page-20 .screen-root /* Original answers toggle */
+body.page-20 .screen-root 
   .history-toggle {
     background: rgba(26,26,26,0.04);
     border: 1px solid var(--border-default);

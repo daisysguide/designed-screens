@@ -99,6 +99,11 @@
           <div class="waiting-heading">Your answers are locked in 🔒</div>
           <div class="waiting-body">Waiting on Jordan to finish their side. The reveal happens the moment you've both answered.</div>
 
+          <div style="text-align:center;margin:8px 0 4px;">
+            <span style="font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;color:#5f45f2;cursor:pointer;">Change my answers</span>
+            <div style="font-size:12px;color:rgba(26,26,26,0.45);margin-top:4px;">You can edit until Jordan finishes.</div>
+          </div>
+
           <!-- In the meantime card -->
           <div class="meantime-card">
             <div class="meantime-title">In the meantime</div>
@@ -152,6 +157,18 @@
     </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">Edit my answers affordance</div>
+      <table class="spec-table">
+        <tr><td>Position</td><td>Below the "Your answers are locked in" card · above the Poke section</td></tr>
+        <tr><td>Style</td><td>Text link · 14px DM Sans semibold · <code>purple-500</code></td></tr>
+        <tr><td>Label</td><td>"Change my answers"</td></tr>
+        <tr><td>Helper text</td><td>"You can edit until [partnerName] finishes." · 12px · <code>text-tertiary</code> · below label</td></tr>
+        <tr><td>On tap</td><td>Routes through Screen 17 → 17b with previous answers pre-filled</td></tr>
+        <tr><td>On submit</td><td>Returns to Screen 18 in Waiting state</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Waiting animation</div>
       <table class="spec-table">
         <tr><td>Container</td><td>88×88px circle · white bg · <code>shadow-md</code></td></tr>
@@ -189,6 +206,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>When partner completes their answers, the app sends a push to the user and navigates them to Screen 19 Alignment Reveal — even if they've left this screen and gone to Home.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Back to home" → Screen 10 Home. User will receive a push notification when partner is done.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Edits allowed until partner submits. Once partner submits, the topic transitions to "Ready to reveal" and the edit affordance is removed. If user is mid-edit when partner submits, the user finishes their edit; partner's submit queues; reveal triggers only when both have a fresh submission.</span></div>
       </div>
     </div>
 

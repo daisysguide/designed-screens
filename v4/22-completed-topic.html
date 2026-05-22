@@ -86,8 +86,7 @@
   <div class="phone-wrap">
     <div class="state-tab-row">
       <button class="state-tab active" id="tab-resolved" onclick="showState('resolved')">✅ Resolved</button>
-      <button class="state-tab" id="tab-talk" onclick="showState('talk')">💬 Talk about it</button>
-      <button class="state-tab" id="tab-revisit" onclick="showState('revisit')">🔖 Revisit later</button>
+      <button class="state-tab" id="tab-needs" onclick="showState('needs')">🔁 Needs more work</button>
     </div>
 
     <div class="phone">
@@ -101,7 +100,7 @@
 
         <!-- Reflection status -->
         <div class="reflection-row">
-          <div class="reflection-pill pill-resolved" id="reflection-pill">✅ Marked resolved</div>
+          <div class="reflection-pill pill-resolved" id="reflection-pill">✅ Resolved</div>
           <div class="tap-change">Tap to change</div>
         </div>
 
@@ -121,12 +120,6 @@
         <div class="summary-card">
           <div class="summary-label">✨ For you two</div>
           <div class="summary-text">You're both thinking about trust, but defining it differently. Worth a quick chat — you probably agree more than this looks.</div>
-        </div>
-
-        <!-- Original answers toggle (shows when re-answered) -->
-        <div class="history-toggle" id="history-toggle" style="display:none;">
-          <div class="history-label">Original answers ›</div>
-          <div class="history-chevron">›</div>
         </div>
 
         <div class="divider"></div>
@@ -156,13 +149,12 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Three reflection status states</div>
+      <div class="spec-card-title">Two reflection status states</div>
       <table class="spec-table">
-        <tr><td>✅ Marked resolved</td><td>Green soft fill pill · "Tap to change" inline right</td></tr>
-        <tr><td>💬 Talk about it</td><td>Purple soft fill pill</td></tr>
-        <tr><td>🔖 Revisit later</td><td>Yellow soft fill pill</td></tr>
-        <tr><td>Tap to change</td><td>Tapping the pill opens the same 3-option card set as Screen 20 Post-Reveal Reflection — inline, no modal</td></tr>
+        <tr><td>✅ Resolved</td><td>Green soft-fill pill (<code>#157a46</code> text · <code>rgba(119,234,175,0.28)</code> bg) · "Tap to change" inline right in <code>text-tertiary</code> · 12px · tap opens Screen 20 2-option selector</td></tr>
+        <tr><td>🔁 Needs more work</td><td>Amber soft-fill pill · "Tap to change" inline right · tap opens Screen 20 2-option selector</td></tr>
       </table>
+      <div class="info-box">"Talk about it" and "Revisit later" are removed. Both are folded into "Needs more work." The topic stays in Pending state on the Topic List until the user picks Resolved.</div>
     </div>
 
     <div class="spec-card">
@@ -170,28 +162,18 @@
       <table class="spec-table">
         <tr><td>Layout</td><td>Same as Screen 19 Alignment Reveal — side by side, 10px gap, min-height 100px</td></tr>
         <tr><td>Difference</td><td>No entry animation — this is a static record, not a reveal moment</td></tr>
-        <tr><td>Content</td><td>Most recent answers. If re-answered, "Original answers" toggle shows previous.</td></tr>
+        <tr><td>Content</td><td>Most recent answers.</td></tr>
       </table>
     </div>
 
-    <div class="spec-card">
-      <div class="spec-card-title">Original answers toggle</div>
-      <table class="spec-table">
-        <tr><td>Visibility</td><td>Only shown if the couple has re-answered this topic at least once</td></tr>
-        <tr><td>Style</td><td>Subtle cream bg row · <code>border-default</code> · chevron right · collapses/expands</td></tr>
-        <tr><td>Expanded content</td><td>Same reveal box pair layout showing original answers, with "Original" label above</td></tr>
-        <tr><td>Purpose</td><td>Lets couples see how their thinking evolved after a conversation</td></tr>
-      </table>
-    </div>
 
-    <div class="spec-card">
+<div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
         <span class="component-tag">Reveal Box (read mode)</span>
         <span class="component-tag">Summary Card (dashed)</span>
         <span class="component-tag">Reflection Status Pill</span>
-        <span class="component-tag">Original Answers toggle</span>
-        <span class="component-tag">Button — Secondary</span>
+<span class="component-tag">Button — Secondary</span>
         <span class="component-tag">Screen Header (back)</span>
       </div>
     </div>
@@ -200,8 +182,7 @@
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>Read-only — same visual layout as Screen 19 but no animation plays.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Reflection status pill is tappable — opens the 3-option selector inline (same options as Screen 20).</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>"Original answers" section only appears if the couple has re-answered — hidden on first completion.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Reflection status pill is tappable — opens Screen 20 with the 2-option selector (Resolved · Needs more work). Selection required — no skip.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Update our answers" → Screen 21 Re-answer Flow (gated confirm step).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
       </div>
@@ -220,12 +201,11 @@
 
 <script>
 const states = {
-  resolved: { cls: 'reflection-pill pill-resolved', text: '✅ Marked resolved' },
-  talk:     { cls: 'reflection-pill pill-talk',     text: '💬 Talk about it' },
-  revisit:  { cls: 'reflection-pill pill-revisit',  text: '🔖 Revisit later' }
+  resolved: { cls: 'reflection-pill pill-resolved', text: '✅ Resolved' },
+  needs:    { cls: 'reflection-pill pill-needs',    text: '🔁 Needs more work' }
 };
 function showState(s) {
-  ['resolved','talk','revisit'].forEach(k => {
+  ['resolved','needs'].forEach(k => {
     document.getElementById('tab-' + k).classList.toggle('active', k === s);
   });
   const pill = document.getElementById('reflection-pill');
@@ -239,12 +219,11 @@ function showState(s) {
 <script>
 
 const states = {
-  resolved: { cls: 'reflection-pill pill-resolved', text: '✅ Marked resolved' },
-  talk:     { cls: 'reflection-pill pill-talk',     text: '💬 Talk about it' },
-  revisit:  { cls: 'reflection-pill pill-revisit',  text: '🔖 Revisit later' }
+  resolved: { cls: 'reflection-pill pill-resolved', text: '✅ Resolved' },
+  needs:    { cls: 'reflection-pill pill-needs',    text: '🔁 Needs more work' }
 };
 function showState(s) {
-  ['resolved','talk','revisit'].forEach(k => {
+  ['resolved','needs'].forEach(k => {
     document.getElementById('tab-' + k).classList.toggle('active', k === s);
   });
   const pill = document.getElementById('reflection-pill');

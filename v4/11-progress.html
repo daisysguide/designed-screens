@@ -73,7 +73,7 @@
   <div>
     <div class="screen-tag">Screen 11 · Home Base</div>
     <div class="page-title">Progress</div>
-    <div class="page-desc">Journey overview. Stats row, overall bar, per-category progress rows, chaos meter easter egg. Progress tab active.</div>
+    <div class="page-desc">Per-category stacked progress bars. Alignment score. Chaos meter. Category / Stage grouping toggle.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="10-home.html">← Screen 10: Home</a>
@@ -197,7 +197,7 @@
             <div class="nav-tab-label">Home</div>
           </div>
           <div class="nav-tab">
-            <div class="nav-tab-icon">📋</div>
+            <div class="nav-tab-icon">📚</div>
             <div class="nav-tab-label">Topics</div>
           </div>
           <div class="nav-tab active">
@@ -228,6 +228,18 @@
     </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">Grouping toggle</div>
+      <table class="spec-table">
+        <tr><td>Position</td><td>Right side of screen header</td></tr>
+        <tr><td>Options</td><td>"By category" | "By stage"</td></tr>
+        <tr><td>Style</td><td>Segment toggle · <code>radius-full</code> · <code>1.5px solid border-default</code> outline · white bg · 32px height (compact)</td></tr>
+        <tr><td>Default</td><td>"By category"</td></tr>
+        <tr><td>Active option</td><td><code>purple-500</code> fill · white text</td></tr>
+        <tr><td>State persistence</td><td>Per-user, per-screen. Independent of Topic List toggle state.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Stats Row</div>
       <table class="spec-table">
         <tr><td>Layout</td><td>3 equal-width columns inside a white card · <code>radius-xl</code> · <code>shadow-md</code></td></tr>
@@ -237,6 +249,7 @@
         <tr><td>Col 1</td><td>"10" / "COMPLETE" — dynamic</td></tr>
         <tr><td>Col 2</td><td>"18" / "REMAINING" — dynamic</td></tr>
         <tr><td>Col 3</td><td>"74%" / "ALIGNED" — alignment score</td></tr>
+        <tr><td>Threshold gate</td><td>Aligned column hidden when revealed topics &lt; 5. Stats row drops to 2-column layout until threshold is met.</td></tr>
       </table>
     </div>
 
@@ -252,14 +265,25 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Category progress rows</div>
+      <div class="spec-card-title">Stacked per-group progress bar</div>
       <table class="spec-table">
-        <tr><td>Category name</td><td>13px DM Sans medium · <code>text-primary</code> · Title Case</td></tr>
-        <tr><td>Count</td><td>"X of Y" · 12px · <code>text-secondary</code> · right-aligned</td></tr>
-        <tr><td>Bar</td><td>6px track · <code>rgba(26,26,26,0.08)</code> bg (slightly lighter inside card context) · <code>purple-500</code> fill</td></tr>
-        <tr><td>At 0%</td><td>Empty track shown — the pattern communicates "not started"</td></tr>
+        <tr><td>Bar height</td><td>8px</td></tr>
+        <tr><td>Track bg</td><td><code>rgba(26,26,26,0.10)</code></td></tr>
+        <tr><td>Segments (left to right)</td><td>Resolved · Pending · In progress (Your turn + Waiting combined) · remainder = Not started (empty track)</td></tr>
+        <tr><td>Resolved color</td><td><code>#1c7d3e</code> (green success)</td></tr>
+        <tr><td>Pending color</td><td><code>#d8a23a</code> (amber, soft)</td></tr>
+        <tr><td>In progress color</td><td><code>purple-500</code> (#5f45f2)</td></tr>
+        <tr><td>Not started</td><td>Empty portion of track — no fill, shows track bg</td></tr>
         <tr><td>Row gap</td><td>12px between rows</td></tr>
-        <tr><td>All 7 categories</td><td>Always shown in fixed order matching the book</td></tr>
+      </table>
+      <div class="info-box">Example: "The Basics: 2 resolved, 1 pending, 1 in progress, 1 not started" renders as a 5-segment track with green + amber + purple + empty.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Empty state gating</div>
+      <table class="spec-table">
+        <tr><td>Chaos meter</td><td>Hidden until user has 3 or more revealed topics. Below that threshold, the card does not render at all.</td></tr>
+        <tr><td>Alignment %</td><td>Hidden until user has 5 or more revealed topics. Below that threshold, the top stats row drops to 2 columns (Complete · Remaining); the third column reappears once threshold is met.</td></tr>
       </table>
     </div>
 
@@ -293,6 +317,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>All numbers are dynamic — update as topics are completed.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Alignment score (74%) is calculated from all revealed topics — ratio of aligned/mostly-aligned to worth-a-conversation reveals.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Milestone animation triggers when a full category reaches 100% — confetti or celebration moment.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Milestone celebration animation triggers on either a full category at 100% OR a full stage at 100%. Same animation, two triggers.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim. Fixed order matching the book.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Chaos meter never explains its calculation — it's meant to be a little mysterious and funny.</span></div>
       </div>

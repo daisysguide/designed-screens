@@ -105,7 +105,7 @@
           <div class="list-group">
             <div class="list-row">
               <div class="row-label">Nudge frequency</div>
-              <div class="row-value">Twice a week</div>
+              <div class="row-value">A few times a week</div>
               <div class="row-chevron">›</div>
             </div>
             <div class="list-row">
@@ -127,6 +127,9 @@
               <div class="toggle" style="margin-top:2px;" onclick="this.classList.toggle('off')">
                 <div class="toggle-thumb"></div>
               </div>
+            </div>
+            <div class="list-row" style="cursor:pointer;">
+              <div class="row-label" style="color:#5f45f2;">I'm in a different stage now</div>
             </div>
             <!-- Date row — standalone, always visible when Q1 applies; hidden for "Thinking about trying" -->
             <div class="list-row" id="date-row">
@@ -151,7 +154,7 @@
           <div class="list-group">
             <div class="list-row">
               <div class="partner-avatar">J</div>
-              <div class="row-label">Jordan · Connected ✓</div>
+              <div class="row-label">Jordan · Linked ✓</div>
               <div class="row-chevron">›</div>
             </div>
           </div>
@@ -191,13 +194,13 @@
             <!-- 1. Name (new) -->
             <div class="list-row" onclick="openEditName()" style="cursor:pointer;">
               <div class="row-label">Name</div>
-              <div class="row-value" id="name-row-value">Sarah</div>
+              <div class="row-value" id="name-row-value">Alex</div>
               <div class="row-chevron">›</div>
             </div>
             <!-- 2. Phone number -->
             <div class="list-row">
               <div class="row-label">Phone number</div>
-              <div class="row-value">+1 604 555 0182</div>
+              <div class="row-value">+1 972 555 0182</div>
               <div class="row-chevron">›</div>
             </div>
             <!-- 3. Restore purchase (new) -->
@@ -226,7 +229,7 @@
             <div class="nav-tab-label">Home</div>
           </div>
           <div class="nav-tab">
-            <div class="nav-tab-icon">📋</div>
+            <div class="nav-tab-icon">📚</div>
             <div class="nav-tab-label">Topics</div>
           </div>
           <div class="nav-tab">
@@ -252,7 +255,7 @@
         </div>
         <!-- Content -->
         <div style="padding:32px 24px;">
-          <input id="edit-name-input" type="text" value="Sarah"
+          <input id="edit-name-input" type="text" value="Alex"
             autocomplete="given-name" autocorrect="off" autocapitalize="words" spellcheck="false"
             style="width:100%;height:48px;border-radius:8px;border:1.5px solid #5f45f2;box-shadow:0 0 0 3px rgba(95,69,242,0.12);background:white;padding:0 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:#1a1a1a;outline:none;box-sizing:border-box;">
           <div style="height:24px;"></div>
@@ -309,15 +312,16 @@
       <div class="spec-card-title">All settings — full reference</div>
       <div class="settings-map">
         <div class="settings-section-label">Notifications</div>
-        <div class="settings-row">Nudge frequency <span class="settings-row-value">Picker → Daily / Twice a week / Weekly / Off</span></div>
+        <div class="settings-row">Nudge frequency <span class="settings-row-value">Picker → Daily / A few times a week / Weekly / Don't nudge me</span></div>
         <div class="settings-row">Funny push notifications <span class="settings-row-value">Toggle · On by default</span></div>
         <div class="settings-section-label">Pacing</div>
         <div class="settings-row">Guided timeline <span class="settings-row-value">Toggle · On = due date sequencing · Off = self-directed · always visible</span></div>
+        <div class="settings-row">I'm in a different stage now <span class="settings-row-value">Action (purple-500) · No chevron · Opens Q1 picker bottom sheet → if date needed, collect inline · Save triggers silent topic re-filter · toast: "Your plan was updated."</span></div>
         <div class="settings-row">Due date / Baby's birthday <span class="settings-row-value">Standalone date row · always visible (when Q1 applies) · independent of Guided timeline toggle</span></div>
         <div class="settings-section-label">Your plan</div>
         <div class="settings-row">Manage topics <span class="settings-row-value">→ Screen 14 · "28 active" count shown</span></div>
         <div class="settings-section-label">Partner</div>
-        <div class="settings-row">Partner row <span class="settings-row-value">Avatar + name + "Connected ✓" or "Invite pending"</span></div>
+        <div class="settings-row">Partner row <span class="settings-row-value">Avatar + name + "Linked ✓" or "Invite pending"</span></div>
         <div class="settings-section-label">Support</div>
         <div class="settings-row">Get help <span class="settings-row-value">→ in-app help / support URL</span></div>
         <div class="settings-row">Give feedback <span class="settings-row-value">→ feedback form or email</span></div>
@@ -393,6 +397,18 @@
 </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">Q1 update row — "I'm in a different stage now"</div>
+      <table class="spec-table">
+        <tr><td>Position</td><td>Pacing section · between "Guided timeline" toggle and Due date row</td></tr>
+        <tr><td>Style</td><td>Standard List Row · <code>purple-500</code> label · no chevron (opens a sheet, not a push)</td></tr>
+        <tr><td>On tap</td><td>Opens bottom sheet with Q1 picker (same 4 options as onboarding Q1)</td></tr>
+        <tr><td>After selection</td><td>If new stage requires a date (Currently pregnant / Expecting again / Baby is already here), collect it inline in the same sheet. Save → silently re-run topic filtering and update Pacing section labels.</td></tr>
+        <tr><td>Confirmation</td><td>Brief toast: "Your plan was updated."</td></tr>
+        <tr><td>V1.1</td><td>Adds a "Rebuilding your plan…" animation (reusing Screen 03's animation) and a results screen showing added/removed topics before saving</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Name row — Edit Name sub-screen</div>
       <table class="spec-table">
         <tr><td>Row label</td><td>"Name" · 15px DM Sans regular · <code>text-primary</code></td></tr>
@@ -460,6 +476,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab above the phone controls the Pacing date row: label, value, and visibility all change. This reflects data set during onboarding — users cannot change their Q1 answer from Settings directly.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Name row: tapping opens an edit screen with a single pre-filled text input and 'Save' primary CTA. On save, name updates in profile and user returns to Settings.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Due date / Baby's birthday row is context-sensitive based on the user's Q1 onboarding answer. It does not depend on the Guided timeline toggle state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Q1 update ("I'm in a different stage now") triggers re-filter of topic plan. Topics that became eligible appear; topics that became ineligible move to the hidden state (recoverable via Manage Topics). Prediction Cards eligibility is also recomputed (see Screen 23).</span></div>
       </div>
     </div>
 
@@ -490,6 +507,7 @@
         <span class="component-tag">List Row — destructive</span>
         <span class="component-tag">List Row — purple action</span>
         <span class="component-tag">Bottom Sheet — Account Deletion</span>
+        <span class="component-tag">Bottom Sheet — Q1 picker</span>
         <span class="component-tag">Sub-screen — Edit Name (push)</span>
         <span class="component-tag">Section Header</span>
         <span class="component-tag">Toggle / Switch</span>
@@ -554,7 +572,7 @@ function closeEditName() {
   setTimeout(() => { overlay.style.display = 'none'; }, 280);
 }
 function saveEditName() {
-  const val = document.getElementById('edit-name-input').value.trim() || 'Sarah';
+  const val = document.getElementById('edit-name-input').value.trim() || 'Alex';
   document.getElementById('name-row-value').textContent = val;
   closeEditName();
 }

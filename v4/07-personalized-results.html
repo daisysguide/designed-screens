@@ -192,7 +192,8 @@
         <tr><td>Label</td><td>DM Sans 11px medium · ALL CAPS · <code>letter-spacing: +0.05em</code> · <code>text-secondary</code> · 4px below number</td></tr>
         <tr><td>Col 1</td><td>"28" / "TOPICS" — dynamic</td></tr>
         <tr><td>Col 2</td><td>"7" / "CATEGORIES" — always 7</td></tr>
-        <tr><td>Col 3</td><td>"~10wk" / "AT YOUR PACE" — estimated from quiz answers</td></tr>
+        <tr><td>Col 3 (Guided timeline)</td><td>"~10wk" / "AT YOUR PACE" — calculated from topic count and nudge frequency</td></tr>
+        <tr><td>Col 3 (Self-directed)</td><td>"Up to you" / "TIMING" — static, no calculation</td></tr>
       </table>
     </div>
 
@@ -245,7 +246,9 @@
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>Topic count (28) and filtered count (23) are both dynamic — calculated from quiz answers. Example numbers shown here.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>For returning unpaid users, this screen renders without re-running the build animation. The plan is loaded from their saved state and shown immediately. The CTA "Review and unlock your plan →" leads to Manage Topics → Paywall as normal.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Pace estimate (~10wk) is calculated from topic count and nudge frequency answer from quiz.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Col 3 of the stats row varies based on Q8 (Guided timeline vs Self-directed). Self-directed users see "Up to you / TIMING" since the pace estimate doesn't apply to their mode.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>All 7 categories always shown — this screen shows the full plan, not a subset.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>'Review and unlock your plan →' → Screen 14 Manage Topics (onboarding context). No bottom nav. No back button.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Screen 14 'Unlock my plan →' → Screen 08 Paywall. The Paywall is not reached directly from Screen 07.</span></div>

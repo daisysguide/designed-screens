@@ -175,11 +175,20 @@
     </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">Eligibility rule</div>
+      <table class="spec-table">
+        <tr><td>Show only when</td><td>Reveal date (due date + 3 months, or birth date + 3 months for "Baby is already here" users) is in the future</td></tr>
+        <tr><td>Includes</td><td>Currently pregnant · Expecting again · Baby is here with baby &lt; 3 months old</td></tr>
+        <tr><td>Excludes</td><td>Thinking about trying (no milestone date) · Baby is here with baby &gt; 3 months old (window has passed)</td></tr>
+        <tr><td>When user updates Q1</td><td>Re-run eligibility on Q1 change. A "Thinking about trying" user who transitions to Pregnant will see prediction cards appear in their plan on the re-filter.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Milestone timing</div>
       <table class="spec-table">
         <tr><td>Reveal trigger</td><td>3 months postpartum — auto-calculated from due date entered in onboarding quiz</td></tr>
         <tr><td>Reminder push</td><td>Sent to both partners when the reveal date is reached</td></tr>
-        <tr><td>If no due date</td><td>User manually sets reveal date in Settings or on this screen</td></tr>
       </table>
       <div class="info-box"><strong>Bridge to retention.</strong> This screen's purpose extends beyond the question — it creates a reason to return to the app months after onboarding.</div>
     </div>
@@ -204,6 +213,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>Reveal date is auto-set from onboarding due date. Shown to user in the locked state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>At milestone: push notification → "It's time. See what you both predicted." → Screen 19 Alignment Reveal.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Prediction Cards are the only time-gated content in V1. The Locked state applies only to this topic type.</span></div>
       </div>
     </div>
 

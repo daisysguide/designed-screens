@@ -348,8 +348,8 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     <div class="spec-card">
       <div class="spec-card-title">Slider component</div>
       <table class="spec-table">
-        <tr><td>Default state</td><td>No thumb visible · full track <code>rgba(26,26,26,0.12)</code> · Continue disabled</td></tr>
-        <tr><td>On first tap/drag</td><td>Thumb appears at nearest integer position</td></tr>
+        <tr><td>Default state</td><td>Ghosted thumb at midpoint (position 5) · 40% opacity · full track <code>rgba(26,26,26,0.12)</code> · Continue disabled</td></tr>
+        <tr><td>On first tap/drag</td><td>Thumb opacity transitions to 100% · value display appears · Continue enables</td></tr>
         <tr><td>Track height</td><td>6px · <code>radius-full</code></td></tr>
         <tr><td>Unset track</td><td><code>rgba(26,26,26,0.12)</code> throughout</td></tr>
         <tr><td>Set track</td><td>Left of thumb: purple-500 · right of thumb: <code>rgba(26,26,26,0.12)</code></td></tr>
@@ -367,10 +367,11 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Scale</td><td>1–10 · integer steps only</td></tr>
         <tr><td>Value display</td><td>Grandstander 32px bold · <code>purple-500</code> · centered above track · <strong>hidden when unset</strong></td></tr>
         <tr><td>Track</td><td>Full width · 6px height · <code>radius-full</code> · <code>rgba(26,26,26,0.12)</code> bg · purple fill from left to thumb</td></tr>
-        <tr><td>Thumb</td><td>28px circle · white · <code>2px solid purple-500</code> border · <code>box-shadow: 0 2px 8px rgba(95,69,242,0.28)</code> · <strong>hidden when unset</strong></td></tr>
+        <tr><td>Thumb</td><td>Rendered at 40% opacity at midpoint (position 5). Ghosted — indicates affordance without implying a selection.</td></tr>
         <tr><td>Drag interaction</td><td>Mousedown/touchstart on track starts drag · value follows pointer · snaps to integer on each step · haptic pulse (<code>navigator.vibrate(10)</code>) on each integer change</td></tr>
         <tr><td>Labels</td><td><code>minLabel</code> (left) and <code>maxLabel</code> (right) · 12px <code>text-tertiary</code> · below track · always visible</td></tr>
-        <tr><td>Initial state</td><td>Unset — value display and thumb hidden · Continue disabled until first drag</td></tr>
+        <tr><td>Initial state</td><td>Ghosted thumb at midpoint (position 5). Thumb rendered at 40% opacity. Value display hidden. Continue disabled.</td></tr>
+        <tr><td>First interaction</td><td>On first touch or drag, thumb opacity transitions to 100%. Value display appears. Continue button enables.</td></tr>
         <tr><td>Answer stored</td><td>Integer 1–10</td></tr>
       </table>
     </div>

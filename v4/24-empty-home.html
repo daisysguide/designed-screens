@@ -92,7 +92,7 @@
           <div class="greeting-row">
             <div>
               <div class="greeting-label">Good morning</div>
-              <div class="greeting-name">Taylor 👋</div>
+              <div class="greeting-name">Alex 👋</div>
             </div>
             <div class="avatar">T</div>
           </div>
@@ -101,7 +101,7 @@
           <div class="nudge-card">
             <div class="nudge-eyebrow">Get started</div>
             <div class="nudge-heading">Pick your first topic.</div>
-            <div class="nudge-body">Each topic takes about 5 minutes. You and Jordan answer separately — then see where you land.</div>
+            <div class="nudge-body">Each topic takes about 5–10 minutes. You and Jordan answer separately — then see where you land.</div>
             <button class="btn-nudge-primary">Browse topics →</button>
           </div>
 
@@ -119,7 +119,7 @@
             <div class="partner-avatar">J</div>
             <div>
               <div class="partner-name">Jordan</div>
-              <div class="partner-status">Joined · waiting on you</div>
+              <div class="partner-status">Linked ✓</div>
             </div>
           </div>
 
@@ -206,6 +206,16 @@
         <tr><td>See all link</td><td>"See all →" · 13px bold · <code>text-link</code> · navigates to Progress screen (11)</td></tr>
         <tr><td>No bars shown</td><td>Don't render all 7 progress rows on Home in empty state — that's the Progress screen's job. Single summary line is sufficient.</td></tr>
       </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Partner card — three states</div>
+      <table class="spec-table">
+        <tr><td>Linked</td><td>Avatar + name + "Linked ✓" — canonical status when partner has joined</td></tr>
+        <tr><td>Invite pending</td><td>Ghost avatar · "Invite sent · hasn't joined yet" · ⏳ pill · "Re-share invite link" secondary button below</td></tr>
+        <tr><td>No partner</td><td>Nudge card: "It's more fun with two." body text + "Invite your partner" secondary button. No avatar.</td></tr>
+      </table>
+      <div class="info-box">The mockup shows the Linked state. Invite pending and No partner states share the same card position but replace the avatar/name with their respective UI.</div>
     </div>
 
     <div class="spec-card">

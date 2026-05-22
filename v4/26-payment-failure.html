@@ -97,7 +97,7 @@
         <div class="scroll-area" id="scroll-area">
           <!-- Payment failed state (default) -->
           <div class="state-badge error" id="state-indicator">● Payment failed</div>
-          <div class="paywall-title">Unlock your full guide.</div>
+          <div class="paywall-title">Your plan is ready</div>
           <div class="paywall-sub">One purchase. Both partners. All topics.</div>
 
           <div id="error-banner" class="error-banner">
@@ -122,15 +122,15 @@
             <div class="price-amount">$49</div>
             <div class="price-sub">Lifetime access · All guides · Both partners</div>
             <div class="feature-list">
-              <div class="feature-item"><span class="feature-check">✓</span> All 7 topic categories</div>
-              <div class="feature-item"><span class="feature-check">✓</span> Alignment reveals for both of you</div>
-              <div class="feature-item"><span class="feature-check">✓</span> Expert-backed guides from Daisy</div>
+              <div class="feature-item"><span class="feature-check">✓</span> Your personalized topic plan</div>
+              <div class="feature-item"><span class="feature-check">✓</span> Side-by-side answer reveal for every topic</div>
+              <div class="feature-item"><span class="feature-check">✓</span> A couples summary for every topic, written for you two</div>
+              <div class="feature-item"><span class="feature-check">✓</span> Expert-written guide for every topic</div>
               <div class="feature-item"><span class="feature-check">✓</span> Both partners, one purchase</div>
             </div>
           </div>
 
           <button class="btn-primary" id="main-cta">Try again</button>
-          <button class="btn-secondary" id="alt-btn">Try a different payment method</button>
           <a class="restore-link" id="restore-link" onclick="showState('restore')">Restore previous purchase</a>
         </div>
       </div>
@@ -173,11 +173,10 @@
 
     <div class="spec-card">
       <div class="spec-card-title">CTAs — payment failed state</div>
-      <table>
-        <tr><td>Primary CTA</td><td>"Try again" · full-width pill · <code>action-primary</code> fill · triggers same payment method retry via App Store</td></tr>
-        <tr><td>Secondary CTA</td><td>"Try a different payment method" · full-width secondary button · opens App Store payment sheet</td></tr>
-        <tr><td>Restore link</td><td>"Restore previous purchase" · 13px · <code>text-link</code> · centered · triggers restore flow</td></tr>
-        <tr><td>Order logic</td><td>Retry first — most users want to fix the same card. Alternative method second. Restore last — it's a different user intent.</td></tr>
+      <table class="spec-table">
+        <tr><td>Primary</td><td>"Try again" · full-width primary button · retries the last payment method</td></tr>
+        <tr><td>Restore link</td><td>"Restore previous purchase" · 14px DM Sans semibold · <code>purple-500</code> · centered below primary · for users who already paid on another device</td></tr>
+        <tr><td>Support link</td><td>Inline text: "Need help? Contact support" · links to support URL · 13px · <code>text-secondary</code></td></tr>
       </table>
     </div>
 
@@ -234,16 +233,14 @@ function showState(state) {
   const errorBanner = document.getElementById('error-banner');
   const successBanner = document.getElementById('restore-success-banner');
   const mainCta = document.getElementById('main-cta');
-  const altBtn = document.getElementById('alt-btn');
   const restoreLink = document.getElementById('restore-link');
 
   if (state === 'fail') {
     indicator.className = 'state-badge error'; indicator.textContent = '● Payment failed';
     errorBanner.style.display = 'flex';
-    errorBanner.innerHTML = `<div class="error-icon">⚠️</div><div><div class="error-banner-text"><div class="error-banner-title">Payment didn't go through.</div>Check your card details or try a different payment method.</div></div>`;
+    errorBanner.innerHTML = `<div class="error-icon">⚠️</div><div><div class="error-banner-text"><div class="error-banner-title">Payment didn't go through.</div>Check your card details and try again.</div></div>`;
     successBanner.style.display = 'none';
     mainCta.textContent = 'Try again';
-    altBtn.style.display = 'block';
     restoreLink.style.display = 'block';
 
   } else if (state === 'restore') {
@@ -254,7 +251,6 @@ function showState(state) {
     errorBanner.innerHTML = `<div class="error-icon">⏳</div><div><div class="error-banner-text" style="color:var(--text-secondary)"><div style="font-weight:700;margin-bottom:2px;">Checking your purchase history…</div>This usually takes a moment.</div></div>`;
     successBanner.style.display = 'none';
     mainCta.textContent = 'Restoring…'; mainCta.disabled = true; mainCta.style.opacity = '0.5';
-    altBtn.style.display = 'none';
     restoreLink.style.display = 'none';
 
   } else if (state === 'success') {
@@ -262,7 +258,6 @@ function showState(state) {
     errorBanner.style.display = 'none';
     successBanner.style.display = 'flex';
     mainCta.textContent = 'Continue to your guide →'; mainCta.disabled = false; mainCta.style.opacity = '1';
-    altBtn.style.display = 'none';
     restoreLink.style.display = 'none';
   }
 }
@@ -282,16 +277,14 @@ function showState(state) {
   const errorBanner = document.getElementById('error-banner');
   const successBanner = document.getElementById('restore-success-banner');
   const mainCta = document.getElementById('main-cta');
-  const altBtn = document.getElementById('alt-btn');
   const restoreLink = document.getElementById('restore-link');
 
   if (state === 'fail') {
     indicator.className = 'state-badge error'; indicator.textContent = '● Payment failed';
     errorBanner.style.display = 'flex';
-    errorBanner.innerHTML = `<div class="error-icon">⚠️</div><div><div class="error-banner-text"><div class="error-banner-title">Payment didn't go through.</div>Check your card details or try a different payment method.</div></div>`;
+    errorBanner.innerHTML = `<div class="error-icon">⚠️</div><div><div class="error-banner-text"><div class="error-banner-title">Payment didn't go through.</div>Check your card details and try again.</div></div>`;
     successBanner.style.display = 'none';
     mainCta.textContent = 'Try again';
-    altBtn.style.display = 'block';
     restoreLink.style.display = 'block';
 
   } else if (state === 'restore') {
@@ -302,7 +295,6 @@ function showState(state) {
     errorBanner.innerHTML = `<div class="error-icon">⏳</div><div><div class="error-banner-text" style="color:var(--text-secondary)"><div style="font-weight:700;margin-bottom:2px;">Checking your purchase history…</div>This usually takes a moment.</div></div>`;
     successBanner.style.display = 'none';
     mainCta.textContent = 'Restoring…'; mainCta.disabled = true; mainCta.style.opacity = '0.5';
-    altBtn.style.display = 'none';
     restoreLink.style.display = 'none';
 
   } else if (state === 'success') {
@@ -310,7 +302,6 @@ function showState(state) {
     errorBanner.style.display = 'none';
     successBanner.style.display = 'flex';
     mainCta.textContent = 'Continue to your guide →'; mainCta.disabled = false; mainCta.style.opacity = '1';
-    altBtn.style.display = 'none';
     restoreLink.style.display = 'none';
   }
 }

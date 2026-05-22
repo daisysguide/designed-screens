@@ -214,36 +214,34 @@ body.page-29 .screen-root .note-char-count.error { color: #ff9191; }
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Content spec</div>
+      <div class="spec-card-title">Note step spec</div>
       <table class="spec-table">
-        <tr><td>Card</td><td>White · <code>shadow-md</code> · <code>radius-xl</code> · 24px padding</td></tr>
-        <tr><td>Heading</td><td>"Anything else [partnerName] should know?" · Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
-        <tr><td>[partnerName]</td><td>Partner's first name if account is linked · "your partner" if not yet linked</td></tr>
-        <tr><td>Sub-text</td><td>"Your note stays private until you've both finished this topic. Then you'll both see it." · DM Sans 13px · <code>text-tertiary</code> · 8px below heading · 16px above textarea</td></tr>
-        <tr><td>Textarea bg</td><td><code>surface-nested</code> (cream <code>#fbefe1</code>) · visually distinct from white card background</td></tr>
-        <tr><td>Textarea size</td><td>Min-height 120px · expands with content to max-height 240px · then scrolls inside</td></tr>
-        <tr><td>Textarea border</td><td><code>1.5px solid border-default</code> · <code>radius-lg</code> (12px) · on focus: <code>border-focus</code> + <code>rgba(95,69,242,0.12)</code> ring</td></tr>
-        <tr><td>Font</td><td>DM Sans 15px regular · <code>text-primary</code> · 14px padding all sides</td></tr>
-        <tr><td>Placeholder</td><td>"Add a note... (optional)" · <code>text-tertiary</code></td></tr>
+        <tr><td>Heading</td><td>"Anything else [partnerName] should know?" — <code>[partnerName]</code> is templated; production swaps in the linked partner's first name, or "your partner" if not yet linked</td></tr>
+        <tr><td>Sub-text</td><td>"[partnerName] sees this after you both complete this topic." · 13px DM Sans · <code>text-tertiary</code></td></tr>
+        <tr><td>Textarea background</td><td>White (<code>surface-card</code>)</td></tr>
+        <tr><td>Min-height</td><td>120px, expanding to 240px</td></tr>
+        <tr><td>Placeholder</td><td>"Your thoughts, context, or questions for later…"</td></tr>
+        <tr><td>Character limit</td><td>Hard 280, enforced with <code>maxlength</code> attribute</td></tr>
+        <tr><td>Counter format</td><td>"N characters remaining" · turns red below 50 remaining</td></tr>
+        <tr><td>Submit button label</td><td>"Submit →"</td></tr>
+        <tr><td>Note is optional</td><td>Empty submission is valid — "Submit →" always enabled</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Character counter spec</div>
       <table class="spec-table">
-        <tr><td>Format</td><td>"{count} / 280" · right-aligned below textarea · 12px DM Sans regular</td></tr>
-        <tr><td>Default color</td><td><code>text-tertiary</code> (<code>rgba(26,26,26,0.38)</code>) · when count ≤ 259</td></tr>
-        <tr><td>Near limit</td><td><code>purple-500</code> (<code>#5f45f2</code>) · when count 260–280</td></tr>
-        <tr><td>Over limit</td><td><code>#ff9191</code> · when count &gt; 280</td></tr>
-        <tr><td>Soft limit</td><td>No <code>maxlength</code> attribute · user may type beyond 280 · Submit stays enabled</td></tr>
-        <tr><td>Hard limit</td><td>500 chars · enforced server-side only</td></tr>
+        <tr><td>Format</td><td>"N characters remaining" · right-aligned below textarea · 12px DM Sans regular</td></tr>
+        <tr><td>Default color</td><td><code>text-tertiary</code> (<code>rgba(26,26,26,0.38)</code>)</td></tr>
+        <tr><td>Near limit</td><td><code>#ff9191</code> · when fewer than 50 characters remaining</td></tr>
+        <tr><td>Hard limit</td><td>280 chars · enforced with <code>maxlength</code> attribute · also enforced server-side</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Submit CTA spec</div>
       <table class="spec-table">
-        <tr><td>Label</td><td>"Submit my answers →"</td></tr>
+        <tr><td>Label</td><td>"Submit →"</td></tr>
         <tr><td>Style</td><td>56px height · <code>radius-full</code> · <code>purple-500</code> fill · full width</td></tr>
         <tr><td>State</td><td>Always enabled — empty note is a valid submission</td></tr>
         <tr><td>On tap</td><td>1. Save note text (empty string if blank) · <code>isVisibleToPartner: false</code><br>2. Mark all topic answers as submitted<br>3. Navigate to Screen 18 Waiting for Partner</td></tr>

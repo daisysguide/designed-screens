@@ -90,7 +90,7 @@
 
         <div class="eyebrow">The Village · Update answers</div>
         <div class="screen-heading">Want to update your answers?</div>
-        <div class="screen-body">Sometimes a conversation changes things. You can answer again — your previous answers will be saved so you can see how your thinking evolved.</div>
+        <div class="screen-body">Sometimes a conversation changes things. You can answer again together — Jordan will be notified and asked to re-answer too.</div>
 
         <div class="happens-card">
           <div class="happens-title">What happens next</div>
@@ -148,7 +148,7 @@
       <table class="spec-table">
         <tr><td>Eyebrow</td><td>"[Category] · Update answers"</td></tr>
         <tr><td>Heading</td><td>"Want to update your answers?"</td></tr>
-        <tr><td>Body</td><td>"Sometimes a conversation changes things. You can answer again — your previous answers will be saved so you can see how your thinking evolved."</td></tr>
+        <tr><td>Body</td><td>"Sometimes a conversation changes things. You can answer again together — Jordan will be notified and asked to re-answer too."</td></tr>
         <tr><td>Partner note</td><td>"[Partner name] will be notified that you've started this." · 12px · <code>text-tertiary</code> · below CTAs</td></tr>
         <tr><td>Primary CTA</td><td>"Yes, let's re-answer"</td></tr>
         <tr><td>Secondary CTA</td><td>"Nevermind"</td></tr>
@@ -179,13 +179,26 @@
     </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">Re-answer round mechanics</div>
+      <table class="spec-table">
+        <tr><td>Initiated by</td><td>Either partner can tap "Update our answers" on Screen 22</td></tr>
+        <tr><td>Notification</td><td>Partner gets a push: "[name] wants to re-answer [topic]. Want to re-answer together?"</td></tr>
+        <tr><td>Race condition</td><td>If both initiate simultaneously, timestamp wins. Second tap is reinterpreted as joining the initiated round.</td></tr>
+        <tr><td>Topic state during round</td><td>Initiator's old reveal remains canonical until both have re-answered</td></tr>
+        <tr><td>Expiry</td><td>14 days. If partner doesn't re-answer within 14 days, the round expires and the topic returns to its prior Completed state. Initiator's pending re-answers are discarded.</td></tr>
+        <tr><td>Reminder</td><td>At day 7, partner gets a gentle nudge push. At day 13, a final reminder.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>Either partner can initiate re-answering. The other is notified immediately when "Yes, let's re-answer" is tapped.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Previous answers are preserved as a "before" snapshot — shown in a collapsed section on the new reveal screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Previous answers are retained server-side but not surfaced in the UI for V1.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>After both re-answer, the reveal (Screen 19) plays again and post-reveal reflection (Screen 20) resets.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Nevermind" returns to Screen 22 Completed Topic with no changes.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>V1.1 will offer the initiator a choice when starting: "update just your answers" vs "start the discussion over." V1 only supports the paired round.</span></div>
       </div>
     </div>
 

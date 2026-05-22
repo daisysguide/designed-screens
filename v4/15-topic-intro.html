@@ -167,12 +167,41 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Three screen states</div>
+      <div class="spec-card-title">Four screen states</div>
       <table class="spec-table">
-        <tr><td>Not started</td><td>Both CTAs live. Partner status line: "Jordan hasn't answered yet either." Primary = "Start answering →", Secondary = "Read the guide first"</td></tr>
-        <tr><td>You answered</td><td>Primary changes to "Continue answering →". Partner line: "Waiting for Jordan to finish." Secondary = "Read the guide" (still accessible)</td></tr>
-        <tr><td>Both answered</td><td>Primary changes to "See your results →". Partner line: "Jordan finished — ready to reveal." Secondary = "Read the guide"</td></tr>
+        <tr>
+          <th>State</th><th>When</th><th>Partner status line</th><th>Primary CTA</th><th>Secondary CTA</th>
+        </tr>
+        <tr>
+          <td>Not started</td>
+          <td>Neither has answered</td>
+          <td>"Jordan hasn't answered yet either."</td>
+          <td>"Start answering →"</td>
+          <td>"Read the guide first"</td>
+        </tr>
+        <tr>
+          <td>Your turn</td>
+          <td>Partner finished, you haven't</td>
+          <td>"Jordan finished — your turn."</td>
+          <td>"Start answering →" or "Continue answering →" (if mid-flow)</td>
+          <td>"Read the guide"</td>
+        </tr>
+        <tr>
+          <td>Waiting</td>
+          <td>You finished, partner hasn't</td>
+          <td>"Waiting on Jordan to finish."</td>
+          <td>None</td>
+          <td>"Read the guide" · "Change my answers" affordance</td>
+        </tr>
+        <tr>
+          <td>Ready to reveal</td>
+          <td>Both finished, reveal not yet triggered for you</td>
+          <td>"Jordan finished — ready to reveal."</td>
+          <td>"See your results →"</td>
+          <td>"Read the guide"</td>
+        </tr>
       </table>
+      <div class="info-box">"Ready to reveal" is a real but rare edge case — most users are auto-pushed to Screen 19 when their partner finishes. If they dismissed the push or were offline, the topic sits in this state until they manually tap in.</div>
     </div>
 
     <div class="spec-card">
@@ -189,7 +218,7 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Stats card (3-col)</div>
+      <div class="spec-card-title">Stats Card (3-col)</div>
       <table class="spec-table">
         <tr><td>Background</td><td>White</td></tr>
         <tr><td>Border radius</td><td><code>radius-lg</code> (12px) — stepped down, nested inside screen</td></tr>
@@ -198,7 +227,9 @@
         <tr><td>Layout</td><td>3 equal columns · <code>1px solid border-default</code> between cols</td></tr>
         <tr><td>Number</td><td>Grandstander 28px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
         <tr><td>Label</td><td>11px DM Sans medium · ALL CAPS · <code>text-secondary</code> · 4px below number</td></tr>
-        <tr><td>Cols</td><td>Questions · Min read · Min quiz</td></tr>
+        <tr><td>Col 1</td><td>Questions count · pulled from <code>topic.questions.length</code></td></tr>
+        <tr><td>Col 2</td><td>Read time · pulled from <code>topic.articleReadMinutes</code> (auto-derived from article word count at 200 wpm)</td></tr>
+        <tr><td>Col 3</td><td>Quiz time · pulled from <code>topic.quizMinutes</code> (estimated ~45 seconds per question)</td></tr>
       </table>
     </div>
 
@@ -243,6 +274,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>The article (Screen 16) is also accessible mid-question via a persistent "Read guide" link — so users aren't forced to commit to an order.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Partner status line is always visible above the CTAs — gives context before committing to answer.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Layout fits without scrolling on most devices. CTA region floats to bottom via spacer — not sticky.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Read and quiz times are dynamic per topic; each topic carries its own <code>articleReadMinutes</code> and <code>quizMinutes</code> values.</span></div>
       </div>
     </div>
 
