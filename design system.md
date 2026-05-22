@@ -1054,6 +1054,99 @@ A question moment consists of three structural regions on screen:
 
 Single-select. 150ms ease for color change. `scale(0.98)` on press for tactile feedback.
 
+### Multi-select variant
+
+Used for Q2 (nuance) in every topic. Multiple options selectable simultaneously.
+
+Add a label directly above the options group:
+
+| Property | Value |
+| --- | --- |
+| Text | "Select all that apply" |
+| Font | 12px DM Sans regular |
+| Color | `text-tertiary` |
+| Position | 8px below question text, 8px above first option |
+
+Selection behavior:
+
+| State | Behavior |
+| --- | --- |
+| Unselected | `surface-nested` (cream) bg · `text-primary` |
+| Selected | `action-primary` (purple-500) fill · `text-on-brand` — same as single-select |
+| Multi-tap | Tapping a selected option deselects it |
+| Multiple | Any number of options can be selected simultaneously |
+
+Continue button: disabled until at least 1 option is selected.
+
+### Slider variant
+
+Used for Q3 (intensity) in every topic. 1–10 scale with labeled endpoints. No default — unset state until user interacts.
+
+| Property | Value |
+| --- | --- |
+| Range | Always 1–10, integer steps only |
+| minLabel | Short opposing label e.g. "Hard no" |
+| maxLabel | Short opposing label e.g. "Totally fine" |
+
+States:
+
+**Unset** (default on screen mount):
+
+| Property | Value |
+| --- | --- |
+| Track | 6px height · `radius-full` · `rgba(26,26,26,0.12)` throughout |
+| Thumb | Not rendered — no thumb until interaction |
+| Value display | Hidden |
+| Continue | Disabled (`opacity-disabled`) |
+
+**Set** (after first tap or drag):
+
+| Property | Value |
+| --- | --- |
+| Track fill | Left of thumb: `action-primary` (purple-500) · Right: `rgba(26,26,26,0.12)` |
+| Thumb | 28px circle · `surface-card` (white) bg · `2px solid purple-500` border · `shadow-md` |
+| Snap | Snaps to nearest integer on release |
+| Haptics | Light impact feedback on each integer snap |
+| Value display | Grandstander 32px bold · `action-primary` · centered above thumb · updates live |
+| Continue | Enabled |
+
+End labels:
+
+| Property | Value |
+| --- | --- |
+| Font | 11px DM Sans regular |
+| Color | `text-tertiary` |
+| Position | minLabel left-aligned · maxLabel right-aligned · 6px below track |
+
+### Note step
+
+The optional step following the last question in every topic. Same question card container, different content.
+
+| Element | Spec |
+| --- | --- |
+| Heading | "Anything else [partnerName] should know?" · Grandstander 20px bold · `text-primary` |
+| Sub-text | "Your note stays private until you've both finished this topic. Then you'll both see it." · 13px DM Sans · `text-tertiary` · 16px above text area |
+| Text area | `surface-nested` bg · `1.5px solid border-default` · `radius-lg` (12px) · 14px padding · DM Sans 15px regular · `text-primary` · min-height 120px · expands to ~240px |
+| Placeholder | "Add a note... (optional)" · `text-tertiary` |
+| Focus state | `border-focus` (purple-500) + `0 0 0 3px rgba(95,69,242,0.12)` ring |
+
+Character counter (below text area, right-aligned):
+
+| Count | Style |
+| --- | --- |
+| 0–259 | "X / 280" · 12px DM Sans regular · `text-tertiary` |
+| 260–280 | `action-primary` (purple-500) |
+| 281+ | `status-error-text` (#ff9191) — soft limit, submit still enabled |
+
+CTA: "Submit my answers →" · Primary · 56px · `radius-full` · always enabled — note is optional, empty submission is valid.
+
+**Privacy model:** Note `isVisibleToPartner` is `false` on creation. Flips to `true` server-side when both partners have submitted all answers for the topic — same gate as the reveal.
+
+**Rules:**
+- Never auto-advance. One CTA, always enabled.
+- The note is not counted as a question step in the progress bar. Progress shows Q{n} of {n} at 100% with an "Optional" pill beside the step label.
+- Empty note creates the record with empty string — do not skip record creation.
+
 ### Behavior rules
 
 - **Tapping an answer never auto-advances.** User must explicitly tap Continue.
@@ -1105,6 +1198,34 @@ completes. Both boxes animate in simultaneously.
 
 ### Visual
 
+### Multi-select reveal variant
+
+Two standard Reveal Boxes side by side (same anatomy). Answer text replaced by flex-wrap pill tags.
+
+| Pill type | Background | Text color |
+| --- | --- | --- |
+| Shared (both selected) | `rgba(119,234,175,0.28)` | `#157a46` (green-700) |
+| Unique (only one partner) | `rgba(26,26,26,0.07)` | `text-primary` |
+
+- Pill: 12px DM Sans semibold · `radius-full` · 4px 10px padding
+- Shared count badge: centered below both boxes · 12px DM Sans medium · `#157a46` · "{n} in common"
+- Badge hidden when there are no shared selections
+
+### Note section
+
+Conditional section on the Reveal screen. Only rendered when at least one partner submitted a note for the topic.
+
+| Element | Spec |
+| --- | --- |
+| Section label | "YOUR NOTES" · same label style as owner labels (11px DM Sans bold · ALL CAPS · letter-spacing +0.5px · `text-secondary`) |
+| Layout | Two standard Reveal Boxes side by side |
+| Empty state | "No note added." · 14px DM Sans regular · italic · `text-tertiary` |
+| Non-empty | Note text verbatim · same text style as answer text |
+
+**Rules:**
+- Show section only when at least one partner has a note. If both are empty, omit the section entirely.
+- Never truncate note text — boxes expand to fit.
+
 ### Rules
 
 - Always paired — left box is always "You said", right box is always the partner. Never invert
@@ -1114,6 +1235,49 @@ completes. Both boxes animate in simultaneously.
 - Min height keeps the boxes comparable in size even when answer lengths differ. Don't remove it.
 - The AI Summary Card always follows the Reveal Box — never show the Reveal Box without it on
   Screen 15.
+
+## Slider Reveal
+
+Replaces the standard two-box Reveal Box layout for slider-type questions. Shows both partners'
+positions on a shared track in a single full-width card.
+
+### Anatomy
+
+| Element | Spec |
+| --- | --- |
+| Card | `surface-card` (white) · `radius-lg` (16px) · `shadow-sm` (`0 2px 12px rgba(26,26,26,0.10)`) · 20px padding · full width |
+| Values row | Your value (left) · Partner's value (right) · space-between |
+| Your value | Grandstander 28px bold · `action-primary` (purple-500) |
+| Partner value | Grandstander 28px bold · `text-primary` |
+| Same-value display | Single centered value · Grandstander 28px bold · `#157a46` (green-700) |
+| Track | 6px height · `radius-full` · `rgba(26,26,26,0.10)` base · 16px margin-top |
+| Range fill | Segment between the two markers · `rgba(95,69,242,0.12)` · `radius-full` |
+| Your marker | 14px circle · `action-primary` fill · z-index above partner marker |
+| Partner marker | 14px circle · `surface-card` fill · `2px solid rgba(26,26,26,0.38)` border |
+| Same-value marker | 16px circle · `#157a46` fill · single marker at the shared position |
+| End labels | minLabel left · maxLabel right · 6px below track · 11px DM Sans regular · `text-tertiary` |
+| Delta label | Centered below track · 12px DM Sans medium · "{n} apart" (`text-secondary`) or "Same ✓" (`#157a46`) |
+
+### States
+
+**Different values:**
+- Values row shows both numbers in their respective colors
+- Range fill spans from the lower marker to the higher marker
+- Both markers rendered; your marker sits on top (z-index)
+- Delta label: "{n} apart"
+
+**Same value:**
+- Single centered value in green-700 (no values row)
+- Single 16px green marker at the shared position
+- No range fill
+- Delta label: "Same ✓" in green-700
+
+### Rules
+
+- Never use two Reveal Boxes for a slider question — always use this component.
+- The range fill is decorative; it highlights the gap, not a "correct" range.
+- Your marker always renders above the partner marker when values differ (z-index).
+- Delta is the absolute difference: `|your − partner|`. Never negative, never a percentage.
 
 ## AI Summary Card
 

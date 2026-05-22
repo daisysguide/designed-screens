@@ -11,7 +11,7 @@
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v3 · 30 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 32 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -21,6 +21,7 @@
   <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
   <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
   <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
   <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
   <div class="sidebar-section-label">Onboarding</div>
   <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
@@ -42,6 +43,7 @@
   <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
   <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
   <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
   <div class="sidebar-section-label">Special</div>
   <a class="sidebar-item active" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
   <div class="sidebar-section-label">Empty States</div>
@@ -60,7 +62,7 @@
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="22-completed-topic.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">23 / 30</span>
+        <span class="topbar-counter">23 / 32</span>
         <a class="topbar-btn" href="24-empty-home.html" aria-label="Next">›</a>
       </div>
     </div>
@@ -131,12 +133,12 @@
       <div class="flow-map">
         <div class="flow-node from">13 Topic List</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node current">22 Prediction Card</div>
+        <div class="flow-node current">23 Prediction Card</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">17 Waiting</div>
+        <div class="flow-node dest">18 Waiting</div>
       </div>
       <div class="info-box">
-        Appears in the Topic List as a visually distinct card. After answering → Screen 17 Waiting (same flow as regular topics). At the milestone date, app sends a push and navigates to Screen 18 Reveal. <strong>No bottom nav.</strong>
+        Appears in the Topic List as a visually distinct card. After answering → Screen 18 Waiting for Partner (same flow as regular topics). At the milestone date, app sends a push and navigates to Screen 19 Alignment Reveal. <strong>No bottom nav.</strong>
       </div>
     </div>
 
@@ -146,8 +148,6 @@
         <tr><td>Answering</td><td>Normal question card + options. Prediction header: dashed border, cream-tinted bg. CTA: "Lock in my prediction →" — disabled until option selected.</td></tr>
               <tr><td>Locked</td><td>Question card replaced by sealed card (🔒 icon, "Your prediction is sealed." heading, body + reveal date pill). Prediction header: solid border strengthened slightly, subdued bg. CTA becomes "Back to topics" — enabled. No countdown UI — reveal date pill communicates timeline.</td></tr>
               <tr><td>Reveal ready</td><td>Sealed card shows 🔮 icon, "Time to find out." heading, body confirming milestone hit. Prediction header: solid purple border + purple-tinted bg — signals the card is now active. CTA: "See your predictions →" — enabled, full weight.</td></tr>
-        <tr><td>Locked</td><td>Answers submitted. Lock icon + sealed message + reveal date shown. No editing.</td></tr>
-        <tr><td>Reveal ready</td><td>Milestone date reached. CTA changes to "See your predictions →" which plays the reveal animation (Screen 18).</td></tr>
       </table>
     </div>
 
@@ -202,7 +202,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>Dashed border on prediction header signals this is a special topic type — distinct from regular topics throughout the app.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Once locked, answers cannot be changed. The locked state is permanent until the reveal date.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Reveal date is auto-set from onboarding due date. Shown to user in the locked state.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>At milestone: push notification → "It's time. See what you both predicted." → Screen 18 Reveal.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>At milestone: push notification → "It's time. See what you both predicted." → Screen 19 Alignment Reveal.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
       </div>
     </div>
@@ -211,7 +211,7 @@
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 23 of 30</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 23 of 32</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="22-completed-topic.html">← Screen 22: Completed Topic</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="24-empty-home.html">Screen 24: Empty Home →</a>

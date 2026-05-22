@@ -11,7 +11,7 @@
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v3 · 30 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 32 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -21,6 +21,7 @@
   <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
   <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
   <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
   <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
   <div class="sidebar-section-label">Onboarding</div>
   <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
@@ -42,6 +43,7 @@
   <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
   <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
   <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
   <div class="sidebar-section-label">Special</div>
   <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
   <div class="sidebar-section-label">Empty States</div>
@@ -60,7 +62,7 @@
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="01-swipeable-intro.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">02 / 30</span>
+        <span class="topbar-counter">02 / 32</span>
         <a class="topbar-btn" href="03-building-your-plan.html" aria-label="Next">›</a>
       </div>
     </div>
@@ -128,7 +130,9 @@
         <div class="flow-node dest">03 Building Your Plan</div>
       </div>
       <div class="info-box">
-        Question count is dynamic: <strong>6 questions</strong> (Thinking about trying) · <strong>7 questions</strong> (Expecting again — Q3 auto-set) · <strong>8 questions</strong> (Currently pregnant / Baby is already here). Back chevron returns to previous question in sequence; from Q1, returns to Screen 01. Completing all questions → Screen 03. Quiz state is persisted to localStorage after each answer and cleared on completion or back past Q1.
+        Question count is dynamic: <strong>6 questions</strong> (Thinking about trying) · <strong>7 questions</strong> (Expecting again — Q3 auto-set) · <strong>8 questions</strong> (Currently pregnant / Baby is already here).<br><br>
+        <strong>Conditional routing:</strong> Q2 (due date picker) only shown when Q1 = "Currently pregnant" OR "Expecting again" · Q2b (baby's birthday picker) shown when Q1 = "Baby is already here" · Q3 skipped entirely when Q1 = "Expecting again" — auto-set to "No" in data layer · Q2 and Q3 both skipped when Q1 = "Thinking about trying"<br><br>
+        Back chevron returns to previous question in sequence; from Q1, returns to Screen 06 (Onboarding Intro / Swipeable Intro). Completing all questions → Screen 03. Quiz state is persisted to localStorage after each answer and cleared on completion or back past Q1.
       </div>
     </div>
 
@@ -298,6 +302,10 @@
         <div class="note-item"><div class="note-bullet"></div><span>Tapping a selected option deselects it — Continue returns to disabled state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Back chevron returns to previous question in the current sequence. From Q1, returns to Screen 01 and clears saved state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Quiz answers are persisted to local storage after each question. On relaunch mid-quiz, the user resumes from their last unanswered question with all prior answers pre-populated. State clears on completing the quiz or navigating back past Q1.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Expecting again": Q2 (due date) is shown, Q3 is skipped and auto-set to "No" in the data layer. User proceeds from Q2 to Q4.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Baby is already here": Q2b (baby's birthday) is shown instead of Q2. Q3 is shown normally.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Thinking about trying": Q2 and Q3 are both skipped. User proceeds from Q1 to Q4.</span></div>
       </div>
     </div>
 
@@ -305,7 +313,7 @@
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 02 of 30</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 02 of 32</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="01-swipeable-intro.html">← Screen 01: Swipeable Intro</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="03-building-your-plan.html">Screen 03: Building Your Plan →</a>

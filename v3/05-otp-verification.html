@@ -11,7 +11,7 @@
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v3 · 30 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 32 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -21,6 +21,7 @@
   <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
   <a class="sidebar-item active" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
   <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
   <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
   <div class="sidebar-section-label">Onboarding</div>
   <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
@@ -42,6 +43,7 @@
   <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
   <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
   <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
   <div class="sidebar-section-label">Special</div>
   <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
   <div class="sidebar-section-label">Empty States</div>
@@ -60,8 +62,8 @@
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="04-sign-up.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">05 / 30</span>
-        <a class="topbar-btn" href="05b-name-entry.html" aria-label="Next">›</a>
+        <span class="topbar-counter">05 / 32</span>
+        <a class="topbar-btn" href="29-name-collection.html" aria-label="Next">›</a>
       </div>
     </div>
   </div>
@@ -75,7 +77,7 @@
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="04-sign-up.html">← Screen 04: Sign Up</a>
-    <a class="nav-pill next" style="cursor:pointer;"  href="05b-name-entry.html">Screen 05b: Name Entry →</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="29-name-collection.html">Screen 29: Name Collection →</a>
   </div>
 </div>
 
@@ -138,14 +140,14 @@
     <div class="spec-card">
       <div class="spec-card-title">Navigation flow</div>
       <div class="flow-map">
-        <div class="flow-node from">02 Sign Up</div>
+        <div class="flow-node from">04 Sign Up</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node current">03 OTP</div>
+        <div class="flow-node current">05 OTP</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">05 Partner Linking</div>
+        <div class="flow-node dest">05b Name Entry</div>
       </div>
       <div class="info-box">
-        Same screen handles both Sign Up and Log In OTP flows. Heading switches: "Check your phone" (phone) or "Check your email" (email). Successful verify → Screen 05 for new users, Screen 12 Home for returning users.
+        Same screen handles both Sign Up and Log In OTP flows. Heading switches: "Check your phone" (phone) or "Check your email" (email). Successful verify → Screen 05b Name Entry for new users, Screen 10 Home for returning users.
       </div>
     </div>
 
@@ -196,7 +198,7 @@
       <table class="spec-table">
         <tr><td>"Resend code"</td><td>14px DM Sans bold · <code>text-link</code> · disabled + countdown for first 30s · re-enables after timer</td></tr>
         <tr><td>Countdown pill</td><td>13px · <code>text-tertiary</code> · cream pill · shows "30s" counting down · disappears when timer ends</td></tr>
-        <tr><td>"Go back"</td><td>14px DM Sans bold · <code>text-link</code> · always active · returns to Screen 02</td></tr>
+        <tr><td>"Go back"</td><td>14px DM Sans bold · <code>text-link</code> · always active · returns to Screen 04 Sign Up</td></tr>
       </table>
     </div>
 
@@ -216,7 +218,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>iOS SMS autofill pastes all 6 digits at once — handle as a single paste event.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Resend code" is disabled for 30 seconds after the screen loads. Countdown pill shows remaining time, disappears at 0.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Wrong code: show error state on all boxes + error message. Don't clear digits. User corrects in place.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Back button and "Go back" both return to Screen 02.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Back button and "Go back" both return to Screen 04 Sign Up.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
       </div>
     </div>
@@ -236,7 +238,7 @@
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 05 of 30</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 05 of 32</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="04-sign-up.html">← Screen 04: Sign Up</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="05b-name-entry.html">Screen 05b: Name Entry →</a>

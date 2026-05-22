@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alignment Reveal — Daisy's Guide Designed Screens v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Screen 19: Alignment Reveal (page-17) ── */
+
+/* Make phone-screen a scrollable container */
+body.page-17 .screen-root .phone-screen {
+  padding: 0 !important;
+  position: relative;
+  overflow: hidden;
+}
+body.page-17 .screen-root .reveal-scroll {
+  position: absolute;
+  inset: 0 0 72px 0;
+  overflow-y: auto;
+  padding: 16px 16px 0;
+  -webkit-overflow-scrolling: touch;
+}
+body.page-17 .screen-root .reveal-cta {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 16px 20px;
+  background: white;
+}
+body.page-17 .screen-root .reveal-cta::before {
+  content: '';
+  position: absolute;
+  top: -28px; left: 0; right: 0; height: 28px;
+  background: linear-gradient(to bottom, transparent, white);
+  pointer-events: none;
+}
+
+/* Question section */
+body.page-17 .screen-root .q-section-label {
+  font-size: 12px; font-weight: 500;
+  color: rgba(26,26,26,0.38); line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+/* Note section */
+body.page-17 .screen-root .notes-section-label {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: rgba(26,26,26,0.38); margin-bottom: 10px;
+}
+body.page-17 .screen-root .reveal-no-note {
+  font-style: italic; font-size: 13px; color: rgba(26,26,26,0.38);
+}
+
+/* Multi-select reveal — pill tags */
+body.page-17 .screen-root .ms-pills {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;
+}
+body.page-17 .screen-root .ms-pill {
+  font-size: 12px; font-weight: 600;
+  border-radius: 100px; padding: 4px 10px; line-height: 1.4;
+}
+body.page-17 .screen-root .ms-pill-shared {
+  background: rgba(119,234,175,0.28); color: #157a46;
+}
+body.page-17 .screen-root .ms-pill-unique {
+  background: rgba(26,26,26,0.07); color: rgba(26,26,26,1);
+}
+body.page-17 .screen-root .ms-shared-badge {
+  text-align: center; font-size: 12px; font-weight: 500;
+  color: #157a46; margin-top: 10px;
+}
+
+/* Slider reveal — full-width card (srv = slider reveal) */
+body.page-17 .screen-root .slider-reveal-card {
+  background: white; border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(26,26,26,0.10);
+  padding: 20px; width: 100%; box-sizing: border-box;
+}
+body.page-17 .screen-root .srv-values {
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+body.page-17 .screen-root .srv-val {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+body.page-17 .screen-root .srv-num {
+  font-family: 'Grandstander', cursive;
+  font-size: 28px; font-weight: 700; line-height: 1;
+}
+body.page-17 .screen-root .srv-num-you     { color: #5f45f2; }
+body.page-17 .screen-root .srv-num-partner { color: rgba(26,26,26,1); }
+body.page-17 .screen-root .srv-num-same    { color: #157a46; }
+body.page-17 .screen-root .srv-name {
+  font-size: 11px; font-weight: 500; color: rgba(26,26,26,0.55);
+}
+body.page-17 .screen-root .srv-name-same {
+  font-size: 13px; font-weight: 500; color: #157a46; margin-top: 4px;
+}
+body.page-17 .screen-root .srv-track {
+  width: 100%; height: 6px; border-radius: 100px;
+  background: rgba(26,26,26,0.10); position: relative; margin-bottom: 6px;
+}
+body.page-17 .screen-root .srv-range {
+  position: absolute; top: 0; height: 100%;
+  background: rgba(95,69,242,0.12); border-radius: 100px;
+}
+body.page-17 .screen-root .srv-marker {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 14px; height: 14px; border-radius: 50%;
+}
+body.page-17 .screen-root .srv-marker-you     { background: #5f45f2; z-index: 2; }
+body.page-17 .screen-root .srv-marker-partner {
+  background: white; border: 2px solid rgba(26,26,26,0.38); z-index: 1;
+}
+body.page-17 .screen-root .srv-marker-same {
+  background: #157a46; width: 16px; height: 16px; z-index: 2;
+}
+body.page-17 .screen-root .srv-endlabels {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: rgba(26,26,26,0.38); margin-bottom: 12px;
+}
+body.page-17 .screen-root .srv-delta {
+  text-align: center; font-size: 12px; color: rgba(26,26,26,0.38);
+}
+body.page-17 .screen-root .srv-delta-same { color: #157a46; font-weight: 500; }
+
+/* Staggered reveal animation */
+body.page-17 .screen-root .rev-item {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+body.page-17 .screen-root .rev-item.rev-show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Confetti canvas */
+#confetti-canvas {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 10;
+  border-radius: inherit; display: none;
+}
+</style>
+</head>
+<body class="page-17">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v4 · 32 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
+  <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
+  <a class="sidebar-item" href="08-paywall.html"><span class="screen-num">08</span>Paywall</a>
+  <a class="sidebar-item" href="09-partner-linking.html"><span class="screen-num">09</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="10-home.html"><span class="screen-num">10</span>Home</a>
+  <a class="sidebar-item" href="11-progress.html"><span class="screen-num">11</span>Progress</a>
+  <a class="sidebar-item" href="12-settings.html"><span class="screen-num">12</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-manage-topics.html"><span class="screen-num">14</span>Manage Topics</a>
+  <a class="sidebar-item" href="15-topic-intro.html"><span class="screen-num">15</span>Topic Intro</a>
+  <a class="sidebar-item" href="16-topic-article.html"><span class="screen-num">16</span>Topic Article</a>
+  <a class="sidebar-item" href="17-question.html"><span class="screen-num">17</span>Question</a>
+  <a class="sidebar-item" href="17b-note.html"><span class="screen-num">17b</span>Note Step</a>
+  <a class="sidebar-item" href="18-waiting-for-partner.html"><span class="screen-num">18</span>Waiting for Partner</a>
+  <a class="sidebar-item active" href="19-alignment-reveal.html"><span class="screen-num">19</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="24-empty-home.html"><span class="screen-num">24</span>Empty Home</a>
+  <a class="sidebar-item" href="25-empty-topic-list.html"><span class="screen-num">25</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="26-payment-failure.html"><span class="screen-num">26</span>Payment Failure</a>
+  <a class="sidebar-item" href="27-connection-error.html"><span class="screen-num">27</span>Connection Error</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="28-onboarding-intro.html"><span class="screen-num">28</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Alignment Reveal</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="18-waiting-for-partner.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">19 / 32</span>
+        <a class="topbar-btn" href="20-post-reveal-reflection.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 19 · Topic Flow</div>
+    <div class="page-title">Alignment Reveal</div>
+    <div class="page-desc">Scrollable reveal screen showing all 4 questions side-by-side, an optional note section, the AI summary card, and alignment pill. Three alignment states. Answers reveal with staggered animation.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" href="18-waiting-for-partner.html">← Screen 18: Waiting for Partner</a>
+    <a class="nav-pill next" href="20-post-reveal-reflection.html">Screen 20: Post-Reveal Reflection →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-conversation" onclick="showState('conversation')">🤔 Worth a conversation</button>
+      <button class="state-tab" id="tab-mostly" onclick="showState('mostly')">😌 Mostly aligned</button>
+      <button class="state-tab" id="tab-aligned" onclick="showState('aligned')">🎉 Fully aligned</button>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <canvas id="confetti-canvas"></canvas>
+
+        <!-- Scrollable content -->
+        <div class="reveal-scroll" id="reveal-scroll">
+          <div class="back-btn">‹ Topics</div>
+          <div class="eyebrow">The Village · Reveal</div>
+          <div class="topic-title" style="margin-bottom:20px;">Who will we trust to watch the baby?</div>
+
+          <!-- Question sections — populated by JS -->
+          <div id="question-sections"></div>
+
+          <!-- Note section — shown only if ≥1 note written -->
+          <div id="note-section" class="rev-item" style="display:none; margin-top:20px;">
+            <div class="notes-section-label">YOUR NOTES</div>
+            <div class="reveal-row">
+              <div class="reveal-box" style="min-height:100px;">
+                <div class="reveal-label">YOUR NOTE</div>
+                <div id="your-note-text" class="reveal-answer"></div>
+              </div>
+              <div class="reveal-box" style="min-height:100px;">
+                <div class="reveal-label">JORDAN'S NOTE</div>
+                <div id="partner-note-text" class="reveal-answer"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI summary -->
+          <div class="summary-card rev-item" id="summary-card" style="margin-top:20px;"></div>
+
+          <!-- Alignment pill -->
+          <div class="alignment-row rev-item" id="alignment-row">
+            <div class="alignment-pill" id="alignment-pill"></div>
+          </div>
+
+          <div style="height:56px;"></div><!-- scroll breathing room above CTA -->
+        </div>
+
+        <!-- Sticky CTA -->
+        <div class="reveal-cta">
+          <button class="btn-primary" style="width:100%;">Continue →</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Routing</div>
+      <div class="flow-map">
+        <div class="flow-node from">17b Note Step</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node from">18 Waiting</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">19 Alignment Reveal</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">20 Post-Reveal</div>
+      </div>
+      <div class="info-box">
+        <strong>The signature product moment.</strong> Screen is scrollable — staggered animation reveals each section in sequence. "Continue →" always visible at bottom. Back returns to Topics (Screen 13). No bottom nav.
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Layout — multi-question scroll</div>
+      <table class="spec-table">
+        <tr><th>Zone</th><th>Spec</th></tr>
+        <tr><td>Screen header</td><td>Back chevron "← Topics" left · no right action · no title</td></tr>
+        <tr><td>Topic eyebrow + title</td><td>Below header · unchanged</td></tr>
+        <tr><td>Scrollable content</td><td>Stacked question sections + optional note section + AI summary + alignment pill</td></tr>
+        <tr><td>Sticky bottom</td><td>"Continue →" primary CTA · always visible · gradient fade above</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Question section spec (per question)</div>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Each of the 4 questions has its own section in the scroll area.</p>
+      <table class="spec-table">
+        <tr><th>Element</th><th>Spec</th></tr>
+        <tr><td>Question label</td><td>Actual question text · 12px DM Sans medium · <code>text-tertiary</code> · left-aligned · 20px above (except first) · 10px below</td></tr>
+        <tr><td>Reveal pair</td><td>Type-specific component (single-select, multi-select, or slider reveal)</td></tr>
+        <tr><td>Section gap</td><td>16px between bottom of one pair and top of next question label</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Three alignment states</div>
+      <div class="state-legend">
+        <div class="state-legend-row">
+          <div class="legend-pill" style="background:rgba(119,234,175,0.28);color:#157a46;">🎉 Fully aligned</div>
+          <div class="legend-text">Both partners' answers identical or near-identical across all questions. Confetti animation. Green pill.</div>
+        </div>
+        <div class="state-legend-row">
+          <div class="legend-pill" style="background:rgba(255,215,85,0.38);color:#8a6800;">😌 Mostly aligned</div>
+          <div class="legend-text">Answers compatible but not identical. No animation. Yellow pill.</div>
+        </div>
+        <div class="state-legend-row">
+          <div class="legend-pill" style="background:rgba(255,173,108,0.30);color:#9a5500;">🤔 Worth a conversation</div>
+          <div class="legend-text">Answers diverge meaningfully on ≥1 question. No animation. Orange pill.</div>
+        </div>
+      </div>
+      <div class="info-box">Alignment is evaluated across all questions — not per question. One pill summarizes the whole topic. Emoji is load-bearing — sentence case only.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">single_select reveal</div>
+      <table class="spec-table">
+        <tr><td>Layout</td><td>Two boxes · flex row · 10px gap · always side by side</td></tr>
+        <tr><td>Box style</td><td>White · <code>1.5px solid border-default</code> · <code>radius-lg</code> (12px) · 14px padding · min-height 100px</td></tr>
+        <tr><td>Owner label</td><td>"YOU SAID" / "[NAME] SAID" · 11px DM Sans bold · ALL CAPS · <code>letter-spacing: +0.05em</code> · text-secondary · 8px below</td></tr>
+        <tr><td>Answer text</td><td>14px DM Sans regular · text-primary · line-height 1.5 · verbatim — never paraphrased</td></tr>
+        <tr><td>Order</td><td>"You said" always left · partner always right</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Single-select reveal (existing, unchanged)</div>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);">Two boxes side by side, 10px gap. "YOU SAID" / "[NAME] SAID" labels. Min-height 100px. No changes from current spec.</p>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">multi_select reveal</div>
+      <table class="spec-table">
+        <tr><td>Layout</td><td>Same two-box layout as single_select (white · <code>1.5px solid border-default</code> · <code>radius-lg</code> · 14px padding · min-height 100px · flex: 1 each · 10px gap)</td></tr>
+        <tr><td>Owner labels</td><td>"YOU SELECTED" / "[NAME] SELECTED" · same label spec as single_select boxes</td></tr>
+        <tr><td>Answer area</td><td>Flex-wrap row of pill tags · 6px gap</td></tr>
+        <tr><td>Shared pill</td><td>Option selected by both partners · bg: <code>rgba(119,234,175,0.28)</code> · text: <code>#157a46</code> · <code>radius-full</code> · 4px 10px padding · 12px DM Sans semibold</td></tr>
+        <tr><td>Unique pill</td><td>Option selected by this person only · bg: <code>rgba(26,26,26,0.07)</code> · text: text-primary · same shape and font</td></tr>
+        <tr><td>Shared count badge</td><td>"X in common" · centered below both boxes · 12px DM Sans medium · <code>#157a46</code> · 10px margin above · shown only if overlap &gt; 0</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Multi-select reveal component</div>
+      <table class="spec-table">
+        <tr><td>Container</td><td>Same two-box side-by-side layout as single-select (white · <code>border-default</code> · <code>radius-lg</code> · 14px padding · min-height 100px · flex: 1 each · 10px gap)</td></tr>
+        <tr><td>Owner labels</td><td>"YOU SELECTED" / "[NAME] SELECTED" · 11px DM Sans bold · ALL CAPS · <code>text-secondary</code></td></tr>
+        <tr><td>Content</td><td>Flex-wrap row of pill tags · 6px gap</td></tr>
+        <tr><td>Shared pill</td><td><code>rgba(119,234,175,0.28)</code> bg · <code>#157a46</code> text · <code>radius-full</code> · 4px 10px padding · 12px DM Sans semibold</td></tr>
+        <tr><td>Unique pill</td><td><code>rgba(26,26,26,0.07)</code> bg · <code>text-primary</code> · same radius/padding/font</td></tr>
+        <tr><td>Shared count</td><td>"X in common" · 12px DM Sans medium · <code>status-success-text</code> · centered below both boxes · 10px above · only shown if overlap &gt; 0</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">slider reveal</div>
+      <table class="spec-table">
+        <tr><td>Layout</td><td>Full-width card — does NOT use the two-box layout · white bg · <code>radius-xl</code> (16px) · <code>shadow-md</code> · 20px padding</td></tr>
+        <tr><td>Values row</td><td>Your value (Grandstander 28px · purple-500 · "You" label below) left · partner's value (28px · text-primary · "[Name]" label below) right · both 11px DM Sans medium text-secondary</td></tr>
+        <tr><td>Same value</td><td>Single centered value in <code>#157a46</code> · "You both said {n}" 13px DM Sans medium success-text below · replaces two-value layout</td></tr>
+        <tr><td>Track</td><td>Full-width · 6px · <code>rgba(26,26,26,0.10)</code> bg · 16px below values row</td></tr>
+        <tr><td>Range fill</td><td><code>rgba(95,69,242,0.12)</code> between the two marker positions · omitted when same value</td></tr>
+        <tr><td>Your marker</td><td>14px circle · purple-500 fill · z-index 2 (on top)</td></tr>
+        <tr><td>Partner marker</td><td>14px circle · white fill · <code>2px solid border-strong</code> · z-index 1</td></tr>
+        <tr><td>Same-value marker</td><td>Single 16px circle · <code>#157a46</code> fill · replaces both markers</td></tr>
+        <tr><td>End labels</td><td>minLabel left · maxLabel right · 11px DM Sans · text-tertiary · 6px below track</td></tr>
+        <tr><td>Delta label</td><td>Centered · 12px · different: "{n} apart" text-tertiary · same: "Same ✓" 12px medium <code>#157a46</code> · 12px below end labels</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Slider reveal component</div>
+      <table class="spec-table">
+        <tr><td>Container</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · 20px padding · full width</td></tr>
+        <tr><td>Values row</td><td>Left: user's value (Grandstander 28px bold · purple-500) + "You" label (11px · <code>text-secondary</code>) · Right: partner's value (same size · <code>text-primary</code>) + "[name]" label</td></tr>
+        <tr><td>Same-value state</td><td>Single centered value · Grandstander 28px bold · <code>#157a46</code> · "You both said [value]" label below</td></tr>
+        <tr><td>Track</td><td>6px · <code>radius-full</code> · <code>rgba(26,26,26,0.10)</code></td></tr>
+        <tr><td>User marker</td><td>14px circle · purple-500 fill · positioned at user's % position</td></tr>
+        <tr><td>Partner marker</td><td>14px circle · white fill · 2px solid <code>border-strong</code></td></tr>
+        <tr><td>Range fill</td><td><code>rgba(95,69,242,0.12)</code> between the two markers</td></tr>
+        <tr><td>End labels</td><td>minLabel left · maxLabel right · 11px DM Sans regular · <code>text-tertiary</code></td></tr>
+        <tr><td>Delta label</td><td>Centered below end labels · "Same ✓" in <code>status-success-text</code> if equal · "[n] apart" in <code>text-tertiary</code> if different</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Note section</div>
+      <table class="spec-table">
+        <tr><td>Visibility</td><td>Only shown if at least one partner wrote a note</td></tr>
+        <tr><td>Section label</td><td>"YOUR NOTES" · 11px DM Sans bold · ALL CAPS · <code>text-tertiary</code> · left-aligned · 20px above · 10px below</td></tr>
+        <tr><td>Boxes</td><td>Two side by side (10px gap) · same container as reveal boxes</td></tr>
+        <tr><td>Left box label</td><td>"YOUR NOTE"</td></tr>
+        <tr><td>Right box label</td><td>"[PARTNER NAME]'S NOTE"</td></tr>
+        <tr><td>Empty state</td><td>"No note added" · 13px DM Sans italic · <code>text-tertiary</code></td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">"For you two" summary card</div>
+      <table class="spec-table">
+        <tr><td>Border</td><td><code>1.5px dashed border-strong</code> — dashed signals AI-generated content</td></tr>
+        <tr><td>Background</td><td><code>rgba(26,26,26,0.02)</code></td></tr>
+        <tr><td>Border radius</td><td><code>radius-lg</code> (12px) · 16px padding</td></tr>
+        <tr><td>Label</td><td>"✨ FOR YOU TWO" · 11px DM Sans bold · ALL CAPS · <code>letter-spacing: +0.05em</code> · text-secondary · ✨ is part of the spec</td></tr>
+        <tr><td>Body</td><td>14px DM Sans regular · text-primary · line-height 1.6</td></tr>
+        <tr><td>Tone</td><td>Warm, specific, actionable. Never generic ("You have different views"). Never mentions AI.</td></tr>
+        <tr><td>AI input</td><td>All question texts + both partners' answers for all questions + both note texts (if present)</td></tr>
+      </table>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-top:12px;">AI summary endpoint now receives all 4 questions + both partners' answers for all questions + both note texts (if present). Previously only 1 Q+A pair was passed.</p>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Alignment pill spec</div>
+      <table class="spec-table">
+        <tr><td>Shape</td><td><code>radius-full</code> · 6px vertical · 14px horizontal padding · 13px DM Sans semibold · centered</td></tr>
+        <tr><td>Fully aligned</td><td>bg: <code>rgba(119,234,175,0.28)</code> · text: <code>#157a46</code></td></tr>
+        <tr><td>Mostly aligned</td><td>bg: <code>rgba(255,215,85,0.38)</code> · text: <code>#8a6800</code></td></tr>
+        <tr><td>Worth a conversation</td><td>bg: <code>rgba(255,173,108,0.30)</code> · text: <code>#9a5500</code></td></tr>
+        <tr><td>Scope</td><td>One pill for the whole topic — not per question</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Reveal animation spec</div>
+      <table class="spec-table">
+        <tr><th>Element</th><th>Delay</th><th>Animation</th></tr>
+        <tr><td>Q1 reveal pair</td><td>0ms</td><td>opacity 0→1 · scale 0.96→1 · 200ms ease-out</td></tr>
+        <tr><td>Q2 reveal pair</td><td>100ms</td><td>same</td></tr>
+        <tr><td>Q3 reveal pair</td><td>200ms</td><td>same</td></tr>
+        <tr><td>Q4 reveal pair</td><td>300ms</td><td>same</td></tr>
+        <tr><td>Note section (if shown)</td><td>350ms</td><td>same</td></tr>
+        <tr><td>AI Summary Card</td><td>450ms</td><td>same</td></tr>
+        <tr><td>Alignment pill</td><td>530ms</td><td>same</td></tr>
+        <tr><td>Confetti (Fully aligned)</td><td>After alignment pill completes</td><td>unchanged</td></tr>
+        <tr><td>Returning visits (Completed Topic)</td><td colspan="2">No animation — static</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-item"><div class="note-bullet"></div><span>All 4 question answers are shown stacked in order. The reveal is for the whole topic, not a single question.</span></div>
+      <div class="note-item"><div class="note-bullet"></div><span>Note section only appears if at least one partner wrote a note. If neither wrote a note, the section is hidden entirely.</span></div>
+      <div class="note-item"><div class="note-bullet"></div><span>AI summary now synthesises across all 4 questions + any note text provided by either partner.</span></div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Reveal Box — single_select</span>
+        <span class="component-tag">Reveal Box — multi_select</span>
+        <span class="component-tag">Reveal Box — slider</span>
+        <span class="component-tag">Note Section (conditional)</span>
+        <span class="component-tag">Summary Card (dashed)</span>
+        <span class="component-tag">Alignment Pill ×3 states</span>
+        <span class="component-tag">Button — Primary (sticky)</span>
+        <span class="component-tag">Confetti (fully aligned)</span>
+        <span class="component-tag">Screen Header (back)</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 19 of 32</span>
+  <div class="nav-pills">
+    <a class="nav-pill" href="18-waiting-for-partner.html">← Screen 18: Waiting for Partner</a>
+    <a class="nav-pill next" href="20-post-reveal-reflection.html">Screen 20: Post-Reveal Reflection →</a>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const TOPIC = {
+  questions: [
+    {
+      type: 'single_select',
+      text: 'Who would you trust to babysit regularly?',
+      your:    'Family only, at least at first',
+      partner: 'Close friends we both trust'
+    },
+    {
+      type: 'multi_select',
+      text: 'What values matter most to you in parenting?',
+      your:    ['Independence and self-reliance', 'Empathy and emotional intelligence'],
+      partner: ['Empathy and emotional intelligence', 'Creative and free expression']
+    },
+    {
+      type: 'slider',
+      text: 'How strict do you want to be about screen time?',
+      min: 1, max: 10, minLabel: 'No restrictions', maxLabel: 'Screen-free',
+      your: 3, partner: 7
+    }
+  ],
+  notes: {
+    your: 'I think we should talk more about the extended family piece — I had some complicated feelings about being left with various relatives growing up.',
+    partner: ''
+  }
+};
+
+const STATES = {
+  conversation: {
+    summary: "You two are approaching this from different angles. You're thinking family-first; Jordan's prioritizing social trust over family dynamics. And your screen-time instincts are pretty far apart (3 vs. 7). Not a problem — just worth a real conversation before patterns set themselves.",
+    pillClass: 'alignment-pill pill-conversation',
+    pillText:  '🤔 Worth a conversation'
+  },
+  mostly: {
+    summary: "You share a foundation — empathy and emotional intelligence showed up for both of you, which matters. The main thing to work through is screen time. You're more relaxed about it than Jordan, and that's a conversation worth having before the baby arrives.",
+    pillClass: 'alignment-pill pill-mostly',
+    pillText:  '😌 Mostly aligned'
+  },
+  aligned: {
+    summary: "You two are on the same page across the board — same trusted people, same values you want to pass on, same instincts about balance. You've already done the thinking together. Keep talking as things evolve.",
+    pillClass: 'alignment-pill pill-aligned',
+    pillText:  '🎉 Fully aligned'
+  }
+};
+
+let confettiFrame;
+
+function buildRevealPair(q) {
+  if (q.type === 'single_select') {
+    return `<div class="reveal-row">
+      <div class="reveal-box">
+        <div class="reveal-label">YOU SAID</div>
+        <div class="reveal-answer">${q.your}</div>
+      </div>
+      <div class="reveal-box">
+        <div class="reveal-label">JORDAN SAID</div>
+        <div class="reveal-answer">${q.partner}</div>
+      </div>
+    </div>`;
+  }
+
+  if (q.type === 'multi_select') {
+    const sharedSet = new Set(q.your.filter(t => q.partner.includes(t)));
+    const makePills = arr => arr.map(t => {
+      const cls = sharedSet.has(t) ? 'ms-pill ms-pill-shared' : 'ms-pill ms-pill-unique';
+      return `<span class="${cls}">${t}</span>`;
+    }).join('');
+    const badge = sharedSet.size > 0
+      ? `<div class="ms-shared-badge">${sharedSet.size} in common</div>` : '';
+    return `<div>
+      <div class="reveal-row">
+        <div class="reveal-box">
+          <div class="reveal-label">YOU SELECTED</div>
+          <div class="ms-pills">${makePills(q.your)}</div>
+        </div>
+        <div class="reveal-box">
+          <div class="reveal-label">JORDAN SELECTED</div>
+          <div class="ms-pills">${makePills(q.partner)}</div>
+        </div>
+      </div>
+      ${badge}
+    </div>`;
+  }
+
+  if (q.type === 'slider') {
+    const range      = q.max - q.min;
+    const isSame     = q.your === q.partner;
+    const yourPct    = (q.your    - q.min) / range * 100;
+    const partnerPct = (q.partner - q.min) / range * 100;
+    const delta      = Math.abs(q.your - q.partner);
+
+    let valuesRow, trackContent, deltaEl;
+
+    if (isSame) {
+      valuesRow = `<div style="text-align:center;">
+        <div class="srv-num srv-num-same">${q.your}</div>
+        <div class="srv-name srv-name-same">You both said ${q.your}</div>
+      </div>`;
+      trackContent = `<div class="srv-marker srv-marker-same" style="left:${yourPct}%"></div>`;
+      deltaEl = `<div class="srv-delta srv-delta-same">Same ✓</div>`;
+    } else {
+      valuesRow = `<div class="srv-values">
+        <div class="srv-val">
+          <div class="srv-num srv-num-you">${q.your}</div>
+          <div class="srv-name">You</div>
+        </div>
+        <div class="srv-val">
+          <div class="srv-num srv-num-partner">${q.partner}</div>
+          <div class="srv-name">Jordan</div>
+        </div>
+      </div>`;
+      const lo = Math.min(yourPct, partnerPct);
+      const hi = Math.max(yourPct, partnerPct);
+      trackContent = `
+        <div class="srv-range" style="left:${lo}%;width:${hi - lo}%"></div>
+        <div class="srv-marker srv-marker-partner" style="left:${partnerPct}%"></div>
+        <div class="srv-marker srv-marker-you" style="left:${yourPct}%"></div>`;
+      deltaEl = `<div class="srv-delta">${delta} apart</div>`;
+    }
+
+    return `<div class="slider-reveal-card">
+      ${valuesRow}
+      <div class="srv-track" style="margin-top:16px;">${trackContent}</div>
+      <div class="srv-endlabels">
+        <span>${q.minLabel}</span><span>${q.maxLabel}</span>
+      </div>
+      ${deltaEl}
+    </div>`;
+  }
+}
+
+function buildSections() {
+  const container = document.getElementById('question-sections');
+  container.innerHTML = TOPIC.questions.map((q, i) => `
+    <div class="q-section rev-item"${i > 0 ? ' style="margin-top:20px;"' : ''}>
+      <div class="q-section-label">${q.text}</div>
+      ${buildRevealPair(q)}
+    </div>`
+  ).join('');
+
+  // Note section
+  const hasYourNote    = TOPIC.notes.your.trim().length > 0;
+  const hasPartnerNote = TOPIC.notes.partner.trim().length > 0;
+  const noteSection    = document.getElementById('note-section');
+  if (hasYourNote || hasPartnerNote) {
+    noteSection.style.display = 'block';
+    const yourEl    = document.getElementById('your-note-text');
+    const partnerEl = document.getElementById('partner-note-text');
+    if (hasYourNote) {
+      yourEl.textContent = TOPIC.notes.your;
+      yourEl.className   = 'reveal-answer';
+    } else {
+      yourEl.textContent = 'No note added.';
+      yourEl.className   = 'reveal-no-note';
+    }
+    if (hasPartnerNote) {
+      partnerEl.textContent = TOPIC.notes.partner;
+      partnerEl.className   = 'reveal-answer';
+    } else {
+      partnerEl.textContent = 'No note added.';
+      partnerEl.className   = 'reveal-no-note';
+    }
+  }
+}
+
+function showState(state) {
+  ['conversation','mostly','aligned'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const d    = STATES[state];
+  const pill = document.getElementById('alignment-pill');
+  document.getElementById('summary-card').innerHTML =
+    `<div class="summary-label">✨ For you two</div><div class="summary-text">${d.summary}</div>`;
+  pill.className  = d.pillClass;
+  pill.textContent = d.pillText;
+
+  playRevealAnimation(state === 'aligned');
+}
+
+function playRevealAnimation(isAligned) {
+  if (confettiFrame) { cancelAnimationFrame(confettiFrame); }
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.style.display = 'none';
+
+  // Reset all
+  document.querySelectorAll('.rev-item').forEach(el => el.classList.remove('rev-show'));
+
+  const n          = TOPIC.questions.length;
+  const hasNote    = document.getElementById('note-section').style.display !== 'none';
+  const noteDelay  = n * 100 + 50;
+  const summDelay  = (hasNote ? noteDelay : n * 100) + 100;
+  const pillDelay  = summDelay + 80;
+
+  document.querySelectorAll('#question-sections .q-section').forEach((el, i) => {
+    setTimeout(() => el.classList.add('rev-show'), i * 100);
+  });
+
+  if (hasNote) {
+    setTimeout(() => document.getElementById('note-section').classList.add('rev-show'), noteDelay);
+  }
+  setTimeout(() => document.getElementById('summary-card').classList.add('rev-show'), summDelay);
+  setTimeout(() => {
+    document.getElementById('alignment-row').classList.add('rev-show');
+    if (isAligned) setTimeout(launchConfetti, 80);
+  }, pillDelay);
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const phone  = canvas.parentElement;
+  canvas.width  = phone.offsetWidth  || 320;
+  canvas.height = phone.offsetHeight || 600;
+  canvas.style.display = 'block';
+  const ctx    = canvas.getContext('2d');
+  const colors = ['#5f45f2','#f5c842','#77eaaf','#ff9191','#ffd755','#fbefe1'];
+
+  const pieces = Array.from({ length: 45 }, () => ({
+    x:  Math.random() * canvas.width,
+    y: -10 - Math.random() * 60,
+    w:  5 + Math.random() * 6,
+    h:  5 + Math.random() * 6,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    vx: (Math.random() - 0.5) * 2.5,
+    vy:  2 + Math.random() * 3.5,
+    rot: Math.random() * 360,
+    rotV: (Math.random() - 0.5) * 9
+  }));
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let live = false;
+    for (const p of pieces) {
+      p.x += p.vx; p.y += p.vy; p.rot += p.rotV;
+      if (p.y < canvas.height) live = true;
+      ctx.save();
+      ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+    if (live) confettiFrame = requestAnimationFrame(tick);
+    else canvas.style.display = 'none';
+  }
+  confettiFrame = requestAnimationFrame(tick);
+  setTimeout(() => { cancelAnimationFrame(confettiFrame); canvas.style.display = 'none'; }, 3500);
+}
+
+buildSections();
+showState('conversation');
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

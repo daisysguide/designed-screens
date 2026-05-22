@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Note Step — Daisy's Guide Designed Screens v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ── Screen 17b: Note Step (page-29) ── */
+
+body.page-29 .screen-root .q-toprow {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+body.page-29 .screen-root .q-back-btn {
+  font-size: 22px; color: #5f45f2; cursor: pointer;
+  line-height: 1; width: 24px; flex-shrink: 0;
+}
+body.page-29 .screen-root .q-step-label {
+  font-size: 12px; font-weight: 600; color: rgba(26,26,26,0.38);
+  text-align: center;
+}
+body.page-29 .screen-root .note-heading {
+  font-family: 'Grandstander', cursive;
+  font-size: 20px; font-weight: 700;
+  color: rgba(26,26,26,1); letter-spacing: -0.02em;
+  margin-bottom: 0;
+}
+body.page-29 .screen-root .note-subtext {
+  font-size: 13px; color: rgba(26,26,26,0.38);
+  line-height: 1.5; margin-top: 8px; margin-bottom: 16px;
+}
+body.page-29 .screen-root .note-textarea {
+  width: 100%; min-height: 120px; max-height: 240px;
+  border-radius: 12px; border: 1.5px solid rgba(26,26,26,0.15);
+  background: #fbefe1;
+  padding: 14px; box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif; font-size: 15px;
+  color: rgba(26,26,26,1); resize: none; outline: none; line-height: 1.5;
+  overflow-y: auto;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+body.page-29 .screen-root .note-textarea::placeholder {
+  color: rgba(26,26,26,0.38);
+}
+body.page-29 .screen-root .note-textarea:focus {
+  border-color: #5f45f2; box-shadow: 0 0 0 3px rgba(95,69,242,0.12);
+}
+body.page-29 .screen-root .note-char-count {
+  text-align: right; font-size: 12px;
+  color: rgba(26,26,26,0.38); margin-top: 6px;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.15s;
+}
+body.page-29 .screen-root .note-char-count.warn  { color: #5f45f2; }
+body.page-29 .screen-root .note-char-count.error { color: #ff9191; }
+</style>
+</head>
+<body class="page-29">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v4 · 32 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
+  <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
+  <a class="sidebar-item" href="08-paywall.html"><span class="screen-num">08</span>Paywall</a>
+  <a class="sidebar-item" href="09-partner-linking.html"><span class="screen-num">09</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="10-home.html"><span class="screen-num">10</span>Home</a>
+  <a class="sidebar-item" href="11-progress.html"><span class="screen-num">11</span>Progress</a>
+  <a class="sidebar-item" href="12-settings.html"><span class="screen-num">12</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="13-topic-list.html"><span class="screen-num">13</span>Topic List</a>
+  <a class="sidebar-item" href="14-manage-topics.html"><span class="screen-num">14</span>Manage Topics</a>
+  <a class="sidebar-item" href="15-topic-intro.html"><span class="screen-num">15</span>Topic Intro</a>
+  <a class="sidebar-item" href="16-topic-article.html"><span class="screen-num">16</span>Topic Article</a>
+  <a class="sidebar-item" href="17-question.html"><span class="screen-num">17</span>Question</a>
+  <a class="sidebar-item active" href="17b-note.html"><span class="screen-num">17b</span>Note Step</a>
+  <a class="sidebar-item" href="18-waiting-for-partner.html"><span class="screen-num">18</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="19-alignment-reveal.html"><span class="screen-num">19</span>Alignment Reveal</a>
+  <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
+  <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
+  <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
+  <div class="sidebar-section-label">Special</div>
+  <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
+  <div class="sidebar-section-label">Empty States</div>
+  <a class="sidebar-item" href="24-empty-home.html"><span class="screen-num">24</span>Empty Home</a>
+  <a class="sidebar-item" href="25-empty-topic-list.html"><span class="screen-num">25</span>Empty Topic List</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="26-payment-failure.html"><span class="screen-num">26</span>Payment Failure</a>
+  <a class="sidebar-item" href="27-connection-error.html"><span class="screen-num">27</span>Connection Error</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="28-onboarding-intro.html"><span class="screen-num">28</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Note Step</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="17-question.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">17b / 30</span>
+        <a class="topbar-btn" href="18-waiting-for-partner.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 17b · Topic Flow</div>
+    <div class="page-title">Note Step</div>
+    <div class="page-desc">Optional free-text note. Appears after all questions, before answers are submitted. Private until both partners complete the topic.</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" href="17-question.html">← Screen 17: Question</a>
+    <a class="nav-pill next" href="18-waiting-for-partner.html">Screen 18: Waiting for Partner →</a>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+    <!-- State tabs -->
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <button id="tab-empty"      onclick="setState('empty')"      style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Empty</button>
+      <button id="tab-typing"     onclick="setState('typing')"     style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Typing</button>
+      <button id="tab-near_limit" onclick="setState('near_limit')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Near limit</button>
+      <button id="tab-over_limit" onclick="setState('over_limit')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Over limit</button>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- Back chevron + step label + Optional pill -->
+        <div class="q-toprow">
+          <div class="q-back-btn">‹</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex:1;">
+            <div class="q-step-label">Q3 of 3</div>
+            <div style="padding:4px 8px;border:1px solid rgba(26,26,26,0.15);border-radius:100px;font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(26,26,26,0.38);line-height:1.2;">Optional</div>
+          </div>
+          <div style="width:24px;"></div>
+        </div>
+
+        <!-- Progress bar at 100% -->
+        <div class="progress-track" style="margin-bottom:16px;">
+          <div class="progress-fill" style="width:100%;"></div>
+        </div>
+
+        <!-- Note card -->
+        <div class="question-card">
+          <div class="note-heading">Anything else Jordan should know?</div>
+          <div class="note-subtext">Your note stays private until you've both finished this topic. Then you'll both see it.</div>
+          <textarea class="note-textarea" id="note-textarea"
+            placeholder="Add a note... (optional)"
+            oninput="handleInput(this)"></textarea>
+          <div class="note-char-count" id="char-count">0 / 280</div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-next">Submit my answers →</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Routing</div>
+      <div class="flow-map">
+        <div class="flow-node from">17 Question (last Q)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">17b Note Step</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">18 Waiting</div>
+      </div>
+      <div class="info-box">
+        <strong>Back</strong> returns to the last question (Screen 17, Q[n−1]).<br><br>
+        <strong>Submit</strong> saves the note (empty string if blank), marks all topic answers as submitted, and navigates to Screen 18 Waiting for Partner.<br><br>
+        <strong>No bottom nav</strong> on this screen — same as all topic flow screens.
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Header spec</div>
+      <table class="spec-table">
+        <tr><td>Back chevron</td><td>Left · <code>purple-500</code> · returns to last question screen</td></tr>
+        <tr><td>Step label</td><td>"Q{n} of {n}" (e.g. "Q3 of 3") · <code>text-tertiary</code> · 12px semibold</td></tr>
+        <tr><td>Optional pill</td><td>Inline beside step label · <code>border-default</code> border · <code>radius-full</code> · <code>text-tertiary</code> · 12px · always visible on this screen</td></tr>
+        <tr><td>Right side</td><td>Empty — 24px spacer only · no action</td></tr>
+        <tr><td>Screen title</td><td>None — no title text between back and right side</td></tr>
+        <tr><td>Progress bar</td><td>100% fill · all questions are complete</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Content spec</div>
+      <table class="spec-table">
+        <tr><td>Card</td><td>White · <code>shadow-md</code> · <code>radius-xl</code> · 24px padding</td></tr>
+        <tr><td>Heading</td><td>"Anything else [partnerName] should know?" · Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
+        <tr><td>[partnerName]</td><td>Partner's first name if account is linked · "your partner" if not yet linked</td></tr>
+        <tr><td>Sub-text</td><td>"Your note stays private until you've both finished this topic. Then you'll both see it." · DM Sans 13px · <code>text-tertiary</code> · 8px below heading · 16px above textarea</td></tr>
+        <tr><td>Textarea bg</td><td><code>surface-nested</code> (cream <code>#fbefe1</code>) · visually distinct from white card background</td></tr>
+        <tr><td>Textarea size</td><td>Min-height 120px · expands with content to max-height 240px · then scrolls inside</td></tr>
+        <tr><td>Textarea border</td><td><code>1.5px solid border-default</code> · <code>radius-lg</code> (12px) · on focus: <code>border-focus</code> + <code>rgba(95,69,242,0.12)</code> ring</td></tr>
+        <tr><td>Font</td><td>DM Sans 15px regular · <code>text-primary</code> · 14px padding all sides</td></tr>
+        <tr><td>Placeholder</td><td>"Add a note... (optional)" · <code>text-tertiary</code></td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Character counter spec</div>
+      <table class="spec-table">
+        <tr><td>Format</td><td>"{count} / 280" · right-aligned below textarea · 12px DM Sans regular</td></tr>
+        <tr><td>Default color</td><td><code>text-tertiary</code> (<code>rgba(26,26,26,0.38)</code>) · when count ≤ 259</td></tr>
+        <tr><td>Near limit</td><td><code>purple-500</code> (<code>#5f45f2</code>) · when count 260–280</td></tr>
+        <tr><td>Over limit</td><td><code>#ff9191</code> · when count &gt; 280</td></tr>
+        <tr><td>Soft limit</td><td>No <code>maxlength</code> attribute · user may type beyond 280 · Submit stays enabled</td></tr>
+        <tr><td>Hard limit</td><td>500 chars · enforced server-side only</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Submit CTA spec</div>
+      <table class="spec-table">
+        <tr><td>Label</td><td>"Submit my answers →"</td></tr>
+        <tr><td>Style</td><td>56px height · <code>radius-full</code> · <code>purple-500</code> fill · full width</td></tr>
+        <tr><td>State</td><td>Always enabled — empty note is a valid submission</td></tr>
+        <tr><td>On tap</td><td>1. Save note text (empty string if blank) · <code>isVisibleToPartner: false</code><br>2. Mark all topic answers as submitted<br>3. Navigate to Screen 18 Waiting for Partner</td></tr>
+        <tr><td>No skip button</td><td>Placeholder + sub-text communicate optionality · one CTA keeps the screen clean</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Note Schema</div>
+      <table class="spec-table">
+        <tr><td><code>topicId</code></td><td>string · FK → Topic.id</td></tr>
+        <tr><td><code>userId</code></td><td>string · FK → User.id</td></tr>
+        <tr><td><code>text</code></td><td>string · empty string valid · server enforces 500-char hard limit</td></tr>
+        <tr><td><code>isVisibleToPartner</code></td><td>boolean · <code>false</code> until server confirms both users submitted all answers for this topic · never set client-side</td></tr>
+        <tr><td><code>createdAt</code></td><td>timestamp</td></tr>
+        <tr><td><code>updatedAt</code></td><td>timestamp</td></tr>
+      </table>
+      <div class="info-box" style="margin-top:12px;"><code>isVisibleToPartner</code> flips to <code>true</code> server-side when both users have submitted answers for this topic — the same condition that triggers the alignment reveal. The client reads this flag to surface the partner's note in Screen 19 Alignment Reveal.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Back Chevron</span>
+        <span class="component-tag">Step Label</span>
+        <span class="component-tag">Optional Pill</span>
+        <span class="component-tag">Progress Bar (100%)</span>
+        <span class="component-tag">Question Card</span>
+        <span class="component-tag">Note Textarea</span>
+        <span class="component-tag">Character Counter</span>
+        <span class="component-tag">Button — Primary (Submit)</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 17b of 32</span>
+  <div class="nav-pills">
+    <a class="nav-pill" href="17-question.html">← Screen 17: Question</a>
+    <a class="nav-pill next" href="18-waiting-for-partner.html">Screen 18: Waiting for Partner →</a>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const DEMO_TEXT = {
+  empty: '',
+  typing: "I think we should talk more about this before we commit to anything. It's something I feel strongly about, and I want us to really be on the same page.",
+  near_limit: "I feel strongly about this — more than my answer might suggest. I want to make sure we talk it through before committing to anything. This is one of those areas where I think our different perspectives could actually strengthen us, if we approach it openly and without judgment. Looking forward to the conversation.",
+  over_limit: "I feel strongly about this — more than my answer might suggest. I want to make sure we talk it through before committing to anything. This is one of those areas where I think our different perspectives could actually strengthen us, if we approach it openly and without judgment. Looking forward to the conversation. I love you and I trust you completely."
+};
+
+function setState(key) {
+  ['empty','typing','near_limit','over_limit'].forEach(k => {
+    const tab = document.getElementById('tab-' + k);
+    const active = k === key;
+    tab.style.background  = active ? '#5f45f2' : 'white';
+    tab.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    tab.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+  const ta = document.getElementById('note-textarea');
+  ta.value = DEMO_TEXT[key];
+  autoExpand(ta);
+  updateCounter(ta.value.length);
+}
+
+function handleInput(ta) {
+  autoExpand(ta);
+  updateCounter(ta.value.length);
+}
+
+function autoExpand(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = Math.max(120, Math.min(ta.scrollHeight, 240)) + 'px';
+}
+
+function updateCounter(len) {
+  const el = document.getElementById('char-count');
+  el.textContent = len + ' / 280';
+  el.classList.remove('warn', 'error');
+  if (len > 280)       el.classList.add('error');
+  else if (len >= 260) el.classList.add('warn');
+}
+
+setState('empty');
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

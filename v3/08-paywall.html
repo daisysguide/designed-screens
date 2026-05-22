@@ -11,7 +11,7 @@
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v3 · 30 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 32 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -21,6 +21,7 @@
   <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
   <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
   <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
   <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
   <div class="sidebar-section-label">Onboarding</div>
   <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
@@ -42,6 +43,7 @@
   <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
   <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
   <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
   <div class="sidebar-section-label">Special</div>
   <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
   <div class="sidebar-section-label">Empty States</div>
@@ -60,7 +62,7 @@
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="14-manage-topics.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">08 / 30</span>
+        <span class="topbar-counter">08 / 32</span>
         <a class="topbar-btn" href="09-partner-linking.html" aria-label="Next">›</a>
       </div>
     </div>
@@ -171,16 +173,16 @@
         <div class="flow-node dest">09 Partner Linking</div>
       </div>
       <div class="info-box">
-        <strong>Highest conversion intent in the app.</strong> User has just invested effort customizing their plan. No back button visible — forward momentum only. Purchase → Screen 12 Home.
+        <strong>Highest conversion intent in the app.</strong> Reached from Screen 14 (Manage Topics) via 'Unlock my plan →' CTA. Not reached directly from Screen 07. User has just invested effort customizing their plan. No back button visible — forward momentum only. Purchase → Screen 09 Partner Linking.
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
       <table class="spec-table">
-        <tr><td>Eyebrow</td><td>"Unlock your plan" · <code>label-sm</code> uppercase · <code>text-tertiary</code></td></tr>
-        <tr><td>Heading</td><td>"Your plan is ready" · Grandstander 26px bold</td></tr>
-        <tr><td>Body</td><td>"Get full access to all 28 of your personalized topics, the side-by-side reveal, and everything that follows." · topic count is dynamic</td></tr>
+        <tr><td>Eyebrow</td><td>"Founding member offer" · <code>label-sm</code> uppercase · <code>text-tertiary</code></td></tr>
+        <tr><td>Heading</td><td>"Get Daisy before the price goes up." · Grandstander 26px bold</td></tr>
+        <tr><td>Body</td><td>"Right now Daisy is $49 once — lifetime access, both partners, all [n] of your topics. We're moving to a $40/year subscription after we launch publicly. Pay once today and you're covered forever."</td></tr>
         <tr><td>CTA</td><td>"Get full access — $49" · price is a templated string from the data layer · if promo applied: "Get full access — $[discounted]"</td></tr>
         <tr><td>Terms line</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy" · 11px · <code>text-tertiary</code> · centered · links in <code>purple-500</code> · open in-app browser</td></tr>
         <tr><td>Restore link</td><td>"Restore previous purchase" · 13px · <code>purple-500</code> · centered · no underline</td></tr>
@@ -188,6 +190,22 @@
         <tr><td>Money-back</td><td>"Not happy within 7 days? Email us for a full refund." · 13px DM Sans · <code>text-tertiary</code> · centered · "Email us" links to <code>mailto:guarantee@daisysguide.com</code> · <code>purple-500</code> · no underline</td></tr>
       </table>
     </div>
+
+    <div class="spec-card">
+  <div class="spec-card-title">Demo Reveal Card</div>
+  <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Static illustrative card shown above the Price/Purchase Card. Fades in on screen mount (opacity 0→1, 300ms ease, 150ms delay). Not tappable.</p>
+  <table class="spec-table">
+    <tr><td>Container</td><td>White · <code>radius-xl</code> (16px) · <code>shadow-md</code> · 16px padding</td></tr>
+    <tr><td>Section label</td><td>"SEE HOW IT WORKS" · 10px DM Sans bold · ALL CAPS · <code>text-tertiary</code> · centered</td></tr>
+    <tr><td>Mini reveal boxes</td><td>Two side by side · 8px gap · white bg · <code>border-default</code> · <code>radius-md</code> · 10px padding · min-height 72px</td></tr>
+    <tr><td>Left box content</td><td>"YOU SAID" label + "Family only, at least at first" (hardcoded)</td></tr>
+    <tr><td>Right box content</td><td>"JORDAN SAID" label + "Close friends we both trust" (hardcoded)</td></tr>
+    <tr><td>Alignment pill</td><td>"😌 Mostly aligned" · <code>rgba(255,215,85,0.38)</code> bg · <code>#8a6800</code> text · centered</td></tr>
+    <tr><td>AI excerpt</td><td>Dashed border card · "✨ FOR YOU TWO" label · "You're both thinking about trust — just with different people in mind. Exactly the kind of thing worth talking through."</td></tr>
+    <tr><td>Interaction</td><td>None — static, not tappable</td></tr>
+    <tr><td>Animation</td><td>Fade in on screen mount: opacity 0→1, 300ms ease, 150ms delay</td></tr>
+  </table>
+</div>
 
     <div class="spec-card">
       <div class="spec-card-title">Price / Purchase Card</div>
@@ -202,7 +220,7 @@
         <tr><td>Divider</td><td><code>1px solid border-default</code> · 16px margin above feature list</td></tr>
         <tr><td>Feature checkmark</td><td>"✓" · <code>#157a46</code> (green) · 14px bold</td></tr>
         <tr><td>Feature text</td><td>14px DM Sans regular · <code>text-primary</code></td></tr>
-        <tr><td>Feature count</td><td>Max 6 items. More starts to feel like a negotiation.</td></tr>
+        <tr><td>Feature bullets</td><td>✓ Know where you agree — and where you need to talk<br>✓ [n] topics filtered for your exact situation, nothing irrelevant<br>✓ A private reveal for every topic — answers stay sealed until you're both done<br>✓ Dr. Daisy's expert guide for every topic<br>✓ Both partners on one purchase — forever</td></tr>
       </table>
     </div>
 
@@ -216,26 +234,33 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Terms + Privacy line</div>
+  <div class="spec-card-title">Founding Member Context Paragraph</div>
+  <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Shown between the Credibility card and the primary CTA.</p>
+  <table class="spec-table">
+    <tr><td>Container</td><td><code>rgba(95,69,242,0.05)</code> bg · <code>1px solid rgba(95,69,242,0.15)</code> border · <code>radius-lg</code> (12px) · 12px 14px padding</td></tr>
+    <tr><td>Row 1</td><td>"🔒" emoji + "Founding member pricing" · 12px DM Sans bold · purple-500 · 6px below</td></tr>
+    <tr><td>Body</td><td>"This price is only available to founding members. Once we open to the public we're moving to $40/year — pay $49 now and you'll never see a subscription charge." · 12px DM Sans regular · <code>text-secondary</code></td></tr>
+  </table>
+</div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">ToS + Privacy Line</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Directly below the primary CTA button</td></tr>
-        <tr><td>Copy</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy"</td></tr>
-        <tr><td>Style</td><td>11px DM Sans · <code>text-tertiary</code> · centered · 8px margin-top</td></tr>
-        <tr><td>"Terms of Service" link</td><td><code>purple-500</code> (#5f45f2) · no underline · opens <code>https://daisysguide.com/terms</code> in in-app browser</td></tr>
-        <tr><td>"Privacy Policy" link</td><td><code>purple-500</code> (#5f45f2) · no underline · opens <code>https://daisysguide.com/privacy</code> in in-app browser</td></tr>
+        <tr><td>Text</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy"</td></tr>
+        <tr><td>Style</td><td>11px DM Sans · <code>text-tertiary</code> · centered</td></tr>
+        <tr><td>Position</td><td>Below primary CTA, above Restore link</td></tr>
+        <tr><td>Links</td><td>"Terms of Service" and "Privacy Policy" in purple-500, open in-app browser</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Restore purchase</div>
+      <div class="spec-card-title">Restore Purchase Link</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Directly below the Terms + Privacy line</td></tr>
-        <tr><td>Label</td><td>"Restore previous purchase" · 13px DM Sans · <code>purple-500</code> · centered · no underline</td></tr>
-        <tr><td>On tap</td><td>Disable link + show inline spinner · call <code>restorePurchase()</code></td></tr>
-        <tr><td><code>restorePurchase()</code></td><td>Stub — will connect to Apple StoreKit (iOS) or backend receipt verification (web)</td></tr>
-        <tr><td>Success state</td><td>Inline banner above price card · bg <code>rgba(119,234,175,0.18)</code> · border <code>1px solid #77eaaf</code> · text <code>#157a46</code> · "✓ Purchase restored. You're all set." · auto-navigate to Home after 2s</td></tr>
-        <tr><td>Failure state</td><td>Inline banner above price card · bg <code>rgba(255,145,145,0.12)</code> · border <code>1px solid #ff9191</code> · text <code>#c0392b</code> · "No previous purchase found. If you think this is wrong, contact support." · "contact support" links to <code>https://daisysguide.com/support</code></td></tr>
-        <tr><td>Spinner</td><td>12px SVG · <code>purple-500</code> · inline right of label · CSS rotation animation</td></tr>
+        <tr><td>Label</td><td>"Restore previous purchase"</td></tr>
+        <tr><td>Style</td><td>13px DM Sans · purple-500 · centered · no underline</td></tr>
+        <tr><td>Position</td><td>Below ToS + Privacy line, above social proof</td></tr>
+        <tr><td>Behavior</td><td>Triggers <code>restorePurchase()</code> · loading spinner while processing · success: green banner "Purchase restored. You're all set." + auto-navigate to Home after 2s · failure: error banner with support link</td></tr>
+        <tr><td>Compliance</td><td>Required by Apple App Store Guideline 3.1.1. Must be visible above the fold.</td></tr>
       </table>
     </div>
 
@@ -247,6 +272,16 @@
         <tr><td>Trigger</td><td>Tapping "Have a promo code?" expands inline — no modal, no sheet</td></tr>
         <tr><td>On valid code</td><td>Price updates in card and CTA button label. Success toast: "Code applied — $X off"</td></tr>
         <tr><td>On invalid code</td><td>Inline error below input: "That code isn't valid or has expired."</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Money-Back Guarantee Line</div>
+      <table class="spec-table">
+        <tr><td>Text</td><td>"Not happy within 7 days? Email us for a full refund."</td></tr>
+        <tr><td>Style</td><td>13px DM Sans · <code>text-tertiary</code> · centered</td></tr>
+        <tr><td>Position</td><td>Below social proof</td></tr>
+        <tr><td>Link</td><td>"Email us" → <code>mailto:guarantee@daisysguide.com</code> · purple-500</td></tr>
       </table>
     </div>
 
@@ -267,11 +302,12 @@
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>Single price, single CTA. No tiers, no free trial, no "maybe later" in V1.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Topic count (28) in heading and body is dynamic — matches the user's personalized plan.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Topic count ([n]) in heading and body is dynamic — matches the user's personalized plan.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Promo code expands inline on tap — no sheet or modal. Collapses if user taps away without applying.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Terms of Service and Privacy Policy links open <code>daisysguide.com/terms</code> and <code>daisysguide.com/privacy</code> in the in-app browser — same URLs as Settings → Legal.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Restore purchase: disables link and shows spinner while <code>restorePurchase()</code> runs. Success shows green banner and navigates to Home after 2s. Failure shows red banner with support link. Link re-enables on failure so user can retry.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Successful purchase → Screen 12 Home. No bottom nav on this screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Successful purchase → Screen 09 Partner Linking. No bottom nav on this screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Element order top to bottom: Eyebrow → Heading + body → Demo Reveal Card → Price/Purchase Card → Credibility card (Dr. Daisy) → Founding Member Context Paragraph → 'Get full access — $49' primary CTA → ToS + Privacy line → Restore previous purchase link → Social proof → Money-back guarantee line → Promo code affordance</span></div>
       </div>
     </div>
 
@@ -279,7 +315,7 @@
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 08 of 30</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 08 of 32</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="14-manage-topics.html">← Screen 14: Manage Topics</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="09-partner-linking.html">Screen 09: Partner Linking →</a>

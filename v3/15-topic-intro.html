@@ -11,7 +11,7 @@
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v3 · 30 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 32 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -21,6 +21,7 @@
   <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
   <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
   <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
   <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
   <div class="sidebar-section-label">Onboarding</div>
   <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
@@ -42,6 +43,7 @@
   <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
   <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
   <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
   <div class="sidebar-section-label">Special</div>
   <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
   <div class="sidebar-section-label">Empty States</div>
@@ -60,7 +62,7 @@
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="14-manage-topics.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">15 / 30</span>
+        <span class="topbar-counter">15 / 32</span>
         <a class="topbar-btn" href="16-topic-article.html" aria-label="Next">›</a>
       </div>
     </div>
@@ -148,16 +150,16 @@
       <div class="flow-map">
         <div class="flow-node from">13 Topic List</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node current">14 Topic Intro</div>
+        <div class="flow-node current">15 Topic Intro</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">15 Topic Article</div>
+        <div class="flow-node dest">16 Topic Article</div>
       </div>
       <div class="flow-map" style="margin-top:8px;">
         <div class="flow-node from" style="opacity:0;">—</div>
         <div class="flow-arrow" style="opacity:0;">→</div>
         <div class="flow-node current" style="opacity:0;">—</div>
         <div class="flow-arrow">or →</div>
-        <div class="flow-node dest">16 Question</div>
+        <div class="flow-node dest">17 Question</div>
       </div>
       <div class="info-box">
         <strong>Key structural decision:</strong> both paths are equally prominent. No visual hierarchy implying one is required first. Users who've read the book skip straight to answering. New users may want the guide first. The article is also accessible mid-question via a persistent link. <strong>No bottom nav.</strong>
@@ -187,7 +189,7 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Stats card (2-col)</div>
+      <div class="spec-card-title">Stats card (3-col)</div>
       <table class="spec-table">
         <tr><td>Background</td><td>White</td></tr>
         <tr><td>Border radius</td><td><code>radius-lg</code> (12px) — stepped down, nested inside screen</td></tr>
@@ -203,8 +205,8 @@
     <div class="spec-card">
       <div class="spec-card-title">Two equal CTAs</div>
       <table class="spec-table">
-        <tr><td>"Start answering →"</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> · leads to Screen 16 Question</td></tr>
-        <tr><td>"Read the guide first"</td><td>Secondary · 56px · <code>radius-full</code> · <code>border-strong</code> outline · leads to Screen 15 Article</td></tr>
+        <tr><td>"Start answering →"</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> · leads to Screen 17 Question</td></tr>
+        <tr><td>"Read the guide first"</td><td>Secondary · 56px · <code>radius-full</code> · <code>border-strong</code> outline · leads to Screen 16 Topic Article</td></tr>
         <tr><td>Hierarchy</td><td>Visually equal weight — same height, same width. Neither implies the other is required first.</td></tr>
         <tr><td>"Back to topics"</td><td>Ghost · 44px · <code>text-tertiary</code> · tertiary action at the bottom</td></tr>
       </table>
@@ -238,7 +240,7 @@
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav — user is inside a topic flow.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Back button always returns to Topic List. No "confirm exit" dialog in V1.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>The article (Screen 15) is also accessible mid-question via a persistent "Read guide" link — so users aren't forced to commit to an order.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The article (Screen 16) is also accessible mid-question via a persistent "Read guide" link — so users aren't forced to commit to an order.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Partner status line is always visible above the CTAs — gives context before committing to answer.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Layout fits without scrolling on most devices. CTA region floats to bottom via spacer — not sticky.</span></div>
       </div>
@@ -248,7 +250,7 @@
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 15 of 30</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 15 of 32</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="14-manage-topics.html">← Screen 14: Manage Topics</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="16-topic-article.html">Screen 16: Topic Article →</a>

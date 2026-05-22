@@ -11,7 +11,7 @@
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v3 · 30 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v3 · 32 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -21,6 +21,7 @@
   <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
   <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
   <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
+  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
   <a class="sidebar-item active" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
   <div class="sidebar-section-label">Onboarding</div>
   <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
@@ -42,6 +43,7 @@
   <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
   <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
   <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
+  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
   <div class="sidebar-section-label">Special</div>
   <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
   <div class="sidebar-section-label">Empty States</div>
@@ -60,7 +62,7 @@
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="05b-name-entry.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">06 / 30</span>
+        <span class="topbar-counter">06 / 32</span>
         <a class="topbar-btn" href="07-personalized-results.html" aria-label="Next">›</a>
       </div>
     </div>
@@ -143,27 +145,27 @@
     <div class="spec-card">
       <div class="spec-card-title">Navigation flow</div>
       <div class="flow-map">
-        <div class="flow-node from">01 Intro</div>
+        <div class="flow-node from">01 Swipeable Intro</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node current">04 Log In</div>
+        <div class="flow-node current">06 Log In</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">03 OTP</div>
+        <div class="flow-node dest">05 OTP</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">12 Home</div>
+        <div class="flow-node dest">10 Home</div>
       </div>
       <div class="info-box">
-        Reached from "Log in" on the Intro screen (Screen 01), or the footer link on Sign Up (Screen 02). Successful OTP → Screen 12 Home (not Partner Linking — returning users already have an account set up).
+        Reached from "Log in" on the Intro screen (Screen 01), or the footer link on Sign Up (Screen 04). Successful OTP → Screen 10 Home (not Partner Linking — returning users already have an account set up).
       </div>
     </div>
 
     <!-- Diff vs Sign Up -->
     <div class="spec-card">
-      <div class="spec-card-title">Differences from Screen 02 — Sign Up</div>
+      <div class="spec-card-title">Differences from Screen 04 — Sign Up</div>
       <table class="diff-table">
         <tr>
           <td class="diff-col-head"></td>
-          <td class="diff-col-head">Screen 02 — Sign Up</td>
-          <td class="diff-col-head">Screen 04 — Log In</td>
+          <td class="diff-col-head">Screen 04 — Sign Up</td>
+          <td class="diff-col-head">Screen 06 — Log In</td>
         </tr>
         <tr>
           <td>Eyebrow</td>
@@ -187,8 +189,8 @@
         </tr>
         <tr>
           <td>On success</td>
-          <td>→ Screen 05 Partner Linking</td>
-          <td>→ Screen 12 Home</td>
+          <td>→ Screen 07 Personalized Results</td>
+          <td>→ Screen 10 Home</td>
         </tr>
       </table>
       <div class="info-box">Everything else — social auth buttons, divider, toggle, input field, "Send code" button — is <strong>identical</strong> to Screen 02. Reuse the same components.</div>
@@ -200,7 +202,7 @@
         <tr><td>Heading</td><td>"Welcome back" · Grandstander 28px bold · no eyebrow label</td></tr>
         <tr><td>Subheading</td><td>"Good to see you again." · DM Sans 15px · <code>text-secondary</code></td></tr>
         <tr><td>Helper text</td><td>"We'll send you a 6-digit code. No password needed." · 12px · <code>text-secondary</code> · sits below the input field, not the social buttons</td></tr>
-        <tr><td>Footer link</td><td>"Don't have an account? Sign up" · "Sign up" in <code>text-link</code> → Screen 02</td></tr>
+        <tr><td>Footer link</td><td>"Don't have an account? Sign up" · "Sign up" in <code>text-link</code> → Screen 04 Sign Up</td></tr>
       </table>
     </div>
 
@@ -208,7 +210,7 @@
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>Identical passwordless mechanic to Sign Up — phone or email, then OTP. No password, ever.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Apple/Google sign-in bypasses OTP and goes directly to Screen 12 Home.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Apple/Google sign-in bypasses OTP and goes directly to Screen 10 Home.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Send code" disabled until field has a non-empty value.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Toggle Phone ↔ Email clears field and swaps label + placeholder.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
@@ -224,14 +226,14 @@
         <span class="component-tag">Text Input</span>
         <span class="component-tag">Segment Toggle</span>
       </div>
-      <div class="info-box" style="margin-top:12px;">All components identical to Screen 02. No new components introduced on this screen.</div>
+      <div class="info-box" style="margin-top:12px;">All components identical to Screen 04 Sign Up. No new components introduced on this screen.</div>
     </div>
 
   </div>
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 06 of 30</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v3 · Screen 06 of 32</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="05b-name-entry.html">← Screen 05b: Name Entry</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="07-personalized-results.html">Screen 07: Personalized Results →</a>
