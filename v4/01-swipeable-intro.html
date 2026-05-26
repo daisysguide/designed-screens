@@ -71,7 +71,7 @@
   <div>
     <div class="screen-tag">Screen 01 · Intro</div>
     <div class="page-title">Swipeable Intro</div>
-    <div class="page-desc">3 cards · swipe or tap Continue to advance · CTAs only on Card 3 · first launch only.</div>
+    <div class="page-desc">3 cards · swipe or tap Next → to advance · CTAs only on Card 3 · first launch only.</div>
   </div>
   <div class="nav-pills">
     <div class="nav-pill" style="opacity:0.35;pointer-events:none;">← No previous</div>
@@ -96,7 +96,7 @@
           <div class="slot-corner tl"></div>
           <div class="slot-corner br"></div>
           <div class="illus-label">Illustration asset</div>
-          <div class="illus-desc" id="illus-desc">Couple looking surprised at each other</div>
+          <div class="illus-desc" id="illus-desc">Couple side-by-side at home, each absorbed in their own thoughts.</div>
         </div>
       </div>
 
@@ -107,16 +107,16 @@
           <div class="dot inactive" id="d3"></div>
         </div>
         <div class="card-heading" id="card-heading">You don't know what you don't know.</div>
-        <div class="card-body" id="card-body">We help you find the parenting conversations worth having, and have them together.</div>
+        <div class="card-body" id="card-body">Neither does your partner.</div>
         <div class="spacer"></div>
 
-        <!-- Cards 1–2: Continue -->
-        <div class="cta-block" id="cta-continue">
-          <button class="btn btn-ghost" onclick="showCard(currentCard + 1)">Continue</button>
+        <!-- Cards 1–2: Next → text link -->
+        <div class="cta-block" id="cta-continue" style="align-items:center;">
+          <button onclick="showCard(currentCard + 1)" style="background:none;border:none;padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text-secondary);cursor:pointer;">Next →</button>
         </div>
         <!-- Card 3: live CTAs -->
         <div class="cta-block" id="cta-live" style="display:none;">
-          <button class="btn btn-primary">Create account</button>
+          <button class="btn btn-primary">Build my plan</button>
           <button class="btn btn-ghost">Log in</button>
         </div>
       </div>
@@ -135,7 +135,7 @@
         <div class="flow-node dest">06 Log In</div>
       </div>
       <div class="info-box">
-        <strong>No bottom nav. No skip.</strong> First-launch only — returning users go straight to Log In. Swipe or tap Continue to advance. CTAs appear only on Card 3.
+        <strong>No bottom nav. No skip.</strong> First-launch only — returning users go straight to Log In. Swipe or tap Next → to advance. CTAs appear only on Card 3.
       </div>
     </div>
 
@@ -144,15 +144,15 @@
       <div class="cta-diagram">
         <div class="cta-row">
           <div class="cta-card-label">Card 1</div>
-          <div class="cta-pill continue-pill">Continue</div>
+          <div class="cta-pill" style="border:none;background:none;color:var(--text-secondary);font-size:13px;font-weight:500;padding:6px 10px;">Next →</div>
         </div>
         <div class="cta-row">
           <div class="cta-card-label">Card 2</div>
-          <div class="cta-pill continue-pill">Continue</div>
+          <div class="cta-pill" style="border:none;background:none;color:var(--text-secondary);font-size:13px;font-weight:500;padding:6px 10px;">Next →</div>
         </div>
         <div class="cta-row">
           <div class="cta-card-label">Card 3</div>
-          <div class="cta-pill primary-pill">Create account</div>
+          <div class="cta-pill primary-pill">Build my plan</div>
         </div>
         <div class="cta-row">
           <div class="cta-card-label"></div>
@@ -160,17 +160,18 @@
         </div>
       </div>
       <div class="info-box">
-        "Continue" is a ghost button — same 56px height and position as the Card 3 CTAs. Swipe works in parallel as an alternative gesture. Neither is primary over the other.
+        On Cards 1–2, "Next →" is a small text link centered under the swipe dots — 14px DM Sans medium, text-secondary, no border, no background. Card 3 swaps in the full primary + ghost stack. The bottom region reflows between cards — it is not pinned to Card 3's height. Swipe works in parallel as an alternative gesture.
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Layout structure</div>
       <table class="spec-table">
-        <tr><td>Illustration zone</td><td>Top 57% · full-bleed · asset fills with <code>object-fit: cover</code></td></tr>
-        <tr><td>Content card</td><td>White · bottom 47% · <code>border-radius: 28px 28px 0 0</code> · overlaps illus ~20px</td></tr>
+        <tr><td>Illustration zone</td><td>Full-bleed from top of viewport, extending to 57% of viewport height · <code>object-fit: cover</code></td></tr>
+        <tr><td>Content card</td><td>Top edge at 53% of viewport (overlapping illustration by ~20px) · extends to bottom of viewport · white</td></tr>
+        <tr><td>Card corners</td><td><code>border-radius: 28px 28px 0 0</code></td></tr>
         <tr><td>Card shadow</td><td><code>0 -6px 28px rgba(26,26,26,0.09)</code></td></tr>
-        <tr><td>Swipe target</td><td>Entire screen — both zones register swipe</td></tr>
+        <tr><td>Swipe target</td><td>Entire viewport — both zones register swipe</td></tr>
       </table>
     </div>
 
@@ -181,21 +182,21 @@
           <div class="card-num">1</div>
           <div>
             <div class="card-variant-heading">"You don't know what you don't know."</div>
-            <div class="card-variant-body">We help you find the parenting conversations worth having, and have them together.</div>
+            <div class="card-variant-body">Neither does your partner.</div>
           </div>
         </div>
         <div class="card-variant-row">
           <div class="card-num">2</div>
           <div>
             <div class="card-variant-heading">"Answer independently. Reveal together."</div>
-            <div class="card-variant-body">You each answer on your own device — then see your answers side by side.</div>
+            <div class="card-variant-body">You'll find what you agree on, and what's worth a real conversation (<em>we'll walk you through that part too</em>).</div>
           </div>
         </div>
         <div class="card-variant-row">
           <div class="card-num">3</div>
           <div>
-            <div class="card-variant-heading">"From bump to teenager. We've got you."</div>
-            <div class="card-variant-body">Guides for every stage of parenthood. — CTAs appear: "Create account" (primary) + "Log in" (ghost).</div>
+            <div class="card-variant-heading">"You'll have these conversations either way."</div>
+            <div class="card-variant-body">With experts in your corner now, or at 3am while soothing a screaming newborn? — CTAs appear: "Build my plan" (primary) + "Log in" (ghost).</div>
           </div>
         </div>
       </div>
@@ -204,9 +205,9 @@
     <div class="spec-card">
       <div class="spec-card-title">Illustration slots</div>
       <table class="spec-table">
-        <tr><td>Card 1</td><td>Couple looking surprised at each other</td></tr>
-        <tr><td>Card 2</td><td>Two phones side by side showing answers</td></tr>
-        <tr><td>Card 3</td><td>Timeline visual from bump to teenager</td></tr>
+        <tr><td>Card 1</td><td>Couple side-by-side at home, each absorbed in their own thoughts.</td></tr>
+        <tr><td>Card 2</td><td>Couple together at home, each on their phone, comfortable in parallel.</td></tr>
+        <tr><td>Card 3</td><td>Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).</td></tr>
         <tr><td>Format</td><td>SVG or PNG · <code>object-fit: cover</code> · fills full zone</td></tr>
         <tr><td>Placeholder</td><td>Cream bg · dashed border · label + description text</td></tr>
       </table>
@@ -225,8 +226,8 @@
     <div class="spec-card">
       <div class="spec-card-title">Buttons</div>
       <table class="spec-table">
-        <tr><td>"Continue"</td><td>Ghost · 56px · <code>radius-full</code> · <code>border-default</code> outline · <code>text-secondary</code> · Cards 1–2 only · advances to next card</td></tr>
-        <tr><td>"Create account"</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> fill · white label · Card 3 only</td></tr>
+        <tr><td>"Next →"</td><td>Text link · 14px DM Sans medium · <code>text-secondary</code> · no border · no background · centered under swipe dots · Cards 1–2 only · advances to next card</td></tr>
+        <tr><td>"Build my plan"</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> fill · white label · Card 3 only</td></tr>
         <tr><td>"Log in"</td><td>Ghost · 56px · <code>radius-full</code> · Card 3 only</td></tr>
       </table>
     </div>
@@ -245,10 +246,11 @@
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>Swipe and Continue both advance cards — neither is the primary gesture.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Swipe and Next → both advance cards — neither is the primary gesture.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Swipe target is the full screen — both illustration and card zones.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Card transitions use a horizontal slide with ease-out, ~280ms duration.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Only shown on first launch. Returning users go directly to Log In.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>"Create account" → Screen 02 Onboarding Quiz. "Log in" → Screen 06 Log In.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Build my plan" → Screen 02 Onboarding Quiz. "Log in" → Screen 06 Log In.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav anywhere on this screen.</span></div>
       </div>
     </div>
@@ -267,16 +269,16 @@
 <script>
 let currentCard = 1;
 const cards = [
-  { heading: "You don't know what you don't know.", body: "We help you find the parenting conversations worth having, and have them together.", illus: "Couple looking surprised at each other", last: false },
-  { heading: "Answer independently. Reveal together.", body: "You each answer on your own device — then see your answers side by side.", illus: "Two phones side by side showing answers", last: false },
-  { heading: "From bump to teenager. We've got you.", body: "Guides for every stage of parenthood.", illus: "Timeline visual from bump to teenager", last: true }
+  { heading: "You don't know what you don't know.", body: "Neither does your partner.", illus: "Couple side-by-side at home, each absorbed in their own thoughts.", last: false },
+  { heading: "Answer independently. Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (<em>we'll walk you through that part too</em>).", illus: "Couple together at home, each on their phone, comfortable in parallel.", last: false },
+  { heading: "You'll have these conversations either way.", body: "With experts in your corner now, or at 3am while soothing a screaming newborn?", illus: "Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).", last: true }
 ];
 function showCard(n) {
   if (n < 1 || n > 3) return;
   currentCard = n;
   const c = cards[n-1];
   document.getElementById('card-heading').textContent = c.heading;
-  document.getElementById('card-body').textContent = c.body;
+  document.getElementById('card-body').innerHTML = c.body;
   document.getElementById('illus-desc').textContent = c.illus;
   document.getElementById('cta-continue').style.display = c.last ? 'none' : 'flex';
   document.getElementById('cta-live').style.display = c.last ? 'flex' : 'none';
@@ -293,16 +295,16 @@ function showCard(n) {
 
 let currentCard = 1;
 const cards = [
-  { heading: "You don't know what you don't know.", body: "We help you find the parenting conversations worth having, and have them together.", illus: "Couple looking surprised at each other", last: false },
-  { heading: "Answer independently. Reveal together.", body: "You each answer on your own device — then see your answers side by side.", illus: "Two phones side by side showing answers", last: false },
-  { heading: "From bump to teenager. We've got you.", body: "Guides for every stage of parenthood.", illus: "Timeline visual from bump to teenager", last: true }
+  { heading: "You don't know what you don't know.", body: "Neither does your partner.", illus: "Couple side-by-side at home, each absorbed in their own thoughts.", last: false },
+  { heading: "Answer independently. Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (<em>we'll walk you through that part too</em>).", illus: "Couple together at home, each on their phone, comfortable in parallel.", last: false },
+  { heading: "You'll have these conversations either way.", body: "With experts in your corner now, or at 3am while soothing a screaming newborn?", illus: "Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).", last: true }
 ];
 function showCard(n) {
   if (n < 1 || n > 3) return;
   currentCard = n;
   const c = cards[n-1];
   document.getElementById('card-heading').textContent = c.heading;
-  document.getElementById('card-body').textContent = c.body;
+  document.getElementById('card-body').innerHTML = c.body;
   document.getElementById('illus-desc').textContent = c.illus;
   document.getElementById('cta-continue').style.display = c.last ? 'none' : 'flex';
   document.getElementById('cta-live').style.display = c.last ? 'flex' : 'none';
