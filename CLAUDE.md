@@ -29,3 +29,10 @@ For `v4/` work:
   top of that screen to match. Spec tables and mockups drift apart easily.
 - After completing changes, run grep verification for any "old copy"
   strings that should no longer appear, and report results.
+
+## Repo hygiene TODOs
+
+- The v1 screen HTML files duplicated at the repo root (same filenames
+  as those under `v1/`) should be either deleted or moved to `_archive/`.
+  They predate the versioned-directory layout. Don't tackle as part of
+  unrelated work — schedule as a dedicated cleanup.
