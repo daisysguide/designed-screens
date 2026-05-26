@@ -98,7 +98,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v4 · 32 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v4 · 30 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -108,7 +108,6 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
   <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
   <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
   <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
-  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
   <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
   <div class="sidebar-section-label">Onboarding</div>
   <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
@@ -130,7 +129,6 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
   <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
   <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
   <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
-  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
   <div class="sidebar-section-label">Special</div>
   <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
   <div class="sidebar-section-label">Empty States</div>
@@ -149,7 +147,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="16-topic-article.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">17 / 32</span>
+        <span class="topbar-counter">17 / 30</span>
         <a class="topbar-btn" href="17b-note.html" aria-label="Next">›</a>
       </div>
     </div>
@@ -233,12 +231,12 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <div class="flow-arrow">→</div>
         <div class="flow-node current">17 Questions</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node from">30 Note Step</div>
+        <div class="flow-node from">17b Note Step</div>
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">18 Waiting</div>
       </div>
       <div class="info-box">
-        <strong>Within the question flow:</strong> Q[0] → Q[1] → … → Q[n-1] → Screen 30 (Note Step) → Submit → Screen 18 Waiting for Partner.<br><br>
+        <strong>Within the question flow:</strong> Q[0] → Q[1] → … → Q[n-1] → Screen 17b (Note Step) → Submit → Screen 18 Waiting for Partner.<br><br>
         <strong>Back from Q[0]</strong> → Topic Intro (Screen 15).<br>
         <strong>Back from Q[i &gt; 0]</strong> → Q[i-1].<br>
         <strong>Back from Note step</strong> → Q[n-1].<br><br>
@@ -383,8 +381,8 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Step indicator</td><td>"Note" label + "Optional" pill rendered inline beside it · pill hidden on all question steps</td></tr>
         <tr><td>Progress bar</td><td>100% fill — all questions are done</td></tr>
         <tr><td>"Read guide"</td><td>Remains visible — user can still review the article</td></tr>
-        <tr><td>Card heading</td><td>"Anything you want to add?" · Grandstander 20px bold · <code>text-primary</code></td></tr>
-        <tr><td>Card subtext</td><td>"Jordan sees this after you both complete this topic." · DM Sans 14px <code>text-secondary</code></td></tr>
+        <tr><td>Card heading</td><td>"Anything else [partnerName] should know?" · Grandstander 20px bold · <code>text-primary</code></td></tr>
+        <tr><td>Card subtext</td><td>"[partnerName] sees this after you both complete this topic." · DM Sans 14px <code>text-secondary</code></td></tr>
         <tr><td>Textarea</td><td>Full width · min-height 96px · white bg · <code>1.5px border-default</code> · <code>radius-md</code> · DM Sans 15px · <code>border-focus</code> + ring on focus</td></tr>
         <tr><td>Placeholder</td><td>"Your thoughts, context, or questions for later…"</td></tr>
         <tr><td>Character count</td><td>"N characters remaining" · 12px <code>text-tertiary</code> · right-aligned below textarea · turns <code>#ff9191</code> below 50 chars remaining</td></tr>
@@ -402,7 +400,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Question text</td><td>Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
         <tr><td>subText</td><td>DM Sans 14px · <code>text-secondary</code> · 6px below question text · rendered when Question.subText is set</td></tr>
         <tr><td>Partner note — question screens</td><td>"[Name] won't see your answer until they've finished too." (unchanged)</td></tr>
-        <tr><td>Partner note — note step (Screen 30)</td><td>"Your note stays private until you've both finished this topic. Then you'll both see it."</td></tr>
+        <tr><td>Partner note — note step (Screen 17b)</td><td>"[partnerName] sees this after you both complete this topic."</td></tr>
         <tr><td>Top padding</td><td>18px between partner note and answer area</td></tr>
         <tr><td>Max options</td><td>6 answer options maximum per question</td></tr>
       </table>
@@ -425,7 +423,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <div class="note-item"><div class="note-bullet"></div><span>Never auto-advance on selection — user must explicitly tap Next. This app is about considered decisions, not quick taps.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Read guide" opens Screen 16 Article without losing question progress. Back from article returns to the same question at the same state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Selection persists if user taps Back and returns to a question. Answers are saved client-side as the user progresses and committed to the server on Submit.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Flow: Q1 → Q2 → Q3 → Q4 → Screen 30 (Note Step) → Screen 18 (Waiting for Partner). Back from Q1 → Screen 15 (Topic Intro). Back from Note Step → Q4.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Flow: Q1 → Q2 → Q3 → Q4 → Screen 17b (Note Step) → Screen 18 (Waiting for Partner). Back from Q1 → Screen 15 (Topic Intro). Back from Note Step → Q4.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The Note step is the final step. Submit is always enabled — an empty note is valid and saves as an empty string.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Slider questions: no default value. Continue remains disabled until the user sets a value by tapping or dragging the track.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Multi-select questions: Continue becomes active when at least 1 option is selected.</span></div>
@@ -455,7 +453,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 17 of 32</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 17 of 30</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;" href="16-topic-article.html">← Screen 16: Topic Article</a>
     <a class="nav-pill next" style="cursor:pointer;" href="17b-note.html">Screen 17b: Note Step →</a>
@@ -505,8 +503,8 @@ const Q_DATA = {
   },
   note: {
     stepLabel: 'Note', progress: 100,
-    heading: 'Anything you want to add?',
-    subText: 'Jordan sees this after you both complete this topic.',
+    heading: 'Anything else [partnerName] should know?',
+    subText: '[partnerName] sees this after you both complete this topic.',
   }
 };
 

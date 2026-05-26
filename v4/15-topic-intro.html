@@ -11,7 +11,7 @@
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v4 · 32 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v4 · 30 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -21,7 +21,6 @@
   <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
   <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
   <a class="sidebar-item" href="05b-name-entry.html"><span class="screen-num">05b</span>Name Entry</a>
-  <a class="sidebar-item" href="29-name-collection.html"><span class="screen-num">29</span>Name Collection</a>
   <a class="sidebar-item" href="06-log-in.html"><span class="screen-num">06</span>Log In</a>
   <div class="sidebar-section-label">Onboarding</div>
   <a class="sidebar-item" href="07-personalized-results.html"><span class="screen-num">07</span>Personalized Results</a>
@@ -43,7 +42,6 @@
   <a class="sidebar-item" href="20-post-reveal-reflection.html"><span class="screen-num">20</span>Post-Reveal Reflection</a>
   <a class="sidebar-item" href="21-re-answer-flow.html"><span class="screen-num">21</span>Re-answer Flow</a>
   <a class="sidebar-item" href="22-completed-topic.html"><span class="screen-num">22</span>Completed Topic</a>
-  <a class="sidebar-item" href="30-note-step.html"><span class="screen-num">30</span>Note Step</a>
   <div class="sidebar-section-label">Special</div>
   <a class="sidebar-item" href="23-prediction-card.html"><span class="screen-num">23</span>Prediction Card</a>
   <div class="sidebar-section-label">Empty States</div>
@@ -62,7 +60,7 @@
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="14-manage-topics.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">15 / 32</span>
+        <span class="topbar-counter">15 / 30</span>
         <a class="topbar-btn" href="16-topic-article.html" aria-label="Next">›</a>
       </div>
     </div>
@@ -87,8 +85,9 @@
   <div class="phone-wrap">
     <div class="state-tab-row">
       <button class="state-tab active" id="tab-fresh" onclick="showState('fresh')">Not started</button>
-      <button class="state-tab" id="tab-answered" onclick="showState('answered')">You answered</button>
-      <button class="state-tab" id="tab-waiting" onclick="showState('waiting')">Waiting on partner</button>
+      <button class="state-tab" id="tab-yourturn" onclick="showState('yourturn')">Your turn</button>
+      <button class="state-tab" id="tab-waiting" onclick="showState('waiting')">Waiting</button>
+      <button class="state-tab" id="tab-reveal" onclick="showState('reveal')">Ready to reveal</button>
     </div>
 
     <div class="phone">
@@ -282,7 +281,7 @@
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 15 of 32</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 15 of 30</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="14-manage-topics.html">← Screen 14: Manage Topics</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="16-topic-article.html">Screen 16: Topic Article →</a>
@@ -291,8 +290,9 @@
 
 <script>
 function showState(state) {
-  ['fresh','answered','waiting'].forEach(s => {
-    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  ['fresh','yourturn','waiting','reveal'].forEach(s => {
+    const el = document.getElementById('tab-' + s);
+    if (el) el.classList.toggle('active', s === state);
   });
 
   const partnerLine = document.getElementById('partner-line');
@@ -304,13 +304,19 @@ function showState(state) {
       <button class="btn-primary">Start answering →</button>
       <button class="btn-secondary">Read the guide first</button>
       <button class="btn-ghost">Back to topics</button>`;
-  } else if (state === 'answered') {
-    partnerLine.textContent = "Waiting for Jordan to finish.";
+  } else if (state === 'yourturn') {
+    partnerLine.textContent = "Jordan finished — your turn.";
     ctaBlock.innerHTML = `
-      <button class="btn-primary">Continue answering →</button>
+      <button class="btn-primary">Start answering →</button>
       <button class="btn-secondary">Read the guide</button>
       <button class="btn-ghost">Back to topics</button>`;
   } else if (state === 'waiting') {
+    partnerLine.textContent = "Waiting on Jordan to finish.";
+    ctaBlock.innerHTML = `
+      <button class="btn-secondary">Read the guide</button>
+      <button class="btn-ghost">Change my answers</button>
+      <button class="btn-ghost">Back to topics</button>`;
+  } else if (state === 'reveal') {
     partnerLine.textContent = "Jordan finished — ready to reveal.";
     ctaBlock.innerHTML = `
       <button class="btn-primary">See your results →</button>
@@ -323,36 +329,7 @@ function showState(state) {
   </div>
 </div>
 <script>
-
-function showState(state) {
-  ['fresh','answered','waiting'].forEach(s => {
-    document.getElementById('tab-' + s).classList.toggle('active', s === state);
-  });
-
-  const partnerLine = document.getElementById('partner-line');
-  const ctaBlock = document.getElementById('cta-block');
-
-  if (state === 'fresh') {
-    partnerLine.textContent = "Jordan hasn't answered yet either.";
-    ctaBlock.innerHTML = `
-      <button class="btn-primary">Start answering →</button>
-      <button class="btn-secondary">Read the guide first</button>
-      <button class="btn-ghost">Back to topics</button>`;
-  } else if (state === 'answered') {
-    partnerLine.textContent = "Waiting for Jordan to finish.";
-    ctaBlock.innerHTML = `
-      <button class="btn-primary">Continue answering →</button>
-      <button class="btn-secondary">Read the guide</button>
-      <button class="btn-ghost">Back to topics</button>`;
-  } else if (state === 'waiting') {
-    partnerLine.textContent = "Jordan finished — ready to reveal.";
-    ctaBlock.innerHTML = `
-      <button class="btn-primary">See your results →</button>
-      <button class="btn-secondary">Read the guide</button>
-      <button class="btn-ghost">Back to topics</button>`;
-  }
-}
-
+// showState defined above
 </script>
 <script src="nav.js"></script>
 </body>
