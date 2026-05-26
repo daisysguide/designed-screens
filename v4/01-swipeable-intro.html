@@ -111,12 +111,12 @@
         <div class="spacer"></div>
 
         <!-- Cards 1–2: Next → text link -->
-        <div class="cta-block" id="cta-continue" style="align-items:center;">
+        <div class="cta-block" id="cta-next" style="align-items:center;">
           <button onclick="showCard(currentCard + 1)" style="background:none;border:none;padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text-secondary);cursor:pointer;">Next →</button>
         </div>
         <!-- Card 3: live CTAs -->
         <div class="cta-block" id="cta-live" style="display:none;">
-          <button class="btn btn-primary">Build my plan</button>
+          <button class="btn btn-primary">Build my plan →</button>
           <button class="btn btn-ghost">Log in</button>
         </div>
       </div>
@@ -152,7 +152,7 @@
         </div>
         <div class="cta-row">
           <div class="cta-card-label">Card 3</div>
-          <div class="cta-pill primary-pill">Build my plan</div>
+          <div class="cta-pill primary-pill">Build my plan →</div>
         </div>
         <div class="cta-row">
           <div class="cta-card-label"></div>
@@ -188,15 +188,15 @@
         <div class="card-variant-row">
           <div class="card-num">2</div>
           <div>
-            <div class="card-variant-heading">"Answer independently. Reveal together."</div>
-            <div class="card-variant-body">You'll find what you agree on, and what's worth a real conversation (<em>we'll walk you through that part too</em>).</div>
+            <div class="card-variant-heading">"Answer independently.<br>Reveal together."</div>
+            <div class="card-variant-body">You'll find what you agree on, and what's worth a real conversation (we'll walk you through that part too).</div>
           </div>
         </div>
         <div class="card-variant-row">
           <div class="card-num">3</div>
           <div>
             <div class="card-variant-heading">"You'll have these conversations either way."</div>
-            <div class="card-variant-body">With experts in your corner now, or at 3am while soothing a screaming newborn? — CTAs appear: "Build my plan" (primary) + "Log in" (ghost).</div>
+            <div class="card-variant-body">With experts in your corner now, or at 3am while soothing a screaming newborn? — CTAs appear: "Build my plan →" (primary) + "Log in" (ghost).</div>
           </div>
         </div>
       </div>
@@ -227,7 +227,7 @@
       <div class="spec-card-title">Buttons</div>
       <table class="spec-table">
         <tr><td>"Next →"</td><td>Text link · 14px DM Sans medium · <code>text-secondary</code> · no border · no background · centered under swipe dots · Cards 1–2 only · advances to next card</td></tr>
-        <tr><td>"Build my plan"</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> fill · white label · Card 3 only</td></tr>
+        <tr><td>"Build my plan →"</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> fill · white label · Card 3 only</td></tr>
         <tr><td>"Log in"</td><td>Ghost · 56px · <code>radius-full</code> · Card 3 only</td></tr>
       </table>
     </div>
@@ -250,7 +250,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>Swipe target is the full screen — both illustration and card zones.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Card transitions use a horizontal slide with ease-out, ~280ms duration.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Only shown on first launch. Returning users go directly to Log In.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>"Build my plan" → Screen 02 Onboarding Quiz. "Log in" → Screen 06 Log In.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Build my plan →" → Screen 02 Onboarding Quiz. "Log in" → Screen 06 Log In.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav anywhere on this screen.</span></div>
       </div>
     </div>
@@ -270,17 +270,17 @@
 let currentCard = 1;
 const cards = [
   { heading: "You don't know what you don't know.", body: "Neither does your partner.", illus: "Couple side-by-side at home, each absorbed in their own thoughts.", last: false },
-  { heading: "Answer independently. Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (<em>we'll walk you through that part too</em>).", illus: "Couple together at home, each on their phone, comfortable in parallel.", last: false },
+  { heading: "Answer independently.<br>Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (we'll walk you through that part too).", illus: "Couple together at home, each on their phone, comfortable in parallel.", last: false },
   { heading: "You'll have these conversations either way.", body: "With experts in your corner now, or at 3am while soothing a screaming newborn?", illus: "Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).", last: true }
 ];
 function showCard(n) {
   if (n < 1 || n > 3) return;
   currentCard = n;
   const c = cards[n-1];
-  document.getElementById('card-heading').textContent = c.heading;
+  document.getElementById('card-heading').innerHTML = c.heading;
   document.getElementById('card-body').innerHTML = c.body;
   document.getElementById('illus-desc').textContent = c.illus;
-  document.getElementById('cta-continue').style.display = c.last ? 'none' : 'flex';
+  document.getElementById('cta-next').style.display = c.last ? 'none' : 'flex';
   document.getElementById('cta-live').style.display = c.last ? 'flex' : 'none';
   [1,2,3].forEach(i => {
     document.getElementById('d'+i).className = 'dot ' + (i===n ? 'active' : 'inactive');
@@ -296,17 +296,17 @@ function showCard(n) {
 let currentCard = 1;
 const cards = [
   { heading: "You don't know what you don't know.", body: "Neither does your partner.", illus: "Couple side-by-side at home, each absorbed in their own thoughts.", last: false },
-  { heading: "Answer independently. Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (<em>we'll walk you through that part too</em>).", illus: "Couple together at home, each on their phone, comfortable in parallel.", last: false },
+  { heading: "Answer independently.<br>Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (we'll walk you through that part too).", illus: "Couple together at home, each on their phone, comfortable in parallel.", last: false },
   { heading: "You'll have these conversations either way.", body: "With experts in your corner now, or at 3am while soothing a screaming newborn?", illus: "Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).", last: true }
 ];
 function showCard(n) {
   if (n < 1 || n > 3) return;
   currentCard = n;
   const c = cards[n-1];
-  document.getElementById('card-heading').textContent = c.heading;
+  document.getElementById('card-heading').innerHTML = c.heading;
   document.getElementById('card-body').innerHTML = c.body;
   document.getElementById('illus-desc').textContent = c.illus;
-  document.getElementById('cta-continue').style.display = c.last ? 'none' : 'flex';
+  document.getElementById('cta-next').style.display = c.last ? 'none' : 'flex';
   document.getElementById('cta-live').style.display = c.last ? 'flex' : 'none';
   [1,2,3].forEach(i => {
     document.getElementById('d'+i).className = 'dot ' + (i===n ? 'active' : 'inactive');
