@@ -2038,8 +2038,15 @@ body.page-07 .screen-root .anim-spinner {
 @keyframes spin { to { transform: rotate(360deg); } }
 
   .anim-done {
-    font-size: 36px;
+    width: 36px; height: 36px;
+    animation: anim-done-scale-in 0.2s ease-out;
   }
+  .anim-done svg { display: block; width: 100%; height: 100%; }
+
+@keyframes anim-done-scale-in {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
 
 body.page-07 .screen-root /* Heading */
   .screen-heading {
