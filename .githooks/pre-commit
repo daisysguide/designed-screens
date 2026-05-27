@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+#
+# Daisy's Guide — pre-commit drift check
+#
+# Versioned at .githooks/pre-commit and activated via:
+#   git config core.hooksPath .githooks
+# (Each clone of the repo must run that once.)
+#
+# Blocks commits that introduce design system drift in /v4/ screen files.
+# Adjust the SCREEN_DIR if your repo layout differs.
+
+set -e
+
+SCREEN_DIR="v4"
+DS_FILE="v4/design system.md"
+FAILED=0
+
+echo "Running Daisy's Guide drift checks..."
+
+# Rule 1: Retired bare status-error and status-success tokens
+# Use perl for proper negative lookahead support
+if find "$SCREEN_DIR" -name "*.html" -print0 | xargs -0 perl -ne 'print "$ARGV:$.: $_" if /\bstatus-error\b(?!-text|-surface)/' 2>/dev/null | grep -q .; then
+  echo ""
+  echo "FAIL [rule 1]: Retired 'status-error' token found. Use status-error-text, status-error-surface, or border-error instead:"
+  find "$SCREEN_DIR" -name "*.html" -print0 | xargs -0 perl -ne 'print "$ARGV:$.: $_" if /\bstatus-error\b(?!-text|-surface)/' 2>/dev/null
+  FAILED=1
+fi
+
+if find "$SCREEN_DIR" -name "*.html" -print0 | xargs -0 perl -ne 'print "$ARGV:$.: $_" if /\bstatus-success\b(?!-text|-surface)/' 2>/dev/null | grep -q .; then
+  echo ""
+  echo "FAIL [rule 1]: Retired 'status-success' token found. Use status-success-text or status-success-surface instead:"
+  find "$SCREEN_DIR" -name "*.html" -print0 | xargs -0 perl -ne 'print "$ARGV:$.: $_" if /\bstatus-success\b(?!-text|-surface)/' 2>/dev/null
+  FAILED=1
+fi
+
+# Rule 2: Retired raw hex values (excluding the design system file itself)
+# Only flag retired hex codes. Canonical hex (#157a46 green-text-dark,
+# #ff9191 pink-400, #c0392b pink-text-dark, #8a6800 yellow-text-dark)
+# must appear in inline CSS / styles since the mockups don't have a
+# runtime CSS-variable system. Spec tables should still prefer token
+# names, but the hook can't reliably distinguish spec tables from
+# inline CSS, so we limit Rule 2 to truly forbidden values.
+HEX_PATTERN='#(1c7d3e|1a4d35|8a6500|d8a23a)'
+if grep -rEHn --include="*.html" "$HEX_PATTERN" "$SCREEN_DIR" 2>/dev/null | grep -v "$DS_FILE" | grep -q .; then
+  echo ""
+  echo "FAIL [rule 2]: Retired raw hex values found. Use canonical hex or token:"
+  grep -rEHn --include="*.html" "$HEX_PATTERN" "$SCREEN_DIR" 2>/dev/null | grep -v "$DS_FILE"
+  echo "  → #1c7d3e / #1a4d35 → use #157a46 (status-success-text / green-text-dark)"
+  echo "  → #8a6500 / #d8a23a → use #1a5170 (status-pending-text / blue-text-dark)"
+  FAILED=1
+fi
+
+# Rule 3: Off-scale Grandstander sizes (warn only, don't block — some are intentional)
+if grep -rEHn --include="*.html" "Grandstander (28|26|22|18|17|14)px" "$SCREEN_DIR" 2>/dev/null | grep -q .; then
+  echo ""
+  echo "WARN [rule 3]: Off-scale Grandstander sizes found. Type scale uses 32 / 24 / 20 only (with single-char exceptions like OTP):"
+  grep -rEHn --include="*.html" "Grandstander (28|26|22|18|17|14)px" "$SCREEN_DIR" 2>/dev/null
+fi
+
+# Rule 4: 404 internal links (relative .html paths must resolve)
+# Walks each href that ends in .html and checks the target exists relative to the file
+while IFS= read -r -d '' file; do
+  dir=$(dirname "$file")
+  while read -r href; do
+    # Skip absolute URLs, anchors, mailto, etc.
+    if [[ "$href" =~ ^(https?:|mailto:|#|/) ]]; then continue; fi
+    # Strip any query string or anchor
+    target="${href%%[?#]*}"
+    if [[ -z "$target" ]]; then continue; fi
+    if [[ ! -f "$dir/$target" ]]; then
+      echo "FAIL [rule 4]: $file links to $href which does not resolve."
+      FAILED=1
+    fi
+  done < <(grep -oEh 'href="[^"]+\.html[^"]*"' "$file" 2>/dev/null | sed -E 's/href="([^"]+)"/\1/')
+done < <(find "$SCREEN_DIR" -name "*.html" -print0)
+
+# Rule 5: Hardcoded "Screen N" references in the design system file (should use slugs)
+if [[ -f "$DS_FILE" ]] && grep -EHn '\bScreen [0-9]+\b' "$DS_FILE" 2>/dev/null | grep -q .; then
+  echo ""
+  echo "WARN [rule 5]: Hardcoded 'Screen N' references in design-system.md. Use slugs (e.g. \`topic-intro\`) instead:"
+  grep -EHn '\bScreen [0-9]+\b' "$DS_FILE" 2>/dev/null
+fi
+
+# Summary
+echo ""
+if [[ $FAILED -eq 1 ]]; then
+  echo "Drift check FAILED. Fix the issues above and try again."
+  echo "(To bypass in an emergency: git commit --no-verify)"
+  exit 1
+else
+  echo "Drift check passed."
+  exit 0
+fi
