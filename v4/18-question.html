@@ -90,7 +90,7 @@ body.page-15 .screen-root .code-block {
 }
 body.page-15 .screen-root .code-comment { color: rgba(26,26,26,0.38); }
 body.page-15 .screen-root .code-key    { color: #5f45f2; }
-body.page-15 .screen-root .code-type   { color: #1c7d3e; }
+body.page-15 .screen-root .code-type   { color: #157a46; }
 body.page-15 .screen-root .code-val    { color: #c75000; }
 </style>
 </head>
@@ -385,7 +385,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Card subtext</td><td>"[partnerName] sees this after you both complete this topic." · DM Sans 14px <code>text-secondary</code></td></tr>
         <tr><td>Textarea</td><td>Full width · min-height 96px · white bg · <code>1.5px border-default</code> · <code>radius-md</code> · DM Sans 15px · <code>border-focus</code> + ring on focus</td></tr>
         <tr><td>Placeholder</td><td>"Your thoughts, context, or questions for later…"</td></tr>
-        <tr><td>Character count</td><td>"N characters remaining" · 12px <code>text-tertiary</code> · right-aligned below textarea · turns <code>#ff9191</code> below 50 chars remaining</td></tr>
+        <tr><td>Character count</td><td>"N characters remaining" · 12px <code>text-tertiary</code> · right-aligned below textarea · turns <code>status-error-text</code> (#c0392b) below 50 chars remaining</td></tr>
         <tr><td>Max length</td><td>280 chars · enforced server-side and by <code>maxlength</code> attribute</td></tr>
         <tr><td>Submit button</td><td>"Submit →" · always active (note may be empty)</td></tr>
         <tr><td>On submit</td><td>Save note (even if empty) → navigate to Screen 19 Waiting for Partner</td></tr>
@@ -677,7 +677,7 @@ function updateCharCount(len) {
   const el = document.getElementById('char-count');
   if (!el) return;
   el.textContent = remaining + ' character' + (remaining === 1 ? '' : 's') + ' remaining';
-  el.style.color = remaining < 50 ? '#ff9191' : '';
+  el.style.color = remaining < 50 ? '#c0392b' : '';
 }
 
 showType('single_select');

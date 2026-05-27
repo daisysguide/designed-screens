@@ -282,7 +282,7 @@
       </div>
 
       <!-- Restore purchase: success toast (green) -->
-      <div id="restore-success-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#1c7d3e;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">Purchase restored. You're all set.</div>
+      <div id="restore-success-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#157a46;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">Purchase restored. You're all set.</div>
 
       <!-- Restore purchase: error toast -->
       <div id="restore-error-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#1a1a1a;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">No previous purchase found. Contact support at guarantee@daisysguide.com</div>
@@ -428,7 +428,7 @@
         <tr><td>No chevron</td><td>Action row — not a navigation destination</td></tr>
         <tr><td>No value</td><td>Right side empty in default state</td></tr>
         <tr><td>On tap</td><td>Disable row + show inline spinner (purple, right-aligned) · call <code>restorePurchase()</code></td></tr>
-        <tr><td>On success</td><td>Green toast at bottom of phone: "Purchase restored. You're all set." · bg <code>#1c7d3e</code> · auto-dismiss after 3s · row re-enables</td></tr>
+        <tr><td>On success</td><td>Green toast at bottom of phone: "Purchase restored. You're all set." · bg <code>status-success-text</code> (#157a46) · auto-dismiss after 3s · row re-enables</td></tr>
         <tr><td>On failure</td><td>Dark toast: "No previous purchase found. Contact support at guarantee@daisysguide.com" · auto-dismiss after 4s · row re-enables</td></tr>
         <tr><td><code>restorePurchase()</code></td><td>Stub — connect to App Store / Play Store restore API</td></tr>
         <tr><td>Demo behavior</td><td>Tap row in preview → simulates success (green toast) after 1.5s</td></tr>

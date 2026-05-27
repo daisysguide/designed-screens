@@ -359,9 +359,9 @@ body.page-17 .screen-root .rev-item.rev-show {
         <tr><td>Layout</td><td>Same two-box layout as single_select (white · <code>1.5px solid border-default</code> · <code>radius-lg</code> · 14px padding · min-height 100px · flex: 1 each · 10px gap)</td></tr>
         <tr><td>Owner labels</td><td>"YOU SELECTED" / "[NAME] SELECTED" · same label spec as single_select boxes</td></tr>
         <tr><td>Answer area</td><td>Flex-wrap row of pill tags · 6px gap</td></tr>
-        <tr><td>Shared pill</td><td>Option selected by both partners · bg: <code>rgba(119,234,175,0.28)</code> · text: <code>#157a46</code> · <code>radius-full</code> · 4px 10px padding · 12px DM Sans semibold</td></tr>
+        <tr><td>Shared pill</td><td>Option selected by both partners · bg: <code>rgba(119,234,175,0.28)</code> · text: <code>status-success-text</code> (#157a46) · <code>radius-full</code> · 4px 10px padding · 12px DM Sans semibold</td></tr>
         <tr><td>Unique pill</td><td>Option selected by this person only · bg: <code>rgba(26,26,26,0.07)</code> · text: text-primary · same shape and font</td></tr>
-        <tr><td>Shared count badge</td><td>"X in common" · centered below both boxes · 12px DM Sans medium · <code>#157a46</code> · 10px margin above · shown only if overlap &gt; 0</td></tr>
+        <tr><td>Shared count badge</td><td>"X in common" · centered below both boxes · 12px DM Sans medium · <code>status-success-text</code> (#157a46) · 10px margin above · shown only if overlap &gt; 0</td></tr>
       </table>
     </div>
 
@@ -371,7 +371,7 @@ body.page-17 .screen-root .rev-item.rev-show {
         <tr><td>Container</td><td>Same two-box side-by-side layout as single-select (white · <code>border-default</code> · <code>radius-lg</code> · 14px padding · min-height 100px · flex: 1 each · 10px gap)</td></tr>
         <tr><td>Owner labels</td><td>"YOU SELECTED" / "[NAME] SELECTED" · 11px DM Sans bold · ALL CAPS · <code>text-secondary</code></td></tr>
         <tr><td>Content</td><td>Flex-wrap row of pill tags · 6px gap</td></tr>
-        <tr><td>Shared pill</td><td><code>rgba(119,234,175,0.28)</code> bg · <code>#157a46</code> text · <code>radius-full</code> · 4px 10px padding · 12px DM Sans semibold</td></tr>
+        <tr><td>Shared pill</td><td><code>rgba(119,234,175,0.28)</code> bg · <code>status-success-text</code> (#157a46) text · <code>radius-full</code> · 4px 10px padding · 12px DM Sans semibold</td></tr>
         <tr><td>Unique pill</td><td><code>rgba(26,26,26,0.07)</code> bg · <code>text-primary</code> · same radius/padding/font</td></tr>
         <tr><td>Shared count</td><td>"X in common" · 12px DM Sans medium · <code>status-success-text</code> · centered below both boxes · 10px above · only shown if overlap &gt; 0</td></tr>
       </table>
@@ -382,14 +382,14 @@ body.page-17 .screen-root .rev-item.rev-show {
       <table class="spec-table">
         <tr><td>Layout</td><td>Full-width card — does NOT use the two-box layout · white bg · <code>radius-xl</code> (16px) · <code>shadow-md</code> · 20px padding</td></tr>
         <tr><td>Values row</td><td>Your value (Grandstander 28px · purple-500 · "You" label below) left · partner's value (28px · text-primary · "[Name]" label below) right · both 11px DM Sans medium text-secondary</td></tr>
-        <tr><td>Same value</td><td>Single centered value in <code>#157a46</code> · "You both said {n}" 13px DM Sans medium success-text below · replaces two-value layout</td></tr>
+        <tr><td>Same value</td><td>Single centered value in <code>status-success-text</code> (#157a46) · "You both said {n}" 13px DM Sans medium success-text below · replaces two-value layout</td></tr>
         <tr><td>Track</td><td>Full-width · 6px · <code>rgba(26,26,26,0.10)</code> bg · 16px below values row</td></tr>
         <tr><td>Range fill</td><td><code>rgba(95,69,242,0.12)</code> between the two marker positions · omitted when same value</td></tr>
         <tr><td>Your marker</td><td>14px circle · purple-500 fill · z-index 2 (on top)</td></tr>
         <tr><td>Partner marker</td><td>14px circle · white fill · <code>2px solid border-strong</code> · z-index 1</td></tr>
-        <tr><td>Same-value marker</td><td>Single 16px circle · <code>#157a46</code> fill · replaces both markers</td></tr>
+        <tr><td>Same-value marker</td><td>Single 16px circle · <code>status-success-text</code> (#157a46) fill · replaces both markers</td></tr>
         <tr><td>End labels</td><td>minLabel left · maxLabel right · 11px DM Sans · text-tertiary · 6px below track</td></tr>
-        <tr><td>Delta label</td><td>Centered · 12px · different: "{n} apart" text-tertiary · same: "Same ✓" 12px medium <code>#157a46</code> · 12px below end labels</td></tr>
+        <tr><td>Delta label</td><td>Centered · 12px · different: "{n} apart" text-tertiary · same: "Same ✓" 12px medium <code>status-success-text</code> (#157a46) · 12px below end labels</td></tr>
       </table>
     </div>
 
@@ -398,7 +398,7 @@ body.page-17 .screen-root .rev-item.rev-show {
       <table class="spec-table">
         <tr><td>Container</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · 20px padding · full width</td></tr>
         <tr><td>Values row</td><td>Left: user's value (Grandstander 28px bold · purple-500) + "You" label (11px · <code>text-secondary</code>) · Right: partner's value (same size · <code>text-primary</code>) + "[name]" label</td></tr>
-        <tr><td>Same-value state</td><td>Single centered value · Grandstander 28px bold · <code>#157a46</code> · "You both said [value]" label below</td></tr>
+        <tr><td>Same-value state</td><td>Single centered value · Grandstander 28px bold · <code>status-success-text</code> (#157a46) · "You both said [value]" label below</td></tr>
         <tr><td>Track</td><td>6px · <code>radius-full</code> · <code>rgba(26,26,26,0.10)</code></td></tr>
         <tr><td>User marker</td><td>14px circle · purple-500 fill · positioned at user's % position</td></tr>
         <tr><td>Partner marker</td><td>14px circle · white fill · 2px solid <code>border-strong</code></td></tr>
@@ -438,8 +438,8 @@ body.page-17 .screen-root .rev-item.rev-show {
       <div class="spec-card-title">Alignment pill spec</div>
       <table class="spec-table">
         <tr><td>Shape</td><td><code>radius-full</code> · 6px vertical · 14px horizontal padding · 13px DM Sans semibold · centered</td></tr>
-        <tr><td>Fully aligned</td><td>bg: <code>rgba(119,234,175,0.28)</code> · text: <code>#157a46</code></td></tr>
-        <tr><td>Mostly aligned</td><td>bg: <code>rgba(255,215,85,0.38)</code> · text: <code>#8a6800</code></td></tr>
+        <tr><td>Fully aligned</td><td>bg: <code>rgba(119,234,175,0.28)</code> · text: <code>status-success-text</code> (#157a46)</td></tr>
+        <tr><td>Mostly aligned</td><td>bg: <code>rgba(255,215,85,0.38)</code> · text: <code>yellow-text-dark</code> (#8a6800)</td></tr>
         <tr><td>Worth a conversation</td><td>bg: <code>rgba(255,173,108,0.30)</code> · text: <code>#9a5500</code></td></tr>
         <tr><td>Scope</td><td>One pill for the whole topic — not per question</td></tr>
       </table>
