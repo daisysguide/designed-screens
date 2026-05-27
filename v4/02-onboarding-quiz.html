@@ -71,7 +71,7 @@
   <div>
     <div class="screen-tag">Screen 02 · Intro</div>
     <div class="page-title">Onboarding Quiz</div>
-    <div class="page-desc">4–6 questions depending on Q1. Drives personalization. Progress bar and count are dynamic.</div>
+    <div class="page-desc">6–8 questions depending on Q1. Drives personalization. Progress bar and count are dynamic.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="01-swipeable-intro.html">← Screen 01: Swipeable Intro</a>
@@ -103,8 +103,7 @@
 
         <!-- Question card -->
         <div class="question-card">
-          <div class="question-text" id="q-text">Where are you in your journey?</div>
-          <div class="question-subtext" id="q-subtext">We'll use this to set the right pace and prioritize the right topics.</div>
+          <div class="question-text" id="q-text" style="margin-bottom:22px;">Where are you in your journey?</div>
           <div class="answer-options" id="answer-options"></div>
         </div>
 
@@ -133,7 +132,7 @@
         <div class="flow-node dest">03 Building Your Plan</div>
       </div>
       <div class="info-box">
-        Question count is dynamic: <strong>4 questions</strong> (Trying / thinking about trying) · <strong>5 questions</strong> (Expecting again — Q3 auto-set) · <strong>6 questions</strong> (Currently pregnant / Baby is already here).<br><br>
+        Question count is dynamic: <strong>6 questions</strong> (Trying / thinking about trying) · <strong>7 questions</strong> (Expecting again — Q3 auto-set) · <strong>8 questions</strong> (Currently pregnant / Baby is already here).<br><br>
         <strong>Conditional routing:</strong> Q2 (due date picker) only shown when Q1 = "Currently pregnant" OR "Expecting again" · Q2b (baby's birthday picker) shown when Q1 = "Baby is already here" · Q3 skipped entirely when Q1 = "Expecting again" — auto-set to "No" in data layer · Q2 and Q4 both skipped when Q1 = "Trying (or thinking about trying)" (no due date, no baby's-sex question pre-pregnancy)<br><br>
         Back chevron returns to previous question in sequence; from Q1, returns to Screen 01 (Swipeable Intro). Completing all questions → Screen 03. Quiz state is persisted to localStorage (optimistic cache) and to the anonymous Supabase user record (canonical) after each answer; localStorage clears on completion or back past Q1.
       </div>
@@ -180,15 +179,29 @@
         <div class="q-row">
           <div class="q-num">Q5</div>
           <div>
-            <div class="q-text">Will you be sharing a last name?</div>
+            <div class="q-text">Do you know what last name you'll give your baby?</div>
             <div class="q-note">Options: Yes · No · Still deciding · Filters last name topic · Optional · Skip = treat as "Still deciding" (last name topic included)</div>
           </div>
         </div>
         <div class="q-row">
           <div class="q-num">Q7</div>
           <div>
-            <div class="q-text">How often would you like us to nudge you?</div>
-            <div class="q-note">Options: Daily · A few times a week · Weekly · Don't nudge me · Optional · Skip = "A few times a week" · Skip label: "Skip — I'll set this in Settings later"</div>
+            <div class="q-text">On a scale of 1 to 5, how aligned do you feel with your partner?</div>
+            <div class="q-note"><strong>Slider</strong> — discrete integer 1–5 · End labels: "Not at all" (1) / "Completely aligned" (5) · Ghosted thumb at midpoint (3) on first render — fill absent, value label hidden · First interaction solidifies thumb to <code>action-primary</code>, shows fill and value, enables Continue · No auto-advance · Optional · Skip default = 3</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q8</div>
+          <div>
+            <div class="q-text">What are you nervous about?</div>
+            <div class="q-note"><strong>Multi-select.</strong> Options (in order): 1. Who will handle what · 2. How we'll get enough sleep · 3. Deciding the "right way" to parent · 4. Making time for ourselves · 5. All of the above · 6. All of the above (and then some) · Options 1–4 toggle independently · Tapping <strong>5</strong> selects 1+2+3+4+5 (and clears 6) · Tapping <strong>6</strong> selects 1+2+3+4+6 (and clears 5) · 5 and 6 are mutually exclusive · Deselecting any of 1–4 also clears 5 and 6 (the "all of the above" claim is no longer true) · Optional · Skip default = none selected</div>
+          </div>
+        </div>
+        <div class="q-row">
+          <div class="q-num">Q9</div>
+          <div>
+            <div class="q-text">What have you done to prepare so far?</div>
+            <div class="q-note"><strong>Multi-select.</strong> Options (in order): 1. Talked to my OB · 2. Talked to friends/family · 3. Listened to podcasts · 4. Read books · 5. Just getting started · Options 1–4 toggle independently · Tapping <strong>5</strong> clears 1–4 and selects only 5 · Tapping any of 1–4 while 5 is selected clears 5 · 5 is mutually exclusive with 1–4 · Optional · Skip default = none selected</div>
           </div>
         </div>
       </div>
@@ -197,10 +210,10 @@
     <div class="spec-card">
       <div class="spec-card-title">Question sequence by Q1 answer</div>
       <table class="spec-table">
-        <tr><td>Trying (or thinking about trying)</td><td>Q1 → Q3 → Q5 → Q7 <em>(4 questions)</em></td></tr>
-        <tr><td>Currently pregnant</td><td>Q1 → Q2 → Q3 → Q4 → Q5 → Q7 <em>(6 questions)</em></td></tr>
-        <tr><td>Baby is already here</td><td>Q1 → Q2b → Q3 → Q4 → Q5 → Q7 <em>(6 questions)</em></td></tr>
-        <tr><td>Expecting again</td><td>Q1 → Q2 → Q4 → Q5 → Q7 <em>(5 questions — Q3 auto-set "No")</em></td></tr>
+        <tr><td>Trying (or thinking about trying)</td><td>Q1 → Q3 → Q5 → Q7 → Q8 → Q9 <em>(6 questions)</em></td></tr>
+        <tr><td>Currently pregnant</td><td>Q1 → Q2 → Q3 → Q4 → Q5 → Q7 → Q8 → Q9 <em>(8 questions)</em></td></tr>
+        <tr><td>Baby is already here</td><td>Q1 → Q2b → Q3 → Q4 → Q5 → Q7 → Q8 → Q9 <em>(8 questions)</em></td></tr>
+        <tr><td>Expecting again</td><td>Q1 → Q2 → Q4 → Q5 → Q7 → Q8 → Q9 <em>(7 questions — Q3 auto-set "No")</em></td></tr>
       </table>
     </div>
 
@@ -211,8 +224,8 @@
         <tr><td>Border radius</td><td><code>radius-xl</code> (16px)</td></tr>
         <tr><td>Shadow</td><td><code>shadow-md</code></td></tr>
         <tr><td>Padding</td><td>24px all sides</td></tr>
-        <tr><td>Question text</td><td>Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
-        <tr><td>Sub-text</td><td>DM Sans 13px · <code>text-secondary</code> · 6px below question · 16px below sub-text</td></tr>
+        <tr><td>Question text</td><td>Grandstander 20px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code> · 22px below before answer region</td></tr>
+        <tr><td>Sub-text</td><td><strong>Removed.</strong> Every question stands on its own — no explanatory copy under the question.</td></tr>
         <tr><td>Max options</td><td>6 — never more</td></tr>
       </table>
     </div>
@@ -231,7 +244,7 @@
         <tr><td>Transition</td><td><code>background 0.15s ease · color 0.15s ease</code></td></tr>
         <tr><td>Press state</td><td><code>transform: scale(0.98)</code></td></tr>
         <tr><td>Gap</td><td>8px between options</td></tr>
-        <tr><td>Selection type</td><td>Single-select. Tapping another option deselects previous.</td></tr>
+        <tr><td>Selection type</td><td>Single-select (Q1, Q3, Q4, Q5) — tapping another option deselects previous · Multi-select (Q8, Q9) — same visual chip, multiple can be selected simultaneously, with question-specific exclusion rules · Slider (Q7) — replaces the answer region entirely, see <a href="design system.md" style="color:var(--purple-500);">design system</a></td></tr>
       </table>
     </div>
 
@@ -249,10 +262,10 @@
       <div class="spec-card-title">Skip discipline — required vs optional</div>
       <table class="spec-table">
         <tr><td>Required (no skip button)</td><td>Q1 · Q2 · Q2b · Q3</td></tr>
-        <tr><td>Optional — "Skip this question"</td><td>Q4 (default: "We're not finding out") · Q5 (default: "Still deciding")</td></tr>
-        <tr><td>Optional — "Skip — I'll set this in Settings later"</td><td>Q7 (default: "A few times a week")</td></tr>
-        <tr><td>Skip behavior</td><td>Applies the default silently to the data layer and advances. The user can always update Q7 in Settings.</td></tr>
-        <tr><td>"Continue"</td><td>Primary · 56px · <code>radius-full</code> · disabled (<code>opacity: 0.4</code>) until an option is selected or date is set</td></tr>
+        <tr><td>Optional — "Skip this question"</td><td>Q4 (default: "We're not finding out") · Q5 (default: "Still deciding") · Q7 (slider default: 3 — midpoint) · Q8 (default: no selections recorded) · Q9 (default: no selections recorded)</td></tr>
+        <tr><td>Skip behavior</td><td>Applies the default silently to the data layer and advances.</td></tr>
+        <tr><td>"Continue" — enabled when</td><td>Single-select: one option selected · Multi-select: at least one option selected · Slider: thumb has been interacted with (value confirmed) · Date picker: date set</td></tr>
+        <tr><td>"Continue" — disabled state</td><td><code>opacity: 0.4</code> · pointer-events: none — applies to all question types until the answered-condition is met</td></tr>
         <tr><td>Auto-advance</td><td>Never. User must tap Continue. This app is about considered decisions.</td></tr>
       </table>
     </div>
@@ -277,11 +290,13 @@
       <div class="component-tags">
         <span class="component-tag">Progress Bar — labeled, dynamic</span>
         <span class="component-tag">Question Card</span>
-        <span class="component-tag">Answer Options</span>
+        <span class="component-tag">Answer Options — single-select</span>
+        <span class="component-tag">Answer Options — multi-select (Q8, Q9)</span>
+        <span class="component-tag">Slider (Q7) — 1–5, ghosted default</span>
         <span class="component-tag">Date Picker (Q2, Q2b)</span>
         <span class="component-tag">Button — Primary (lg)</span>
         <span class="component-tag">Screen Header (back)</span>
-        <span class="component-tag">Skip (tertiary, context-aware label)</span>
+        <span class="component-tag">Skip (tertiary)</span>
       </div>
     </div>
 
@@ -296,11 +311,15 @@
         <div class="note-item"><div class="note-bullet"></div><span>Tapping a selected option deselects it — Continue returns to disabled state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Back-nav (within sequence):</strong> Tapping the back chevron returns to the previous question in the current sequence. The previously selected answer is pre-selected on the prior question; Continue is enabled.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Back-nav from Q1:</strong> Returns to Screen 01 (Swipeable Intro) and clears saved state (localStorage). The anonymous server record persists.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Changing Q1 on back-navigation:</strong> Recalculate the sequence from the new Q1 answer. <em>Preserve</em> any answers that exist in both the old and new sequences (e.g., Q5, Q7). <em>Clear</em> Q2/Q2b when switching between a pregnancy stage and "Baby is already here" — the date question changes context (due date vs birthday).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Changing Q1 on back-navigation:</strong> Recalculate the sequence from the new Q1 answer. <em>Preserve</em> any answers that exist in both the old and new sequences (Q5, Q7, Q8, Q9 are in every path). <em>Clear</em> Q2/Q2b when switching between a pregnancy stage and "Baby is already here" — the date question changes context (due date vs birthday).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Expecting again": Q2 (due date) is shown, Q3 is skipped and auto-set to "No" in the data layer. User proceeds from Q2 to Q4.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Baby is already here": Q2b (baby's birthday) is shown instead of Q2. Q3 is shown normally.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Trying (or thinking about trying)": Q2 (due date) and Q4 (baby's sex) are both skipped — neither applies pre-pregnancy. Q3 (will this be your first?) is asked. User proceeds Q1 → Q3 → Q5 → Q7.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Trying (or thinking about trying)": Q2 (due date) and Q4 (baby's sex) are both skipped — neither applies pre-pregnancy. User proceeds Q1 → Q3 → Q5 → Q7 → Q8 → Q9.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Q7 (Slider):</strong> 1–5 discrete integer. Ghosted thumb at midpoint (3) on first render with no fill and no value label. First drag or tap solidifies the thumb to <code>action-primary</code>, reveals the fill and value, and enables Continue. Per design-system Slider spec.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Q8 multi-select rules:</strong> Options 1–4 toggle independently. Option 5 ("All of the above") and option 6 ("All of the above (and then some)") are mutually exclusive. Tapping 5 selects 1+2+3+4+5 and clears 6; tapping 6 selects 1+2+3+4+6 and clears 5. Deselecting any of 1–4 also deselects 5 and 6, since the "all of the above" claim is no longer true.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Q9 multi-select rules:</strong> Options 1–4 toggle independently. Option 5 ("Just getting started") is mutually exclusive with 1–4 — tapping it clears any selection in 1–4; tapping any of 1–4 while 5 is selected deselects 5.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Sub-text removed:</strong> Every question stands on its own — no explanatory copy under any question.</span></div>
       </div>
     </div>
 
@@ -323,71 +342,94 @@ const QUESTIONS = {
   q1: {
     id: 'q1', label: 'Q1',
     text: 'Where are you in your journey?',
-    sub: "We'll use this to set the right pace and prioritize the right topics.",
     options: ['💭 Trying (or thinking about trying)', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again'],
     required: true
   },
   q2: {
     id: 'q2', label: 'Q2',
     text: 'When is your due date?',
-    sub: "We'll use this to sequence topics at the right time.",
     datePicker: true, pickerLabel: 'Due date', minToday: true,
     required: true
   },
   q2b: {
     id: 'q2b', label: 'Q2b',
     text: 'When was baby born?',
-    sub: "We'll use this to sequence age-appropriate topics.",
     datePicker: true, pickerLabel: "Baby's birthday", maxToday: true,
     required: true
   },
   q3: {
     id: 'q3', label: 'Q3',
     text: 'Will this be your first?',
-    sub: "This helps us decide which topics are most relevant for you.",
     options: ['Yes, first time', "No, we've done this before"],
     required: true
   },
   q4: {
     id: 'q4', label: 'Q4',
     text: "Have you found out the baby's sex yet?",
-    sub: "We use this to filter out topics that won't apply to you.",
     options: ["Yes, it's a girl", "Yes, it's a boy", 'Not yet', "We're not finding out"],
-    required: false, skipLabel: 'Skip this question', skipDefault: "We're not finding out"
+    required: false, skipLabel: 'Skip this question', skipDefault: 3 // index of "We're not finding out"
   },
   q5: {
     id: 'q5', label: 'Q5',
-    text: 'Will you be sharing a last name?',
-    sub: "This lets us filter one topic if it doesn't apply to you.",
+    text: "Do you know what last name you'll give your baby?",
     options: ['Yes', 'No', 'Still deciding'],
-    required: false, skipLabel: 'Skip this question', skipDefault: 'Still deciding'
+    required: false, skipLabel: 'Skip this question', skipDefault: 2 // index of "Still deciding"
   },
   q7: {
     id: 'q7', label: 'Q7',
-    text: 'How often would you like us to nudge you?',
-    sub: "You can always change this in Settings.",
-    options: ['Daily', 'A few times a week', 'Weekly', "Don't nudge me"],
-    required: false, skipLabel: "Skip — I'll set this in Settings later", skipDefault: 'A few times a week'
+    text: 'On a scale of 1 to 5, how aligned do you feel with your partner?',
+    slider: true, sliderMin: 1, sliderMax: 5, sliderLeft: 'Not at all', sliderRight: 'Completely aligned',
+    required: false, skipLabel: 'Skip this question', skipDefault: 3
+  },
+  q8: {
+    id: 'q8', label: 'Q8',
+    text: 'What are you nervous about?',
+    multiSelect: true,
+    options: [
+      'Who will handle what',
+      "How we'll get enough sleep",
+      'Deciding the "right way" to parent',
+      'Making time for ourselves',
+      'All of the above',
+      'All of the above (and then some)'
+    ],
+    // Custom toggle logic for Q8 — see toggleMulti() in showQuestion
+    multiKind: 'q8',
+    required: false, skipLabel: 'Skip this question', skipDefault: []
+  },
+  q9: {
+    id: 'q9', label: 'Q9',
+    text: 'What have you done to prepare so far?',
+    multiSelect: true,
+    options: [
+      'Talked to my OB',
+      'Talked to friends/family',
+      'Listened to podcasts',
+      'Read books',
+      'Just getting started'
+    ],
+    multiKind: 'q9',
+    required: false, skipLabel: 'Skip this question', skipDefault: []
   }
 };
 
 // Build question sequence based on Q1 answer index
 // 0=Trying (or thinking about trying), 1=Currently pregnant, 2=Baby is already here, 3=Expecting again
 function buildSequence(q1Idx) {
-  const { q1, q2, q2b, q3, q4, q5, q7 } = QUESTIONS;
+  const { q1, q2, q2b, q3, q4, q5, q7, q8, q9 } = QUESTIONS;
   switch (q1Idx) {
-    case 0: return [q1, q3, q5, q7];           // Trying (or thinking about trying) — Q2 (no due date) and Q4 (no baby sex) skipped
-    case 1: return [q1, q2, q3, q4, q5, q7];   // Currently pregnant
-    case 2: return [q1, q2b, q3, q4, q5, q7];  // Baby is already here
-    case 3: return [q1, q2, q4, q5, q7];       // Expecting again — Q3 auto-set to "No"
-    default: return [q1, q3, q5, q7];          // Unknown — conservative default
+    case 0: return [q1, q3, q5, q7, q8, q9];               // Trying (or thinking about trying) — Q2 (no due date) and Q4 (no baby sex) skipped
+    case 1: return [q1, q2, q3, q4, q5, q7, q8, q9];       // Currently pregnant
+    case 2: return [q1, q2b, q3, q4, q5, q7, q8, q9];      // Baby is already here
+    case 3: return [q1, q2, q4, q5, q7, q8, q9];           // Expecting again — Q3 auto-set to "No"
+    default: return [q1, q3, q5, q7, q8, q9];              // Unknown — conservative default
   }
 }
 
 // State
 const STORAGE_KEY = 'dg_onboarding_quiz_v4';
 let answers = {};
-let sequence = [QUESTIONS.q1, QUESTIONS.q3, QUESTIONS.q5, QUESTIONS.q7];
+let sequence = [QUESTIONS.q1, QUESTIONS.q3, QUESTIONS.q5, QUESTIONS.q7, QUESTIONS.q8, QUESTIONS.q9];
 let currentIdx = 0;
 let selectedOpt = null;
 
@@ -422,6 +464,50 @@ function rebuildTabs() {
   });
 }
 
+// Selection-logic helpers for multi-select questions
+function applyMultiToggle(kind, currentSet, tappedIdx) {
+  const sel = new Set(currentSet);
+  if (kind === 'q8') {
+    // Indices: 0–3 independent · 4 = "All of the above" · 5 = "All of the above (and then some)"
+    if (tappedIdx <= 3) {
+      sel.has(tappedIdx) ? sel.delete(tappedIdx) : sel.add(tappedIdx);
+      // Deselecting any of 1–4 invalidates 5 and 6
+      const allFourSet = sel.has(0) && sel.has(1) && sel.has(2) && sel.has(3);
+      if (!allFourSet) { sel.delete(4); sel.delete(5); }
+    } else if (tappedIdx === 4) {
+      if (sel.has(4)) { sel.delete(4); }
+      else { sel.add(0); sel.add(1); sel.add(2); sel.add(3); sel.add(4); sel.delete(5); }
+    } else if (tappedIdx === 5) {
+      if (sel.has(5)) { sel.delete(5); }
+      else { sel.add(0); sel.add(1); sel.add(2); sel.add(3); sel.add(5); sel.delete(4); }
+    }
+  } else if (kind === 'q9') {
+    // Indices: 0–3 independent · 4 = "Just getting started" (mutex with 0–3)
+    if (tappedIdx <= 3) {
+      sel.has(tappedIdx) ? sel.delete(tappedIdx) : sel.add(tappedIdx);
+      sel.delete(4);
+    } else if (tappedIdx === 4) {
+      if (sel.has(4)) { sel.delete(4); }
+      else { sel.clear(); sel.add(4); }
+    }
+  }
+  return Array.from(sel).sort((a, b) => a - b);
+}
+
+function isAnswered(q) {
+  const a = answers[q.id];
+  if (q.datePicker) return true; // mockup: date assumed set
+  if (q.multiSelect) return Array.isArray(a) && a.length > 0;
+  if (q.slider) return typeof a === 'number';
+  return a !== undefined;
+}
+
+function setContinueState(q) {
+  const btn = document.getElementById('continue-btn');
+  if (isAnswered(q)) btn.classList.remove('disabled');
+  else btn.classList.add('disabled');
+}
+
 function showQuestion(idx) {
   currentIdx = idx;
   const q = sequence[idx];
@@ -439,7 +525,6 @@ function showQuestion(idx) {
 
   // Question text
   document.getElementById('q-text').textContent = q.text;
-  document.getElementById('q-subtext').textContent = q.sub || '';
 
   // Skip button visibility and label
   const skipBtn = document.getElementById('skip-btn');
@@ -450,7 +535,7 @@ function showQuestion(idx) {
     skipBtn.textContent = q.skipLabel || 'Skip this question';
   }
 
-  // Options
+  // Answer region
   const container = document.getElementById('answer-options');
   container.innerHTML = '';
 
@@ -469,11 +554,103 @@ function showQuestion(idx) {
       <div style="font-size:12px;color:rgba(26,26,26,0.4);margin-top:4px;">Opens native date picker on device${hint ? ' · ' + hint : ''}</div>
     `;
     container.appendChild(wrap);
-    document.getElementById('continue-btn').classList.remove('disabled');
+    setContinueState(q);
     return;
   }
 
-  // Pre-select saved answer
+  if (q.slider) {
+    const min = q.sliderMin, max = q.sliderMax;
+    const saved = answers[q.id];
+    let confirmed = typeof saved === 'number';
+    let value = confirmed ? saved : Math.round((min + max) / 2);
+
+    const positionPct = (v) => ((v - min) / (max - min)) * 100;
+
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;padding:18px 4px 8px;user-select:none;';
+    wrap.innerHTML = `
+      <div class="slider-value" style="text-align:center;height:22px;font-size:15px;font-weight:600;color:var(--text-primary);font-family:'DM Sans',sans-serif;visibility:${confirmed ? 'visible' : 'hidden'};">${value}</div>
+      <div class="slider-row" style="position:relative;height:44px;display:flex;align-items:center;cursor:pointer;margin-top:6px;">
+        <div class="slider-track" style="position:relative;width:100%;height:6px;background:rgba(26,26,26,0.10);border-radius:9999px;">
+          <div class="slider-fill" style="position:absolute;left:0;top:0;height:100%;background:var(--purple-500);border-radius:9999px;width:${confirmed ? positionPct(value) + '%' : '0%'};transition:width 0.15s ease;"></div>
+          ${[1,2,3,4,5].map(i => `<div class="slider-tick" style="position:absolute;left:${positionPct(i)}%;top:-1px;transform:translateX(-1px);width:2px;height:8px;background:rgba(26,26,26,0.15);border-radius:1px;"></div>`).join('')}
+          <div class="slider-thumb" style="position:absolute;left:${positionPct(value)}%;top:50%;width:28px;height:28px;border-radius:50%;background:var(--white);border:2px solid ${confirmed ? 'var(--purple-500)' : 'var(--border-default)'};box-shadow:0 1px 2px rgba(26,26,26,0.10);transform:translate(-50%,-50%);transition:left 0.15s ease,border-color 0.15s ease;"></div>
+        </div>
+      </div>
+      <div class="slider-end-labels" style="display:flex;justify-content:space-between;margin-top:14px;font-size:12px;color:var(--text-secondary);font-family:'DM Sans',sans-serif;">
+        <span>${q.sliderLeft}</span>
+        <span>${q.sliderRight}</span>
+      </div>
+    `;
+    container.appendChild(wrap);
+
+    const row = wrap.querySelector('.slider-row');
+    const fill = wrap.querySelector('.slider-fill');
+    const thumb = wrap.querySelector('.slider-thumb');
+    const valueLabel = wrap.querySelector('.slider-value');
+
+    const setValue = (v) => {
+      value = Math.max(min, Math.min(max, v));
+      confirmed = true;
+      fill.style.width = positionPct(value) + '%';
+      thumb.style.left = positionPct(value) + '%';
+      thumb.style.borderColor = 'var(--purple-500)';
+      valueLabel.textContent = value;
+      valueLabel.style.visibility = 'visible';
+      answers[q.id] = value;
+      setContinueState(q);
+      saveState();
+    };
+
+    const pickFromEvent = (e) => {
+      const rect = row.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      const newVal = Math.round(min + ratio * (max - min));
+      setValue(newVal);
+    };
+
+    row.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      pickFromEvent(e);
+      const onMove = (ev) => pickFromEvent(ev);
+      const onUp = () => {
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+      };
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+    });
+
+    setContinueState(q);
+    return;
+  }
+
+  if (q.multiSelect) {
+    const renderButtons = () => {
+      container.innerHTML = '';
+      const selArr = answers[q.id] || [];
+      const selSet = new Set(selArr);
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-opt' + (selSet.has(i) ? ' selected' : '');
+        btn.textContent = opt;
+        btn.addEventListener('click', () => {
+          const next = applyMultiToggle(q.multiKind, selSet, i);
+          answers[q.id] = next;
+          saveState();
+          renderButtons();
+          setContinueState(q);
+        });
+        container.appendChild(btn);
+      });
+    };
+    renderButtons();
+    setContinueState(q);
+    return;
+  }
+
+  // Single-select
   const savedAnswer = answers[q.id];
   q.options.forEach((opt, i) => {
     const btn = document.createElement('button');
@@ -490,24 +667,19 @@ function showQuestion(idx) {
         sequence = buildSequence(i);
         if (i === 3) answers.q3 = 1; // Expecting again → auto-set Q3="No"
         rebuildTabs();
-        // Update progress label now that total is known
         const newTotal = sequence.length;
         document.getElementById('progress-fill').style.width = Math.round((1 / newTotal) * 100) + '%';
         document.getElementById('progress-label').textContent = `1 of ${newTotal}`;
       }
 
-      document.getElementById('continue-btn').classList.remove('disabled');
+      setContinueState(q);
       saveState();
     });
     container.appendChild(btn);
   });
 
-  if (savedAnswer !== undefined) {
-    selectedOpt = savedAnswer;
-    document.getElementById('continue-btn').classList.remove('disabled');
-  } else {
-    document.getElementById('continue-btn').classList.add('disabled');
-  }
+  if (savedAnswer !== undefined) selectedOpt = savedAnswer;
+  setContinueState(q);
 }
 
 // Continue
