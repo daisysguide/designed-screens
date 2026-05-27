@@ -9,7 +9,7 @@
 <style>
 /* ── Screen 05b: Name Entry (page-28) ── */
 body.page-28 {
-  --cream: #fbefe1; --white: #ffffff;
+  --cream: #fbefe1; --white: #ffffff; --black: #1a1a1a;
   --purple-500: #5f45f2; --purple-600: #4c35d4;
   --text-primary: rgba(26,26,26,1);
   --text-secondary: rgba(26,26,26,0.55);
@@ -75,32 +75,25 @@ body.page-28 .screen-root .state-tab.active {
   background: var(--purple-500); border-color: var(--purple-500); color: white;
 }
 
-/* ── Phone shell ── */
+/* ── Phone shell — matches v4 device-frame chrome ── */
 body.page-28 .screen-root .phone {
-  width: 390px; height: 812px;
-  background: var(--cream); border-radius: 52px;
-  box-shadow: 0 32px 80px rgba(26,26,26,0.22), 0 0 0 1.5px rgba(26,26,26,0.12);
-  overflow: hidden; position: relative;
+  width: 375px; height: 812px; border-radius: 48px; overflow: hidden;
+  position: relative; background: var(--cream);
+  box-shadow: 0 0 0 2px var(--black), 0 32px 64px rgba(26,26,26,0.22), 0 8px 16px rgba(26,26,26,0.1);
 }
 body.page-28 .screen-root .phone-notch {
-  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 126px; height: 30px; background: #0a0a0a;
-  border-radius: 0 0 20px 20px; z-index: 10;
+  width: 126px; height: 30px; background: var(--black);
+  border-radius: 0 0 20px 20px; margin: 0 auto; position: relative; z-index: 10;
 }
 
 /* ── Phone screen — vertically centered content ── */
 body.page-28 .screen-root .phone-screen {
-  height: 812px; padding: 30px 0 40px;
+  height: calc(812px - 30px); padding: 0;
   display: flex; flex-direction: column; justify-content: center;
   background: var(--cream);
 }
 body.page-28 .screen-root .name-content {
   padding: 0 24px;
-}
-
-/* Daisy mark */
-body.page-28 .screen-root .daisy-mark {
-  display: flex; justify-content: center; margin-bottom: 8px;
 }
 
 /* Heading */
@@ -309,23 +302,6 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
       <div class="phone-screen">
         <div class="name-content">
 
-          <!-- Daisy mark (daisy.png asset) -->
-          <div class="daisy-mark">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g transform="translate(24,24)">
-                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(0)"/>
-                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(45)"/>
-                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(90)"/>
-                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(135)"/>
-                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(180)"/>
-                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(225)"/>
-                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(270)"/>
-                <ellipse cx="0" cy="-13" rx="5.5" ry="9" fill="#ede9ff" stroke="#9b8df8" stroke-width="0.75" transform="rotate(315)"/>
-                <circle cx="0" cy="0" r="8.5" fill="#f5c842" stroke="#e0a800" stroke-width="0.75"/>
-              </g>
-            </svg>
-          </div>
-
           <div class="name-heading">What should we call you?</div>
           <div class="name-subtext">Just your first name — we'll use it throughout the app.</div>
 
@@ -370,11 +346,10 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
       <div class="spec-card-title">Layout</div>
       <table class="spec-table">
         <tr><td>Background</td><td><code>surface-page</code> (cream)</td></tr>
-        <tr><td>Back button</td><td>None — no back affordance on this screen</td></tr>
+        <tr><td>Back button</td><td>None. Deliberate exception to the system back-gesture rule, since the account already exists server-side at this point and navigating back would put the user in an undefined state.</td></tr>
         <tr><td>Bottom nav</td><td>None</td></tr>
         <tr><td>Content alignment</td><td>Vertically centered within the screen</td></tr>
         <tr><td>Horizontal padding</td><td>24px on both sides</td></tr>
-        <tr><td>Daisy mark</td><td>48px · centered · <code>daisy.png</code> asset · 48px above heading</td></tr>
       </table>
     </div>
 
@@ -383,6 +358,7 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
       <table class="spec-table">
         <tr><td>Type</td><td><code>type="text"</code></td></tr>
         <tr><td>Attributes</td><td><code>autocomplete="given-name"</code> · <code>autocorrect="off"</code> · <code>autocapitalize="words"</code> · <code>spellcheck="false"</code></td></tr>
+        <tr><td>Max length</td><td><code>maxlength="30"</code>. Caps name length to prevent broken copy interpolation downstream.</td></tr>
         <tr><td>Height</td><td>48px</td></tr>
         <tr><td>Border radius</td><td><code>radius-md</code> (8px)</td></tr>
         <tr><td>Background</td><td><code>surface-card</code> (white) — always</td></tr>
@@ -402,7 +378,8 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
         <tr><td>Style</td><td>Primary · 56px height · <code>radius-full</code> · <code>purple-500</code></td></tr>
         <tr><td>Disabled</td><td><code>opacity: 0.4</code> · <code>pointer-events: none</code> · when input is empty</td></tr>
         <tr><td>Active</td><td>Full opacity once any character is entered</td></tr>
-        <tr><td>On tap</td><td>Trim whitespace · save first name to user profile · navigate to Screen 07 Personalized Results</td></tr>
+        <tr><td>On tap</td><td>Trim whitespace, validate non-empty after trim, show Button loading state (spinner replaces label, button stays disabled), save first name to user profile, navigate to Screen 07 on success.</td></tr>
+        <tr><td>On save failure</td><td>Show Error toast with copy "Couldn't save your name. Try again." Re-enable the button. Stay on screen. 8 second timeout falls to the same error path.</td></tr>
         <tr><td>No skip</td><td>Name is required — no skip affordance on this screen</td></tr>
       </table>
     </div>
@@ -415,14 +392,13 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
         <div class="note-item"><div class="note-bullet"></div><span>On tap: trim leading/trailing whitespace before saving. If the result is an empty string, keep the CTA disabled.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Name is saved to the user profile and used as [firstName] throughout the app (e.g., "Now let's get [firstName] in here" on Screen 09).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Apple and Google sign-in users never see this screen. Their display name comes from the auth provider and is saved during the sign-in handshake.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>No back button. If the user needs to correct their phone/email they must use the OS gesture (swipe back) — the back gesture is not available on this screen in the production flow.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>App resume: if the user closes the app on this screen, they resume here with the input empty. This is an addition to the mid-topic-app-resume rules in the design system.</span></div>
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
-        <span class="component-tag">Daisy Mark (48px)</span>
         <span class="component-tag">Text Input</span>
         <span class="component-tag">Button — Primary (lg)</span>
       </div>

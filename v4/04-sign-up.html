@@ -275,6 +275,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>"Log in" footer link → Screen 06 Log In.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Phone/email OTP success → Screen 05b (Name Entry) before proceeding to Screen 07. Apple/Google sign-in bypasses Screen 05b, name is provided by the auth provider and the user goes directly to Screen 07.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Apple Sign In fallback: if the Apple auth provider returns no display name (user selected "Hide my name"), route the user to Screen 05b Name Entry after auth completes, before Screen 07. Google Sign In reliably returns a name and continues to skip 05b as currently specified.</span></div>
       </div>
     </div>
 
