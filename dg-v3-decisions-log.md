@@ -2,7 +2,7 @@
 
 A complete record of the design decisions made while reviewing the v3 designed
 screens. Use this as the source of truth when updating the spec docs and when
-briefing Rocketech.
+briefing Jake.
 
 The decisions are grouped thematically rather than in the order they were made.
 Many original questions expanded into multi-part calls — those are captured
@@ -20,7 +20,7 @@ together below.
 | Your turn | Partner answered, you haven't | Purple dot, filled purple "Your turn" pill, topic name bold |
 | Waiting | You answered, partner hasn't | Gray dot, "⏳ Waiting" neutral pill |
 | Pending | Both answered + revealed, but user hasn't marked Resolved | (new pill — to spec visually) |
-| Resolved | Both answered + revealed, user picked Resolved on Screen 20 | Green checkmark pill |
+| Resolved | Both answered + revealed, user picked Resolved on Screen 21 | Green checkmark pill |
 
 Plus one special state for Prediction Cards only:
 
@@ -28,10 +28,10 @@ Plus one special state for Prediction Cards only:
 
 **Sort priority on Topic List:** Your turn → Not started → Waiting → Pending → Resolved → Locked.
 
-**"Talk about it" + "Revisit later" merged into "Needs more work"** on Screen 20.
+**"Talk about it" + "Revisit later" merged into "Needs more work"** on Screen 21.
 Single optional reminder toggle replaces the two separate options.
 
-**Screen 20 (Post-Reveal Reflection) redesign:**
+**Screen 21 (Post-Reveal Reflection) redesign:**
 - Two reflection options (Resolved · Needs more work)
 - Selection is **required** — primary CTA disabled until one is picked
 - Primary CTA renamed to **"Submit →"**
@@ -77,11 +77,11 @@ Prediction Cards naturally appear on the re-filter.
 Toggle in the header: `[ By category | By stage ]`. Default: By category
 (mirrors the book's TOC).
 
-Mirror the book's alt-TOC for the stage labels. Same toggle UX on Screen 13
-(Topic List) and Screen 11 (Progress). Each screen remembers its own toggle
+Mirror the book's alt-TOC for the stage labels. Same toggle UX on Screen 14
+(Topic List) and Screen 12 (Progress). Each screen remembers its own toggle
 state independently — users think about navigation and progress differently.
 
-**Milestone celebration trigger** (Screen 11): currently fires when a category
+**Milestone celebration trigger** (Screen 12): currently fires when a category
 reaches 100%. After adding stages, also fire when a full stage reaches 100%.
 Same animation, two triggers.
 
@@ -104,7 +104,7 @@ breakdown lives in the per-group bars below.
 
 ---
 
-## 5. Screen 15 Topic Intro — 4 states
+## 5. Screen 16 Topic Intro — 4 states
 
 Aligned with the new state model:
 
@@ -116,10 +116,10 @@ Aligned with the new state model:
 | Ready to reveal | "Jordan finished — ready to reveal." | "See your results →" |
 
 **Edits allowed during Waiting until partner submits.** Add a quiet "Change my
-answers" link on both Screen 18 (Waiting for Partner) and Screen 15 Waiting
-state. Tapping routes through Screens 17 → 17b with previous answers pre-filled.
+answers" link on both Screen 19 (Waiting for Partner) and Screen 16 Waiting
+state. Tapping routes through Screens 18 → 18b with previous answers pre-filled.
 
-Screen 18 keeps "Your answers are locked in 🔒" as the headline but adds a
+Screen 19 keeps "Your answers are locked in 🔒" as the headline but adds a
 subtle line: *"Need to change something? You can edit until [partnerName]
 finishes."*
 
@@ -132,7 +132,7 @@ Partner's submit queues; reveal waits for the both-fresh-submitted state.
 
 **Model: paired re-answer round** (V1 default).
 - Initiator submits re-answer → topic enters "[name] re-answered, waiting for partner" state
-- Partner gets notification; if they re-answer, both have new answers → new reveal plays (Screen 19 again)
+- Partner gets notification; if they re-answer, both have new answers → new reveal plays (Screen 20 again)
 - Original reveal remains canonical until partner joins
 - Race condition (both initiate simultaneously): timestamp wins, second tap reinterpreted as joining
 
@@ -147,8 +147,8 @@ answers"* (unilateral) vs *"start the discussion over"* (paired re-round).
 ## 7. Snapshot feature
 
 **Cut the user-facing snapshot in V1.** When a couple re-answers, the new
-answers become canonical. Screen 22's "Original answers" toggle is removed.
-Screen 21's copy drops the *"your previous answers will be saved so you can see
+answers become canonical. Screen 23's "Original answers" toggle is removed.
+Screen 22's copy drops the *"your previous answers will be saved so you can see
 how your thinking evolved"* line.
 
 **Retain the data server-side** for future-proofing. Doesn't affect V1 spec but
@@ -156,20 +156,20 @@ keeps the option open for a later "view history" feature.
 
 ---
 
-## 8. Note step (Screen 17 / 17b reconciliation)
+## 8. Note step (Screen 18 / 18b reconciliation)
 
-Final spec — base is 17b, with several overrides from 17:
+Final spec — base is 18b, with several overrides from 18:
 
 | Element | Spec |
 |---|---|
-| Heading | "Anything else [partnerName] should know?" (17b) |
-| Sub-text | "[partnerName] sees this after you both complete this topic." (17) |
-| Textarea bg | White (17) |
-| Min-height | 120px, expanding to 240px (17b) |
-| Placeholder | "Your thoughts, context, or questions for later…" (17) |
-| Char limit | Hard 280, enforced with `maxlength` (17) |
-| Counter | "N characters remaining", turns red below 50 left (17) |
-| Submit label | "Submit →" (17) |
+| Heading | "Anything else [partnerName] should know?" (18b) |
+| Sub-text | "[partnerName] sees this after you both complete this topic." (18) |
+| Textarea bg | White (18) |
+| Min-height | 120px, expanding to 240px (18b) |
+| Placeholder | "Your thoughts, context, or questions for later…" (18) |
+| Char limit | Hard 280, enforced with `maxlength` (18) |
+| Counter | "N characters remaining", turns red below 50 left (18) |
+| Submit label | "Submit →" (18) |
 
 `[partnerName]` is templated — production swaps in the partner's actual name.
 
@@ -183,9 +183,9 @@ Final spec — base is 17b, with several overrides from 17:
 - Expert-written guide for every topic
 - Both partners, one purchase
 
-Used on Screen 08 (Paywall) and Screen 26 (Payment Failure) — same list both
+Used on Screen 09 (Paywall) and Screen 27 (Payment Failure) — same list both
 places. The "for you two" framing in bullet 3 echoes the AI summary card on
-Screen 19, keeping language coherent.
+Screen 20, keeping language coherent.
 
 ---
 
@@ -208,24 +208,24 @@ Logged-in user without a completed purchase → routed to
 **Personalized Results → Manage Topics → Paywall**.
 
 Skip the "Building your plan" animation (Screen 03) since their plan already
-exists — just open Screen 07. The re-engagement sequence rebuilds emotional
+exists — just open Screen 08. The re-engagement sequence rebuilds emotional
 context before the paywall ask.
 
 ---
 
 ## 12. Empty state and edge case handling
 
-**Chaos meter (Screen 11):** Hide until 3 reveals. The meter is a playful
+**Chaos meter (Screen 12):** Hide until 3 reveals. The meter is a playful
 easter egg; making it appear once earned preserves the surprise.
 
-**Alignment % (Screens 10, 11):** Hide until 5 reveals. Small samples produce
+**Alignment % (Screens 11, 12):** Hide until 5 reveals. Small samples produce
 noisy numbers that could mislead couples about their dynamic. Below 5 reveals,
 the stat tile is suppressed (Home: single-tile, Progress: 2-column top stats).
 
-**Empty Home partner variants (Screen 24):** Spec all three (Linked · Invite
-pending · No partner) by mirroring Screen 10's variants.
+**Empty Home partner variants (Screen 25):** Spec all three (Linked · Invite
+pending · No partner) by mirroring Screen 11's variants.
 
-**Empty Topic List chips (Screen 25):** Removed. Matches Screen 13's no-chips
+**Empty Topic List chips (Screen 26):** Removed. Matches Screen 14's no-chips
 approach. Filtering UI is unnecessary on top of category/stage grouping.
 
 ---
@@ -244,7 +244,7 @@ solving the discoverability problem.
 ## 14. Copy and visual consistency
 
 **Bottom nav Topics icon:** 📚 (books) everywhere. Replaces the 📋 clipboard on
-Screen 10. When real icons replace placeholders, use `ti-book` or `ti-book-2`.
+Screen 11. When real icons replace placeholders, use `ti-book` or `ti-book-2`.
 
 **Partner status copy:** Just "Linked ✓" everywhere with the avatar and name.
 No timestamps ("Active 2h ago" cut), no conditional action language.
@@ -262,7 +262,7 @@ me. Same set in Quiz Q7 and Settings.
   from article word count (200 wpm standard).
 
 **Sample data persona:** User = **Alex** (gender-neutral). Partner stays
-Jordan. Both gender-neutral. Update Screen 24's "Taylor" to "Alex"; standardize
+Jordan. Both gender-neutral. Update Screen 25's "Taylor" to "Alex"; standardize
 "Sarah" across other screens to "Alex."
 
 **Sample phone area code:** 972 (Dallas).
@@ -273,10 +273,10 @@ Jordan. Both gender-neutral. Update Screen 24's "Taylor" to "Alex"; standardize
 
 **7-day refund promise stays.** Implementation via App Store Connect refund API
 (iOS 15+) + a support process that handles refund requests when users email
-guarantee@daisysguide.com. Flag for Rocketech: backend integration with the
+guarantee@daisysguide.com. Flag for Jake: backend integration with the
 App Store refund API is required.
 
-**Screen 26 payment retry CTAs simplified.** Drop "Try a different payment
+**Screen 27 payment retry CTAs simplified.** Drop "Try a different payment
 method" (doesn't work cleanly on iOS). Replace with just **"Try again"** as
 primary, plus the existing restore-purchase link and contact-support link.
 
@@ -290,7 +290,7 @@ recoverable, delete account is not.
 
 ---
 
-## Implementation flags for Rocketech
+## Implementation flags for Jake
 
 A few decisions imply schema or integration work worth surfacing explicitly:
 
@@ -300,7 +300,7 @@ A few decisions imply schema or integration work worth surfacing explicitly:
 - **Topic state machine:** five states for regular topics, plus Locked for
   prediction cards.
 - **Pending → Resolved transition:** users can switch a topic's reflection
-  status at any time from Screen 22.
+  status at any time from Screen 23.
 - **Q1 update flow (V1):** schema needs to support re-running topic filtering;
   user profile mutation triggers re-filter.
 - **Re-answer flow:** new "re-answer pending" state with 14-day expiry timer.
@@ -323,4 +323,4 @@ A few decisions imply schema or integration work worth surfacing explicitly:
 2. Re-run the Claude Code / Cursor fix prompt for the definitive bugs (still
    valid — none of those were affected by these decisions).
 3. Hand the updated v3 spec + this decisions log + the schema implications to
-   Rocketech for the build.
+   Jake for the build.

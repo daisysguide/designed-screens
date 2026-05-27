@@ -183,7 +183,7 @@ When a user closes the app mid-session and returns later, the app resumes based 
 - **Mid-question (Screen 16):** Resumes to the last visited question with progress intact. Previously selected (but not submitted) answer re-selected on mount. No toast — silent resume.
 - **Mid-waiting-for-partner (Screen 17):** Returns directly to the Waiting screen. If the partner finished in the interim, the screen detects this on mount and auto-advances to Alignment Reveal (Screen 18).
 - **Mid-onboarding (pre-paywall):** Resumes at the last completed onboarding step. Most common abandon point is post-quiz, pre-paywall — returns to Personalized Results (Screen 09) or Paywall directly.
-- **Mid name-entry (Screen 05b):** Resumes to Screen 05b with input empty. Account creation already succeeded server-side, but name is not yet captured.
+- **Mid name-entry (Screen 06):** Resumes to Screen 06 with input empty. Account creation already succeeded server-side, but name is not yet captured.
 - **All other screens:** Resume to Home (Screen 12).
 
 ### Lapsed user re-entry
