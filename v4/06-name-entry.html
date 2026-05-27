@@ -102,18 +102,17 @@ body.page-28 .screen-root .phone-notch {
     border-radius: 0 0 20px 20px; margin: 0 auto; position: relative; z-index: 10;
   }
 
-/* Vertical centering for this sparse form is the one inner-content
-   deviation from page-02's top-anchored phone-screen. */
 body.page-28 .screen-root .phone-screen {
     padding: 8px 24px 40px;
     height: calc(812px - 30px);
-    display: flex; flex-direction: column; justify-content: center;
+    display: flex; flex-direction: column;
   }
 
 body.page-28 .screen-root .name-heading {
     font-family: 'Grandstander', cursive;
-    font-size: 26px; font-weight: 700;
-    color: var(--text-primary); text-align: center; line-height: 1.2;
+    font-size: 28px; font-weight: 700;
+    color: var(--text-primary); text-align: center; line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
 body.page-28 .screen-root .name-subtext {
@@ -323,11 +322,11 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
         <div class="name-content">
 
           <div class="name-heading">What should we call you?</div>
-          <div class="name-subtext">Just your first name — we'll use it throughout the app.</div>
+          <div class="name-subtext">Just your first name. We'll use it throughout the app.</div>
 
           <div class="name-field placeholder" id="name-field">Your first name</div>
 
-          <button class="name-cta disabled" id="name-cta">Let's go →</button>
+          <button class="name-cta disabled" id="name-cta">Let's go</button>
 
         </div>
       </div>
@@ -355,10 +354,10 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
       <table class="spec-table">
-        <tr><td>Heading</td><td>"What should we call you?" · Grandstander 26px bold · <code>text-primary</code> · centered</td></tr>
-        <tr><td>Sub-text</td><td>"Just your first name — we'll use it throughout the app." · DM Sans 15px · <code>text-secondary</code> · centered · 16px below heading</td></tr>
+        <tr><td>Heading</td><td>"What should we call you?" · Grandstander 28px bold · <code>text-primary</code> · centered</td></tr>
+        <tr><td>Sub-text</td><td>"Just your first name. We'll use it throughout the app." · DM Sans 15px · <code>text-secondary</code> · centered · 16px below heading</td></tr>
         <tr><td>Placeholder</td><td>"Your first name" · 15px DM Sans · <code>text-tertiary</code></td></tr>
-        <tr><td>CTA label</td><td>"Let's go →" · 16px DM Sans semibold</td></tr>
+        <tr><td>CTA label</td><td>"Let's go" · 16px DM Sans semibold</td></tr>
       </table>
     </div>
 
@@ -368,7 +367,7 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
         <tr><td>Background</td><td><code>surface-page</code> (cream)</td></tr>
         <tr><td>Back button</td><td>None. Deliberate exception to the system back-gesture rule, since the account already exists server-side at this point and navigating back would put the user in an undefined state.</td></tr>
         <tr><td>Bottom nav</td><td>None</td></tr>
-        <tr><td>Content alignment</td><td>Vertically centered within the screen</td></tr>
+        <tr><td>Content alignment</td><td>Top-anchored within the safe area</td></tr>
         <tr><td>Horizontal padding</td><td>24px on both sides</td></tr>
       </table>
     </div>
@@ -394,7 +393,7 @@ body.page-28 .screen-root .footer-label { font-size: 12px; color: var(--text-ter
     <div class="spec-card">
       <div class="spec-card-title">CTA button</div>
       <table class="spec-table">
-        <tr><td>Label</td><td>"Let's go →"</td></tr>
+        <tr><td>Label</td><td>"Let's go"</td></tr>
         <tr><td>Style</td><td>Primary · 56px height · <code>radius-full</code> · <code>purple-500</code></td></tr>
         <tr><td>Disabled</td><td><code>opacity: 0.4</code> · <code>pointer-events: none</code> · when input is empty</td></tr>
         <tr><td>Active</td><td>Full opacity once any character is entered</td></tr>

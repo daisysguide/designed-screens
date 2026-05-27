@@ -6,6 +6,12 @@
 <title>Log In — Daisy's Guide Designed Screens v4</title>
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+body.page-03 .screen-root .label-sm {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 6px;
+  }
+</style>
 </head>
 <body class="page-03">
 <div class="sidebar">
@@ -92,7 +98,8 @@
       <div class="phone-notch"></div>
       <div class="phone-screen">
 
-        <div class="screen-heading" style="margin-top:12px;">Welcome back</div>
+        <div class="label-sm">Log in</div>
+        <div class="screen-heading">Welcome back</div>
         <div class="screen-subhead">Good to see you again.</div>
 
         <button class="btn-social">
@@ -168,11 +175,11 @@
         <tr>
           <td>Eyebrow</td>
           <td>"Create your account"</td>
-          <td>None</td>
+          <td>"Log in"</td>
         </tr>
         <tr>
           <td>Heading</td>
-          <td>"Let's get started"</td>
+          <td>"Save your personalized plan"</td>
           <td>"Welcome back"</td>
         </tr>
         <tr>
@@ -201,7 +208,8 @@
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
       <table class="spec-table">
-        <tr><td>Heading</td><td>"Welcome back" · Grandstander 28px bold · no eyebrow label</td></tr>
+        <tr><td>Eyebrow label</td><td>"Log in" · <code>label-sm</code> uppercase · <code>text-tertiary</code></td></tr>
+        <tr><td>Heading</td><td>"Welcome back" · Grandstander 28px bold</td></tr>
         <tr><td>Subheading</td><td>"Good to see you again." · DM Sans 15px · <code>text-secondary</code></td></tr>
         <tr><td>Helper text</td><td>"We'll send you a 6-digit code. No password needed." · 12px · <code>text-secondary</code> · sits below the input field, not the social buttons</td></tr>
         <tr><td>Footer link</td><td>"Don't have an account? Sign up" · "Sign up" in <code>text-link</code> → Screen 04 Sign Up</td></tr>
