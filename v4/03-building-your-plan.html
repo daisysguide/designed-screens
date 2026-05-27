@@ -95,31 +95,33 @@
       <div class="phone-screen">
 
         <div class="anim-slot" id="anim-slot">
-          <div class="anim-spinner" id="anim-spinner"></div>
-          <div class="anim-done" id="anim-done" style="display:none;">🌼</div>
+          <div class="anim-spinner" id="anim-spinner" aria-hidden="true"></div>
+          <div class="anim-done" id="anim-done" style="display:none;" aria-hidden="true">🌼</div>
         </div>
 
-        <div class="screen-heading" id="screen-heading">Building your plan...</div>
-        <div class="screen-body" id="screen-body">Filtering out the stuff that doesn't apply to you. Won't be a second.</div>
+        <div class="screen-heading" id="screen-heading" aria-live="polite">Building your plan...</div>
+        <div class="screen-body" id="screen-body" aria-live="polite">Tailoring this to where you are right now.</div>
 
-        <div class="step-list">
+        <div class="step-list" id="step-list" aria-live="polite" aria-atomic="false">
 
           <div class="step-item" id="step1">
             <div class="step-icon" id="icon1"><div class="step-icon-pending"></div></div>
-            <div class="step-text">Filtering irrelevant topics...</div>
+            <div class="step-text">Picking what fits you...</div>
           </div>
 
           <div class="step-item pending" id="step2">
             <div class="step-icon" id="icon2"><div class="step-icon-pending"></div></div>
-            <div class="step-text">Sequencing by your timeline...</div>
+            <div class="step-text">Putting first things first...</div>
           </div>
 
           <div class="step-item pending" id="step3">
             <div class="step-icon" id="icon3"><div class="step-icon-pending"></div></div>
-            <div class="step-text">Setting up your couple profile...</div>
+            <div class="step-text">Almost ready...</div>
           </div>
 
         </div>
+
+        <button class="btn btn-primary btn-lg" id="done-cta" style="display:none;width:100%;margin-top:24px;height:56px;font-size:16px;font-weight:600;background:var(--purple-500);color:white;border:none;border-radius:var(--radius-full);cursor:pointer;font-family:'DM Sans',sans-serif;">Claim my plan →</button>
 
       </div>
     </div>
@@ -138,17 +140,21 @@
         <div class="flow-node dest">04 Sign Up</div>
       </div>
       <div class="info-box">
-        <strong>No user interaction on this screen.</strong> No back button, no bottom nav. Auto-advances to Screen 04 Sign Up when the sequence completes (~2–3 seconds). The user cannot skip or interrupt it.
+        <strong>Minimal interaction.</strong> No back button, no bottom nav. User taps the "Claim my plan →" CTA on the done state to advance to Screen 04.
       </div>
+      <table class="spec-table" style="margin-top:12px;">
+        <tr><td>Exits to</td><td>Screen 04 Sign Up — user taps "Claim my plan →" on the done state</td></tr>
+      </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
       <table class="spec-table">
         <tr><td>Heading (during)</td><td>"Building your plan..." · Grandstander 24px bold · centered</td></tr>
-        <tr><td>Body (during)</td><td>"Filtering out the stuff that doesn't apply to you. Won't be a second." · DM Sans 15px · <code>text-secondary</code> · centered · max-width 280px</td></tr>
+        <tr><td>Body (during)</td><td>"Tailoring this to where you are right now." · DM Sans 15px · <code>text-secondary</code> · centered · max-width 280px</td></tr>
         <tr><td>Heading (done)</td><td>"Your plan is ready." · same style</td></tr>
         <tr><td>Body (done)</td><td>"We found 28 topics worth having together." · personalized with actual count</td></tr>
+        <tr><td>CTA (done)</td><td>"Claim my plan →" · Button (Primary, Large) · full width · taps to advance to Screen 04 Sign Up</td></tr>
         <tr><td>Tone</td><td>Warm and playful — never "Loading..." or "Please wait"</td></tr>
       </table>
     </div>
@@ -189,9 +195,9 @@
     <div class="spec-card">
       <div class="spec-card-title">Step checklist — spec</div>
       <table class="spec-table">
-        <tr><td>Step 1</td><td>"Filtering irrelevant topics..."</td></tr>
-        <tr><td>Step 2</td><td>"Sequencing by your timeline..."</td></tr>
-        <tr><td>Step 3</td><td>"Setting up your couple profile..."</td></tr>
+        <tr><td>Step 1</td><td>"Picking what fits you..."</td></tr>
+        <tr><td>Step 2</td><td>"Putting first things first..."</td></tr>
+        <tr><td>Step 3</td><td>"Almost ready..."</td></tr>
         <tr><td>Step card bg</td><td><code>surface-card</code> (white) · <code>radius-lg</code> · <code>shadow-sm</code> · 14px 16px padding</td></tr>
         <tr><td>Step text</td><td>DM Sans 14px medium · <code>text-primary</code></td></tr>
         <tr><td>Gap between steps</td><td>10px</td></tr>
@@ -215,18 +221,44 @@
         <span class="component-tag">Loading / Processing State</span>
         <span class="component-tag">Step checklist</span>
         <span class="component-tag">Spinner animation</span>
+        <span class="component-tag">Button (Primary, Large)</span>
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>No user interaction. Screen auto-advances to Screen 04 Sign Up when sequence completes.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Steps complete in order — Step 1 → Step 2 → Step 3. Each active for ~700ms.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>If the actual API call completes in under 2 seconds, hold on this screen until the animation finishes — don't skip ahead.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>If API takes longer than 3 seconds, loop Step 3 spinner until it resolves.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Heading and body copy update to "done" state when all 3 steps complete.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav. No back button.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>One user interaction on this screen: tapping "Claim my plan →" on the done state. No back button, no bottom nav.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Steps complete in order: Step 1 → Step 2 → Step 3. Each active for ~700ms. Total animation: ~2–3 seconds.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When all 3 steps complete, the heading/body transitions to the done state, the spinner is replaced by the 🌼 emoji, the step list is hidden, and the "Claim my plan →" CTA appears.</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">API timing</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>Under 2 seconds: hold for the animation; don't skip ahead.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>2 to 10 seconds: loop step 3 spinner until the API resolves, then transition to done state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>10 to 15 seconds: keep spinner looping and add a subtle line under step 3: "Taking a little longer than usual..." (DM Sans 13px, <code>text-secondary</code>).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Past 15 seconds, or on API error: route to Screen 27 (Connection Error). Retry path returns to Screen 03 and re-runs the sequence.</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Accessibility</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>Step list container uses <code>aria-live="polite"</code> and <code>aria-atomic="false"</code> so each step transition is announced.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Heading/body region uses <code>aria-live="polite"</code> so the transition to the done state is announced.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Spinner has <code>aria-hidden="true"</code>. The step copy carries the meaning.</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Data persistence</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>An anonymous Supabase user record is created before this screen (likely on Screen 02 entry). Quiz answers are saved against the anonymous ID. On Screen 04 sign-up, the anonymous record is merged with the new permanent account.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Users who abandon between Screen 03 and Screen 04 can resume from Screen 07 on return.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Implementation flag for Jake:</strong> this affects the auth flow across Screens 02, 03, 04 and how returning unauthenticated users are routed.</span></div>
       </div>
     </div>
 
@@ -257,6 +289,8 @@ function showState(state) {
   const done = document.getElementById('anim-done');
   const heading = document.getElementById('screen-heading');
   const body = document.getElementById('screen-body');
+  const stepList = document.getElementById('step-list');
+  const cta = document.getElementById('done-cta');
 
   const spinnerHtml = '<div class="step-icon-spinner"></div>';
   const doneHtml = '<span class="step-icon-done">✓</span>';
@@ -266,28 +300,28 @@ function showState(state) {
     s1.className = 'step-item active'; i1.innerHTML = spinnerHtml;
     s2.className = 'step-item pending'; i2.innerHTML = pendingHtml;
     s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
-    spinner.style.display = 'block'; done.style.display = 'none';
+    spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     heading.textContent = 'Building your plan...';
-    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+    body.textContent = "Tailoring this to where you are right now.";
   } else if (state === 'step2') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item active'; i2.innerHTML = spinnerHtml;
     s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
-    spinner.style.display = 'block'; done.style.display = 'none';
+    spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     heading.textContent = 'Building your plan...';
-    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+    body.textContent = "Tailoring this to where you are right now.";
   } else if (state === 'step3') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item done'; i2.innerHTML = doneHtml;
     s3.className = 'step-item active'; i3.innerHTML = spinnerHtml;
-    spinner.style.display = 'block'; done.style.display = 'none';
+    spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     heading.textContent = 'Building your plan...';
-    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+    body.textContent = "Tailoring this to where you are right now.";
   } else if (state === 'done') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item done'; i2.innerHTML = doneHtml;
     s3.className = 'step-item done'; i3.innerHTML = doneHtml;
-    spinner.style.display = 'none'; done.style.display = 'block';
+    spinner.style.display = 'none'; done.style.display = 'block'; stepList.style.display = 'none'; cta.style.display = '';
     heading.textContent = 'Your plan is ready.';
     body.textContent = 'We found 28 topics worth having together.';
   }
@@ -315,6 +349,8 @@ function showState(state) {
   const done = document.getElementById('anim-done');
   const heading = document.getElementById('screen-heading');
   const body = document.getElementById('screen-body');
+  const stepList = document.getElementById('step-list');
+  const cta = document.getElementById('done-cta');
 
   const spinnerHtml = '<div class="step-icon-spinner"></div>';
   const doneHtml = '<span class="step-icon-done">✓</span>';
@@ -324,28 +360,28 @@ function showState(state) {
     s1.className = 'step-item active'; i1.innerHTML = spinnerHtml;
     s2.className = 'step-item pending'; i2.innerHTML = pendingHtml;
     s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
-    spinner.style.display = 'block'; done.style.display = 'none';
+    spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     heading.textContent = 'Building your plan...';
-    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+    body.textContent = "Tailoring this to where you are right now.";
   } else if (state === 'step2') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item active'; i2.innerHTML = spinnerHtml;
     s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
-    spinner.style.display = 'block'; done.style.display = 'none';
+    spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     heading.textContent = 'Building your plan...';
-    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+    body.textContent = "Tailoring this to where you are right now.";
   } else if (state === 'step3') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item done'; i2.innerHTML = doneHtml;
     s3.className = 'step-item active'; i3.innerHTML = spinnerHtml;
-    spinner.style.display = 'block'; done.style.display = 'none';
+    spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     heading.textContent = 'Building your plan...';
-    body.textContent = "Filtering out the stuff that doesn't apply to you. Won't be a second.";
+    body.textContent = "Tailoring this to where you are right now.";
   } else if (state === 'done') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item done'; i2.innerHTML = doneHtml;
     s3.className = 'step-item done'; i3.innerHTML = doneHtml;
-    spinner.style.display = 'none'; done.style.display = 'block';
+    spinner.style.display = 'none'; done.style.display = 'block'; stepList.style.display = 'none'; cta.style.display = '';
     heading.textContent = 'Your plan is ready.';
     body.textContent = 'We found 28 topics worth having together.';
   }
