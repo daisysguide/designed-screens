@@ -1917,7 +1917,9 @@ body.page-06 .screen-root .page-footer {
 
 body.page-06 .screen-root .footer-label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
 
-/* ── Screen 08-building-your-plan.html ── */
+/* ── Screen 03-building-your-plan.html ── */
+/* Note: this screen uses body class .page-07 (historical naming; .page-03 is
+   taken by Screen 06 Log In). Class name does not match the screen number. */
 body.page-07 {
     --cream: #fbefe1;
     --black: #1a1a1a;
@@ -2178,6 +2180,18 @@ body.page-07 .screen-root .page-footer {
   }
 
 body.page-07 .screen-root .footer-label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
+
+body.page-07 .screen-root /* Primary button (done state CTA) */
+  .btn-primary {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 56px; border-radius: var(--radius-full);
+    background: var(--purple-500); color: white; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 700;
+    cursor: pointer; letter-spacing: -0.01em;
+    transition: background 0.15s;
+  }
+
+body.page-07 .screen-root .btn-primary:hover { background: var(--purple-600); }
 
 /* ── Screen 09-personalized-results.html ── */
 body.page-08 {
