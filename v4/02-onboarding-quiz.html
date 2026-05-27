@@ -71,7 +71,7 @@
   <div>
     <div class="screen-tag">Screen 02 · Intro</div>
     <div class="page-title">Onboarding Quiz</div>
-    <div class="page-desc">6–8 questions depending on Q1. Drives personalization. Progress bar and count are dynamic.</div>
+    <div class="page-desc">4–6 questions depending on Q1. Drives personalization. Progress bar and count are dynamic.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="01-swipeable-intro.html">← Screen 01: Swipeable Intro</a>
@@ -87,6 +87,11 @@
     <div class="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
+
+        <!-- Screen header (back chevron only) -->
+        <div class="screen-header" style="height:56px;display:flex;align-items:center;flex-shrink:0;background:var(--cream);">
+          <button class="back-btn" aria-label="Back" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--text-primary);font-size:26px;line-height:1;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-left:-10px;">‹</button>
+        </div>
 
         <!-- Progress -->
         <div class="progress-row">
@@ -128,9 +133,9 @@
         <div class="flow-node dest">03 Building Your Plan</div>
       </div>
       <div class="info-box">
-        Question count is dynamic: <strong>6 questions</strong> (Thinking about trying) · <strong>7 questions</strong> (Expecting again — Q3 auto-set) · <strong>8 questions</strong> (Currently pregnant / Baby is already here).<br><br>
-        <strong>Conditional routing:</strong> Q2 (due date picker) only shown when Q1 = "Currently pregnant" OR "Expecting again" · Q2b (baby's birthday picker) shown when Q1 = "Baby is already here" · Q3 skipped entirely when Q1 = "Expecting again" — auto-set to "No" in data layer · Q2 and Q3 both skipped when Q1 = "Thinking about trying"<br><br>
-        Back chevron returns to previous question in sequence; from Q1, returns to Screen 06 (Onboarding Intro / Swipeable Intro). Completing all questions → Screen 03. Quiz state is persisted to localStorage after each answer and cleared on completion or back past Q1.
+        Question count is dynamic: <strong>4 questions</strong> (Trying / thinking about trying) · <strong>5 questions</strong> (Expecting again — Q3 auto-set) · <strong>6 questions</strong> (Currently pregnant / Baby is already here).<br><br>
+        <strong>Conditional routing:</strong> Q2 (due date picker) only shown when Q1 = "Currently pregnant" OR "Expecting again" · Q2b (baby's birthday picker) shown when Q1 = "Baby is already here" · Q3 skipped entirely when Q1 = "Expecting again" — auto-set to "No" in data layer · Q2 and Q4 both skipped when Q1 = "Trying (or thinking about trying)" (no due date, no baby's-sex question pre-pregnancy)<br><br>
+        Back chevron returns to previous question in sequence; from Q1, returns to Screen 01 (Swipeable Intro). Completing all questions → Screen 03. Quiz state is persisted to localStorage (optimistic cache) and to the anonymous Supabase user record (canonical) after each answer; localStorage clears on completion or back past Q1.
       </div>
     </div>
 
@@ -141,7 +146,7 @@
           <div class="q-num">Q1</div>
           <div>
             <div class="q-text">Where are you in your journey?</div>
-            <div class="q-note">Options: Thinking about trying · Currently pregnant · Baby is already here · Expecting again · <strong>Required — no skip</strong> · Determines entire question sequence</div>
+            <div class="q-note">Options: Trying (or thinking about trying) · Currently pregnant · Baby is already here · Expecting again · <strong>Required — no skip</strong> · Determines entire question sequence</div>
           </div>
         </div>
         <div class="q-row">
@@ -161,8 +166,8 @@
         <div class="q-row">
           <div class="q-num">Q3</div>
           <div>
-            <div class="q-text">Is this your first baby?</div>
-            <div class="q-note">Options: Yes, first time · No, we've done this before · Shown when Q1 = "Currently pregnant" or "Baby is already here" · <strong>Skipped (auto-set "No")</strong> when Q1 = "Expecting again" · <strong>Skipped entirely</strong> when Q1 = "Thinking about trying" · <strong>Required when shown — no skip</strong></div>
+            <div class="q-text">Will this be your first?</div>
+            <div class="q-note">Options: Yes, first time · No, we've done this before · Shown when Q1 = "Trying (or thinking about trying)", "Currently pregnant", or "Baby is already here" · <strong>Skipped (auto-set "No")</strong> when Q1 = "Expecting again" · <strong>Required when shown — no skip</strong></div>
           </div>
         </div>
         <div class="q-row">
@@ -180,24 +185,10 @@
           </div>
         </div>
         <div class="q-row">
-          <div class="q-num">Q6</div>
-          <div>
-            <div class="q-text">Are cultural or religious traditions important to you?</div>
-            <div class="q-note">Options: Yes, very · Somewhat · Not really · Optional · Skip = treat as "Somewhat"</div>
-          </div>
-        </div>
-        <div class="q-row">
           <div class="q-num">Q7</div>
           <div>
             <div class="q-text">How often would you like us to nudge you?</div>
             <div class="q-note">Options: Daily · A few times a week · Weekly · Don't nudge me · Optional · Skip = "A few times a week" · Skip label: "Skip — I'll set this in Settings later"</div>
-          </div>
-        </div>
-        <div class="q-row">
-          <div class="q-num">Q8</div>
-          <div>
-            <div class="q-text">How do you want to work through your topics?</div>
-            <div class="q-note">Options: Guided timeline · Self-directed · Optional · Skip = "Guided timeline" · Skip label: "Skip — I'll set this in Settings later"</div>
           </div>
         </div>
       </div>
@@ -206,10 +197,10 @@
     <div class="spec-card">
       <div class="spec-card-title">Question sequence by Q1 answer</div>
       <table class="spec-table">
-        <tr><td>Thinking about trying</td><td>Q1 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(6 questions)</em></td></tr>
-        <tr><td>Currently pregnant</td><td>Q1 → Q2 → Q3 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(8 questions)</em></td></tr>
-        <tr><td>Baby is already here</td><td>Q1 → Q2b → Q3 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(8 questions)</em></td></tr>
-        <tr><td>Expecting again</td><td>Q1 → Q2 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(7 questions — Q3 auto-set "No")</em></td></tr>
+        <tr><td>Trying (or thinking about trying)</td><td>Q1 → Q3 → Q5 → Q7 <em>(4 questions)</em></td></tr>
+        <tr><td>Currently pregnant</td><td>Q1 → Q2 → Q3 → Q4 → Q5 → Q7 <em>(6 questions)</em></td></tr>
+        <tr><td>Baby is already here</td><td>Q1 → Q2b → Q3 → Q4 → Q5 → Q7 <em>(6 questions)</em></td></tr>
+        <tr><td>Expecting again</td><td>Q1 → Q2 → Q4 → Q5 → Q7 <em>(5 questions — Q3 auto-set "No")</em></td></tr>
       </table>
     </div>
 
@@ -258,21 +249,26 @@
       <div class="spec-card-title">Skip discipline — required vs optional</div>
       <table class="spec-table">
         <tr><td>Required (no skip button)</td><td>Q1 · Q2 · Q2b · Q3</td></tr>
-        <tr><td>Optional — "Skip this question"</td><td>Q4 (default: "We're not finding out") · Q5 (default: "Still deciding") · Q6 (default: "Somewhat")</td></tr>
-        <tr><td>Optional — "Skip — I'll set this in Settings later"</td><td>Q7 (default: "A few times a week") · Q8 (default: "Guided timeline")</td></tr>
-        <tr><td>Skip behavior</td><td>Applies the default silently to the data layer and advances. The user can always update Q7/Q8 in Settings.</td></tr>
+        <tr><td>Optional — "Skip this question"</td><td>Q4 (default: "We're not finding out") · Q5 (default: "Still deciding")</td></tr>
+        <tr><td>Optional — "Skip — I'll set this in Settings later"</td><td>Q7 (default: "A few times a week")</td></tr>
+        <tr><td>Skip behavior</td><td>Applies the default silently to the data layer and advances. The user can always update Q7 in Settings.</td></tr>
         <tr><td>"Continue"</td><td>Primary · 56px · <code>radius-full</code> · disabled (<code>opacity: 0.4</code>) until an option is selected or date is set</td></tr>
         <tr><td>Auto-advance</td><td>Never. User must tap Continue. This app is about considered decisions.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Local storage persistence</div>
+      <div class="spec-card-title">Anonymous session and data persistence</div>
       <table class="spec-table">
-        <tr><td>Key</td><td><code>dg_onboarding_quiz_v4</code></td></tr>
-        <tr><td>Saves</td><td>All answers to date + current question index · written after every answer and skip</td></tr>
-        <tr><td>Resumes</td><td>On app relaunch mid-quiz: restore answers, rebuild sequence from Q1 answer, advance to last unanswered question with previous answers pre-selected</td></tr>
-        <tr><td>Clears</td><td>On quiz completion · on back past Q1 (user returns to Screen 01)</td></tr>
+        <tr><td>Anonymous user record</td><td>Created server-side (Supabase anonymous user) on first entry to Screen 02, <strong>before Q1 renders</strong>. One session per device.</td></tr>
+        <tr><td>Per-answer writes</td><td>Every answer and skip is written to the anonymous user record server-side <strong>and</strong> mirrored to localStorage. The server record is canonical; localStorage is an optimistic cache for instant resume on app relaunch.</td></tr>
+        <tr><td>localStorage key</td><td><code>dg_onboarding_quiz_v4</code></td></tr>
+        <tr><td>localStorage saves</td><td>All answers to date + current question index · written after every answer and skip</td></tr>
+        <tr><td>localStorage resumes</td><td>On app relaunch mid-quiz: restore answers from cache, rebuild sequence from Q1 answer, advance to last unanswered question with previous answers pre-selected. Server record is the source of truth if cache is missing or stale.</td></tr>
+        <tr><td>localStorage clears</td><td>On quiz completion · on back past Q1 (user returns to Screen 01). The anonymous server record <strong>persists</strong> through these events.</td></tr>
+        <tr><td>Sign-up merge</td><td>On Screen 04 sign-up, the anonymous record is merged with the new permanent account via Supabase <code>linkIdentity</code> (or equivalent). Quiz answers, anonymous ID, and any partial state attach to the new authenticated user.</td></tr>
+        <tr><td>Recovery path</td><td>A user with an anonymous session and a completed quiz who returns without signing up is routed to <strong>Screen 07 (Personalized Results)</strong> on next app open — their plan is ready, they just haven't created an account yet.</td></tr>
+        <tr><td>Retention (unconverted)</td><td><strong>TBD — flag for Jake.</strong> Need a policy for how long unconverted anonymous records are retained server-side before cleanup.</td></tr>
       </table>
     </div>
 
@@ -293,17 +289,18 @@
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>One question per screen — same template reused for all questions in the sequence.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Q1 answer immediately determines the full sequence and updates the progress bar total. Sequence and progress label recalculate before advancing to Q2/Q2b.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Q1 answer immediately determines the full sequence and updates the progress bar total. Sequence and progress label recalculate before advancing to the next question.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Expecting again" silently sets Q3 = "No" in the data layer without showing the question. The user's second-time parent status is inferred.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Q4 circumcision filtering: excluded <em>only</em> when answer is "Yes, it's a girl". All other answers (Yes, it's a boy / Not yet / We're not finding out / skipped) keep the topic included.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Saved state is restored on relaunch — previous answers are pre-selected. User resumes at the first unanswered question.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Tapping a selected option deselects it — Continue returns to disabled state.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Back chevron returns to previous question in the current sequence. From Q1, returns to Screen 01 and clears saved state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Back-nav (within sequence):</strong> Tapping the back chevron returns to the previous question in the current sequence. The previously selected answer is pre-selected on the prior question; Continue is enabled.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Back-nav from Q1:</strong> Returns to Screen 01 (Swipeable Intro) and clears saved state (localStorage). The anonymous server record persists.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Changing Q1 on back-navigation:</strong> Recalculate the sequence from the new Q1 answer. <em>Preserve</em> any answers that exist in both the old and new sequences (e.g., Q5, Q7). <em>Clear</em> Q2/Q2b when switching between a pregnancy stage and "Baby is already here" — the date question changes context (due date vs birthday).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Quiz answers are persisted to local storage after each question. On relaunch mid-quiz, the user resumes from their last unanswered question with all prior answers pre-populated. State clears on completing the quiz or navigating back past Q1.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Expecting again": Q2 (due date) is shown, Q3 is skipped and auto-set to "No" in the data layer. User proceeds from Q2 to Q4.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Baby is already here": Q2b (baby's birthday) is shown instead of Q2. Q3 is shown normally.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Thinking about trying": Q2 and Q3 are both skipped. User proceeds from Q1 to Q4.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Trying (or thinking about trying)": Q2 (due date) and Q4 (baby's sex) are both skipped — neither applies pre-pregnancy. Q3 (will this be your first?) is asked. User proceeds Q1 → Q3 → Q5 → Q7.</span></div>
       </div>
     </div>
 
@@ -327,7 +324,7 @@ const QUESTIONS = {
     id: 'q1', label: 'Q1',
     text: 'Where are you in your journey?',
     sub: "We'll use this to set the right pace and prioritize the right topics.",
-    options: ['💭 Thinking about trying', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again'],
+    options: ['💭 Trying (or thinking about trying)', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again'],
     required: true
   },
   q2: {
@@ -346,7 +343,7 @@ const QUESTIONS = {
   },
   q3: {
     id: 'q3', label: 'Q3',
-    text: 'Is this your first baby?',
+    text: 'Will this be your first?',
     sub: "This helps us decide which topics are most relevant for you.",
     options: ['Yes, first time', "No, we've done this before"],
     required: true
@@ -365,46 +362,32 @@ const QUESTIONS = {
     options: ['Yes', 'No', 'Still deciding'],
     required: false, skipLabel: 'Skip this question', skipDefault: 'Still deciding'
   },
-  q6: {
-    id: 'q6', label: 'Q6',
-    text: 'Are cultural or religious traditions important to you?',
-    sub: "We won't make assumptions — just want to prioritize the right topics.",
-    options: ['Yes, very', 'Somewhat', 'Not really'],
-    required: false, skipLabel: 'Skip this question', skipDefault: 'Somewhat'
-  },
   q7: {
     id: 'q7', label: 'Q7',
     text: 'How often would you like us to nudge you?',
     sub: "You can always change this in Settings.",
     options: ['Daily', 'A few times a week', 'Weekly', "Don't nudge me"],
     required: false, skipLabel: "Skip — I'll set this in Settings later", skipDefault: 'A few times a week'
-  },
-  q8: {
-    id: 'q8', label: 'Q8',
-    text: 'How do you want to work through your topics?',
-    sub: "You can always change this in Settings.",
-    options: ['Guided timeline — sequence topics based on my due date', "Self-directed — I'll work through them in my own order"],
-    required: false, skipLabel: "Skip — I'll set this in Settings later", skipDefault: 'Guided timeline'
   }
 };
 
 // Build question sequence based on Q1 answer index
-// 0=Thinking about trying, 1=Currently pregnant, 2=Baby is already here, 3=Expecting again
+// 0=Trying (or thinking about trying), 1=Currently pregnant, 2=Baby is already here, 3=Expecting again
 function buildSequence(q1Idx) {
-  const { q1, q2, q2b, q3, q4, q5, q6, q7, q8 } = QUESTIONS;
+  const { q1, q2, q2b, q3, q4, q5, q7 } = QUESTIONS;
   switch (q1Idx) {
-    case 0: return [q1, q4, q5, q6, q7, q8];           // Thinking about trying
-    case 1: return [q1, q2, q3, q4, q5, q6, q7, q8];  // Currently pregnant
-    case 2: return [q1, q2b, q3, q4, q5, q6, q7, q8]; // Baby is already here
-    case 3: return [q1, q2, q4, q5, q6, q7, q8];       // Expecting again
-    default: return [q1, q4, q5, q6, q7, q8];          // Unknown — conservative default
+    case 0: return [q1, q3, q5, q7];           // Trying (or thinking about trying) — Q2 (no due date) and Q4 (no baby sex) skipped
+    case 1: return [q1, q2, q3, q4, q5, q7];   // Currently pregnant
+    case 2: return [q1, q2b, q3, q4, q5, q7];  // Baby is already here
+    case 3: return [q1, q2, q4, q5, q7];       // Expecting again — Q3 auto-set to "No"
+    default: return [q1, q3, q5, q7];          // Unknown — conservative default
   }
 }
 
 // State
 const STORAGE_KEY = 'dg_onboarding_quiz_v4';
 let answers = {};
-let sequence = [QUESTIONS.q1, QUESTIONS.q4, QUESTIONS.q5, QUESTIONS.q6, QUESTIONS.q7, QUESTIONS.q8];
+let sequence = [QUESTIONS.q1, QUESTIONS.q3, QUESTIONS.q5, QUESTIONS.q7];
 let currentIdx = 0;
 let selectedOpt = null;
 

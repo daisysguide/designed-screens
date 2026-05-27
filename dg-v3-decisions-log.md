@@ -47,10 +47,15 @@ list surface.
 ## 2. No time-gating in V1 (except Prediction Cards)
 
 Personalization in V1 = which topics are hidden/shown via Manage Topics. **No
-temporal sequencing.** "Guided timeline" affects sort order only, not access.
+temporal sequencing.**
 
 This drops a large content-modeling investment (per-topic temporal triggers were
 going to need definition for all 51 topics).
+
+**V1 ships a single default sort order on Topic List.** The Guided timeline vs
+Self-directed choice (formerly Q8 in onboarding) and the corresponding
+sort-order toggle are **cut from V1**. Sort behavior is fixed in V1; revisit in
+a future version if/when the guided-timeline content model is built.
 
 **Prediction Cards stay in V1** as the only time-gated feature. Their reveal
 date is auto-calculated as **due date + 3 months** (or birth date + 3 months for
@@ -59,7 +64,7 @@ date is auto-calculated as **due date + 3 months** (or birth date + 3 months for
 **Prediction Cards eligibility:** show only to users with a future milestone
 (reveal date > today). This naturally:
 - Includes: Currently pregnant · Expecting again · Baby is here < 3 months old
-- Excludes: Thinking about trying · Baby is here > 3 months old
+- Excludes: Trying (or thinking about trying) · Baby is here > 3 months old
 
 For excluded users, Prediction Cards just don't appear in their plan. No
 "perpetually locked" weirdness. When a user updates Q1 (see Decision 11),
