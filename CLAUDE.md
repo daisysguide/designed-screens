@@ -13,8 +13,7 @@ instead and flag the decision before proceeding.
 
 Screen mockups live in versioned directories at the repo root: `v1/`,
 `v2/`, `v3/` (all frozen) and `v4/` (active). Each screen is a single
-HTML file. The root also contains the original v1 set of screen files;
-treat those as frozen too — all new work happens in `v4/`.
+HTML file — all new work happens in `v4/`.
 
 `dg-v3-decisions-log.md` (root) is the authoritative source for design
 rationale; its v3 name is kept as a historical record and it continues
@@ -47,10 +46,6 @@ their own dedicated tasks.
 
 ## Repo hygiene TODOs
 
-- The v1 screen HTML files duplicated at the repo root (same filenames
-  as those under `v1/`) should be either deleted or moved to `_archive/`.
-  They predate the versioned-directory layout. Don't tackle as part of
-  unrelated work — schedule as a dedicated cleanup.
 - The v4 body classes (`.page-NN`) don't match screen numbers —
   historical drift (e.g., Screen 03 = `.page-07`, Screen 04 = `.page-01`,
   Screen 06 = `.page-03`). Worth a dedicated sweep to align body classes
