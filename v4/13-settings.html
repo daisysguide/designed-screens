@@ -273,9 +273,9 @@
           <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your partner keeps their account, but the connection between you is removed — their slot will show as Disconnected.</div>
           <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your $49 purchase is non-refundable. If you reinstall, use 'Restore purchase' in Settings to recover access.</div>
         </div>
-        <button id="delete-confirm-btn" onclick="handleDeleteAccount()" style="width:100%;height:56px;background:#ff9191;color:#fff;border:none;border-radius:100px;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <button id="delete-confirm-btn" onclick="handleDeleteAccount()" style="width:100%;height:56px;background:#ff9191;color:#c0392b;border:none;border-radius:100px;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
           Yes, delete my account
-          <span id="delete-spinner" style="display:none;"><svg width="16" height="16" viewBox="0 0 16 16" style="animation:spin 0.8s linear infinite;"><circle cx="8" cy="8" r="6" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="20 12"/></svg></span>
+          <span id="delete-spinner" style="display:none;"><svg width="16" height="16" viewBox="0 0 16 16" style="animation:spin 0.8s linear infinite;"><circle cx="8" cy="8" r="6" fill="none" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="20 12"/></svg></span>
         </button>
         <div style="height:10px;"></div>
         <button onclick="closeDeleteSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
@@ -346,7 +346,7 @@
         <tr><td>Value</td><td>13px DM Sans regular · <code>text-secondary</code> · right of label</td></tr>
         <tr><td>Chevron</td><td>"›" · 16px · <code>text-tertiary</code> · only on navigable rows</td></tr>
         <tr><td>Pressed state</td><td><code>rgba(26,26,26,0.03)</code> bg</td></tr>
-        <tr><td>Destructive</td><td><code>status-error-text</code> (#ff9191) label · no chevron · no value</td></tr>
+        <tr><td>Destructive</td><td><code>status-error-text</code> (#c0392b) label · no chevron · no value</td></tr>
       </table>
     </div>
 
@@ -467,7 +467,7 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Name</strong> appears at the top of Account — it's the most personal and frequently referenced field. Tapping pushes a lightweight edit screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Phone number</strong> shown instead of password — consistent with the passwordless auth model throughout the app.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Restore purchase</strong> is purple (positive action) — not destructive. Placed between phone number and Delete account so it's easy to find but clearly separated from destructive actions.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Log out</strong> uses <code>status-error-text</code> (pink) label, not red — stays on brand even for destructive actions.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Log out</strong> uses <code>status-error-text</code> label (dark red on white) — destructive list rows use this same treatment for WCAG AA compliance.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Delete account</strong> is placed above Log Out — it is more permanent and warrants its own bottom sheet confirmation before anything happens.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The Account Deletion bottom sheet is interactive in the preview — tap "Delete account" to open it. Swipe down, tap Cancel, or tap the overlay to dismiss.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The two toggles (Funny push notifications, Guided timeline) are interactive — tap them in the preview.</span></div>
@@ -490,7 +490,7 @@
     <tr><td>Bullet 2</td><td>"Your partner keeps their account, but the connection between you is removed — their slot will show as Disconnected."</td></tr>
     <tr><td>Bullet 3</td><td>"Your $49 purchase is non-refundable. If you reinstall, use 'Restore previous purchase' to recover access."</td></tr>
     <tr><td>Bullet style</td><td>13px DM Sans regular · <code>text-secondary</code> · 12px gap between</td></tr>
-    <tr><td>Destructive CTA</td><td>"Yes, delete my account" · full width · 56px · <code>radius-full</code> · <code>#ff9191</code> fill · white label</td></tr>
+    <tr><td>Destructive CTA</td><td>"Yes, delete my account" · full width · 56px · <code>radius-full</code> · <code>pink-400</code> (#ff9191) fill · <code>status-error-text</code> (#c0392b) label — WCAG AA compliant</td></tr>
     <tr><td>Ghost CTA</td><td>"Cancel" · full width · 56px · <code>radius-full</code> · <code>border-default</code> outline · <code>text-primary</code> label</td></tr>
     <tr><td>On confirm</td><td>Delete user data · unlink partner (partner shows "Disconnected") · navigate to Sign Up screen</td></tr>
   </table>
