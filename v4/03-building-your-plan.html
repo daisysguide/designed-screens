@@ -22,11 +22,14 @@
     margin-bottom: 0;
   }
 
-  /* Force daisy SVG size so nothing in the shared stylesheet can shrink it. */
+  /* Force daisy SVG size so nothing in the shared stylesheet can shrink it.
+     The translate compensates for the stamen sitting ~2px right of geometric
+     center within the SVG art — at 78px that offset is visible. */
   body.page-07 .screen-root .anim-slot .anim-done svg {
     width: 78px !important;
     height: 78px !important;
     display: block;
+    transform: translate(-2px, 2px);
   }
 
   body.page-07 .screen-root .anim-slot-wrap.done .anim-slot {
