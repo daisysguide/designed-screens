@@ -45,6 +45,8 @@ implications of. If a per-screen prompt asks you to make a cross-screen
 change, flag it and ask before proceeding. Cross-screen concerns get
 their own dedicated tasks.
 
+When applying changes from a per-screen review, only apply items explicitly tagged as ship blockers in the prompt. Fast-fix and V2+ items should be appended to a dedicated section in CLAUDE.md called "Deferred items" — one bullet per item, noting the screen and what to do — not applied immediately. This keeps single-screen runs minimal and accumulates polish work into a single later cleanup pass.
+
 ## Repo hygiene TODOs
 
 - The v1 screen HTML files duplicated at the repo root (same filenames
