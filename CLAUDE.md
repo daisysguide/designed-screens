@@ -30,9 +30,30 @@ For `v4/` work:
 - After completing changes, run grep verification for any "old copy"
   strings that should no longer appear, and report results.
 
+### Scope for per-screen reviews
+
+When applying changes from a per-screen review prompt (e.g., a prompt
+generated from reviewing a single screen in Claude chat), scope edits to
+that screen's HTML file only. Don't make changes to:
+- CSS class names or selectors
+- `styles.css` or the design system
+- `nav.js`, `index.html`, or other shared files
+- Body classes on other screen files
+
+These are repo-wide concerns that a single-screen review can't see the
+implications of. If a per-screen prompt asks you to make a cross-screen
+change, flag it and ask before proceeding. Cross-screen concerns get
+their own dedicated tasks.
+
 ## Repo hygiene TODOs
 
 - The v1 screen HTML files duplicated at the repo root (same filenames
   as those under `v1/`) should be either deleted or moved to `_archive/`.
   They predate the versioned-directory layout. Don't tackle as part of
   unrelated work — schedule as a dedicated cleanup.
+- The v4 body classes (`.page-NN`) don't match screen numbers —
+  historical drift (e.g., Screen 03 = `.page-07`, Screen 04 = `.page-01`,
+  Screen 06 = `.page-03`). Worth a dedicated sweep to align body classes
+  with screen numbers across all v4 files. Do not absorb into other
+  tasks — needs its own pass since renames have cross-file CSS
+  implications.
