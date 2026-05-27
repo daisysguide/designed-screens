@@ -26,8 +26,8 @@
      daisy bottom-anchored inside .anim-slot's flex centering. Lock the
      wrapper to the SVG's box so flex centers the daisy itself. */
   body.page-07 .screen-root .anim-slot .anim-done {
-    width: 78px;
-    height: 78px;
+    width: 84px;
+    height: 84px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,13 +36,13 @@
   }
 
   /* Force daisy SVG size so nothing in the shared stylesheet can shrink it.
-     The translate compensates for the stamen sitting slightly right and
-     above geometric center within the SVG art — at 78px the offset is visible. */
+     Translate compensates for the stamen sitting slightly above geometric
+     center within the SVG art; horizontal offset zeroed per visual nudge. */
   body.page-07 .screen-root .anim-slot .anim-done svg {
-    width: 78px !important;
-    height: 78px !important;
+    width: 84px !important;
+    height: 84px !important;
     display: block;
-    transform: translate(-2px, -1px);
+    transform: translate(0, -1px);
   }
 
   body.page-07 .screen-root .anim-slot-wrap.done .anim-slot {
