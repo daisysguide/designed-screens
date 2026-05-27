@@ -209,7 +209,7 @@ body.page-17 .screen-root .rev-item.rev-show {
   <div>
     <div class="screen-tag">Screen 20 · Topic Flow</div>
     <div class="page-title">Alignment Reveal</div>
-    <div class="page-desc">Scrollable reveal screen showing all 4 questions side-by-side, an optional note section, the AI summary card, and alignment pill. Three alignment states. Answers reveal with staggered animation.</div>
+    <div class="page-desc">Scrollable reveal screen showing all 4 questions side-by-side, an optional note section, the For you two card, and alignment pill. Three alignment states. Answers reveal with staggered animation.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" href="19-waiting-for-partner.html">← Screen 19: Waiting for Partner</a>
@@ -257,7 +257,7 @@ body.page-17 .screen-root .rev-item.rev-show {
             </div>
           </div>
 
-          <!-- AI summary -->
+          <!-- For you two -->
           <div class="summary-card rev-item" id="summary-card" style="margin-top:20px;"></div>
 
           <!-- Alignment pill -->
@@ -302,7 +302,7 @@ body.page-17 .screen-root .rev-item.rev-show {
         <tr><th>Zone</th><th>Spec</th></tr>
         <tr><td>Screen header</td><td>Back chevron "← Topics" left · no right action · no title</td></tr>
         <tr><td>Topic eyebrow + title</td><td>Below header · unchanged</td></tr>
-        <tr><td>Scrollable content</td><td>Stacked question sections + optional note section + AI summary + alignment pill</td></tr>
+        <tr><td>Scrollable content</td><td>Stacked question sections + optional note section + For you two + alignment pill</td></tr>
         <tr><td>Sticky bottom</td><td>"Continue →" primary CTA · always visible · gradient fade above</td></tr>
       </table>
     </div>
@@ -454,7 +454,7 @@ body.page-17 .screen-root .rev-item.rev-show {
         <tr><td>Q3 reveal pair</td><td>200ms</td><td>same</td></tr>
         <tr><td>Q4 reveal pair</td><td>300ms</td><td>same</td></tr>
         <tr><td>Note section (if shown)</td><td>350ms</td><td>same</td></tr>
-        <tr><td>AI Summary Card</td><td>450ms</td><td>same</td></tr>
+        <tr><td>For you two card</td><td>450ms</td><td>same</td></tr>
         <tr><td>Alignment pill</td><td>530ms</td><td>same</td></tr>
         <tr><td>Confetti (Fully aligned)</td><td>After alignment pill completes</td><td>unchanged</td></tr>
         <tr><td>Returning visits (Completed Topic)</td><td colspan="2">No animation — static</td></tr>
@@ -465,7 +465,7 @@ body.page-17 .screen-root .rev-item.rev-show {
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-item"><div class="note-bullet"></div><span>All 4 question answers are shown stacked in order. The reveal is for the whole topic, not a single question.</span></div>
       <div class="note-item"><div class="note-bullet"></div><span>Note section only appears if at least one partner wrote a note. If neither wrote a note, the section is hidden entirely.</span></div>
-      <div class="note-item"><div class="note-bullet"></div><span>AI summary now synthesises across all 4 questions + any note text provided by either partner.</span></div>
+      <div class="note-item"><div class="note-bullet"></div><span>For you two now synthesises across all 4 questions + any note text provided by either partner.</span></div>
     </div>
 
     <div class="spec-card">
@@ -672,7 +672,7 @@ function showState(state) {
   const d    = STATES[state];
   const pill = document.getElementById('alignment-pill');
   document.getElementById('summary-card').innerHTML =
-    `<div class="summary-label">✨ For you two</div><div class="summary-text">${d.summary}</div>`;
+    `<div class="summary-label">✨ FOR YOU TWO</div><div class="summary-text">${d.summary}</div>`;
   pill.className  = d.pillClass;
   pill.textContent = d.pillText;
 
