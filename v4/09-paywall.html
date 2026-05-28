@@ -324,10 +324,15 @@
 <!-- ── Paywall mockup styles (scoped under .s09) ── -->
 <style>
   /* The shared .phone-screen wrapper applies padding: 20px 24px 36px, which
-     would compound with the mockup's own .pad / padding-top values. Zero it
-     for the screen-09 paywall so the v9 artifact's spacing is the single
-     source of truth. Scoped via :has(> .s09) so only this screen is affected. */
-  body.page-10 .screen-root .phone-screen:has(> .s09){padding:0}
+     compounded with the mockup's own .pad (0 20px) and padding-top values
+     (cards too narrow, top crowded, bottom dead space). For screen 09 the
+     wrapper owns the 20px side gutter and zeroes top/bottom; the mockup's
+     .pad contributes the top padding-top only (its side padding is dropped
+     below so it can't compound), and .actionbar breaks out to the phone
+     edges. Scoped via :has(> .s09) so only this screen is affected. */
+  body.page-10 .screen-root .phone-screen:has(> .s09){padding:0 20px}
+  body.page-10 .screen-root .phone-screen:has(> .s09) .s09 .pad{padding-left:0;padding-right:0}
+  body.page-10 .screen-root .phone-screen:has(> .s09) .s09 .actionbar{margin-left:-20px;margin-right:-20px}
   .s09{
     --cream:#F6F0E6; --ink:#1A1A1A; --muted:#6B6962; --hint:#9A968C;
     --purple:#5F45F2; --green:#157A46; --border:#E8E3D8; --gold:#E0A800;
