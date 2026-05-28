@@ -1098,7 +1098,7 @@ Display-only teaser used on `personalized-results` to show a few of the conversa
 
 #### Variants
 
-- **Personalized** (Q8 answered): label "Starting with what you told us" (purple dots) over the user's worries, then "And a few couples don't see coming" (neutral dots) over curated universal topics. Padded to ~4 rows.
+- **Personalized** (Q8 answered): label "Starting with what you told us" (purple dots) over the user's worries, then "...And a few couples don't see coming" (neutral dots) over curated universal topics. Padded to ~4 rows.
 - **Fallback** (Q8 skipped / empty): single label "A few you'll want to sit down for" + the fixed four topics, all neutral dots.
 
 #### Rules
