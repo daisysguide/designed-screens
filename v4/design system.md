@@ -1093,12 +1093,12 @@ Display-only teaser used on `personalized-results` to show a few of the conversa
 | Rows | Separated by 1px hairline (`rgba(26,26,26,0.08)`); first row has no top border |
 | Question text | 15px DM Sans medium · `text-primary` · worries reframed as conversation questions |
 | Dot marker | 7px circle · `purple-500` for the user's own items, `border-default` (neutral) otherwise |
-| Group label | `label-sm` uppercase · `purple-500` ("yours") or `text-tertiary` ("curated") |
-| Scope line | Below the card · 12.5px · `text-secondary` · "Plus N more, across all 7 areas…" (N dynamic) |
+| Section label | `label-sm` uppercase · `purple-500` — **one style across both states**. The "yours" vs "curated" distinction rides on dot color + wording, not label color. |
+| Scope line | Below the card · 12.5px · `text-secondary` · "Plus N more, with expert guidance for everything ahead." (N dynamic) |
 
 #### Variants
 
-- **Personalized** (Q8 answered): label "Starting with what you told us" (purple) over the user's worries, then "And a few couples don't see coming" (tertiary) over curated universal topics. Padded to ~4 rows.
+- **Personalized** (Q8 answered): label "Starting with what you told us" (purple dots) over the user's worries, then "And a few couples don't see coming" (neutral dots) over curated universal topics. Padded to ~4 rows.
 - **Fallback** (Q8 skipped / empty): single label "A few you'll want to sit down for" + the fixed four topics, all neutral dots.
 
 #### Rules
@@ -1778,6 +1778,13 @@ This document does not have a version number. It is at HEAD. Changes are dated i
 ## CHANGELOG
 
 Date-stamped record of design system decisions. Add new entries at the top.
+
+### 2026-05-28 — Screen 08 Conversation Preview label + scope-line polish
+
+Two follow-up tweaks to the `personalized-results` Conversation Preview:
+
+- **Labels unified to one style.** All section labels (the personalized group labels and the fallback label) now share a single style: `label-sm` uppercase `purple-500`, identical across both states. The "from your answers" vs "curated" distinction is carried by **dot color + wording, not label color**. Previously the personalized label was purple, the curated label `text-tertiary`, and the fallback label a larger black `text-primary`. `.pv-group-label.mine` / `.more` stay in the markup as color no-ops; the `.pv-dot` rules are unchanged.
+- **Scope line reworded.** "Plus N more, across all 7 areas of parenting prep." → "Plus N more, with expert guidance for everything ahead." The "expert guidance" claim is accurate — every topic ships with guidance. The 2026-05-27 entry below quotes the original copy as the historical record.
 
 ### 2026-05-27 — Screen 08 (Personalized Results) redesign
 

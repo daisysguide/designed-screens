@@ -2342,18 +2342,13 @@ body.page-08 .screen-root /* Conversation Preview — the hero element (display-
     margin-bottom: 14px;
   }
 
-body.page-08 .screen-root .pv-group-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-    padding-top: 16px; padding-bottom: 2px;
-  }
-
-body.page-08 .screen-root .pv-group-label.mine { color: var(--purple-500); }
-
-body.page-08 .screen-root .pv-group-label.more { color: var(--text-tertiary); }
-
+/* All preview labels share ONE style: small uppercase purple. The "from your
+   answers" vs "curated" distinction rides on dot color + wording, not label color. */
+body.page-08 .screen-root .pv-group-label,
 body.page-08 .screen-root .pv-label-fixed {
-    font-size: 14px; font-weight: 700; color: var(--text-primary);
-    padding-top: 14px; padding-bottom: 4px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--purple-500);
+    padding-top: 16px; padding-bottom: 2px;
   }
 
 body.page-08 .screen-root .pv-row {

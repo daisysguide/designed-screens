@@ -25,3 +25,10 @@ in the repo as the reviewed baseline (no further changes will be made to it).
 
 - Re-answer flow choice: "update just your answers" vs "start the discussion over"
 - Full Q1 update UX with "Rebuilding your plan…" animation and diff screen
+
+## Dated changes
+
+### 2026-05-28
+
+- **Screen 08 (Personalized Results) — Conversation Preview labels unified:** all section labels now share a single style (small uppercase `purple-500`), identical across the personalized and fallback states. The "from your answers" vs "curated" distinction is carried by dot color + wording, never by label color.
+- **Screen 08 — scope line reworded:** "Plus N more, across all 7 areas of parenting prep." → "Plus N more, with expert guidance for everything ahead."

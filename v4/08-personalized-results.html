@@ -119,7 +119,7 @@
           </div>
         </div>
 
-        <div class="scope anim d4"><b>Plus 41 more</b>, across all 7 areas of parenting prep.</div>
+        <div class="scope anim d4"><b>Plus 41 more</b>, with expert guidance for everything ahead.</div>
 
         <div class="spacer"></div>
 
@@ -156,7 +156,7 @@
         <tr><td>Eyebrow</td><td>"Your plan is ready" · <code>label-sm</code> uppercase · <code>purple-500</code> — documented per-screen exception to the <code>text-secondary</code> eyebrow standard (see design system)</td></tr>
         <tr><td>Heading</td><td>"You two have a lot to talk about." · Grandstander 30px / 800 · static — no longer leads with a topic count</td></tr>
         <tr><td>Subhead</td><td>"The big stuff most couples put off until it turns into a fight. You'll talk it through first, and go in as a team." · DM Sans 15px · <code>text-secondary</code></td></tr>
-        <tr><td>Scope line</td><td>"Plus 41 more, across all 7 areas of parenting prep." · 12.5px · <code>text-secondary</code> · count = plan total − topics shown (both dynamic)</td></tr>
+        <tr><td>Scope line</td><td>"Plus 41 more, with expert guidance for everything ahead." · 12.5px · <code>text-secondary</code> · count = plan total − topics shown (dynamic). The "expert guidance" claim is accurate — every topic ships with guidance.</td></tr>
         <tr><td>Due-date pill</td><td>"~18 weeks until baby's here" · weeks is dynamic · conditional (see Due-date pill below)</td></tr>
         <tr><td>CTA</td><td>"Let's begin →" · arrow is part of the label · navigates to Screen 09 Paywall</td></tr>
       </table>
@@ -168,7 +168,8 @@
         <tr><td>Role</td><td>The hero element. Display-only teaser — <strong>not interactive</strong>. No chevrons, status pills, state dots, hover/press, or tap target. Must read as a preview, never as the tappable Topic Row.</td></tr>
         <tr><td>Container</td><td><code>surface-card</code> · <code>radius-2xl</code> · <code>shadow-lg</code> · rows separated by 1px <code>hair</code> hairlines</td></tr>
         <tr><td>Question text</td><td>15px DM Sans medium · <code>text-primary</code> · worries reframed as conversation questions</td></tr>
-        <tr><td>Personalized variant</td><td>Group label "Starting with what you told us" (<code>purple-500</code>, purple dot markers) over the user's Q8 worries, then "And a few couples don't see coming" (<code>text-tertiary</code>, neutral dots) over curated universal topics. Padded to ~4 rows.</td></tr>
+        <tr><td>Labels</td><td>All section labels share one style: <code>label-sm</code> uppercase, <code>purple-500</code> — identical across both states. Personalization is signaled by <strong>dot color + wording, not label color</strong>: purple dots = from the user's Q8 answers, neutral dots = curated / universal.</td></tr>
+        <tr><td>Personalized variant</td><td>Label "Starting with what you told us" (purple dots) over the user's Q8 worries, then "And a few couples don't see coming" (neutral dots) over curated topics. Padded to ~4 rows.</td></tr>
         <tr><td>Fallback variant</td><td>Single label "A few you'll want to sit down for" + the fixed four topics (neutral dots). Shown when Q8 is skipped / empty.</td></tr>
       </table>
       <div class="info-box">Recognition, not bespoke curation — the curated additions are explicitly labelled as <em>not</em> from the user's input, so we never imply every shown topic was chosen for them.</div>
