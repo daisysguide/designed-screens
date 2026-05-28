@@ -158,7 +158,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
   <div>
     <div class="screen-tag">Screen 18 · Topic Flow</div>
     <div class="page-title">Question</div>
-    <div class="page-desc">Three question types: single-select MC, multi-select MC, and 1–10 slider. Always 4 questions per topic. An optional note step follows the last question before submission.</div>
+    <div class="page-desc">Three question types: single-select MC, multi-select MC, and 1–10 slider. Always 3 questions per topic. An optional note step follows the last question before submission.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;" href="17-topic-article.html">← Screen 17: Topic Article</a>
@@ -290,7 +290,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     <div class="spec-card">
       <div class="spec-card-title">Topic Schema update</div>
       <table class="spec-table">
-        <tr><td><code>questions</code></td><td>Question[] · ordered array · always 4 questions per topic · rendered in sequence on Screen 18</td></tr>
+        <tr><td><code>questions</code></td><td>Question[] · ordered array · always 3 questions per topic · rendered in sequence on Screen 18</td></tr>
         <tr><td>Other fields</td><td>id, title, categoryId, articleContent, etc. — unchanged</td></tr>
       </table>
     </div>
@@ -409,7 +409,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     <div class="spec-card">
       <div class="spec-card-title">Progress & step indicator</div>
       <table class="spec-table">
-        <tr><td>Step label</td><td>"Q{i} of {n}" (e.g. "Q2 of 4") for question steps · "Note" + inline "Optional" pill for the note step</td></tr>
+        <tr><td>Step label</td><td>"Q{i} of {n}" (e.g. "Q2 of 3") for question steps · "Note" + inline "Optional" pill for the note step</td></tr>
         <tr><td>Progress fill</td><td>Questions only — <code>currentQuestion / totalQuestions * 100%</code> · Note step holds at 100% (all questions done) · Note step does not extend the bar beyond full</td></tr>
         <tr><td>Track</td><td>Full-width · 4px · cream bg · <code>radius-full</code> · purple fill</td></tr>
         <tr><td>Animation</td><td><code>transition: width 0.3s ease</code> when advancing</td></tr>

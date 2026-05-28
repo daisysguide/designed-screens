@@ -167,7 +167,7 @@ body.page-29 .screen-root .note-char-count.error { color: #c0392b; }
           <div class="note-heading">Anything else Jordan should know?</div>
           <div class="note-subtext">Jordan sees this after you both complete this topic.</div>
           <textarea class="note-textarea" id="note-textarea"
-            placeholder="Add a note... (optional)"
+            placeholder="Your thoughts, context, or questions for later…"
             oninput="handleInput(this)"></textarea>
           <div class="note-char-count" id="char-count">280 characters remaining</div>
         </div>
@@ -252,7 +252,7 @@ body.page-29 .screen-root .note-char-count.error { color: #c0392b; }
       <table class="spec-table">
         <tr><td><code>topicId</code></td><td>string · FK → Topic.id</td></tr>
         <tr><td><code>userId</code></td><td>string · FK → User.id</td></tr>
-        <tr><td><code>text</code></td><td>string · empty string valid · server enforces 500-char hard limit</td></tr>
+        <tr><td><code>text</code></td><td>string · empty string valid · server enforces 280-char hard limit</td></tr>
         <tr><td><code>isVisibleToPartner</code></td><td>boolean · <code>false</code> until server confirms both users submitted all answers for this topic · never set client-side</td></tr>
         <tr><td><code>createdAt</code></td><td>timestamp</td></tr>
         <tr><td><code>updatedAt</code></td><td>timestamp</td></tr>

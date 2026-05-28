@@ -209,7 +209,7 @@ body.page-17 .screen-root .rev-item.rev-show {
   <div>
     <div class="screen-tag">Screen 20 · Topic Flow</div>
     <div class="page-title">Alignment Reveal</div>
-    <div class="page-desc">Scrollable reveal screen showing all 4 questions side-by-side, an optional note section, the For you two card, and alignment pill. Three alignment states. Answers reveal with staggered animation.</div>
+    <div class="page-desc">Scrollable reveal screen showing all 3 questions side-by-side, an optional note section, the For you two card, and alignment pill. Three alignment states. Answers reveal with staggered animation.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" href="19-waiting-for-partner.html">← Screen 19: Waiting for Partner</a>
@@ -309,7 +309,7 @@ body.page-17 .screen-root .rev-item.rev-show {
 
     <div class="spec-card">
       <div class="spec-card-title">Question section spec (per question)</div>
-      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Each of the 4 questions has its own section in the scroll area.</p>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Each of the 3 questions has its own section in the scroll area.</p>
       <table class="spec-table">
         <tr><th>Element</th><th>Spec</th></tr>
         <tr><td>Question label</td><td>Actual question text · 12px DM Sans medium · <code>text-tertiary</code> · left-aligned · 20px above (except first) · 10px below</td></tr>
@@ -431,7 +431,7 @@ body.page-17 .screen-root .rev-item.rev-show {
         <tr><td>Tone</td><td>Warm, specific, actionable. Never generic ("You have different views"). Never mentions AI.</td></tr>
         <tr><td>AI input</td><td>All question texts + both partners' answers for all questions + both note texts (if present)</td></tr>
       </table>
-      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-top:12px;">AI summary endpoint now receives all 4 questions + both partners' answers for all questions + both note texts (if present). Previously only 1 Q+A pair was passed.</p>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-top:12px;">AI summary endpoint now receives all 3 questions + both partners' answers for all questions + both note texts (if present). Previously only 1 Q+A pair was passed.</p>
     </div>
 
     <div class="spec-card">
@@ -452,7 +452,6 @@ body.page-17 .screen-root .rev-item.rev-show {
         <tr><td>Q1 reveal pair</td><td>0ms</td><td>opacity 0→1 · scale 0.96→1 · 200ms ease-out</td></tr>
         <tr><td>Q2 reveal pair</td><td>100ms</td><td>same</td></tr>
         <tr><td>Q3 reveal pair</td><td>200ms</td><td>same</td></tr>
-        <tr><td>Q4 reveal pair</td><td>300ms</td><td>same</td></tr>
         <tr><td>Note section (if shown)</td><td>350ms</td><td>same</td></tr>
         <tr><td>For you two card</td><td>450ms</td><td>same</td></tr>
         <tr><td>Alignment pill</td><td>530ms</td><td>same</td></tr>
@@ -465,7 +464,7 @@ body.page-17 .screen-root .rev-item.rev-show {
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-item"><div class="note-bullet"></div><span>All 4 question answers are shown stacked in order. The reveal is for the whole topic, not a single question.</span></div>
       <div class="note-item"><div class="note-bullet"></div><span>Note section only appears if at least one partner wrote a note. If neither wrote a note, the section is hidden entirely.</span></div>
-      <div class="note-item"><div class="note-bullet"></div><span>For you two now synthesises across all 4 questions + any note text provided by either partner.</span></div>
+      <div class="note-item"><div class="note-bullet"></div><span>For you two now synthesises across all 3 questions + any note text provided by either partner.</span></div>
     </div>
 
     <div class="spec-card">
