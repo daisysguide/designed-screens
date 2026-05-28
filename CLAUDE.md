@@ -15,7 +15,7 @@ Screen mockups live in versioned directories at the repo root: `v1/`,
 `v2/`, `v3/` (all frozen) and `v4/` (active). Each screen is a single
 HTML file — all new work happens in `v4/`.
 
-`dg-v3-decisions-log.md` (root) is the authoritative source for design
+`v3/dg-v3-decisions-log.md` is the authoritative source for design
 rationale; its v3 name is kept as a historical record and it continues
 to apply through v4. `v4/CHANGELOG.md` is a quick-reference summary of
 changes — consult the decisions log when you need the "why" behind a
