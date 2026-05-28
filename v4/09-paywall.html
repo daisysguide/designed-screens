@@ -269,7 +269,7 @@
     <div class="spec-card">
       <div class="spec-card-title">Sticky CTA bar</div>
       <table class="spec-table">
-        <tr><td>Visibility</td><td>Always visible from page load · no entrance animation</td></tr>
+        <tr><td>Visibility</td><td>Pinned to the bottom of the screen · stays visible while the content scrolls · no entrance animation</td></tr>
         <tr><td>Button</td><td>"Get lifetime access for $49" · purple · full width</td></tr>
         <tr><td>Guarantee</td><td>"7-day money-back guarantee. Full refund, no questions." · with a green shield-check icon · directly below the button</td></tr>
       </table>
@@ -373,7 +373,7 @@
   body.page-10 .screen-root .s09 .dot.on{background:var(--purple);width:16px;border-radius:3px}
   body.page-10 .screen-root .s09 .legal{font-size:11px;color:var(--hint);line-height:1.5;margin-top:18px}
   body.page-10 .screen-root .s09 .legal a{color:var(--hint);text-decoration:underline dashed;text-decoration-thickness:1px;text-underline-offset:2px}
-  body.page-10 .screen-root .s09 .actionbar{padding:14px 20px 20px;margin-top:18px;background:#fff;border-top:0.5px solid var(--border)}
+  body.page-10 .screen-root .s09 .actionbar{position:sticky;bottom:0;z-index:5;margin-top:18px;padding:14px 20px 20px;background:#fff;border-top:0.5px solid var(--border);box-shadow:0 -6px 16px -8px rgba(40,30,10,0.18)}
   body.page-10 .screen-root .s09 .cta{width:100%;background:var(--purple);color:#fff;border:none;border-radius:14px;padding:16px;
     font-family:var(--body);font-weight:500;font-size:16px;cursor:pointer;transition:transform .12s ease,filter .12s ease}
   body.page-10 .screen-root .s09 .cta:hover{filter:brightness(1.06)} .s09 .cta:active{transform:scale(.985)}
