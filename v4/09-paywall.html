@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paywall — Daisy's Guide Designed Screens v4</title>
-<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="page-10">
@@ -59,7 +61,7 @@
     <div style="display:flex;align-items:center;">
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
-        <a class="topbar-btn" href="15-manage-topics.html" aria-label="Previous">‹</a>
+        <a class="topbar-btn" href="08-personalized-results.html" aria-label="Previous">‹</a>
         <span class="topbar-counter">09 / 30</span>
         <a class="topbar-btn" href="10-partner-linking.html" aria-label="Next">›</a>
       </div>
@@ -71,10 +73,10 @@
   <div>
     <div class="screen-tag">Screen 09 · Onboarding</div>
     <div class="page-title">Paywall</div>
-    <div class="page-desc">Single price, single CTA. User just built their plan — highest conversion intent moment.</div>
+    <div class="page-desc">Price first, CTA always visible. User arrives warm off Screen 08's emotional peak — their worries reframed as conversations.</div>
   </div>
   <div class="nav-pills">
-    <a class="nav-pill" style="cursor:pointer;"  href="15-manage-topics.html">← Screen 15: Manage Topics</a>
+    <a class="nav-pill" style="cursor:pointer;"  href="08-personalized-results.html">← Screen 08: Personalized Results</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="10-partner-linking.html">Screen 10: Partner Linking →</a>
   </div>
 </div>
@@ -89,70 +91,86 @@
       <div class="phone-notch"></div>
       <div class="phone-screen">
 
-        <div class="eyebrow">Unlock your plan</div>
-        <div class="screen-heading">Your plan is ready</div>
-        <div class="screen-body">Get full access to all 28 of your personalized topics, the side-by-side reveal, and everything that follows.</div>
+        <!-- ── Paywall mockup (scoped under .s09 so its classes can't leak) ── -->
+        <div class="s09">
+          <h2 class="sr-only">Daisy's Guide paywall: launch price drops from $60 a year to $49 lifetime. Sample reveal and trust block follow on scroll. 7-day money-back guarantee.</h2>
 
-        <!-- Price / Purchase Card -->
-        <div class="price-card">
-          <div class="price-eyebrow">One-time purchase</div>
-          <div class="price-amount">$49</div>
-          <div class="price-sublabel">Lifetime access · One-time charge · Does not renew</div>
-          <div class="feature-divider"></div>
-          <div class="feature-list">
-            <div class="feature-item">
-              <span class="feature-check">✓</span>
-              <span class="feature-text">Your personalized topic plan</span>
+          <div class="pad" style="padding-top:8px">
+            <h1>Go in already on the same page</h1>
+          </div>
+
+          <!-- Price / Purchase Card -->
+          <div class="pad" style="padding-top:6px">
+            <div class="card" style="padding:20px 18px;box-shadow:0 6px 20px -8px rgba(40,30,10,0.22)">
+              <div class="price-eyebrow">Launch price</div>
+              <div style="text-align:center;margin-bottom:2px"><span class="anchor"><span class="anchor-text">$60 / year</span><span class="anchor-line"></span></span></div>
+              <div class="price">$49</div>
+              <div class="price-sub">Pay once. Yours forever.</div>
+              <div class="divider"></div>
+              <div class="feat"><span class="chk">✓</span><span><span class="b">Full access</span> for <span class="b">both partners</span></span></div>
+              <div class="feat"><span class="chk">✓</span><span>Your <span class="b">personalized plan</span> with side-by-side reveals and a guide for every discussion</span></div>
+              <div class="feat"><span class="chk">✓</span><span>Every guide written by <span class="b">Dr. Daisy, MD</span>, a Mother-Baby Unit Medical Director and mom</span></div>
             </div>
-            <div class="feature-item">
-              <span class="feature-check">✓</span>
-              <span class="feature-text">Side-by-side answer reveal for every topic</span>
+          </div>
+
+          <!-- Sample reveal -->
+          <div class="pad fade-in" style="padding-top:20px;animation-delay:2s">
+            <div class="card" style="padding:14px;background:rgba(95,69,242,0.05);border-color:rgba(95,69,242,0.18)">
+              <div class="minilabel" style="text-align:center;margin-bottom:11px;color:var(--purple)">Sample reveal</div>
+              <div style="display:flex;gap:8px">
+                <div class="reveal-box"><div class="who">Mia said</div><div class="said an-said" style="animation-delay:2.5s">I'll take the first three months off</div></div>
+                <div class="reveal-box"><div class="who">Jordan said</div><div class="said an-said" style="animation-delay:2.75s">We'll split leave 50 / 50</div></div>
+              </div>
+              <div style="text-align:center;margin:11px 0">
+                <span class="pill an-pop" style="animation-delay:3.15s">
+                  <svg class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg>
+                  One to talk through
+                </span>
+              </div>
+              <div class="dashed an-rise" style="animation-delay:3.55s">
+                <div class="ai-label">For you two</div>
+                <div style="font-size:12.5px;line-height:1.5;color:#3F3D38">You're both planning to be the primary caregiver early on. That's a loving instinct from each of you, and a scheduling collision worth settling before HR deadlines force the call.</div>
+                <div style="display:flex;align-items:center;gap:5px;margin-top:9px;padding-top:9px;border-top:0.5px solid rgba(95,69,242,0.18);font-size:11.5px;font-weight:500;color:var(--purple)">
+                  <svg class="i" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                  Read the full guide
+                </div>
+              </div>
             </div>
-            <div class="feature-item">
-              <span class="feature-check">✓</span>
-              <span class="feature-text">A couples summary for every topic, written for you two</span>
+          </div>
+
+          <!-- Trust block -->
+          <div class="pad fade-in" style="padding-top:20px;animation-delay:4.3s">
+            <div class="tcard">
+              <div class="minilabel" style="text-align:center;margin-bottom:11px;color:var(--purple)">Trusted by thousands of parents-to-be</div>
+              <div class="tstars" aria-label="5 out of 5 stars">★★★★★</div>
+              <div class="tbody" id="tbody" aria-live="polite">
+                <div class="tquote" id="tq"></div>
+                <div class="tattr"><span class="tname" id="tn"></span><span class="chip" id="tc"></span></div>
+              </div>
+              <div class="dots" id="dots"></div>
             </div>
-            <div class="feature-item">
-              <span class="feature-check">✓</span>
-              <span class="feature-text">Expert-written guide for every topic</span>
+          </div>
+
+          <!-- Footer -->
+          <div class="pad fade-in" style="padding-top:24px;text-align:center;animation-delay:4.9s">
+            <div style="display:flex;justify-content:center;align-items:center;gap:14px;font-size:12.5px">
+              <a href="#">Have a promo code?</a>
+              <span style="color:var(--hint)">·</span>
+              <a href="#">Restore purchase</a>
             </div>
-            <div class="feature-item">
-              <span class="feature-check">✓</span>
-              <span class="feature-text">Both partners, one purchase</span>
+            <div class="legal">By purchasing you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></div>
+          </div>
+
+          <!-- Sticky CTA bar -->
+          <div class="actionbar">
+            <button class="cta">Get lifetime access for $49</button>
+            <div class="guarantee">
+              <svg class="i" viewBox="0 0 24 24" style="color:var(--green)"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span>7-day money-back guarantee. Full refund, no questions.</span>
             </div>
           </div>
         </div>
-
-        <!-- Credibility card -->
-        <div class="cred-card">
-          <div class="cred-text">Every guide was created by <strong>Dr. Daisy, MD</strong> — a practicing pediatrician and the mother behind Daisy's Guide. Real expertise, not generic advice.</div>
-        </div>
-
-        <!-- Restore banners — hidden until restore attempt resolves -->
-        <div id="restore-success" style="display:none;background:rgba(119,234,175,0.18);border:1px solid #77eaaf;border-radius:10px;padding:10px 14px;font-size:13px;color:#157a46;text-align:center;margin-top:12px;">✓ Purchase restored. You're all set.</div>
-        <div id="restore-error" style="display:none;background:rgba(255,145,145,0.12);border:1px solid #ff9191;border-radius:10px;padding:10px 14px;font-size:13px;color:#c0392b;text-align:center;margin-top:12px;">No previous purchase found. If you think this is wrong, <a href="https://daisysguide.com/support" style="color:#c0392b;text-decoration:none;">contact support</a>.</div>
-
-        <div class="spacer"></div>
-
-        <!-- 1. CTA -->
-        <button class="btn-primary">Get full access — $49</button>
-
-        <!-- 2. Terms + Privacy -->
-        <div style="font-size:11px;color:rgba(26,26,26,0.45);text-align:center;margin-top:8px;line-height:1.5;">By purchasing you agree to our <a href="https://daisysguide.com/terms" style="color:#5f45f2;text-decoration:none;">Terms of Service</a> and <a href="https://daisysguide.com/privacy" style="color:#5f45f2;text-decoration:none;">Privacy Policy</a></div>
-
-        <!-- 3. Restore purchase -->
-        <div style="text-align:center;margin-top:10px;">
-          <a id="restore-link" href="#" onclick="handleRestore(event)" style="font-size:13px;color:#5f45f2;text-decoration:none;">Restore previous purchase<span id="restore-spinner" style="display:none;margin-left:6px;vertical-align:middle;"><svg width="12" height="12" viewBox="0 0 12 12" style="animation:spin 0.8s linear infinite;display:inline-block;vertical-align:middle;"><circle cx="6" cy="6" r="4.5" fill="none" stroke="#5f45f2" stroke-width="2" stroke-dasharray="14 8"/></svg></span></a>
-        </div>
-
-        <!-- 4. Social proof -->
-        <div class="social-proof"><span class="stars">★★★★★</span> Rated 4.9 on Amazon</div>
-
-        <!-- 5. Money-back guarantee -->
-        <div style="font-size:13px;color:rgba(26,26,26,0.45);text-align:center;margin-top:6px;">Not happy within 7 days? <a href="mailto:guarantee@daisysguide.com" style="color:#5f45f2;text-decoration:none;">Email us</a> for a full refund.</div>
-
-        <!-- 5. Promo code affordance -->
-        <button style="width:100%;height:44px;margin-top:6px;background:transparent;border:1px solid rgba(26,26,26,0.18);border-radius:100px;font-size:14px;font-family:inherit;color:rgba(26,26,26,0.55);cursor:pointer;">Have a promo code?</button>
+        <!-- ── /Paywall mockup ── -->
 
       </div>
     </div>
@@ -164,130 +182,96 @@
     <div class="spec-card">
       <div class="spec-card-title">Navigation flow</div>
       <div class="flow-map">
-        <div class="flow-node from">15 Manage Topics</div>
+        <div class="flow-node from">08 Personalized Results</div>
         <div class="flow-arrow">→</div>
         <div class="flow-node current">09 Paywall</div>
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">10 Partner Linking</div>
       </div>
       <div class="info-box">
-        <strong>Highest conversion intent in the app.</strong> Reached from Screen 15 (Manage Topics) via 'Unlock my plan →' CTA. Not reached directly from Screen 08. User has just invested effort customizing their plan. No back button visible — forward momentum only. Purchase → Screen 10 Partner Linking.
+        Reached directly from Screen 08 (Personalized Results) where the user has just hit the emotional peak of seeing the conversations they need to have. <strong>Forward momentum only — no back button.</strong> The CTA bar is visible from page load. Successful purchase routes to Screen 10 Partner Linking.
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
       <table class="spec-table">
-        <tr><td>Eyebrow</td><td>"Founding member offer" · <code>label-sm</code> uppercase · <code>text-tertiary</code></td></tr>
-        <tr><td>Heading</td><td>"Your plan is ready" · <code>display-md</code> (Grandstander 24px bold)</td></tr>
-        <tr><td>Body</td><td>"Right now Daisy is $49 once — lifetime access, both partners, all [n] of your topics. We're moving to a $40/year subscription after we launch publicly. Pay once today and you're covered forever."</td></tr>
-        <tr><td>CTA</td><td>"Get full access — $49" · price is a templated string from the data layer · if promo applied: "Get full access — $[discounted]"</td></tr>
-        <tr><td>Terms line</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy" · 11px · <code>text-tertiary</code> · centered · links in <code>purple-500</code> · open in-app browser</td></tr>
-        <tr><td>Restore link</td><td>"Restore previous purchase" · 13px · <code>purple-500</code> · centered · no underline</td></tr>
-        <tr><td>Social proof</td><td>"★★★★★ Rated 4.9 on Amazon" · 13px DM Sans · <code>text-secondary</code> · centered</td></tr>
-        <tr><td>Money-back</td><td>"Not happy within 7 days? Email us for a full refund." · 13px DM Sans · <code>text-tertiary</code> · centered · "Email us" links to <code>mailto:guarantee@daisysguide.com</code> · <code>purple-500</code> · no underline</td></tr>
+        <tr><td>Top of screen</td><td>No eyebrow, no wordmark, no top-right restore link. Headline only.</td></tr>
+        <tr><td>Headline</td><td>"Go in already on the same page" · Grandstander 27px / 600</td></tr>
+        <tr><td>Subhead</td><td>None — deliberately removed</td></tr>
+        <tr><td>CTA</td><td>"Get lifetime access for $49" · sticky bar, visible from page load</td></tr>
+        <tr><td>Footer links</td><td>"Have a promo code?" and "Restore purchase" side by side with a middot divider · <code>purple-500</code></td></tr>
+        <tr><td>Legal line</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy" · Terms and Privacy as dashed-underlined gray text (not purple links)</td></tr>
       </table>
     </div>
-
-    <div class="spec-card">
-  <div class="spec-card-title">Demo Reveal Card</div>
-  <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Static illustrative card shown above the Price/Purchase Card. Fades in on screen mount (opacity 0→1, 300ms ease, 150ms delay). Not tappable.</p>
-  <table class="spec-table">
-    <tr><td>Container</td><td>White · <code>radius-xl</code> (16px) · <code>shadow-md</code> · 16px padding</td></tr>
-    <tr><td>Section label</td><td>"SEE HOW IT WORKS" · 10px DM Sans bold · ALL CAPS · <code>text-tertiary</code> · centered</td></tr>
-    <tr><td>Mini reveal boxes</td><td>Two side by side · 8px gap · white bg · <code>border-default</code> · <code>radius-md</code> · 10px padding · min-height 72px</td></tr>
-    <tr><td>Left box content</td><td>"YOU SAID" label + "Family only, at least at first" (hardcoded)</td></tr>
-    <tr><td>Right box content</td><td>"JORDAN SAID" label + "Close friends we both trust" (hardcoded)</td></tr>
-    <tr><td>Alignment pill</td><td>"😌 Mostly aligned" · <code>rgba(255,215,85,0.38)</code> bg · <code>yellow-text-dark</code> (#8a6800) text · centered</td></tr>
-    <tr><td>AI excerpt</td><td>Dashed border card · "✨ FOR YOU TWO" label · "You're both thinking about trust — just with different people in mind. Exactly the kind of thing worth talking through."</td></tr>
-    <tr><td>Interaction</td><td>None — static, not tappable</td></tr>
-    <tr><td>Animation</td><td>Fade in on screen mount: opacity 0→1, 300ms ease, 150ms delay</td></tr>
-  </table>
-</div>
 
     <div class="spec-card">
       <div class="spec-card-title">Price / Purchase Card</div>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">First card below the headline. Buy action is always visible from page load; the price animation fires on load.</p>
       <table class="spec-table">
-        <tr><td>Background</td><td><code>surface-card</code> (white)</td></tr>
-        <tr><td>Border radius</td><td><code>radius-xl</code> (16px)</td></tr>
-        <tr><td>Shadow</td><td><code>shadow-md</code></td></tr>
-        <tr><td>Padding</td><td>24px 20px</td></tr>
-        <tr><td>Eyebrow</td><td>"One-time purchase" · 12px DM Sans regular · <code>text-secondary</code> · centered</td></tr>
-        <tr><td>Price</td><td>Grandstander 48px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code> · centered</td></tr>
-        <tr><td>Sub-label</td><td>"Lifetime access · One-time charge · Does not renew" · 13px · <code>text-secondary</code> · centered</td></tr>
-        <tr><td>Divider</td><td><code>1px solid border-default</code> · 16px margin above feature list</td></tr>
-        <tr><td>Feature checkmark</td><td>"✓" · <code>status-success-text</code> (#157a46) · 14px bold</td></tr>
-        <tr><td>Feature text</td><td>14px DM Sans regular · <code>text-primary</code></td></tr>
-        <tr><td>Feature bullets</td><td>
+        <tr><td>Background</td><td><code>surface-card</code> (white) · <code>radius-xl</code> (16px) · soft lifted shadow · 20px 18px padding</td></tr>
+        <tr><td>Eyebrow</td><td>"Launch price" · 11px small caps · <code>purple-500</code> · centered (was "Founding member offer")</td></tr>
+        <tr><td>Anchor price</td><td>"$60 / year" · gray · animated strike-through (drops in from large, then strikes out) — non-subscription framing is the single most important thing to communicate</td></tr>
+        <tr><td>Price</td><td>"$49" · Grandstander 48px / 600 · <code>letter-spacing: -0.02em</code> · centered · builds in after the anchor</td></tr>
+        <tr><td>Price sub line</td><td>"Pay once. Yours forever." · single line · <code>text-secondary</code> · centered</td></tr>
+        <tr><td>Divider</td><td><code>0.5px solid border-default</code> above the feature list</td></tr>
+        <tr><td>Features (exactly 3)</td><td>
           <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>Your personalized topic plan</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Side-by-side answer reveal for every topic</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>A couples summary for every topic, written for you two</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Expert-written guide for every topic</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Both partners, one purchase</span></div>
-      </div>
+            <div class="note-item"><div class="note-bullet"></div><span><strong>Full access</strong> for <strong>both partners</strong></span></div>
+            <div class="note-item"><div class="note-bullet"></div><span>Your <strong>personalized plan</strong> with side-by-side reveals and a guide for every discussion</span></div>
+            <div class="note-item"><div class="note-bullet"></div><span>Every guide written by <strong>Dr. Daisy, MD</strong>, a Mother-Baby Unit Medical Director and mom</span></div>
+          </div>
         </td></tr>
+        <tr><td>Checkmark</td><td>"✓" · <code>status-success-text</code> (#157a46)</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Credibility card</div>
+      <div class="spec-card-title">Sample Reveal Card</div>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Purple-tinted to signal it's an example, not the user's own data. Demonstrates the product mechanic with two named example partners.</p>
       <table class="spec-table">
-        <tr><td>Style</td><td><code>1.5px dashed border-strong</code> · <code>radius-lg</code> · <code>rgba(26,26,26,0.02)</code> bg · same dashed treatment as For you two card — signals "authored content"</td></tr>
-        <tr><td>Copy</td><td>"Every guide was created by Dr. Daisy, MD — a practicing pediatrician and the mother behind Daisy's Guide. Real expertise, not generic advice."</td></tr>
-        <tr><td>"Dr. Daisy, MD"</td><td>Bold · <code>text-primary</code> · the credential lands harder with the name</td></tr>
+        <tr><td>Container</td><td><code>rgba(95,69,242,0.05)</code> bg · <code>rgba(95,69,242,0.18)</code> border · <code>radius-xl</code> · 14px padding</td></tr>
+        <tr><td>Section label</td><td>"Sample reveal" · 10px small caps · <code>purple-500</code> · inside the card at top</td></tr>
+        <tr><td>Mini reveal boxes</td><td>Two side by side · "Mia said" / "I'll take the first three months off" and "Jordan said" / "We'll split leave 50 / 50"</td></tr>
+        <tr><td>Alignment pill</td><td>"One to talk through" · yellow-tinted bg · <code>#8A6800</code> text · centered · with chat icon</td></tr>
+        <tr><td>AI synthesis</td><td>Dashed border card · "For you two" label · "You're both planning to be the primary caregiver early on. That's a loving instinct from each of you, and a scheduling collision worth settling before HR deadlines force the call."</td></tr>
+        <tr><td>Locked cue</td><td>"Read the full guide" with a padlock icon · signals depth beyond the synthesis</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-  <div class="spec-card-title">Founding Member Context Paragraph</div>
-  <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Shown between the Credibility card and the primary CTA.</p>
-  <table class="spec-table">
-    <tr><td>Container</td><td><code>rgba(95,69,242,0.05)</code> bg · <code>1px solid rgba(95,69,242,0.15)</code> border · <code>radius-lg</code> (12px) · 12px 14px padding</td></tr>
-    <tr><td>Row 1</td><td>"🔒" emoji + "Founding member pricing" · 12px DM Sans bold · purple-500 · 6px below</td></tr>
-    <tr><td>Body</td><td>"This price is only available to founding members. Once we open to the public we're moving to $40/year — pay $49 now and you'll never see a subscription charge." · 12px DM Sans regular · <code>text-secondary</code></td></tr>
-  </table>
-</div>
-
-    <div class="spec-card">
-      <div class="spec-card-title">ToS + Privacy Line</div>
+      <div class="spec-card-title">Trust block</div>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">White card, lifted with a soft shadow. Rotating verified testimonials.</p>
       <table class="spec-table">
-        <tr><td>Text</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy"</td></tr>
-        <tr><td>Style</td><td>11px DM Sans · <code>text-tertiary</code> · centered</td></tr>
-        <tr><td>Position</td><td>Below primary CTA, above Restore link</td></tr>
-        <tr><td>Links</td><td>"Terms of Service" and "Privacy Policy" in purple-500, open in-app browser</td></tr>
+        <tr><td>Header</td><td>"Trusted by thousands of parents-to-be" · 10px small caps · <code>purple-500</code> · inside the card at top (matches the Sample Reveal header pattern)</td></tr>
+        <tr><td>Layout</td><td>5-star row + rotating verified quote + attribution + source chip + nav dots · all centered</td></tr>
+        <tr><td>Source chips</td><td>Check icon + "Verified" for Amazon quotes · Reddit Snoo logo + "Reddit" for the Reddit quote</td></tr>
+        <tr><td>Quotes (real, attributed)</td><td>
+          <div class="note-list">
+            <div class="note-item"><div class="note-bullet"></div><span>"My husband enjoyed this book, and he was fairly anti-baby talk." — r/waiting_to_try (Reddit)</span></div>
+            <div class="note-item"><div class="note-bullet"></div><span>"...things we hadn't even thought to discuss before the baby arrived." — Elisabeth F (Verified)</span></div>
+            <div class="note-item"><div class="note-bullet"></div><span>"It made us feel like a team rather than guessing separately." — CLP (Verified)</span></div>
+            <div class="note-item"><div class="note-bullet"></div><span>"It walks you through real conversations that couples need to have." — CountingStarz (Verified)</span></div>
+          </div>
+        </td></tr>
+        <tr><td>Rotation</td><td>Auto-advances every 5.5s · pauses on hover · dots are tappable</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Restore Purchase Link</div>
+      <div class="spec-card-title">Footer</div>
       <table class="spec-table">
-        <tr><td>Label</td><td>"Restore previous purchase"</td></tr>
-        <tr><td>Style</td><td>13px DM Sans · purple-500 · centered · no underline</td></tr>
-        <tr><td>Position</td><td>Below ToS + Privacy line, above social proof</td></tr>
-        <tr><td>Behavior</td><td>Triggers <code>restorePurchase()</code> · loading spinner while processing · success: green banner "Purchase restored. You're all set." + auto-navigate to Home after 2s · failure: error banner with support link</td></tr>
-        <tr><td>Compliance</td><td>Required by Apple App Store Guideline 3.1.1. Must be visible above the fold.</td></tr>
+        <tr><td>Links row</td><td>"Have a promo code?" · middot · "Restore purchase" · side by side · <code>purple-500</code></td></tr>
+        <tr><td>Legal line</td><td>"By purchasing you agree to our Terms of Service and Privacy Policy" · Terms and Privacy as dashed-underline gray text, not purple links · <code>text-tertiary</code></td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Promo code</div>
+      <div class="spec-card-title">Sticky CTA bar</div>
       <table class="spec-table">
-        <tr><td>Default state</td><td>"Have a promo code?" ghost button · 44px · <code>border-default</code> outline · collapsed</td></tr>
-        <tr><td>Expanded state</td><td>Text input + "Apply" button side by side · input full width minus button · <code>radius-full</code> on both</td></tr>
-        <tr><td>Trigger</td><td>Tapping "Have a promo code?" expands inline — no modal, no sheet</td></tr>
-        <tr><td>On valid code</td><td>Price updates in card and CTA button label. Success toast: "Code applied — $X off"</td></tr>
-        <tr><td>On invalid code</td><td>Inline error below input: "That code isn't valid or has expired."</td></tr>
-      </table>
-    </div>
-
-    <div class="spec-card">
-      <div class="spec-card-title">Money-Back Guarantee Line</div>
-      <table class="spec-table">
-        <tr><td>Text</td><td>"Not happy within 7 days? Email us for a full refund."</td></tr>
-        <tr><td>Style</td><td>13px DM Sans · <code>text-tertiary</code> · centered</td></tr>
-        <tr><td>Position</td><td>Below social proof</td></tr>
-        <tr><td>Link</td><td>"Email us" → <code>mailto:guarantee@daisysguide.com</code> · purple-500</td></tr>
+        <tr><td>Visibility</td><td>Always visible from page load · no entrance animation</td></tr>
+        <tr><td>Button</td><td>"Get lifetime access for $49" · purple · full width</td></tr>
+        <tr><td>Guarantee</td><td>"7-day money-back guarantee. Full refund, no questions." · with a green shield-check icon · directly below the button</td></tr>
       </table>
     </div>
 
@@ -295,26 +279,31 @@
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
         <span class="component-tag">Price / Purchase Card</span>
-        <span class="component-tag">Button — Primary (lg)</span>
-        <span class="component-tag">Credibility card (dashed)</span>
-        <span class="component-tag">Screen Header (eyebrow)</span>
-        <span class="component-tag">Terms + Privacy line</span>
-        <span class="component-tag">Restore Purchase</span>
-        <span class="component-tag">Promo code affordance</span>
+        <span class="component-tag">Sample Reveal Card</span>
+        <span class="component-tag">Trust block (rotating)</span>
+        <span class="component-tag">Footer (links + legal)</span>
+        <span class="component-tag">Sticky CTA bar</span>
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>Single price, single CTA. No tiers, no free trial, no "maybe later" in V1.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Topic count ([n]) in heading and body is dynamic — matches the user's personalized plan.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Promo code expands inline on tap — no sheet or modal. Collapses if user taps away without applying.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Terms of Service and Privacy Policy links open <code>daisysguide.com/terms</code> and <code>daisysguide.com/privacy</code> in the in-app browser — same URLs as Settings → Legal.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Restore purchase: disables link and shows spinner while <code>restorePurchase()</code> runs. Success shows green banner and navigates to Home after 2s. Failure shows red banner with support link. Link re-enables on failure so user can retry.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Successful purchase → Screen 10 Partner Linking. No bottom nav on this screen.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>7-day money-back guarantee is honored via the App Store Connect refund API (iOS 15+) when users email guarantee@daisysguide.com. Engineering: backend integration with App Store Connect refund endpoints required.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Element order top to bottom: Eyebrow → Heading + body → Demo Reveal Card → Price/Purchase Card → Credibility card (Dr. Daisy) → Founding Member Context Paragraph → 'Get full access — $49' primary CTA → ToS + Privacy line → Restore previous purchase link → Social proof → Money-back guarantee line → Promo code affordance</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Price-first hierarchy: Headline → Price card → Sample reveal → Trust block → Footer → Sticky CTA bar. The buy action is always visible from page load; everything else cascades in.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>$49 anchored against $60/year. Animated strike-through on $60/year, then $49 builds in.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Topic count is 45 wherever it appears (51 topics in the library minus 6 filtered out by quiz answers).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Brand voice: calm, considered, warm. No salesy phrasing ("only $X", "limited time offer"), no em dashes, sentence case throughout (small-caps labels via CSS <code>text-transform: uppercase</code>).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Successful purchase → Screen 10 Partner Linking. No bottom nav, no back button.</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Production notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>Animations here use timed delays for the demo. In production the sample reveal, trust block, and footer should fire on <code>IntersectionObserver</code> triggers as each card enters the viewport. The price card animation fires on page load. The CTA bar has no entrance animation.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The Reddit chip uses Simple Icons' SVG of the Reddit Snoo. Before ship, verify usage aligns with Reddit's brand guidelines (source attribution is generally fine with the official SVG, clear space, no modification).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The "no questions" claim in the guarantee assumes a frictionless refund. Confirm against the actual App Store Connect refund flow before shipping; if refunds require any back-and-forth, soften the wording to "no hassle" or similar.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The "trusted by thousands of parents-to-be" aggregate is supported by approximately 4,250 unit sales. If a real review count is preferred, judge.me shows 5.0 from 56 reviews; the sales-based "thousands" framing is honest and stronger.</span></div>
       </div>
     </div>
 
@@ -324,42 +313,116 @@
 <div class="page-footer">
   <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 09 of 30</span>
   <div class="nav-pills">
-    <a class="nav-pill" style="cursor:pointer;"  href="15-manage-topics.html">← Screen 15: Manage Topics</a>
+    <a class="nav-pill" style="cursor:pointer;"  href="08-personalized-results.html">← Screen 08: Personalized Results</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="10-partner-linking.html">Screen 10: Partner Linking →</a>
   </div>
 </div>
     </div>
   </div>
 </div>
+
+<!-- ── Paywall mockup styles (scoped under .s09) ── -->
+<style>
+  .s09{
+    --cream:#F6F0E6; --ink:#1A1A1A; --muted:#6B6962; --hint:#9A968C;
+    --purple:#5F45F2; --green:#157A46; --border:#E8E3D8; --gold:#E0A800;
+    --display:'Grandstander',sans-serif; --body:'DM Sans',sans-serif;
+    font-family:var(--body); color:var(--ink);
+  }
+  .s09 *{box-sizing:border-box}
+  .s09 a{color:var(--purple);text-decoration:none}
+  .s09 .pad{padding:0 20px}
+  .s09 h1{font-family:var(--display);font-weight:600;font-size:27px;line-height:1.18;margin:0 0 18px}
+  .s09 .card{background:#fff;border:0.5px solid var(--border);border-radius:16px}
+  .s09 .minilabel{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--hint);font-weight:500}
+  .s09 .reveal-box{flex:1;background:#fff;border:0.5px solid var(--border);border-radius:10px;padding:11px}
+  .s09 .reveal-box .who{font-size:9px;letter-spacing:0.05em;text-transform:uppercase;color:var(--hint);margin-bottom:5px}
+  .s09 .reveal-box .said{font-size:13px;line-height:1.4;color:var(--ink)}
+  .s09 .pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,215,85,0.4);color:#8A6800;
+    font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px}
+  .s09 .dashed{border:1.5px dashed rgba(95,69,242,0.3);border-radius:11px;background:#fff;padding:12px 13px}
+  .s09 .ai-label{font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple);font-weight:500;margin-bottom:5px}
+  .s09 .price-eyebrow{font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple);font-weight:500;text-align:center;margin-bottom:6px}
+  .s09 .price{font-family:var(--display);font-weight:600;font-size:48px;line-height:1;text-align:center;letter-spacing:-0.02em;animation:s09-buildIn .55s cubic-bezier(.2,.7,.3,1) 1s both}
+  .s09 .price-sub{font-size:12.5px;color:var(--muted);text-align:center;margin-top:6px}
+  .s09 .divider{border-top:0.5px solid var(--border);margin:15px 0 11px}
+  .s09 .feat{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:13.5px;line-height:1.4}
+  .s09 .feat .chk{color:var(--green);font-weight:500}
+  .s09 .b{font-weight:500}
+  .s09 .tcard{position:relative;background:#fff;border:none;border-radius:16px;padding:16px 16px 14px;overflow:hidden;box-shadow:0 4px 14px -6px rgba(40,30,10,0.12)}
+  .s09 .tstars{color:var(--gold);font-size:13px;letter-spacing:2px;margin:0 0 9px;text-align:center}
+  .s09 .tbody{transition:opacity .32s ease;min-height:72px;display:flex;flex-direction:column;justify-content:center}
+  .s09 .tquote{font-size:16px;line-height:1.5;color:#2E2C28;font-style:italic;text-align:center}
+  .s09 .tattr{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:11px}
+  .s09 .tname{font-size:12px;font-weight:500;color:var(--ink)}
+  .s09 .chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px}
+  .s09 .chip-amz{background:rgba(21,122,70,0.1);color:#0F5A33}
+  .s09 .chip-rdt{background:rgba(255,69,0,0.13);color:#B23300}
+  .s09 .dots{display:flex;gap:6px;justify-content:center;margin-top:14px}
+  .s09 .dot{width:6px;height:6px;border-radius:50%;background:#D8D2C4;border:none;padding:0;cursor:pointer;transition:background .2s,width .2s}
+  .s09 .dot.on{background:var(--purple);width:16px;border-radius:3px}
+  .s09 .legal{font-size:11px;color:var(--hint);line-height:1.5;margin-top:18px}
+  .s09 .legal a{color:var(--hint);text-decoration:underline dashed;text-decoration-thickness:1px;text-underline-offset:2px}
+  .s09 .actionbar{padding:14px 20px 20px;margin-top:18px;background:#fff;border-top:0.5px solid var(--border)}
+  .s09 .cta{width:100%;background:var(--purple);color:#fff;border:none;border-radius:14px;padding:16px;
+    font-family:var(--body);font-weight:500;font-size:16px;cursor:pointer;transition:transform .12s ease,filter .12s ease}
+  .s09 .cta:hover{filter:brightness(1.06)} .s09 .cta:active{transform:scale(.985)}
+  .s09 .guarantee{display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;color:var(--muted);margin-top:10px}
+  .s09 .i{display:inline-block;width:1em;height:1em;vertical-align:-0.14em;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .s09 .fade-in{opacity:0;animation:s09-fade .4s ease forwards}
+  @keyframes s09-fade{to{opacity:1}}
+  .s09 .an-said{animation:s09-focusIn .55s ease both}
+  .s09 .an-pop{animation:s09-popIn .5s ease both}
+  .s09 .an-rise{animation:s09-riseIn .5s ease both}
+  .s09 .anchor{position:relative;display:inline-block;font-size:14px;line-height:1}
+  .s09 .anchor-text{display:inline-block;color:#9A968C;transform-origin:top center;animation:s09-priceDrop .5s cubic-bezier(.2,.7,.3,1) .5s both}
+  .s09 .anchor-line{position:absolute;left:0;right:0;top:48%;height:1.5px;background:#9A968C;transform-origin:left center;animation:s09-strikeIn .5s ease .5s both}
+  @keyframes s09-focusIn{from{filter:blur(7px);opacity:.2;transform:translateY(4px)}to{filter:blur(0);opacity:1;transform:none}}
+  @keyframes s09-popIn{0%{opacity:0;transform:scale(.8)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+  @keyframes s09-riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes s09-priceDrop{from{transform:scale(3);color:#1A1A1A}to{transform:none;color:#9A968C}}
+  @keyframes s09-strikeIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes s09-buildIn{from{opacity:0;transform:translateY(8px) scale(.92)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){.s09 .fade-in,.s09 .an-said,.s09 .an-pop,.s09 .an-rise,.s09 .anchor-text,.s09 .anchor-line,.s09 .price{animation:none;opacity:1}}
+  .s09 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+
 <script src="nav.js"></script>
-<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 <script>
-function restorePurchase() {
-  // Stub — connect to Apple StoreKit (iOS) or backend receipt verification (web)
-  return new Promise((_resolve, _reject) => {});
-}
-
-function handleRestore(e) {
-  e.preventDefault();
-  const link = document.getElementById('restore-link');
-  const spinner = document.getElementById('restore-spinner');
-  link.style.pointerEvents = 'none';
-  link.style.opacity = '0.5';
-  spinner.style.display = 'inline';
-
-  restorePurchase()
-    .then(() => {
-      spinner.style.display = 'none';
-      document.getElementById('restore-success').style.display = 'block';
-      setTimeout(() => { window.location.href = '11-home.html'; }, 2000);
-    })
-    .catch(() => {
-      spinner.style.display = 'none';
-      link.style.pointerEvents = '';
-      link.style.opacity = '';
-      document.getElementById('restore-error').style.display = 'block';
-    });
-}
+(function () {
+  var T=[
+    {q:"My husband enjoyed this book, and he was fairly anti-baby talk.", n:"r/waiting_to_try", s:"reddit"},
+    {q:"…things we hadn't even thought to discuss before the baby arrived.", n:"Elisabeth F", s:"amazon"},
+    {q:"It made us feel like a team rather than guessing separately.", n:"CLP", s:"amazon"},
+    {q:"It walks you through real conversations that couples need to have.", n:"CountingStarz", s:"amazon"}
+  ];
+  var i=0, timer=null;
+  var tbody=document.getElementById('tbody'), tq=document.getElementById('tq'),
+      tn=document.getElementById('tn'), tc=document.getElementById('tc'), dots=document.getElementById('dots');
+  if(!tbody) return;
+  T.forEach(function(_,k){
+    var b=document.createElement('button');
+    b.className='dot'+(k===0?' on':''); b.setAttribute('aria-label','Review '+(k+1));
+    b.onclick=function(){show(k); reset();};
+    dots.appendChild(b);
+  });
+  function paint(){
+    var t=T[i];
+    tq.textContent='“'+t.q+'”';
+    tn.textContent=t.n;
+    if(t.s==='amazon'){ tc.className='chip chip-amz'; tc.innerHTML='<svg class="i" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Verified'; }
+    else { tc.className='chip chip-rdt'; tc.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" style="display:inline-block;vertical-align:-2px"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" fill="currentColor"/></svg> Reddit'; }
+    Array.prototype.forEach.call(dots.children,function(d,k){ d.className='dot'+(k===i?' on':''); });
+  }
+  function show(k){ i=k; tbody.style.opacity=0; setTimeout(function(){ paint(); tbody.style.opacity=1; },180); }
+  function next(){ show((i+1)%T.length); }
+  function reset(){ clearInterval(timer); timer=setInterval(next,5500); }
+  paint();
+  timer=setInterval(next,5500);
+  var card=document.querySelector('.s09 .tcard');
+  card.addEventListener('mouseenter',function(){ clearInterval(timer); });
+  card.addEventListener('mouseleave',reset);
+})();
 </script>
 </body>
 </html>
