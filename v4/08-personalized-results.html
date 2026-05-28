@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Personalized Results — Daisy's Guide Designed Screens v4</title>
-<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="page-08">
@@ -61,7 +61,7 @@
       <div class="topbar-nav">
         <a class="topbar-btn" href="07-log-in.html" aria-label="Previous">‹</a>
         <span class="topbar-counter">08 / 30</span>
-        <a class="topbar-btn" href="15-manage-topics.html" aria-label="Next">›</a>
+        <a class="topbar-btn" href="09-paywall.html" aria-label="Next">›</a>
       </div>
     </div>
   </div>
@@ -71,11 +71,11 @@
   <div>
     <div class="screen-tag">Screen 08 · Onboarding</div>
     <div class="page-title">Personalized Results</div>
-    <div class="page-desc">Plan summary. Emotional peak of onboarding. Lead with the filtered number — relief it's not 51.</div>
+    <div class="page-desc">Plan summary and emotional peak of onboarding. Leads with the conversations the couple needs to have, not a topic count.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="07-log-in.html">← Screen 07: Log In</a>
-    <a class="nav-pill next" style="cursor:pointer;"  href="15-manage-topics.html">Screen 15: Manage Topics →</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="09-paywall.html">Screen 09: Paywall →</a>
   </div>
 </div>
 
@@ -83,70 +83,50 @@
 
   <!-- PHONE -->
   <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-personalized" onclick="showState('personalized')">Personalized</button>
+      <button class="state-tab" id="tab-fallback" onclick="showState('fallback')">Fallback</button>
+    </div>
+
     <div class="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
 
-        <div class="eyebrow">Your personalized plan</div>
-        <div class="screen-heading">You've got 45 topics to work through</div>
-        <div class="screen-body">We filtered out 6 topics that don't apply to you. You can review everything and adjust on the next screen.</div>
+        <div class="eyebrow anim d1">Your plan is ready</div>
+        <div class="screen-heading anim d2">You two have a lot<br>to talk about.</div>
+        <div class="screen-body anim d2">The big stuff most couples put off until it turns into a fight. You'll talk it through first, and go in as a team.</div>
 
-        <!-- Stats Display (columns: 3) -->
-        <div class="stats-row">
-          <div class="stat-col">
-            <div class="stat-num">45</div>
-            <div class="stat-label">Topics</div>
+        <!-- Conversation Preview — display-only. Default (personalized) markup lives here;
+             showState() swaps only this card's contents between personalized and fallback. -->
+        <div class="preview anim d3" id="preview">
+          <div class="pv-group-label mine">Starting with what you told us</div>
+          <div class="pv-row">
+            <span class="pv-dot mine"></span>
+            <span class="pv-q">How will we share parental and household duties?</span>
           </div>
-          <div class="stat-col">
-            <div class="stat-num">7</div>
-            <div class="stat-label">Categories</div>
+          <div class="pv-row">
+            <span class="pv-dot mine"></span>
+            <span class="pv-q">How will we make time for ourselves as a couple?</span>
           </div>
-          <div class="stat-col">
-            <div class="stat-num">~10wk</div>
-            <div class="stat-label">At your pace</div>
+          <div class="pv-group-label more">And a few couples don't see coming</div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">Who will be in the delivery room?</span>
           </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="section-label">Your categories</div>
-        <div class="pills-wrap">
-          <span class="pill pill-c">The Basics</span>
-          <span class="pill pill-c">Pregnancy & Birth</span>
-          <span class="pill pill-c">The Village</span>
-          <span class="pill pill-c">Eat, Poop, Sleep, Repeat</span>
-          <span class="pill pill-c">Education, Health & Development</span>
-          <span class="pill pill-c">The Existential</span>
-          <span class="pill pill-c">Us</span>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="info-card">
-          <div class="info-card-title">How it works</div>
-          <div class="info-card-body">
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="display:flex;gap:10px;align-items:flex-start;">
-                <span style="font-family:'Grandstander',cursive;font-size:15px;font-weight:700;color:#5f45f2;flex-shrink:0;line-height:1.4;">1</span>
-                <span style="font-size:13px;color:rgba(26,26,26,0.6);line-height:1.5;">Answer every question on your own — no peeking at each other's answers</span>
-              </div>
-              <div style="display:flex;gap:10px;align-items:flex-start;">
-                <span style="font-family:'Grandstander',cursive;font-size:15px;font-weight:700;color:#5f45f2;flex-shrink:0;line-height:1.4;">2</span>
-                <span style="font-size:13px;color:rgba(26,26,26,0.6);line-height:1.5;">When you're both done with a topic, see your answers side by side</span>
-              </div>
-              <div style="display:flex;gap:10px;align-items:flex-start;">
-                <span style="font-family:'Grandstander',cursive;font-size:15px;font-weight:700;color:#5f45f2;flex-shrink:0;line-height:1.4;">3</span>
-                <span style="font-size:13px;color:rgba(26,26,26,0.6);line-height:1.5;">Where you don't agree, we'll help you work through it together</span>
-              </div>
-            </div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">What will we keep from how we were raised, and what will we change?</span>
           </div>
         </div>
+
+        <div class="scope anim d4"><b>Plus 41 more</b>, across all 7 areas of parenting prep.</div>
 
         <div class="spacer"></div>
 
-        <button class="btn-primary">
-          Review and unlock your plan →
-        </button>
+        <div class="due anim d5">
+          <span class="due-pill"><b>~18 weeks</b> until baby's here</span>
+        </div>
+        <button class="btn-primary anim d6">Let's begin →</button>
 
       </div>
     </div>
@@ -162,94 +142,79 @@
         <div class="flow-arrow">→</div>
         <div class="flow-node current">08 Personalized Results</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node dest">15 Manage Topics</div>
+        <div class="flow-node dest">09 Paywall</div>
       </div>
       <div class="info-box">
-        <strong>Highest emotional engagement moment in onboarding.</strong> No back button. One CTA — "Review and unlock your plan →" — which primes the user for what they're about to see and positions the paywall as the natural next step. No bottom nav.
-        <br><br>The CTA 'Review and unlock your plan →' navigates to Screen 15 (Manage Topics), not directly to the Paywall. The Paywall is reached via Screen 15's 'Unlock my plan →' CTA.
+        <strong>Highest emotional engagement moment in onboarding.</strong> No back button, no bottom nav. One CTA — "Let's begin →" — which routes directly to the Paywall (Screen 09).
+        <br><br>Manage Topics (editing / removing topics) moves <strong>post-purchase</strong> and is no longer part of the pre-paywall flow. The conversation preview now does the priming that the topic-count summary used to do.
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
       <table class="spec-table">
-        <tr><td>Eyebrow</td><td>"Your personalized plan" · <code>label-sm</code> uppercase · <code>text-tertiary</code></td></tr>
-        <tr><td>Heading</td><td>"You've got 45 topics to work through" · Grandstander 24px bold · number is dynamic</td></tr>
-        <tr><td>Body</td><td>"We filtered out 6 topics that don't apply to you. You can review everything and adjust on the next screen." · filtered count is dynamic</td></tr>
-        <tr><td>CTA</td><td>"Review and unlock your plan →" · arrow is part of the label · navigates to Screen 15 Manage Topics</td></tr>
-      </table>
-      <div class="info-box">Lead with the filtered number first — "45 topics" not "51 topics". The relief of a smaller, tailored number is the emotional hook of this screen.</div>
-    </div>
-
-    <div class="spec-card">
-      <div class="spec-card-title">Stats Display (columns: 3)</div>
-      <table class="spec-table">
-        <tr><td>Layout</td><td>3 equal-width columns · full content width · flex row</td></tr>
-        <tr><td>Dividers</td><td><code>1px solid border-default</code> right border on cols 1–2</td></tr>
-        <tr><td>Number</td><td>Grandstander 32px bold · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
-        <tr><td>Label</td><td>DM Sans 11px medium · ALL CAPS · <code>letter-spacing: +0.05em</code> · <code>text-secondary</code> · 4px below number</td></tr>
-        <tr><td>Col 1</td><td>"28" / "TOPICS" — dynamic</td></tr>
-        <tr><td>Col 2</td><td>"7" / "CATEGORIES" — always 7</td></tr>
-        <tr><td>Col 3 (Guided timeline)</td><td>"~10wk" / "AT YOUR PACE" — calculated from topic count and nudge frequency</td></tr>
-        <tr><td>Col 3 (Self-directed)</td><td>"Up to you" / "TIMING" — static, no calculation</td></tr>
+        <tr><td>Eyebrow</td><td>"Your plan is ready" · <code>label-sm</code> uppercase · <code>purple-500</code> — documented per-screen exception to the <code>text-secondary</code> eyebrow standard (see design system)</td></tr>
+        <tr><td>Heading</td><td>"You two have a lot to talk about." · Grandstander 30px / 800 · static — no longer leads with a topic count</td></tr>
+        <tr><td>Subhead</td><td>"The big stuff most couples put off until it turns into a fight. You'll talk it through first, and go in as a team." · DM Sans 15px · <code>text-secondary</code></td></tr>
+        <tr><td>Scope line</td><td>"Plus 41 more, across all 7 areas of parenting prep." · 12.5px · <code>text-secondary</code> · count = plan total − topics shown (both dynamic)</td></tr>
+        <tr><td>Due-date pill</td><td>"~18 weeks until baby's here" · weeks is dynamic · conditional (see Due-date pill below)</td></tr>
+        <tr><td>CTA</td><td>"Let's begin →" · arrow is part of the label · navigates to Screen 09 Paywall</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Category pills</div>
-      <div style="margin-bottom:12px;">
-        <div class="cat-pills">
-          <span class="cat-pill" style="background:rgba(95,69,242,0.08);color:#5f45f2;">The Basics</span>
-          <span class="cat-pill" style="background:rgba(95,69,242,0.08);color:#5f45f2;">Pregnancy & Birth</span>
-          <span class="cat-pill" style="background:rgba(95,69,242,0.08);color:#5f45f2;">The Village</span>
-          <span class="cat-pill" style="background:rgba(95,69,242,0.08);color:#5f45f2;">Eat, Poop, Sleep, Repeat</span>
-          <span class="cat-pill" style="background:rgba(95,69,242,0.08);color:#5f45f2;">Education, Health & Development</span>
-          <span class="cat-pill" style="background:rgba(95,69,242,0.08);color:#5f45f2;">The Existential</span>
-          <span class="cat-pill" style="background:rgba(95,69,242,0.08);color:#5f45f2;">Us</span>
-        </div>
-      </div>
+      <div class="spec-card-title">Conversation Preview</div>
       <table class="spec-table">
-        <tr><td>Style</td><td><code>rgba(95,69,242,0.08)</code> bg · <code>purple-500</code> text · <code>radius-full</code> · 5px 12px padding · DM Sans 12px semibold · not interactive</td></tr>
-        <tr><td>Names</td><td>The 7 real book category names verbatim in Title Case — never abbreviated, reworded, or lowercased</td></tr>
-        <tr><td>Count</td><td>Always all 7 on this screen — this isn't filtered, it shows the full category set</td></tr>
-        <tr><td>Layout</td><td>Flex wrap · 6px gap</td></tr>
+        <tr><td>Role</td><td>The hero element. Display-only teaser — <strong>not interactive</strong>. No chevrons, status pills, state dots, hover/press, or tap target. Must read as a preview, never as the tappable Topic Row.</td></tr>
+        <tr><td>Container</td><td><code>surface-card</code> · <code>radius-2xl</code> · <code>shadow-lg</code> · rows separated by 1px <code>hair</code> hairlines</td></tr>
+        <tr><td>Question text</td><td>15px DM Sans medium · <code>text-primary</code> · worries reframed as conversation questions</td></tr>
+        <tr><td>Personalized variant</td><td>Group label "Starting with what you told us" (<code>purple-500</code>, purple dot markers) over the user's Q8 worries, then "And a few couples don't see coming" (<code>text-tertiary</code>, neutral dots) over curated universal topics. Padded to ~4 rows.</td></tr>
+        <tr><td>Fallback variant</td><td>Single label "A few you'll want to sit down for" + the fixed four topics (neutral dots). Shown when Q8 is skipped / empty.</td></tr>
+      </table>
+      <div class="info-box">Recognition, not bespoke curation — the curated additions are explicitly labelled as <em>not</em> from the user's input, so we never imply every shown topic was chosen for them.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Personalization logic</div>
+      <table class="spec-table">
+        <tr><td>Source</td><td>Q8 "What are you nervous about?" When answered, the user's worries lead (reframed as questions, labelled as theirs) and are padded to ~4 with curated universal topics. When skipped / empty, fall back to the fixed four.</td></tr>
+        <tr><td>"Who will handle what"</td><td>→ How will we share parental and household duties?</td></tr>
+        <tr><td>"Making time for ourselves"</td><td>→ How will we make time for ourselves as a couple?</td></tr>
+        <tr><td>"Deciding the right way to parent"</td><td>→ What will we keep from how we were raised, and what will we change?</td></tr>
+        <tr><td>"How we'll get enough sleep"</td><td>→ a sleep conversation topic</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">"How it works" card</div>
+      <div class="spec-card-title">Due-date pill</div>
       <table class="spec-table">
-        <tr><td>Background</td><td><code>surface-card</code> (white)</td></tr>
-        <tr><td>Border radius</td><td><code>radius-xl</code> (16px)</td></tr>
-        <tr><td>Shadow</td><td><code>shadow-md</code></td></tr>
-        <tr><td>Padding</td><td>16px</td></tr>
-        <tr><td>Title</td><td>"How it works" · 14px DM Sans bold · <code>text-primary</code></td></tr>
-        <tr><td>Body</td><td>Numbered 1–2–3 list · Grandstander purple number left · 13px DM Sans regular body right · 8px gap between items</td></tr>
+        <tr><td>Style</td><td>Subtle neutral chip · <code>radius-full</code> · <code>rgba(26,26,26,0.04)</code> bg · DM Sans 12.5px · <code>text-secondary</code> · no shadow · sits just above the CTA</td></tr>
+        <tr><td>Copy</td><td>"~N weeks until baby's here" · N dynamic</td></tr>
+        <tr><td>Shown when</td><td>A due date exists <strong>and</strong> weeks-remaining ≥ 5 (threshold tunable). Scopes it to the "currently pregnant" and "expecting again" branches.</td></tr>
+        <tr><td>Hidden when</td><td>Trying / thinking about trying (no date), or countdown < 5 weeks — a low number reads as "not enough time" and hurts conversion.</td></tr>
+        <tr><td>Out of scope</td><td>"Baby is already here" — that would be an age, not a countdown; a separate element, not this pill.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
-        <span class="component-tag">Stats Display (columns: 3)</span>
-        <span class="component-tag">Badge / Category Pill ×7</span>
-        <span class="component-tag">Divider</span>
-        <span class="component-tag">Info Card</span>
+        <span class="component-tag">Conversation Preview</span>
+        <span class="component-tag">Due-date pill</span>
         <span class="component-tag">Button — Primary (lg)</span>
-        <span class="component-tag">Screen Header (eyebrow)</span>
+        <span class="component-tag">Screen eyebrow</span>
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>Topic count (45) and filtered count (6) are both dynamic — calculated from quiz answers. Example numbers shown here.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>For returning unpaid users, this screen renders without re-running the build animation. The plan is loaded from their saved state and shown immediately. The CTA "Review and unlock your plan →" leads to Manage Topics → Paywall as normal.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Pace estimate (~10wk) is calculated from topic count and nudge frequency answer from quiz.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Col 3 of the stats row varies based on Q8 (Guided timeline vs Self-directed). Self-directed users see "Up to you / TIMING" since the pace estimate doesn't apply to their mode.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>All 7 categories always shown — this screen shows the full plan, not a subset.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>'Review and unlock your plan →' → Screen 15 Manage Topics (onboarding context). No bottom nav. No back button.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Screen 15 'Unlock my plan →' → Screen 09 Paywall. The Paywall is not reached directly from Screen 08.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Conversation Preview is personalized from Q8 when answered, otherwise falls back to the fixed four. Example content shown here.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Scope-line numbers are dynamic: "Plus N more" where N = plan total − topics shown; the area count is always 7.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Due-date pill renders only when a due date exists and weeks-remaining ≥ 5; hidden for the trying / thinking branch and when the countdown is too short.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Let's begin →" → Screen 09 Paywall. No bottom nav. No back button.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"How it works" has been removed from this screen. Its content is preserved (Info Card pattern in the design system) and is being relocated to a more actionable spot (intro / just-in-time before the first question) as a separate task — not deleted from the product.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>For returning unpaid users, this screen loads from saved plan state and skips the build animation; the same "Let's begin →" → Paywall path applies.</span></div>
       </div>
     </div>
 
@@ -260,12 +225,47 @@
   <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 08 of 30</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="07-log-in.html">← Screen 07: Log In</a>
-    <a class="nav-pill next" style="cursor:pointer;"  href="15-manage-topics.html">Screen 15: Manage Topics →</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="09-paywall.html">Screen 09: Paywall →</a>
   </div>
 </div>
     </div>
   </div>
 </div>
+<script>
+// Mirror Screen 07's state-tab pattern. Personalized markup is authored once in the
+// static HTML above (captured here); only the Conversation Preview card swaps on toggle.
+(function () {
+  const preview = document.getElementById('preview');
+  const PV_PERSONALIZED = preview.innerHTML;
+  const PV_FALLBACK = `
+          <div class="pv-label-fixed">A few you'll want to sit down for</div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">How will we share parental and household duties?</span>
+          </div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">Who will be in the delivery room?</span>
+          </div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">What will we keep from how we were raised, and what will we change?</span>
+          </div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">How will we make time for ourselves as a couple?</span>
+          </div>`;
+
+  window.showState = function (state) {
+    ['personalized', 'fallback'].forEach(s => {
+      document.getElementById('tab-' + s).classList.toggle('active', s === state);
+    });
+    preview.innerHTML = state === 'fallback' ? PV_FALLBACK : PV_PERSONALIZED;
+  };
+
+  showState('personalized');
+})();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>

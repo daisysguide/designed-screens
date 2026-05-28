@@ -190,6 +190,7 @@ These appear in v4 screen files but are not in the type scale. Each one should m
 - ALL CAPS is reserved exclusively for `label-sm`. Never for headings, body, or display sizes.
 - Letter-spacing convention: **em throughout**. Convert any `+0.5px` etc. in screen files to em equivalents.
 - Grandstander letter-spacing: `-0.02em`. DM Sans: `0` (default). `label-sm` uppercase: `+0.05em`.
+- No em dashes in user-facing screen copy — use periods, commas, or restructure the sentence. (Spec and documentation prose may still use them.)
 
 ### Spacing
 
@@ -740,9 +741,28 @@ Small inline timer pill. Used on OTP Verification for the resend cooldown.
 | Content | "30s" counting down to 0, then disappears |
 | Position | Inline next to the affordance it's gating (e.g. "Resend code") |
 
+### Due-Date Pill — NEW
+
+Quiet neutral chip used on `personalized-results`, just above the CTA, to ground the plan in the user's timeline. Distinct from the Countdown Pill (which is a live timer); this is a static, encouraging "weeks remaining."
+
+| Property | Value |
+|---|---|
+| Style | `radius-full` · `rgba(26,26,26,0.04)` bg · 6px 14px padding · no shadow |
+| Font | 12.5px DM Sans · `text-secondary`; the number in `text-primary` bold |
+| Content | "~N weeks until baby's here" (N dynamic) |
+| Position | Centered, directly above the primary CTA |
+
+#### Conditional display
+
+- **Shown** only when a due date exists **and** weeks-remaining ≥ 5 (threshold tunable). Scopes it to the "currently pregnant" and "expecting again" journeys.
+- **Hidden** for "trying / thinking about trying" (no date) and when the countdown is under 5 weeks — a low number reads as "not enough time" and depresses conversion.
+- **Out of scope:** "baby is already here" would be an age, not a countdown; that's a separate element, not this pill.
+
 ### Category Pill — NEW
 
-Compact inline pill used on Personalized Results to display the 7 book category names.
+Compact inline pill for displaying the 7 book category names.
+
+> **Currently unused / reserved.** `personalized-results` was its only consumer and no longer renders it (redesigned around the Conversation Preview). Kept in the system for reuse — do not delete.
 
 | Property | Value |
 |---|---|
@@ -810,6 +830,21 @@ Top chrome on every flow screen.
 | Border (default) | None |
 | Border (scrolled) | `1px solid border-default` on bottom |
 | Horizontal padding | 4px |
+
+### Screen Eyebrow — NEW
+
+Short uppercase label sitting directly above a screen heading (e.g. "Log in", "Your plan is ready"). Gives the heading one or two words of context.
+
+| Property | Value |
+|---|---|
+| Font | `label-sm` · ALL CAPS |
+| Color | `text-secondary` (60%) — the standard for screen eyebrows |
+| Position | Directly above the screen heading · `space-2` below it |
+| Letter-spacing | per `label-sm` (`+0.05em`, uppercase) |
+
+**Color standard:** screen eyebrows use `text-secondary`. Card-internal eyebrows (e.g. Onboarding Nudge Card) keep their own treatment.
+
+**Documented exception — `personalized-results`:** its eyebrow "Your plan is ready" is rendered in `purple-500` on purpose. It marks the emotional peak of onboarding and ties the eyebrow to the primary action color. This is an intentional per-screen exception, not drift — a cross-screen eyebrow audit should leave it as-is.
 
 ### Article Nav Bar — NEW
 
@@ -1047,6 +1082,29 @@ Used on `manage-topics` for the 3-state inclusion checkbox + topic name + reason
 | "Tap to add back" | Inline link in reason text · `text-link` color |
 | Row padding | 10px vertical |
 | Row separator | 1px solid `rgba(26,26,26,0.06)` |
+
+### Conversation Preview — NEW
+
+Display-only teaser used on `personalized-results` to show a few of the conversations a couple will have. It is the screen's hero element and replaced the old stats row + category pills.
+
+| Property | Value |
+|---|---|
+| Container | `surface-card` · `radius-2xl` · `shadow-lg` · 6px 18px 18px padding |
+| Rows | Separated by 1px hairline (`rgba(26,26,26,0.08)`); first row has no top border |
+| Question text | 15px DM Sans medium · `text-primary` · worries reframed as conversation questions |
+| Dot marker | 7px circle · `purple-500` for the user's own items, `border-default` (neutral) otherwise |
+| Group label | `label-sm` uppercase · `purple-500` ("yours") or `text-tertiary` ("curated") |
+| Scope line | Below the card · 12.5px · `text-secondary` · "Plus N more, across all 7 areas…" (N dynamic) |
+
+#### Variants
+
+- **Personalized** (Q8 answered): label "Starting with what you told us" (purple) over the user's worries, then "And a few couples don't see coming" (tertiary) over curated universal topics. Padded to ~4 rows.
+- **Fallback** (Q8 skipped / empty): single label "A few you'll want to sit down for" + the fixed four topics, all neutral dots.
+
+#### Rules
+
+- **Must be visually distinct from the Topic Row.** It is a preview, not a list item: no chevrons, no status pills, no state dots, no hover / press state, no tap target. If it starts to look tappable, it's wrong.
+- **Recognition, not bespoke curation.** Curated additions are explicitly labelled as *not* from the user's input. Never imply every shown topic was hand-picked for them.
 
 ### Question Card
 
@@ -1433,7 +1491,7 @@ Single-select. Tapping another deselects previous.
 
 ### Info Card ("How it works") — NEW
 
-Numbered-step explainer card used on `personalized-results` ("How it works") and as a general pattern.
+Numbered-step explainer card. A general pattern; it was previously on `personalized-results` ("How it works"), which has since dropped it — that content is being relocated to a more actionable spot (intro / just-in-time before the first question), so the component stays documented here.
 
 | Property | Value |
 |---|---|
@@ -1720,6 +1778,19 @@ This document does not have a version number. It is at HEAD. Changes are dated i
 ## CHANGELOG
 
 Date-stamped record of design system decisions. Add new entries at the top.
+
+### 2026-05-27 — Screen 08 (Personalized Results) redesign
+
+Redesigned `personalized-results` around a Conversation Preview instead of a plan summary:
+
+- **Removed from the screen:** the 3-column Stats Display, the category-pill row + "Your categories" label, and the on-screen "How it works" Info Card. (Stats Display and Info Card stay in the system — Stats Display is used elsewhere; Info Card's content is relocating.)
+- **New copy:** eyebrow "Your plan is ready"; heading "You two have a lot to talk about." (no longer leads with a topic count); a subhead; and a scope line "Plus N more, across all 7 areas of parenting prep."
+- **New components:** Conversation Preview (display-only teaser, personalized vs fallback variants, hard rule that it must not look like the tappable Topic Row) and Due-Date Pill (quiet conditional chip, shown only when a due date exists and weeks-remaining ≥ 5).
+- **CTA reworded and rerouted:** "Review and unlock your plan →" became "Let's begin →" and routes directly to `paywall` (was `manage-topics`). Manage Topics moves post-purchase. The cross-screen nav-diagram + Manage-Topics entry-point ripple is tracked as a separate task.
+- **Screen Eyebrow standard documented:** screen eyebrows use `text-secondary` (60%); `personalized-results` keeps a `purple-500` eyebrow as a documented per-screen exception (emotional peak).
+- **Category Pill marked reserved / unused** (08 was its only consumer).
+- **Copy rule added:** no em dashes in user-facing screen copy.
+- **Tokens:** `radius-2xl` and `shadow-lg` were reused at their canonical DS values for the preview card; the source mockup's 22px radius and heavier shadow were not adopted, to stay with the subtle-mobile-shadow philosophy. A warm radial-gradient background and a staggered entrance animation (with a `prefers-reduced-motion` fallback) were added page-locally on 08. `--peach` / `--cream-deep` are page-local for now — promotion candidates if the warm gradient is reused.
 
 ### 2026-05-27 — Initial v2.0 release
 
