@@ -323,6 +323,11 @@
 
 <!-- ── Paywall mockup styles (scoped under .s09) ── -->
 <style>
+  /* The shared .phone-screen wrapper applies padding: 20px 24px 36px, which
+     would compound with the mockup's own .pad / padding-top values. Zero it
+     for the screen-09 paywall so the v9 artifact's spacing is the single
+     source of truth. Scoped via :has(> .s09) so only this screen is affected. */
+  body.page-10 .screen-root .phone-screen:has(> .s09){padding:0}
   .s09{
     --cream:#F6F0E6; --ink:#1A1A1A; --muted:#6B6962; --hint:#9A968C;
     --purple:#5F45F2; --green:#157A46; --border:#E8E3D8; --gold:#E0A800;
