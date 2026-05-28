@@ -81,6 +81,37 @@ if [[ -f "$DS_FILE" ]] && grep -EHn '\bScreen [0-9]+\b' "$DS_FILE" 2>/dev/null |
   grep -EHn '\bScreen [0-9]+\b' "$DS_FILE" 2>/dev/null
 fi
 
+# Rule 6: Retired topic-state labels appearing as user-facing strings.
+# UI labels are "Needs work" / "We're good"; "Pending" / "Resolved" stay
+# only as data-model state names / CSS class names / JS keys.
+# Excludes the step-checklist legend on Screen 03 (different concept).
+if grep -rEHIn --include="*.html" '>(✓ |✅ )?(Pending|Resolved) *<' "$SCREEN_DIR" 2>/dev/null | grep -v 'legend-text' | grep -q .; then
+  echo ""
+  echo "FAIL [rule 6]: Retired user-facing label found. Use 'Needs work' / 'We're good' (data model can still say pending/resolved):"
+  grep -rEHIn --include="*.html" '>(✓ |✅ )?(Pending|Resolved) *<' "$SCREEN_DIR" 2>/dev/null | grep -v 'legend-text'
+  FAILED=1
+fi
+
+# Rule 7: Retired "AI Summary" card naming. The card is "For you two";
+# the label rendering is "✨ FOR YOU TWO".
+if grep -rEHIn --include="*.html" '(AI Summary Card|AI summary card|✨ AI [sS]ummary)' "$SCREEN_DIR" 2>/dev/null | grep -q .; then
+  echo ""
+  echo "FAIL [rule 7]: Retired 'AI Summary' card reference found. Use 'For you two' / 'For you two card' / '✨ FOR YOU TWO':"
+  grep -rEHIn --include="*.html" '(AI Summary Card|AI summary card|✨ AI [sS]ummary)' "$SCREEN_DIR" 2>/dev/null
+  FAILED=1
+fi
+
+# Rule 8: Off-spec button heights (warn). Buttons must be 56 / 44 / 32.
+# 52px / 42px usually indicate drift, but list-row min-height legitimately
+# uses 52px and the Empty Home Onboarding Nudge Card has a documented
+# 42px exception. Lines containing "Min height" or "deliberate exception"
+# are skipped.
+if grep -rEHIn --include="*.html" '\b(52|42)px\b' "$SCREEN_DIR" 2>/dev/null | grep -vE '(Min height|deliberate exception)' | grep -q .; then
+  echo ""
+  echo "WARN [rule 8]: 52px / 42px height found outside known exceptions. Buttons should be 56 / 44 / 32 — confirm this isn't an off-spec button height:"
+  grep -rEHIn --include="*.html" '\b(52|42)px\b' "$SCREEN_DIR" 2>/dev/null | grep -vE '(Min height|deliberate exception)'
+fi
+
 # Summary
 echo ""
 if [[ $FAILED -eq 1 ]]; then
