@@ -1394,8 +1394,8 @@ Composed row showing one category's completion. Stacked vertically on `progress`
 1. The Basics
 2. Pregnancy & Birth
 3. The Village
-4. Eat, Poop, Sleep
-5. Health & Development
+4. Eat, Poop, Sleep, Repeat
+5. Education, Health & Development
 6. The Existential
 7. Us
 
