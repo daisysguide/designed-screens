@@ -3181,12 +3181,11 @@ body.page-11 .screen-root .phone-notch {
 body.page-11 .screen-root .phone-screen {
     height: calc(812px - 30px);
     display: flex; flex-direction: column; overflow: hidden;
-    position: relative;
   }
 
 body.page-11 .screen-root /* Scroll area */
   .scroll-area {
-    flex: 1; overflow-y: auto; padding: 16px 20px 84px;
+    flex: 1; overflow-y: auto; padding: 16px 20px 12px;
     scrollbar-width: none;
   }
 
@@ -3392,12 +3391,8 @@ body.page-11 .screen-root .see-progress {
 
 body.page-11 .screen-root /* Bottom nav */
   .bottom-nav {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 84px; padding: 0 8px 20px;
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(255,255,255,0.5);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
+    border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
@@ -3573,7 +3568,6 @@ body.page-12 .screen-root .phone-notch {
 body.page-12 .screen-root .phone-screen {
     height: calc(812px - 30px);
     display: flex; flex-direction: column; overflow: hidden;
-    position: relative;
   }
 
 body.page-12 .screen-root /* Header */
@@ -3601,7 +3595,7 @@ body.page-12 .screen-root .manage-link {
 
 body.page-12 .screen-root /* Scroll area */
   .scroll-area {
-    flex: 1; overflow-y: auto; padding: 4px 20px 84px;
+    flex: 1; overflow-y: auto; padding: 4px 20px 12px;
     scrollbar-width: none;
   }
 
@@ -3709,12 +3703,8 @@ body.page-12 .screen-root .cat-collapsed-count { font-size: 11px; color: var(--t
 
 body.page-12 .screen-root /* Bottom nav */
   .bottom-nav {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 84px; padding: 0 8px 20px;
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(255,255,255,0.5);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
+    border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
@@ -6265,12 +6255,11 @@ body.page-22 .screen-root .phone-notch {
 body.page-22 .screen-root .phone-screen {
     height: calc(812px - 30px);
     display: flex; flex-direction: column; overflow: hidden;
-    position: relative;
   }
 
 body.page-22 .screen-root /* Scroll area */
   .scroll-area {
-    flex: 1; overflow-y: auto; padding: 16px 20px 84px;
+    flex: 1; overflow-y: auto; padding: 16px 20px 12px;
     scrollbar-width: none;
   }
 
@@ -6374,12 +6363,8 @@ body.page-22 .screen-root .chaos-score {
 
 body.page-22 .screen-root /* Bottom nav */
   .bottom-nav {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 84px; padding: 0 8px 20px;
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(255,255,255,0.5);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
+    border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
@@ -6551,12 +6536,11 @@ body.page-23 .screen-root .phone-notch {
 body.page-23 .screen-root .phone-screen {
     height: calc(812px - 30px);
     display: flex; flex-direction: column; overflow: hidden;
-    position: relative;
   }
 
 body.page-23 .screen-root /* Scroll area */
   .scroll-area {
-    flex: 1; overflow-y: auto; padding: 16px 20px 84px;
+    flex: 1; overflow-y: auto; padding: 16px 20px 12px;
     scrollbar-width: none;
   }
 
@@ -6648,12 +6632,8 @@ body.page-23 .screen-root /* Destructive row */
 
 body.page-23 .screen-root /* Bottom nav */
   .bottom-nav {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 84px; padding: 0 8px 20px;
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(255,255,255,0.5);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
+    border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
@@ -6843,11 +6823,10 @@ body.page-24 .screen-root .phone-notch {
 body.page-24 .screen-root .phone-screen {
     height: calc(812px - 30px);
     display: flex; flex-direction: column; overflow: hidden;
-    position: relative;
   }
 
 body.page-24 .screen-root .scroll-area {
-    flex: 1; overflow-y: auto; padding: 16px 20px 84px;
+    flex: 1; overflow-y: auto; padding: 16px 20px 12px;
     scrollbar-width: none;
   }
 
@@ -6961,12 +6940,8 @@ body.page-24 .screen-root .see-all-link { font-size: 13px; font-weight: 700; col
 
 body.page-24 .screen-root /* BOTTOM NAV */
   .bottom-nav {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 84px; padding: 0 8px 20px;
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(255,255,255,0.5);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
+    border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
@@ -7108,7 +7083,7 @@ body.page-25 .screen-root .phone-notch {
     border-radius: 0 0 20px 20px; margin: 0 auto;
   }
 
-body.page-25 .screen-root .phone-screen { height: calc(812px - 30px); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+body.page-25 .screen-root .phone-screen { height: calc(812px - 30px); display: flex; flex-direction: column; overflow: hidden; }
 
 body.page-25 .screen-root /* SCREEN HEADER */
   .screen-header {
@@ -7127,7 +7102,7 @@ body.page-25 .screen-root .screen-header-title {
     color: var(--text-primary); letter-spacing: -0.02em;
   }
 
-body.page-25 .screen-root .scroll-area { flex: 1; overflow-y: auto; padding: 8px 20px 84px; scrollbar-width: none; }
+body.page-25 .screen-root .scroll-area { flex: 1; overflow-y: auto; padding: 8px 20px 20px; scrollbar-width: none; }
 
 body.page-25 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
 
@@ -7179,12 +7154,8 @@ body.page-25 .screen-root .btn-primary-small {
 
 body.page-25 .screen-root /* BOTTOM NAV */
   .bottom-nav {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 84px; padding: 0 8px 20px;
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(255,255,255,0.5);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
+    border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
@@ -7576,7 +7547,7 @@ body.page-27 .screen-root .phone {
 
 body.page-27 .screen-root .phone-notch { width: 126px; height: 30px; background: var(--black); border-radius: 0 0 20px 20px; margin: 0 auto; }
 
-body.page-27 .screen-root .phone-screen { height: calc(812px - 30px); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+body.page-27 .screen-root .phone-screen { height: calc(812px - 30px); display: flex; flex-direction: column; overflow: hidden; }
 
 body.page-27 .screen-root /* SCREEN HEADER */
   .screen-header {
@@ -7585,7 +7556,7 @@ body.page-27 .screen-root /* SCREEN HEADER */
 
 body.page-27 .screen-root .back-btn { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; margin-left: -10px; }
 
-body.page-27 .screen-root .scroll-area { flex: 1; overflow-y: auto; padding: 8px 24px 84px; scrollbar-width: none; }
+body.page-27 .screen-root .scroll-area { flex: 1; overflow-y: auto; padding: 8px 24px 40px; scrollbar-width: none; }
 
 body.page-27 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
 
@@ -7636,12 +7607,7 @@ body.page-27 .screen-root .skeleton-line.medium { width: 80%; }
 
 body.page-27 .screen-root /* BOTTOM NAV */
   .bottom-nav {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 84px; padding: 0 8px 20px;
-    background: rgba(255,255,255,0.72);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(255,255,255,0.5);
+    height: 84px; padding: 0 8px 20px; background: var(--white); border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
