@@ -3399,7 +3399,7 @@ body.page-11 .screen-root /* Bottom nav */
 body.page-11 .screen-root .nav-tab {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 3px;
-    cursor: pointer; color: var(--text-secondary);
+    cursor: pointer; color: var(--text-secondary); text-decoration: none;
   }
 
 body.page-11 .screen-root .nav-tab.active { color: var(--purple-500); }
@@ -3710,7 +3710,7 @@ body.page-12 .screen-root /* Bottom nav */
 
 body.page-12 .screen-root .nav-tab {
     flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 3px; cursor: pointer; color: var(--text-secondary);
+    align-items: center; justify-content: center; gap: 3px; cursor: pointer; color: var(--text-secondary); text-decoration: none;
   }
 
 body.page-12 .screen-root .nav-tab.active { color: var(--purple-500); }
@@ -6370,7 +6370,7 @@ body.page-22 .screen-root /* Bottom nav */
 
 body.page-22 .screen-root .nav-tab {
     flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 3px; cursor: pointer; color: var(--text-secondary);
+    align-items: center; justify-content: center; gap: 3px; cursor: pointer; color: var(--text-secondary); text-decoration: none;
   }
 
 body.page-22 .screen-root .nav-tab.active { color: var(--purple-500); }
@@ -6639,7 +6639,7 @@ body.page-23 .screen-root /* Bottom nav */
 
 body.page-23 .screen-root .nav-tab {
     flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 3px; cursor: pointer; color: var(--text-secondary);
+    align-items: center; justify-content: center; gap: 3px; cursor: pointer; color: var(--text-secondary); text-decoration: none;
   }
 
 body.page-23 .screen-root .nav-tab.active { color: var(--purple-500); }
