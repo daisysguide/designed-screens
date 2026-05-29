@@ -3703,7 +3703,7 @@ body.page-12 .screen-root .cat-collapsed-count { font-size: 11px; color: var(--t
 
 body.page-12 .screen-root /* Bottom nav */
   .bottom-nav {
-    height: 64px; background: var(--white);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
     border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
@@ -6363,7 +6363,7 @@ body.page-22 .screen-root .chaos-score {
 
 body.page-22 .screen-root /* Bottom nav */
   .bottom-nav {
-    height: 64px; background: var(--white);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
     border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
@@ -6632,7 +6632,7 @@ body.page-23 .screen-root /* Destructive row */
 
 body.page-23 .screen-root /* Bottom nav */
   .bottom-nav {
-    height: 64px; background: var(--white);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
     border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
@@ -6940,7 +6940,7 @@ body.page-24 .screen-root .see-all-link { font-size: 13px; font-weight: 700; col
 
 body.page-24 .screen-root /* BOTTOM NAV */
   .bottom-nav {
-    height: 64px; background: var(--white);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
     border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
@@ -7154,7 +7154,7 @@ body.page-25 .screen-root .btn-primary-small {
 
 body.page-25 .screen-root /* BOTTOM NAV */
   .bottom-nav {
-    height: 64px; background: var(--white);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
     border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
@@ -7607,7 +7607,7 @@ body.page-27 .screen-root .skeleton-line.medium { width: 80%; }
 
 body.page-27 .screen-root /* BOTTOM NAV */
   .bottom-nav {
-    height: 64px; background: var(--white); border-top: 1px solid var(--border-default);
+    height: 84px; padding: 0 8px 20px; background: var(--white); border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
