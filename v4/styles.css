@@ -3391,7 +3391,7 @@ body.page-11 .screen-root .see-progress {
 
 body.page-11 .screen-root /* Bottom nav */
   .bottom-nav {
-    height: 64px; background: var(--white);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
     border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
