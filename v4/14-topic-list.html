@@ -201,7 +201,7 @@
               <div class="cat-body"><div class="single-list"><div class="topic-card">
                 <div class="topic-row"><div class="topic-name">What activities or traditions do we want to start or continue?</div></div>
                 <div class="topic-row"><div class="topic-name">How will we share our culture and/or religion with our child?</div></div>
-                <div class="topic-row"><div class="topic-name">What aspects of our upbringing will we replicate and what will we avoid as parents?</div></div>
+                <div class="topic-row"><div class="topic-name">What aspects of our upbringing will we replicate, and what will we avoid?</div></div>
                 <div class="topic-row"><div class="topic-name">What are the values we want to pass on?</div></div>
               </div></div></div>
             </div>
@@ -545,6 +545,30 @@
     </div>
   </div>
 </div>
+<script>
+(function () {
+  var root = document.querySelector('.screen-root');
+  if (!root) return;
+
+  var btns = root.querySelectorAll('.group-toggle button');
+  var catView = root.querySelector('#view-category');
+  var stageView = root.querySelector('#view-stage');
+  function setView(which) {
+    if (catView) catView.style.display = (which === 'stage') ? 'none' : 'block';
+    if (stageView) stageView.style.display = (which === 'stage') ? 'block' : 'none';
+    btns.forEach(function (b) { b.classList.remove('active'); });
+  }
+  if (btns[0]) btns[0].addEventListener('click', function () { setView('category'); btns[0].classList.add('active'); });
+  if (btns[1]) btns[1].addEventListener('click', function () { setView('stage'); btns[1].classList.add('active'); });
+  setView('category');
+  if (btns[0]) btns[0].classList.add('active');
+
+  root.querySelectorAll('.cat-header').forEach(function (h) {
+    h.style.cursor = 'pointer';
+    h.addEventListener('click', function () { h.parentElement.classList.toggle('collapsed'); });
+  });
+})();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>
