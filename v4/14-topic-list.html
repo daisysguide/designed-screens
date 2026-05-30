@@ -73,7 +73,7 @@
   <div>
     <div class="screen-tag">Screen 14 · Topic Flow</div>
     <div class="page-title">Topic List</div>
-    <div class="page-desc">All 7 categories. Five topic states + Locked. Category / Stage grouping toggle. Collapsible groups. "Manage topics" top right.</div>
+    <div class="page-desc">All 7 categories. Two-phase topic model: an action-phase pill per user (Not started / Your turn / Ready to reveal / Partner's turn), and after reveal a shared alignment band (Fully · Mostly · Worth a conversation). Floating Category / Stage toggle above bottom nav. Collapsible groups. "Manage topics" top right.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="13-settings.html">← Screen 13: Settings</a>
@@ -93,7 +93,7 @@
         <div class="screen-header">
           <div class="screen-header-left">
             <div class="screen-title">Your topics</div>
-            <div class="screen-subtitle">45 topics · 10 complete</div>
+            <div class="screen-subtitle">49 topics · 3 revealed</div>
           </div>
           <div class="manage-link">Manage topics</div>
         </div>
@@ -101,110 +101,231 @@
         <!-- Scroll area -->
         <div class="scroll-area">
 
-          <!-- The Basics — expanded -->
-          <div class="cat-group">
-            <div class="cat-header">
-              <div class="cat-header-left">
-                <span class="cat-name">The Basics</span>
-                <span class="cat-count">5 topics</span>
-              </div>
-              <span class="cat-chevron">›</span>
-            </div>
-            <div class="topic-rows">
-              <div class="topic-row">
-                <div class="state-dot resolved"></div>
-                <div class="topic-label-wrap"><div class="topic-name">What will baby's name be?</div></div>
-                <div class="topic-right"><span class="status-pill pill-resolved">✓ We're good</span></div>
-              </div>
-              <div class="topic-row">
-                <div class="state-dot pending"></div>
-                <div class="topic-label-wrap"><div class="topic-name">When will we tell our parents we're pregnant?</div></div>
-                <div class="topic-right"><span class="status-pill pill-pending">Needs work</span></div>
-              </div>
-              <div class="topic-row">
-                <div class="state-dot your-turn"></div>
-                <div class="topic-label-wrap"><div class="topic-name" style="font-weight:700;">How will we budget for a baby?</div></div>
-                <div class="topic-right"><span class="status-pill pill-your-turn">Your turn</span></div>
-              </div>
-              <div class="topic-row">
-                <div class="state-dot waiting"></div>
-                <div class="topic-label-wrap"><div class="topic-name dimmed">Health insurance</div></div>
-                <div class="topic-right"><span class="status-pill pill-waiting">⏳ Waiting</span></div>
-              </div>
-              <div class="topic-row">
-                <div class="state-dot pending"></div>
-                <div class="topic-label-wrap"><div class="topic-name">Do we have life insurance?</div></div>
-                <div class="topic-right"><span class="status-pill pill-pending">Needs work</span></div>
-              </div>
-              <div class="topic-row">
-                <div class="state-dot locked"></div>
-                <div class="topic-label-wrap"><div class="topic-name locked-text">What baby items do we actually need to buy before the birth?</div></div>
-                <div class="topic-right"><span class="status-pill pill-locked">🔒 Locked</span></div>
+          <!-- ============ BY CATEGORY ============ -->
+          <div id="view-category">
+
+            <!-- The Basics — expanded, peek -->
+            <div class="cat-group">
+              <div class="cat-header"><span class="cat-name">The Basics</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body">
+                <div class="phase-scroller">
+                  <div class="phase-page">
+                    <div class="phase-eyebrow">Not revealed yet · 4</div>
+                    <div class="topic-card">
+                      <div class="topic-row reveal-row"><div class="topic-name">How will we budget for a baby?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                      <div class="topic-row"><div class="topic-name">Where will we raise our family?</div><span class="pill pill-your-turn">Your turn</span></div>
+                      <div class="topic-row"><div class="topic-name">What items do we need to get for the baby?</div><span class="pill pill-partner">Sam's turn</span></div>
+                      <div class="topic-row"><div class="topic-name">What will baby's last name be?</div></div>
+                    </div>
+                  </div>
+                  <div class="phase-page">
+                    <div class="phase-eyebrow">Revealed · 3</div>
+                    <div class="topic-card">
+                      <div class="group-divider fully">Fully aligned<span class="gc">1</span></div>
+                      <div class="topic-row"><div class="topic-name">What will baby's first and middle name be?</div></div>
+                      <div class="group-divider mostly">Mostly aligned<span class="gc">1</span></div>
+                      <div class="topic-row"><div class="topic-name">Do we have the right health insurance?</div></div>
+                      <div class="group-divider worth">Worth a conversation<span class="gc">1</span></div>
+                      <div class="topic-row"><div class="topic-name">Do we have life insurance, and is it enough?</div></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
+            <!-- Pregnancy & Birth -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Pregnancy &amp; Birth</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">What is our birth plan?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want a doctor or a midwife?</div></div>
+                <div class="topic-row"><div class="topic-name">Where do we want to give birth?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want a birth doula?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will be in the delivery room?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want health screenings — even if they reveal something hard?</div></div>
+                <div class="topic-row"><div class="topic-name">When do we want to find out the baby's sex?</div></div>
+                <div class="topic-row"><div class="topic-name">If it's a boy, will we circumcise?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we respond if there's birth trauma?</div></div>
+              </div></div></div>
+            </div>
+
+            <!-- The Village -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">The Village</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">When will we tell people that we're expecting?</div></div>
+                <div class="topic-row"><div class="topic-name">Will we share the baby's name and/or sex before it's born?</div></div>
+                <div class="topic-row"><div class="topic-name">What kind of baby shower do we want?</div></div>
+                <div class="topic-row"><div class="topic-name">When will people meet the baby?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will we trust to watch the baby or babysit?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want a postpartum doula, lactation consultant, and/or a night nurse?</div></div>
+                <div class="topic-row"><div class="topic-name">What will we do about childcare?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we approach spending time with extended family?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will be the legal guardian if something happens to us?</div></div>
+                <div class="topic-row"><div class="topic-name">Should we make a will before the baby is born?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want our baby to have godparents? If so, who would we choose?</div></div>
+              </div></div></div>
+            </div>
+
+            <!-- Eat, Poop, Sleep, Repeat -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Eat, Poop, Sleep, Repeat</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">Breastfeed, formula, or combo feed?</div></div>
+                <div class="topic-row"><div class="topic-name">Where will the baby sleep?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we help the baby sleep?</div></div>
+                <div class="topic-row"><div class="topic-name">When and how will we introduce solids?</div></div>
+              </div></div></div>
+            </div>
+
+            <!-- Education, Health & Development -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Education, Health &amp; Development</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">How will we choose a pediatrician?</div></div>
+                <div class="topic-row"><div class="topic-name">What will we do if we are told our baby has a tongue tie?</div></div>
+                <div class="topic-row"><div class="topic-name">What are our views on vaccines and preventive care?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we track baby's activity and milestones?</div></div>
+                <div class="topic-row"><div class="topic-name">How do we feel about pacifiers?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we babyproof?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we help our baby learn to communicate?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we play with our baby?</div></div>
+                <div class="topic-row"><div class="topic-name">Will we save for education?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we handle screen time in early childhood?</div></div>
+              </div></div></div>
+            </div>
+
+            <!-- The Existential -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">The Existential</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">What activities or traditions do we want to start or continue?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we share our culture and/or religion with our child?</div></div>
+                <div class="topic-row"><div class="topic-name">What aspects of our upbringing will we replicate and what will we avoid as parents?</div></div>
+                <div class="topic-row"><div class="topic-name">What are the values we want to pass on?</div></div>
+              </div></div></div>
+            </div>
+
+            <!-- Us -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Us</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">What is our postpartum plan?</div></div>
+                <div class="topic-row"><div class="topic-name">How much parental leave will we take?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we share parental and household duties?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we handle lack of sleep, hormones, and/or postpartum depression?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we make time for ourselves as a couple?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we make time for ourselves as individuals?</div></div>
+              </div></div></div>
+            </div>
+
           </div>
 
-          <!-- Remaining categories — collapsed -->
-          <div class="cat-group">
-            <div class="cat-header">
-              <div class="cat-header-left">
-                <span class="cat-name" style="color:var(--text-secondary);">Pregnancy & Birth</span>
-                <span class="cat-count">8 topics</span>
-              </div>
-              <span class="cat-chevron collapsed">›</span>
+          <!-- ============ BY STAGE ============ -->
+          <div id="view-stage">
+
+            <!-- Before Pregnancy -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Before Pregnancy</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">Where will we raise our family?</div></div>
+                <div class="topic-row"><div class="topic-name">What aspects of our upbringing will we replicate, and what will we avoid?</div></div>
+                <div class="topic-row"><div class="topic-name">What are the values we want to pass on?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we share our culture and/or religion with our child?</div></div>
+                <div class="topic-row"><div class="topic-name">What activities or traditions do we want to start or continue?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we approach spending time with extended family?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we make time for ourselves as a couple?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we make time for ourselves as individuals?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we budget for a baby?</div></div>
+                <div class="topic-row"><div class="topic-name">Will we save for education?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we have the right health insurance?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we have life insurance, and is it enough?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will be the legal guardian if something happens to us?</div></div>
+                <div class="topic-row"><div class="topic-name">Should we make a will before the baby is born?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want our baby to have godparents? If so, who?</div></div>
+              </div></div></div>
             </div>
+
+            <!-- First Trimester — expanded, peek -->
+            <div class="cat-group">
+              <div class="cat-header"><span class="cat-name">First Trimester</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body">
+                <div class="phase-scroller">
+                  <div class="phase-page">
+                    <div class="phase-eyebrow">Not revealed yet · 4</div>
+                    <div class="topic-card">
+                      <div class="topic-row reveal-row"><div class="topic-name">When will we tell people that we're expecting?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                      <div class="topic-row"><div class="topic-name">Do we want a doctor or a midwife?</div><span class="pill pill-your-turn">Your turn</span></div>
+                      <div class="topic-row"><div class="topic-name">What will we do about childcare?</div><span class="pill pill-partner">Sam's turn</span></div>
+                      <div class="topic-row"><div class="topic-name">Do we want health screenings — even if they reveal something hard?</div></div>
+                    </div>
+                  </div>
+                  <div class="phase-page">
+                    <div class="phase-eyebrow">Revealed · 4</div>
+                    <div class="topic-card">
+                      <div class="group-divider fully">Fully aligned<span class="gc">2</span></div>
+                      <div class="topic-row"><div class="topic-name">What will the baby's first and middle name be?</div></div>
+                      <div class="topic-row"><div class="topic-name">What will the baby's last name be?</div></div>
+                      <div class="group-divider mostly">Mostly aligned<span class="gc">1</span></div>
+                      <div class="topic-row"><div class="topic-name">When do we want to find out the baby's sex?</div></div>
+                      <div class="group-divider worth">Worth a conversation<span class="gc">1</span></div>
+                      <div class="topic-row"><div class="topic-name">Will we share the baby's name and/or sex before it's born?</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Second Trimester -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Second Trimester</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">What items do we need to get for the baby?</div></div>
+                <div class="topic-row"><div class="topic-name">Where do we want to give birth?</div></div>
+                <div class="topic-row"><div class="topic-name">What is our birth plan?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want a birth doula?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will be in the delivery room?</div></div>
+                <div class="topic-row"><div class="topic-name">If it's a boy, will we circumcise?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we respond if there's birth trauma?</div></div>
+                <div class="topic-row"><div class="topic-name">How much parental leave will we take?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we share parental and household duties?</div></div>
+                <div class="topic-row"><div class="topic-name">What kind of baby shower do we want?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we choose a pediatrician?</div></div>
+                <div class="topic-row"><div class="topic-name">What are our views on vaccines and preventive care?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want a postpartum doula, lactation consultant, and/or night nurse?</div></div>
+              </div></div></div>
+            </div>
+
+            <!-- Third Trimester & Early Postpartum -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Third Trimester &amp; Early Postpartum</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">What is our postpartum plan?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we handle lack of sleep, hormones, and/or postpartum depression?</div></div>
+                <div class="topic-row"><div class="topic-name">Breastfeed, formula, or combo feed?</div></div>
+                <div class="topic-row"><div class="topic-name">Where will the baby sleep?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we help the baby sleep?</div></div>
+                <div class="topic-row"><div class="topic-name">How do we feel about pacifiers?</div></div>
+                <div class="topic-row"><div class="topic-name">What will we do if we are told our baby has a tongue tie?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we babyproof?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will we trust to watch the baby or babysit?</div></div>
+                <div class="topic-row"><div class="topic-name">When will people meet the baby?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we track the baby's activity and milestones?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we help our baby learn to communicate?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we play with our baby?</div></div>
+                <div class="topic-row"><div class="topic-name">When and how will we introduce solids?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we handle screen time in early childhood?</div></div>
+              </div></div></div>
+            </div>
+
           </div>
 
-          <div class="cat-group">
-            <div class="cat-header">
-              <div class="cat-header-left">
-                <span class="cat-name" style="color:var(--text-secondary);">The Village</span>
-                <span class="cat-count">6 topics</span>
-              </div>
-              <span class="cat-chevron collapsed">›</span>
-            </div>
-          </div>
+        </div>
 
-          <div class="cat-group">
-            <div class="cat-header">
-              <div class="cat-header-left">
-                <span class="cat-name" style="color:var(--text-secondary);">Eat, Poop, Sleep, Repeat</span>
-                <span class="cat-count">4 topics</span>
-              </div>
-              <span class="cat-chevron collapsed">›</span>
-            </div>
-          </div>
-
-          <div class="cat-group">
-            <div class="cat-header">
-              <div class="cat-header-left">
-                <span class="cat-name" style="color:var(--text-secondary);">Education, Health & Development</span>
-                <span class="cat-count">2 topics</span>
-              </div>
-              <span class="cat-chevron collapsed">›</span>
-            </div>
-          </div>
-
-          <div class="cat-group">
-            <div class="cat-header">
-              <div class="cat-header-left">
-                <span class="cat-name" style="color:var(--text-secondary);">The Existential</span>
-                <span class="cat-count">2 topics</span>
-              </div>
-              <span class="cat-chevron collapsed">›</span>
-            </div>
-          </div>
-
-          <div class="cat-group">
-            <div class="cat-header">
-              <div class="cat-header-left">
-                <span class="cat-name" style="color:var(--text-secondary);">Us</span>
-                <span class="cat-count">1 topic</span>
-              </div>
-              <span class="cat-chevron collapsed">›</span>
-            </div>
-          </div>
-
+        <!-- Floating grouping toggle (above bottom nav) -->
+        <div class="group-toggle">
+          <button class="active">By category</button>
+          <button>By stage</button>
         </div>
 
         <!-- Bottom nav -->
@@ -244,93 +365,120 @@
         <div class="flow-node dest">16 Topic Intro</div>
       </div>
       <div class="info-box">
-        Topics tab is active. Tapping any non-locked topic row → Screen 16 Topic Intro. "Manage topics" top right → Screen 15 Manage Topics. Locked topics are non-interactive.
+        Topics tab is active. Tapping any topic row → Screen 16 Topic Intro. "Manage topics" top right → Screen 15 Manage Topics.
       </div>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Five topic states</div>
+      <div class="spec-card-title">Topic state model</div>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:14px;">A topic has two phases. The row shows whichever phase is live — never both. <strong>Action phase</strong> is per-user (opposite for each partner) and appears as a right-aligned pill before the reveal. <strong>Alignment phase</strong> is shared (one value per couple) and appears as a colored sub-divider band inside the Revealed card after the reveal.</p>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:10px;">Action phase · per user</div>
       <div class="state-legend">
         <div class="state-legend-row">
-          <div class="state-legend-dot" style="background:rgba(26,26,26,0.18);"></div>
+          <div class="state-legend-dot" style="background:rgba(26,26,26,0.12);"></div>
           <div>
             <div class="legend-label">Not started</div>
-            <div class="legend-sub">Neutral gray dot · "Not started" neutral pill · neither partner has answered</div>
+            <div class="legend-sub">No pill · clean row · neither partner has answered.</div>
           </div>
         </div>
         <div class="state-legend-row">
-          <div class="state-legend-dot" style="background:var(--purple-500);"></div>
+          <div class="state-legend-dot" style="background:var(--cyan-soft);border:1.5px solid var(--cyan-strong);"></div>
           <div>
             <div class="legend-label">Your turn</div>
-            <div class="legend-sub">Purple dot · filled <code>purple-500</code> "Your turn" pill · topic name <strong>bold</strong> · partner has answered, user hasn't</div>
+            <div class="legend-sub">Cyan pill · fill <code>#9decfa</code> · border <code>#7fe3f7</code> · text <code>#0b5263</code> · partner answered, user hasn't.</div>
           </div>
         </div>
         <div class="state-legend-row">
-          <div class="state-legend-dot" style="background:rgba(26,26,26,0.25);"></div>
+          <div class="state-legend-dot" style="background:var(--cyan-strong);"></div>
           <div>
-            <div class="legend-label">Waiting</div>
-            <div class="legend-sub">Gray dot · "⏳ Waiting" neutral pill · user has answered, partner hasn't</div>
+            <div class="legend-label">Ready to reveal</div>
+            <div class="legend-sub">Cyan pill on an animated multi-hue gradient row (cyan → lilac → pink) · highest-energy state · both answered, user hasn't opened reveal yet · reduced-motion safe.</div>
           </div>
         </div>
         <div class="state-legend-row">
-          <div class="state-legend-dot" style="background:#1a5170;"></div>
+          <div class="state-legend-dot" style="background:rgba(26,26,26,0.07);border:1px solid rgba(26,26,26,0.1);"></div>
           <div>
-            <div class="legend-label">Needs work</div>
-            <div class="legend-sub">Blue dot · "Needs work" soft-blue-fill pill · both answered + revealed, user hasn't picked We're good yet.</div>
-          </div>
-        </div>
-        <div class="state-legend-row">
-          <div class="state-legend-dot" style="background:#157a46;"></div>
-          <div>
-            <div class="legend-label">We're good</div>
-            <div class="legend-sub">Green dot · "✓ We're good" pill · <code>status-success-text</code> (#157a46) text · <code>rgba(119,234,175,0.28)</code> bg · user picked We're good on Screen 21</div>
+            <div class="legend-label">Partner's turn</div>
+            <div class="legend-sub">Quiet gray pill · no border · text <code>rgba(26,26,26,0.6)</code> · user answered, waiting on partner. Label uses partner's first name ("Sam's turn"); falls back to "Partner's turn" if unlinked or the name is too long. Never truncate a name.</div>
           </div>
         </div>
       </div>
-      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-top:14px;"><strong>Locked</strong> — prediction cards only. 🔒 muted pill · <code>opacity: 0.55</code> · non-interactive · no tap navigation. Not a regular topic state.</p>
-      <div class="info-box">Sort priority: <strong>Your turn</strong> → Not started → Waiting → Needs work → We're good → Locked.</div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin:18px 0 10px;">Alignment phase · shared</div>
+      <div class="state-legend">
+        <div class="state-legend-row">
+          <div class="state-legend-dot" style="background:var(--align-fully-bg);"></div>
+          <div>
+            <div class="legend-label">Fully aligned</div>
+            <div class="legend-sub">Brand-green band · bg <code>rgba(119,234,175,0.30)</code> · text <code>#157a46</code> · couple answered the same.</div>
+          </div>
+        </div>
+        <div class="state-legend-row">
+          <div class="state-legend-dot" style="background:var(--align-mostly-bg);"></div>
+          <div>
+            <div class="legend-label">Mostly aligned</div>
+            <div class="legend-sub">Lighter brand-green band · bg <code>rgba(150,241,198,0.42)</code> · text <code>#2e7d52</code> · close, with minor gaps.</div>
+          </div>
+        </div>
+        <div class="state-legend-row">
+          <div class="state-legend-dot" style="background:var(--align-worth-bg);"></div>
+          <div>
+            <div class="legend-label">Worth a conversation</div>
+            <div class="legend-sub">Orange band · bg <code>rgba(255,173,108,0.34)</code> · text <code>#995611</code> · sentence case. Deliberately off the green→red axis — this is an invitation, not a warning.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Topic row spec</div>
       <table class="spec-table">
         <tr><td>Container</td><td>White card · <code>radius-xl</code> · <code>shadow-md</code> · rows separated by <code>1px solid rgba(26,26,26,0.06)</code></td></tr>
-        <tr><td>State dot</td><td>10px circle · left of label · color per state</td></tr>
-        <tr><td>Topic name</td><td>14px DM Sans medium · full width with text-overflow ellipsis · bold for "Your turn" state</td></tr>
-        <tr><td>Status pill</td><td>Right-aligned · 11px DM Sans semibold · shape and color per state</td></tr>
-        <tr><td>Tap target</td><td>Full row · min 44px height · pressed state: <code>rgba(26,26,26,0.03)</code> bg</td></tr>
-        <tr><td>Locked</td><td>No tap animation, no navigation · <code>cursor: default</code></td></tr>
-        <tr><td>Row padding</td><td>12px vertical · 16px horizontal</td></tr>
+        <tr><td>Topic name</td><td>~14.5px DM Sans medium · full width · <strong>wraps</strong> to multiple lines · no truncation or ellipsis (the whole question matters)</td></tr>
+        <tr><td>Pill</td><td>Right-aligned · vertically centered · single line · no icon · 11px DM Sans bold</td></tr>
+        <tr><td>Ready to reveal</td><td>Topic name 600 weight · row uses animated multi-hue gradient (cyan → lilac → pink) · inset glow + shine sweep + pill bounce · all paused under <code>prefers-reduced-motion</code></td></tr>
+        <tr><td>Tap target</td><td>Full row · <code>min-height: 52px</code> · pressed state: <code>rgba(26,26,26,0.03)</code> bg</td></tr>
+        <tr><td>Row padding</td><td>13px vertical · 16px horizontal</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Group layout</div>
+      <table class="spec-table">
+        <tr><td>Group key</td><td>Category (default) or Stage — controlled by the floating Grouping toggle</td></tr>
+        <tr><td>Mixed-phase group</td><td>Horizontal snap-scroll "peek" — Not-revealed list at ~84% width, Revealed list peeking on the right</td></tr>
+        <tr><td>Single-phase group</td><td>Full-width single list (no peek)</td></tr>
+        <tr><td>Eyebrow</td><td>Small uppercase gray caption above each list with count — e.g., "NOT REVEALED YET · 4", "REVEALED · 3"</td></tr>
+        <tr><td>Revealed card</td><td>One card · the three alignment states are colored sub-divider bands inside it, each with a count on the right (not three separate cards)</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Category headers</div>
       <table class="spec-table">
-        <tr><td>Name</td><td>13px DM Sans bold · <code>text-primary</code> when expanded · <code>text-secondary</code> when collapsed</td></tr>
-        <tr><td>Count badge</td><td>"X topics" · 11px · neutral gray pill · inline right of name</td></tr>
-        <tr><td>Chevron</td><td>Right edge · rotates -90° when collapsed · <code>transition: transform 0.2s</code></td></tr>
-        <tr><td>Tap target</td><td>Full header row · collapses/expands topic rows below</td></tr>
-        <tr><td>Default state</td><td>All categories collapsed except the first one with actionable topics</td></tr>
+        <tr><td>Name</td><td>18px DM Sans bold · <code>text-primary</code> when expanded · <code>text-secondary</code> when collapsed</td></tr>
+        <tr><td>Chevron</td><td>Right edge · rotates 90° when expanded · <code>transition: transform 0.2s</code></td></tr>
+        <tr><td>Tap target</td><td>Full header row · collapses/expands group body below</td></tr>
+        <tr><td>Default state</td><td>All categories collapsed except the first actionable group, which is expanded</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Screen header</div>
       <table class="spec-table">
-        <tr><td>Title</td><td>"Your topics" · <code>display-md</code> (Grandstander 24px bold)</td></tr>
-        <tr><td>Subtitle</td><td>"45 topics · 10 complete" · 13px · <code>text-secondary</code> · live count</td></tr>
+        <tr><td>Title</td><td>"Your topics" · Grandstander 22px bold</td></tr>
+        <tr><td>Subtitle</td><td>13px · <code>text-secondary</code> · live count (plan total · revealed)</td></tr>
         <tr><td>"Manage topics"</td><td>Right-aligned · 13px DM Sans bold · <code>purple-500</code> · underline · → Screen 15</td></tr>
-        <tr><td>Grouping toggle</td><td>Right-aligned · below "Manage topics" · segment toggle · "By category" default — see Grouping toggle spec</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Grouping toggle</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Right side of screen header, below "Manage topics" link</td></tr>
+        <tr><td>Position</td><td>Floating pill, centered horizontally, just above the bottom nav (no longer in the screen header)</td></tr>
         <tr><td>Options</td><td>"By category" | "By stage"</td></tr>
-        <tr><td>Style</td><td>Segment toggle · <code>radius-full</code> · <code>1.5px solid border-default</code> outline · white bg · 32px height (compact)</td></tr>
+        <tr><td>Style</td><td>Frosted-glass pill · <code>radius-full</code> · translucent white bg · 12px backdrop blur · soft shadow · 3px inner padding</td></tr>
         <tr><td>Default</td><td>"By category"</td></tr>
         <tr><td>Active option</td><td><code>purple-500</code> fill · white text</td></tr>
         <tr><td>Inactive option</td><td>transparent · <code>text-secondary</code></td></tr>
@@ -342,20 +490,28 @@
     <div class="spec-card">
       <div class="spec-card-title">Stage groupings (By stage view)</div>
       <table class="spec-table">
-        <tr><td>Stage labels</td><td>Mirror the book's alternative TOC ordering — content team to provide exact labels</td></tr>
+        <tr><td>Stages</td><td>Four real stages: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum</td></tr>
         <tr><td>Within-stage order</td><td>Topics in the order they appear in the book's alt-TOC</td></tr>
-        <tr><td>Visual</td><td>Same group-header style as categories · "X topics" count badge inline</td></tr>
-        <tr><td>Includes prediction cards</td><td>Yes, sorted into whichever stage they belong to</td></tr>
+        <tr><td>Visual</td><td>Same group-header + peek/single-list pattern as categories</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Sort priority</div>
+      <table class="spec-table">
+        <tr><td>Within Not revealed</td><td>Ready to reveal → Your turn → Not started → Partner's turn</td></tr>
+        <tr><td>Within Revealed</td><td>Fully aligned → Mostly aligned → Worth a conversation</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
-        <span class="component-tag">Topic rows ×5 states</span>
-        <span class="component-tag">Segment Toggle (grouping)</span>
+        <span class="component-tag">Topic rows ×4 action states</span>
+        <span class="component-tag">Alignment bands ×3</span>
+        <span class="component-tag">Peek snap-scroller</span>
         <span class="component-tag">Category group headers</span>
-        <span class="component-tag">Badge / Status Pill</span>
+        <span class="component-tag">Grouping toggle (floating)</span>
         <span class="component-tag">Bottom Nav (Topics active)</span>
         <span class="component-tag">Screen Header</span>
       </div>
@@ -364,13 +520,15 @@
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>All 7 categories present. Default: first category with actionable topics expanded, rest collapsed.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Tapping a category header toggles expand/collapse with chevron animation.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Sort priority within each group: Your turn → Not started → Waiting → Needs work → We're good → Locked.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Locked topics: no tap, no navigation. Visually de-emphasized at ~55% opacity. Applies to prediction cards only.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>All 7 categories present in By-category view; 4 stages in By-stage view. Default: first actionable group expanded, rest collapsed.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Action-phase states are per-user and change the pill <strong>in place</strong> — rows don't relocate as each side answers.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Alignment is shared and seeded at reveal time. Both partners see the same band for a given revealed topic.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Anyone can open a loop, closing takes both" — moving a settled topic to <em>Worth a conversation</em> is unilateral and instant; moving back to settled (Fully / Mostly aligned) is propose-and-confirm.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No Locked state for now — the prediction-card lock-out is dropped from this screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Partner's-turn pill label uses the partner's first name (e.g., "Sam's turn"). Falls back to "Partner's turn" if unlinked or the name is too long — never truncate a name.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Manage topics" link always visible top right — never scrolls away.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Topic count in subtitle ("45 topics · 10 complete") updates live as topics are completed.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim — same as throughout the app.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Subtitle count updates live (plan total · revealed) as topics move through reveal.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Category and stage names in Title Case verbatim — same as throughout the app.</span></div>
       </div>
     </div>
 
