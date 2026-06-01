@@ -93,7 +93,7 @@
         <div class="screen-header">
           <div class="screen-header-left">
             <div class="screen-title">Your topics</div>
-            <div class="screen-subtitle">49 topics · 3 revealed</div>
+            <div class="screen-subtitle"><span data-topics-total>—</span> topics · <span data-topics-revealed>—</span> revealed</div>
           </div>
           <div class="manage-link">Manage topics</div>
         </div>
@@ -472,7 +472,7 @@
       <div class="spec-card-title">Screen header</div>
       <table class="spec-table">
         <tr><td>Title</td><td>"Your topics" · Grandstander 22px bold</td></tr>
-        <tr><td>Subtitle</td><td>13px · <code>text-secondary</code> · live count (plan total · revealed)</td></tr>
+        <tr><td>Subtitle</td><td>13px · <code>text-secondary</code> · "<code>{plan} topics · {revealed} revealed</code>" templated off the data layer. <code>{plan}</code> = the user's filtered plan total (45 in this example), same source Progress / Home / onboarding 03/08/09 template off. Not the full library of 51.</td></tr>
         <tr><td>"Manage topics"</td><td>Right-aligned · 13px DM Sans bold · <code>purple-500</code> · underline · → Screen 15</td></tr>
       </table>
     </div>
@@ -531,7 +531,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>No Locked state for now — the prediction-card lock-out is dropped from this screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Partner's-turn pill label uses the partner's first name (e.g., "Sam's turn"). Falls back to "Partner's turn" if unlinked or the name is too long — never truncate a name.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Manage topics" link always visible top right — never scrolls away.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Subtitle count updates live (plan total · revealed) as topics move through reveal.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Subtitle count updates live ({plan} · {revealed}) as topics move through reveal. Templated off the data layer — same <code>plan</code> source as Progress (45 in this example, not the full library of 51).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Category and stage names in Title Case verbatim — same as throughout the app.</span></div>
       </div>
     </div>
@@ -554,6 +554,15 @@
   var root = document.querySelector('.screen-root') || document;
   var sa = root.querySelector('.scroll-area');
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Data layer (mock) — Progress/Home/onboarding template off the filtered plan total.
+  // Keep this matched to Screen 12's `plan` until a real data source is wired up.
+  var topicStats = { plan: 45, revealed: 3 };
+  var totalEl = root.querySelector('[data-topics-total]');
+  var revealedEl = root.querySelector('[data-topics-revealed]');
+  if (totalEl) totalEl.textContent = topicStats.plan;
+  if (revealedEl) revealedEl.textContent = topicStats.revealed;
+
   var REST_GAP = 12;
   var MOVE_MS = 540;
   function easeInOut(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2; }
