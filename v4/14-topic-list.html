@@ -55,6 +55,50 @@
     body.page-12 .screen-root .dock-sep { display: none; }
   }
 
+  /* Demo state switcher (doc page only) — toggles between
+     "has actions" (default) and "all clear" (nothing actionable) states.
+     Doesn't ship in the app; lives above the phone frame like Screen 12. */
+  body.page-12 .screen-root .state-tabs {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+  }
+  body.page-12 .screen-root .state-tab {
+    height: 28px; padding: 0 12px; border-radius: var(--radius-full);
+    border: 1.5px solid var(--border-strong); background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600;
+    color: var(--text-primary); cursor: pointer;
+    display: inline-flex; align-items: center;
+  }
+  body.page-12 .screen-root .state-tab.active {
+    background: var(--purple-500); border-color: var(--purple-500); color: #fff;
+  }
+
+  /* "All clear" state — nothing pre-reveal needs the user's attention.
+     Strips every "your move" affordance: action pills, reveal-row treatment,
+     the Needs-you chip, and the category-header dots that flag actionable
+     groups. Revealed/alignment content stays (settled outcomes, not pending
+     actions). The peek-eyebrow ("Not revealed yet · 4") also drops — without
+     pills it's a label with nothing to label, and the peek becomes a quiet
+     plain list of unanswered topics. */
+  body.page-12 .screen-root.clear-state .pill-reveal,
+  body.page-12 .screen-root.clear-state .pill-your-turn,
+  body.page-12 .screen-root.clear-state .needs-chip,
+  body.page-12 .screen-root.clear-state .cat-dot,
+  body.page-12 .screen-root.clear-state .phase-eyebrow { display: none; }
+  /* Reveal row reverts to a plain topic row — kill the gradient, the inset
+     glow, the shine sweep, and the bolder name weight. Keeps the row's tap
+     target / padding / divider exactly as plain rows. */
+  body.page-12 .screen-root.clear-state .reveal-row {
+    background: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+  body.page-12 .screen-root.clear-state .reveal-row::before,
+  body.page-12 .screen-root.clear-state .reveal-row::after { display: none !important; }
+  body.page-12 .screen-root.clear-state .reveal-row .topic-name { font-weight: 500; }
+  /* Dock keeps just the grouping toggle — drop the divider that separated
+     it from the (now-gone) Needs-you chip. */
+  body.page-12 .screen-root.clear-state .dock-sep { display: none; }
+
   /* "Needs you" flattened view */
   body.page-12 .screen-root #view-needs { display: none; padding: 0 12px; }
   body.page-12 .screen-root #view-needs .needs-eyebrow {
@@ -140,12 +184,17 @@
   <div>
     <div class="screen-tag">Screen 14 · Topic Flow</div>
     <div class="page-title">Topic List</div>
-    <div class="page-desc">All 7 categories. Two-phase topic model: an action-phase pill per user (Not started / Your turn / Ready to reveal / Partner's turn), and after reveal a shared alignment band (Fully · Mostly · Worth a conversation). Floating dock above bottom nav: Category / Stage grouping toggle + a "Needs you" lens chip (cyan, label only) that flattens the list to the prioritized pre-reveal queue. Collapsible groups. "Manage topics" top right.</div>
+    <div class="page-desc">All 7 categories. Two-phase topic model: an action-phase pill per user (Not started / Your turn / Ready to reveal / Partner's turn), and after reveal a shared alignment band (Fully · Mostly · Worth a conversation). Floating dock above bottom nav: Category / Stage grouping toggle + a "Needs you" lens chip (cyan, label only) that flattens the list to the prioritized pre-reveal queue. Collapsible groups. "Manage topics" top right. Toggle above the frame previews the "all clear" state — nothing pre-reveal is actionable, so Your-turn / Ready-to-reveal treatments and the Needs-you chip all drop away.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="13-settings.html">← Screen 13: Settings</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="15-manage-topics.html">Screen 15: Manage Topics →</a>
   </div>
+</div>
+
+<div class="state-tabs" role="tablist" aria-label="Topic List state preview">
+  <button class="state-tab active" data-state="has-actions" type="button">Has actions</button>
+  <button class="state-tab" data-state="all-clear" type="button">All clear</button>
 </div>
 
 <div class="main-layout">
@@ -617,6 +666,19 @@
     </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">"All clear" state</div>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:14px;">When nothing pre-reveal is actionable for the user, the list goes quiet. Every "your move" affordance drops away so the screen stops shouting when there's nothing to shout about. Revealed/alignment content is unchanged — settled outcomes aren't pending actions.</p>
+      <table class="spec-table">
+        <tr><td>Triggers</td><td>Actionable count = 0 (Your turn + Ready to reveal). All pre-reveal topics are either Not started or Partner's turn.</td></tr>
+        <tr><td>What drops</td><td>Ready-to-reveal gradient row + charge pill · Your-turn pills · "Needs you" chip · the dock divider · category-header dots that flag actionable groups · the "Not revealed yet · N" eyebrow above the peek list</td></tr>
+        <tr><td>What stays</td><td>Full topic list with all groups · Category / Stage toggle in the dock · revealed cards with alignment bands · "Manage topics" link · screen header / subtitle</td></tr>
+        <tr><td>Dock contents</td><td>Just the grouping toggle, no chip and no divider. The pill is the same white frosted-glass shape; it just contains less.</td></tr>
+        <tr><td>Peek behavior</td><td>Mixed-phase groups still peek (left page: unanswered, right page: revealed) — but the left eyebrow is gone and rows are plain. The peek now reads as "what's left to do" without urgency markers.</td></tr>
+        <tr><td>Partner's-turn pill</td><td>Stays visible — it's information, not a call to action. The user isn't blocked on themselves.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
         <span class="component-tag">Topic rows ×4 action states</span>
@@ -757,6 +819,20 @@
       });
     }
   }
+
+  // Demo state switcher — toggles .clear-state on .screen-root.
+  // "All clear" hides every "your move" affordance and, if the lens
+  // happens to be on when the user flips into it, exits the lens first
+  // (the chip is about to vanish; restore the prior grouping cleanly).
+  root.querySelectorAll('.state-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      root.querySelectorAll('.state-tab').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var clear = btn.getAttribute('data-state') === 'all-clear';
+      if (clear && chip && chip.classList.contains('active')) chip.click();
+      root.classList.toggle('clear-state', clear);
+    });
+  });
 })();
 </script>
 <script src="nav.js"></script>
