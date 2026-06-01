@@ -3748,7 +3748,11 @@ body.page-12 .screen-root /* Action-phase pills */
     color: var(--cyan-text);
   }
 
-body.page-12 .screen-root .pill-reveal { background: var(--cyan-strong); border-color: var(--cyan-strong); }
+body.page-12 .screen-root .pill-reveal {
+    background: var(--cyan-strong);
+    border-color: var(--cyan-strong);
+    box-shadow: 0 0 8px 1px rgba(95,69,242,0.34);
+  }
 
 body.page-12 .screen-root .pill-your-turn { background: var(--cyan-soft); border-color: var(--cyan-strong); color: var(--cyan-text); }
 
@@ -3789,7 +3793,7 @@ body.page-12 .screen-root .topic-row.reveal-row::before {
       animation: page12RevealShine 3.4s ease-in-out infinite;
     }
     body.page-12 .screen-root .topic-row.reveal-row .pill-reveal {
-      animation: page12RevealBounce 2s cubic-bezier(.3,.7,.3,1) infinite;
+      animation: page12RevealCharge 2.4s ease-in-out infinite;
     }
   }
 
@@ -3797,10 +3801,9 @@ body.page-12 .screen-root .topic-row.reveal-row::before {
 @keyframes page12RevealShine { 0% { left: -70%; } 50%,100% { left: 130%; } }
 @keyframes page12RevealGlow { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
 @keyframes page12RevealEnter { 0% { transform: scale(0.96); } 60% { transform: scale(1.02); } 100% { transform: scale(1); } }
-@keyframes page12RevealBounce {
-    0%,100% { transform: translateY(0) scale(1); box-shadow: 0 0 0 rgba(127,227,247,0); }
-    40% { transform: translateY(-3px) scale(1.07); box-shadow: 0 5px 18px rgba(95,216,240,0.85); }
-    60% { transform: translateY(0) scale(1.03); box-shadow: 0 3px 12px rgba(95,216,240,0.5); }
+@keyframes page12RevealCharge {
+    0%, 100% { transform: scale(1);    box-shadow: 0 0 6px 1px  rgba(95,69,242,0.30); }
+    50%      { transform: scale(1.04); box-shadow: 0 0 12px 2px rgba(95,69,242,0.55); }
   }
 
 body.page-12 .screen-root /* Floating grouping toggle above bottom nav */
