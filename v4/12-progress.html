@@ -149,7 +149,7 @@
                   <span class="align-dot worth"></span>
                   <div>
                     <div class="align-name">Worth a conversation</div>
-                    <div class="align-sub" id="worth-sub">A few open loops to come back to.</div>
+                    <div class="align-sub" id="worth-sub">A few conversations to come back to.</div>
                   </div>
                   <span class="align-count" id="cnt-worth">0</span>
                   <span class="chev" aria-hidden="true">›</span>
@@ -248,9 +248,9 @@
         <tr><td>Bar fills</td><td>Solid state colors only: green <code>#77eaaf</code> · lighter green <code>#96f1c6</code> · orange <code>#ffad6c</code>. Widths proportional to counts.</td></tr>
         <tr><td>Rows</td><td>Three: dot · sentence-case name · Grandstander count.</td></tr>
         <tr><td>Fully / Mostly</td><td>Identical plain rows. <b>No sub-line</b> — the old "A fine place to be." was removed (the color + framing already say "this is fine"; saying it reads defensive).</td></tr>
-        <tr><td>Worth row — hybrid</td><td>The only special row. Fill <code>rgba(255,173,108,0.34)</code> + <b>2px <code>#ffad6c</code> border</b>. Count-aware sub-line ("<b>N</b> open loops to come back to"). Chevron. Tap expands a revisit list.</td></tr>
+        <tr><td>Worth row — hybrid</td><td>The only special row. Fill <code>rgba(255,173,108,0.34)</code> + <b>2px <code>#ffad6c</code> border</b>. Count-aware sub-line ("<b>N</b> conversations to come back to"). Chevron. Tap expands a revisit list.</td></tr>
         <tr><td>Revisit list</td><td>Each worth-a-conversation topic is its own <b>44px tap target</b> with a right arrow → navigates to that topic. The deliberate "destination, not a hub" exception.</td></tr>
-        <tr><td>Capped peek + inline expand</td><td>Show up to <b>~4</b> topics inline. When there are more, append a <b>"Show all {N}"</b> row that expands the rest <b>in place</b> — opt-in, single scroll, page just gets longer. Toggles to <b>"Show fewer."</b> No navigation off Progress; the overflow is fully self-contained, so it never depends on a destination that doesn't exist. The worth-row sub-line still shows the true count ("{N} open loops to come back to") — the cap limits the <em>peek</em>, not the number. The expand panel grows to fit (no fixed clip).</td></tr>
+        <tr><td>Capped peek + inline expand</td><td>Show up to <b>~4</b> topics inline. When there are more, append a <b>"Show all {N}"</b> row that expands the rest <b>in place</b> — opt-in, single scroll, page just gets longer. Toggles to <b>"Show fewer."</b> No navigation off Progress; the overflow is fully self-contained, so it never depends on a destination that doesn't exist. The worth-row sub-line still shows the true count ("{N} conversations to come back to") — the cap limits the <em>peek</em>, not the number. The expand panel grows to fit (no fixed clip).</td></tr>
         <tr><td>Topics dependency (future)</td><td>If Topics (Screen 14) ever gains a dedicated "Worth a conversation" filter/view, the inline "Show all {N}" can become <b>"See all {N} →"</b> into that view. Logged as a Topics dependency, not a Progress blocker. Out of scope here.</td></tr>
         <tr><td>Distribution, not score</td><td>Never a percentage, gauge, or pass/fail. A single "% aligned" is explicitly prohibited — it would put "Worth a conversation" on the losing side of a ratio.</td></tr>
         <tr><td>Zero-row behavior</td><td><b>Case A</b> (some revealed, one state at 0): show the row, dimmed to ~45%. The state-aware note carries reassurance — a dimmed zero reads "not yet." <b>Case B</b> (nothing revealed at all): card takes its empty form — eyebrow + mechanic note + empty <b>dashed</b> track, no rows.</td></tr>
@@ -563,9 +563,9 @@
 
       const sub = root.querySelector('#worth-sub');
       sub.textContent =
-        W === 0 ? "Nothing open right now." :
-        W === 1 ? "1 open loop to come back to." :
-                  W + " open loops to come back to.";
+        W === 0 ? "Nothing to come back to right now." :
+        W === 1 ? "1 conversation to come back to." :
+                  W + " conversations to come back to.";
 
       // Capped peek with inline expansion. Render via renderRevisit() so
       // the rv-all click handler can re-render without re-running the
