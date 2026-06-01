@@ -12,19 +12,32 @@
   /* Screen 14 — "Needs you" lens dock.
      Wraps the existing grouping toggle and the new chip in a single floating
      container above the bottom nav. Overrides the toggle's own absolute
-     positioning when it lives inside .dock so the dock owns placement. */
+     positioning when it lives inside .dock so the dock owns placement.
+
+     Default: true single inline row (no flex-wrap). flex-wrap is added back
+     only as a last-resort safety net for very large Dynamic Type, sized so
+     it doesn't trigger at normal phone widths. The phone-screen above acts
+     as the query container — when it narrows past the threshold below the
+     inline row stops fitting, the dock stacks. */
+  body.page-12 .screen-root .phone-screen { container-type: inline-size; }
+
   body.page-12 .screen-root .dock {
     position: absolute; left: 50%; transform: translateX(-50%);
     bottom: 94px; z-index: 15;
-    display: flex; align-items: center; gap: 10px;
-    flex-wrap: wrap; justify-content: center;
-    max-width: calc(100% - 32px);
-    container-type: inline-size;
+    display: flex; align-items: center; gap: 8px;
+    justify-content: center;
+    max-width: calc(100% - 24px);
   }
   body.page-12 .screen-root .dock .group-toggle {
     position: static; left: auto; transform: none; bottom: auto; z-index: auto;
   }
-  /* Lens hidden by default — toggled into flex when active so it can wrap. */
+  /* Tighten the toggle's buttons inside the dock so the inline row fits the
+     phone width (375) with margin to spare — the styles.css default of
+     11px / 18px padding is too generous once a second control sits next to it. */
+  body.page-12 .screen-root .dock .group-toggle button {
+    padding: 8px 13px; font-size: 12px;
+  }
+  /* Lens on: stack chip above toggle (toggle is hidden anyway) and shrink gap. */
   body.page-12 .screen-root .dock.lens-on { flex-direction: column; gap: 0; }
   body.page-12 .screen-root .dock.lens-on .group-toggle { display: none; }
 
@@ -36,8 +49,8 @@
     border: 1px solid var(--cyan-strong);
     background: var(--cyan-soft);
     color: var(--cyan-text);
-    font-size: 12.5px; font-weight: 600;
-    padding: 9px 14px;
+    font-size: 12px; font-weight: 600;
+    padding: 8px 13px;
     border-radius: var(--radius-full);
     box-shadow: 0 6px 22px rgba(26,26,26,0.16);
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -53,11 +66,19 @@
   }
   body.page-12 .screen-root .needs-chip.active .needs-x { display: inline; }
 
-  /* Container-query fallback: if the dock would overflow its parent width
-     (e.g., large Dynamic Type, long localized labels), stack vertically. */
-  @container (max-width: 320px) {
-    body.page-12 .screen-root .dock { flex-direction: column; }
+  /* Container-query stack: when the phone-screen narrows below the width at
+     which the inline row stops fitting cleanly, switch the dock to a column
+     and put the chip on its own line above the toggle (centered). 340 is
+     just below 375 so a normal phone fits inline with margin to spare. */
+  @container (max-width: 340px) {
+    body.page-12 .screen-root .dock {
+      flex-direction: column-reverse; gap: 6px;
+    }
   }
+  /* Safety net for very large Dynamic Type / longer localized labels — if
+     the row overflows its max-width even on a 375 phone, wrap rather than
+     clip. Centered stacking is enforced by justify-content + align-items. */
+  body.page-12 .screen-root .dock { flex-wrap: wrap; row-gap: 6px; }
 
   /* "Needs you" flattened view */
   body.page-12 .screen-root #view-needs { display: none; }
