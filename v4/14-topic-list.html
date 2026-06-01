@@ -8,6 +8,66 @@
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/regular/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* Screen 14 — "Needs you" lens dock.
+     Wraps the existing grouping toggle and the new chip in a single floating
+     container above the bottom nav. Overrides the toggle's own absolute
+     positioning when it lives inside .dock so the dock owns placement. */
+  body.page-12 .screen-root .dock {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    bottom: 94px; z-index: 15;
+    display: flex; align-items: center; gap: 10px;
+    flex-wrap: wrap; justify-content: center;
+    max-width: calc(100% - 32px);
+    container-type: inline-size;
+  }
+  body.page-12 .screen-root .dock .group-toggle {
+    position: static; left: auto; transform: none; bottom: auto; z-index: auto;
+  }
+  /* Lens hidden by default — toggled into flex when active so it can wrap. */
+  body.page-12 .screen-root .dock.lens-on { flex-direction: column; gap: 0; }
+  body.page-12 .screen-root .dock.lens-on .group-toggle { display: none; }
+
+  /* Needs you chip — cyan, label-only. Hidden when there are zero
+     actionable topics (data-needs-count="0"). */
+  body.page-12 .screen-root .needs-chip {
+    font-family: 'DM Sans', sans-serif;
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--cyan-strong);
+    background: var(--cyan-soft);
+    color: var(--cyan-text);
+    font-size: 12.5px; font-weight: 600;
+    padding: 9px 14px;
+    border-radius: var(--radius-full);
+    box-shadow: 0 6px 22px rgba(26,26,26,0.16);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    cursor: pointer; white-space: nowrap;
+  }
+  body.page-12 .screen-root .needs-chip[hidden] { display: none; }
+  body.page-12 .screen-root .needs-chip.active {
+    background: var(--cyan-strong);
+    color: var(--cyan-text);
+  }
+  body.page-12 .screen-root .needs-chip .needs-x {
+    display: none; font-size: 13px; line-height: 1; opacity: 0.8;
+  }
+  body.page-12 .screen-root .needs-chip.active .needs-x { display: inline; }
+
+  /* Container-query fallback: if the dock would overflow its parent width
+     (e.g., large Dynamic Type, long localized labels), stack vertically. */
+  @container (max-width: 320px) {
+    body.page-12 .screen-root .dock { flex-direction: column; }
+  }
+
+  /* "Needs you" flattened view */
+  body.page-12 .screen-root #view-needs { display: none; }
+  body.page-12 .screen-root #view-needs .needs-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-tertiary);
+    margin: 0 0 8px 4px;
+  }
+  body.page-12 .screen-root #view-needs .needs-section { margin-bottom: 18px; }
+</style>
 </head>
 <body class="page-12">
 <div class="sidebar">
@@ -73,7 +133,7 @@
   <div>
     <div class="screen-tag">Screen 14 · Topic Flow</div>
     <div class="page-title">Topic List</div>
-    <div class="page-desc">All 7 categories. Two-phase topic model: an action-phase pill per user (Not started / Your turn / Ready to reveal / Partner's turn), and after reveal a shared alignment band (Fully · Mostly · Worth a conversation). Floating Category / Stage toggle above bottom nav. Collapsible groups. "Manage topics" top right.</div>
+    <div class="page-desc">All 7 categories. Two-phase topic model: an action-phase pill per user (Not started / Your turn / Ready to reveal / Partner's turn), and after reveal a shared alignment band (Fully · Mostly · Worth a conversation). Floating dock above bottom nav: Category / Stage grouping toggle + a "Needs you" lens chip (cyan, label only) that flattens the list to the prioritized pre-reveal queue. Collapsible groups. "Manage topics" top right.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="13-settings.html">← Screen 13: Settings</a>
@@ -312,12 +372,45 @@
 
           </div>
 
+          <!-- ============ NEEDS YOU (lens) ============
+               Flattened, prioritized queue of pre-reveal "your move" topics.
+               Order: Ready to reveal · N first (magic row + charge pill),
+               then Your turn · N (cyan pill). Excludes Worth a conversation
+               (lives on Progress), Partner's turn, Not started, and any
+               settled/aligned state. -->
+          <div id="view-needs">
+            <div class="needs-section">
+              <div class="needs-eyebrow">Ready to reveal · 3</div>
+              <div class="topic-card">
+                <div class="topic-row reveal-row"><div class="topic-name">How will we budget for a baby?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                <div class="topic-row reveal-row"><div class="topic-name">When will we tell people that we're expecting?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                <div class="topic-row reveal-row"><div class="topic-name">What is our postpartum plan?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+              </div>
+            </div>
+            <div class="needs-section">
+              <div class="needs-eyebrow">Your turn · 2</div>
+              <div class="topic-card">
+                <div class="topic-row"><div class="topic-name">Where will we raise our family?</div><span class="pill pill-your-turn">Your turn</span></div>
+                <div class="topic-row"><div class="topic-name">What is our birth plan?</div><span class="pill pill-your-turn">Your turn</span></div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Floating grouping toggle (above bottom nav) -->
-        <div class="group-toggle">
-          <button class="active">By category</button>
-          <button>By stage</button>
+        <!-- Floating dock above bottom nav: grouping toggle + "Needs you" lens chip.
+             Inline by default; the dock's container query stacks the children
+             to a column when the row can't fit (small viewports, large
+             Dynamic Type, longer localized labels). -->
+        <div class="dock">
+          <div class="group-toggle">
+            <button class="active">By category</button>
+            <button>By stage</button>
+          </div>
+          <button class="needs-chip" type="button" data-needs-count="5" aria-pressed="false">
+            <span class="needs-label">Needs you</span>
+            <span class="needs-x" aria-hidden="true">✕</span>
+          </button>
         </div>
 
         <!-- Bottom nav -->
@@ -468,7 +561,7 @@
     <div class="spec-card">
       <div class="spec-card-title">Grouping toggle</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Floating pill, centered horizontally, just above the bottom nav (no longer in the screen header)</td></tr>
+        <tr><td>Position</td><td>Lives in the floating dock above the bottom nav, alongside the "Needs you" chip</td></tr>
         <tr><td>Options</td><td>"By category" | "By stage"</td></tr>
         <tr><td>Style</td><td>Frosted-glass pill · <code>radius-full</code> · translucent white bg · 12px backdrop blur · soft shadow · 3px inner padding</td></tr>
         <tr><td>Default</td><td>"By category"</td></tr>
@@ -476,6 +569,25 @@
         <tr><td>Inactive option</td><td>transparent · <code>text-secondary</code></td></tr>
         <tr><td>On switch</td><td>Re-group the topic list using the new key. Smooth transition; no full re-render.</td></tr>
         <tr><td>State persistence</td><td>Per-user, per-screen. Remembered separately from Progress screen's toggle.</td></tr>
+        <tr><td>When lens is on</td><td>Toggle drops away — one organizing principle at a time. Restored on exit to whatever was active before.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">"Needs you" lens</div>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:14px;">A one-tap filter that flattens the list to just the pre-reveal "your move" topics, in priority order. Third distinct job in the trio — <strong>Home</strong> = the single next action, <strong>Progress</strong> = worth-a-conversation reflection, <strong>Topics "Needs you"</strong> = the full pre-reveal queue when you want to do more than one thing. Must NOT surface Worth a conversation (that stays on Progress) and must not become a second Home.</p>
+      <table class="spec-table">
+        <tr><td>Chip label</td><td>"Needs you" — label only · no icon (a sparkle reads as Gemini and collides with the app's own ✨ = AI-generated convention; this is a plain filter, not AI) · no count (presence already says "there's something"; numbers turn calm into a backlog at scale, and the breakdown lives inside the lens)</td></tr>
+        <tr><td>Chip color</td><td>The "your move" cyan — soft-cyan fill (<code>--cyan-soft</code>), <code>--cyan-strong</code> border, <code>--cyan-text</code> text. Active state fills <code>--cyan-strong</code> and appends ✕</td></tr>
+        <tr><td>Position</td><td>In the floating dock above the bottom nav, beside the grouping toggle</td></tr>
+        <tr><td>Default layout</td><td>Inline — one row: <code>[ By category | By stage ]&nbsp;&nbsp;[ Needs you ]</code></td></tr>
+        <tr><td>Fallback layout</td><td>Stacked — reflows to two lines (Needs you on its own line, toggle on the other) when the inline row can't fit: small viewports, large Dynamic Type / accessibility text, or longer localized labels. Triggered on actual overflow (container query + <code>flex-wrap</code> safety net), not a fixed width breakpoint</td></tr>
+        <tr><td>Visibility</td><td>Only rendered when actionable N ≥ 1. At N = 0 the dock shows just the grouping toggle</td></tr>
+        <tr><td>"Actionable" =</td><td>Your turn + Ready to reveal only (per-user, pre-reveal). Excludes Worth a conversation, Partner's turn, Not started, and any settled/aligned state</td></tr>
+        <tr><td>Order in lens</td><td>"Ready to reveal · N" first (magic-row treatment + charge pill — most time-sensitive, both partners have answered), then "Your turn · N" (cyan pill)</td></tr>
+        <tr><td>Enter</td><td>Tap chip → list flattens to the prioritized queue · grouping toggle hides · chip fills cyan and appends ✕</td></tr>
+        <tr><td>Exit</td><td>Tap the active chip → restores the full list in whatever grouping was active before. The floating chip stays reachable no matter how far you've scrolled</td></tr>
+        <tr><td>Reduced motion</td><td>No new behavior — the magic row and charge pill already honor <code>prefers-reduced-motion</code></td></tr>
       </table>
     </div>
 
@@ -504,6 +616,7 @@
         <span class="component-tag">Peek snap-scroller</span>
         <span class="component-tag">Category group headers</span>
         <span class="component-tag">Grouping toggle (floating)</span>
+        <span class="component-tag">"Needs you" lens chip</span>
         <span class="component-tag">Bottom Nav (Topics active)</span>
         <span class="component-tag">Screen Header</span>
       </div>
@@ -521,6 +634,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>"Manage topics" link always visible top right — never scrolls away.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Subtitle count updates live ({plan} · {revealed}) as topics move through reveal. Templated off the data layer — same <code>plan</code> source as Progress (45 in this example, not the full library of 51).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Category and stage names in Title Case verbatim — same as throughout the app.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Needs you" lens flattens the list to actionable topics only (Ready to reveal → Your turn). Chip is absent when there's nothing to act on; while on, the grouping toggle hides and the chip shows ✕ to exit. Worth a conversation deliberately stays out of this lens — that belongs on Progress.</span></div>
       </div>
     </div>
 
@@ -592,15 +706,49 @@
   var btns = root.querySelectorAll('.group-toggle button');
   var catView = root.querySelector('#view-category');
   var stageView = root.querySelector('#view-stage');
+  var needsView = root.querySelector('#view-needs');
   function setView(which){
-    if (catView) catView.style.display = (which === 'stage') ? 'none' : 'block';
+    if (catView) catView.style.display = (which === 'category') ? 'block' : 'none';
     if (stageView) stageView.style.display = (which === 'stage') ? 'block' : 'none';
+    if (needsView) needsView.style.display = (which === 'needs') ? 'block' : 'none';
     btns.forEach(function (b){ b.classList.remove('active'); });
   }
   if (btns[0]) btns[0].addEventListener('click', function(){ setView('category'); btns[0].classList.add('active'); });
   if (btns[1]) btns[1].addEventListener('click', function(){ setView('stage'); btns[1].classList.add('active'); });
   setView('category');
   if (btns[0]) btns[0].classList.add('active');
+
+  // "Needs you" lens — flattens the list to a prioritized queue of pre-reveal
+  // actionable topics. Chip only rendered when N > 0; tap enters the lens
+  // (hides the grouping toggle), tap again restores the prior grouping.
+  var dock = root.querySelector('.dock');
+  var chip = root.querySelector('.needs-chip');
+  if (chip && dock) {
+    var n = parseInt(chip.getAttribute('data-needs-count') || '0', 10);
+    if (!n) {
+      chip.setAttribute('hidden', '');
+    } else {
+      var priorView = 'category';
+      chip.addEventListener('click', function(){
+        var nowOn = !chip.classList.contains('active');
+        if (nowOn) {
+          var active = root.querySelector('.group-toggle button.active');
+          priorView = (active && active.textContent.indexOf('stage') !== -1) ? 'stage' : 'category';
+          chip.classList.add('active');
+          chip.setAttribute('aria-pressed', 'true');
+          dock.classList.add('lens-on');
+          setView('needs');
+        } else {
+          chip.classList.remove('active');
+          chip.setAttribute('aria-pressed', 'false');
+          dock.classList.remove('lens-on');
+          setView(priorView);
+          var btn = (priorView === 'stage') ? btns[1] : btns[0];
+          if (btn) btn.classList.add('active');
+        }
+      });
+    }
+  }
 })();
 </script>
 <script src="nav.js"></script>
