@@ -19,7 +19,7 @@
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(26,26,26,0.10);
     border-radius: var(--radius-full);
-    padding: 3px; box-shadow: 0 6px 22px rgba(26,26,26,0.16);
+    padding: 2px; box-shadow: 0 6px 22px rgba(26,26,26,0.16);
     max-width: calc(100% - 24px);
   }
   /* Toggle is no longer its own pill — just holds its buttons inside the dock */
@@ -27,7 +27,7 @@
     position: static; left: auto; transform: none; bottom: auto; z-index: auto;
     background: none; border: none; box-shadow: none; padding: 0; backdrop-filter: none;
   }
-  body.page-12 .screen-root .dock .group-toggle button { padding: 8px 13px; font-size: 12px; }
+  body.page-12 .screen-root .dock .group-toggle button { min-height: 44px; padding: 0 14px; font-size: 12px; }
   /* Divider between the grouping segments and the lens segment */
   body.page-12 .screen-root .dock-sep { width: 1px; height: 18px; background: rgba(26,26,26,0.12); margin: 0 3px; flex: none; }
   /* "Needs you" = cyan-tinted segment inside the white pill (off / available);
@@ -37,7 +37,7 @@
     display: inline-flex; align-items: center; gap: 6px;
     background: rgba(127,227,247,0.22); border: none; box-shadow: none; backdrop-filter: none;
     color: var(--cyan-text); font-size: 12px; font-weight: 700;
-    padding: 8px 13px; border-radius: var(--radius-full);
+    min-height: 44px; padding: 0 14px; border-radius: var(--radius-full);
     cursor: pointer; white-space: nowrap;
   }
   body.page-12 .screen-root .needs-chip[hidden] { display: none; }
