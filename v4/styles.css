@@ -6539,7 +6539,11 @@ body.page-22 .screen-root .revisit {
     max-height: 0; overflow: hidden; transition: max-height 0.3s ease; margin: 0 -8px;
   }
 
-body.page-22 .screen-root .revisit.open { max-height: 360px; }
+/* Capped peek: ~4 rows + "Show all" affordance. */
+body.page-22 .screen-root .revisit.open { max-height: 480px; }
+/* Inline expanded: grows to fit a long list of open loops (spec §3 — must
+   not clip). Generous ceiling so the transition still animates. */
+body.page-22 .screen-root .revisit.open.expanded { max-height: 2400px; }
 
 body.page-22 .screen-root .revisit-inner {
     margin: 8px 4px 0; background: rgba(255,173,108,0.14);
@@ -6558,12 +6562,23 @@ body.page-22 .screen-root .rv-item + .rv-item { border-top: 1px solid rgba(255,1
 body.page-22 .screen-root .rv-item:active { background: rgba(255,173,108,0.2); }
 
 body.page-22 .screen-root .rv-topic {
-    font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.25;
+    font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.35;
   }
 
 body.page-22 .screen-root .rv-arrow {
     margin-left: auto; color: var(--worth-text); font-size: 15px; flex: none;
   }
+
+/* "Show all {N}" / "Show fewer" toggle — opt-in inline expansion. */
+body.page-22 .screen-root .rv-all {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    min-height: 42px; padding: 9px;
+    border-top: 1px solid rgba(255,173,108,0.32);
+    font-size: 13px; font-weight: 700; color: var(--worth-text);
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+
+body.page-22 .screen-root .rv-all:active { background: rgba(255,173,108,0.2); }
 
 /* ── Breakdown — grouping toggle as section header ── */
 body.page-22 .screen-root .group-toggle {

@@ -85,6 +85,7 @@
   <button class="state-tab active" data-state="balanced" type="button">Balanced</button>
   <button class="state-tab" data-state="settled" type="button">Mostly settled</button>
   <button class="state-tab" data-state="heavy" type="button">Orange-heavy</button>
+  <button class="state-tab" data-state="many" type="button">Many open (30)</button>
   <button class="state-tab" data-state="early" type="button">All orange</button>
   <button class="state-tab" data-state="allgreen" type="button">All aligned</button>
   <button class="state-tab" data-state="in-between" type="button">In-between</button>
@@ -249,6 +250,8 @@
         <tr><td>Fully / Mostly</td><td>Identical plain rows. <b>No sub-line</b> — the old "A fine place to be." was removed (the color + framing already say "this is fine"; saying it reads defensive).</td></tr>
         <tr><td>Worth row — hybrid</td><td>The only special row. Fill <code>rgba(255,173,108,0.34)</code> + <b>2px <code>#ffad6c</code> border</b>. Count-aware sub-line ("<b>N</b> open loops to come back to"). Chevron. Tap expands a revisit list.</td></tr>
         <tr><td>Revisit list</td><td>Each worth-a-conversation topic is its own <b>44px tap target</b> with a right arrow → navigates to that topic. The deliberate "destination, not a hub" exception.</td></tr>
+        <tr><td>Capped peek + inline expand</td><td>Show up to <b>~4</b> topics inline. When there are more, append a <b>"Show all {N}"</b> row that expands the rest <b>in place</b> — opt-in, single scroll, page just gets longer. Toggles to <b>"Show fewer."</b> No navigation off Progress; the overflow is fully self-contained, so it never depends on a destination that doesn't exist. The worth-row sub-line still shows the true count ("{N} open loops to come back to") — the cap limits the <em>peek</em>, not the number. The expand panel grows to fit (no fixed clip).</td></tr>
+        <tr><td>Topics dependency (future)</td><td>If Topics (Screen 14) ever gains a dedicated "Worth a conversation" filter/view, the inline "Show all {N}" can become <b>"See all {N} →"</b> into that view. Logged as a Topics dependency, not a Progress blocker. Out of scope here.</td></tr>
         <tr><td>Distribution, not score</td><td>Never a percentage, gauge, or pass/fail. A single "% aligned" is explicitly prohibited — it would put "Worth a conversation" on the losing side of a ratio.</td></tr>
         <tr><td>Zero-row behavior</td><td><b>Case A</b> (some revealed, one state at 0): show the row, dimmed to ~45%. The state-aware note carries reassurance — a dimmed zero reads "not yet." <b>Case B</b> (nothing revealed at all): card takes its empty form — eyebrow + mechanic note + empty <b>dashed</b> track, no rows.</td></tr>
         <tr><td>Orange-heavy holds</td><td>Design must read calm + inviting at every proportion. The orange is a warm peach off the green→red axis; layout is a distribution (not a gauge); states are journey-ordered (green→orange, not best→worst); orange items are actionable; copy reassures at the extremes.</td></tr>
@@ -351,7 +354,7 @@
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>All numbers are dynamic — completion, alignment counts, breakdown rows, and the note line update as topics are completed and reveals happen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The state-aware note picks copy from the ladder based on the current distribution; it's what makes orange-heavy holds read warm at every proportion.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Tapping the "Worth a conversation" row expands the revisit list; each item is a 44px tap target that navigates to that topic.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Tapping the "Worth a conversation" row expands the revisit list; each item is a 44px tap target that navigates to that topic. The peek shows up to ~4 rows; "Show all {N}" expands the rest inline (no off-screen navigation), and "Show fewer" collapses back.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Breakdown rows navigate to that group's accordion on Topics. No inline accordion on Progress — Progress is reflection, Topics is exploration.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Milestone celebration animation triggers on either a full category at 100% OR a full stage at 100%. Same animation, two triggers.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim. Stage names: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum.</span></div>
@@ -393,18 +396,25 @@
     "Do we have life insurance, and is it enough?",
     "Do we want health screenings - even if they reveal something hard?",
     "How will we share our culture and/or religion with our child?",
-    "How will we make time for ourselves as a couple?"
+    "How will we make time for ourselves as a couple?",
+    "What aspects of our upbringing will we replicate and what will we avoid as parents?"
   ];
+
+  // Peek size — beyond this, a "Show all {N}" row expands the rest inline.
+  // Self-contained on Progress: no navigation off-screen (see spec §3).
+  const REVISIT_CAP = 4;
+  let revisitExpanded = false;
 
   // ── State presets ──
   // Each defines: align counts, completion (done/prog/plan), in-between flag,
   // empty-state flag, breakdown override (optional), badges variant.
   const states = {
-    balanced:   { align:{fully:4, mostly:2, worth:4}, done:10, prog:5, plan:45, badges:"earned" },
-    settled:    { align:{fully:7, mostly:2, worth:1}, done:10, prog:5, plan:45, badges:"earned" },
-    heavy:      { align:{fully:1, mostly:1, worth:4}, done:6,  prog:5, plan:45, badges:"earned" },
-    early:      { align:{fully:0, mostly:0, worth:4}, done:4,  prog:5, plan:45, badges:"earned" },
-    allgreen:   { align:{fully:7, mostly:2, worth:0}, done:9,  prog:5, plan:45, badges:"earned" },
+    balanced:   { align:{fully:4, mostly:2, worth:4},  done:10, prog:5, plan:45, badges:"earned" },
+    settled:    { align:{fully:7, mostly:2, worth:1},  done:10, prog:5, plan:45, badges:"earned" },
+    heavy:      { align:{fully:1, mostly:1, worth:4},  done:6,  prog:5, plan:45, badges:"earned" },
+    many:       { align:{fully:3, mostly:4, worth:30}, done:37, prog:5, plan:45, badges:"earned" },
+    early:      { align:{fully:0, mostly:0, worth:4},  done:4,  prog:5, plan:45, badges:"earned" },
+    allgreen:   { align:{fully:7, mostly:2, worth:0},  done:9,  prog:5, plan:45, badges:"earned" },
     "in-between": {
       align:{fully:0, mostly:0, worth:0},
       done:0, prog:6, plan:45,
@@ -441,6 +451,32 @@
         <span class="brow-chev" aria-hidden="true">›</span>
       </div>`;
     }).join('');
+  }
+
+  // Track the worth count for the current state so the rv-all toggle
+  // can re-render the revisit list without going through applyState.
+  let currentWorthCount = 0;
+
+  function renderRevisit(){
+    const inner   = root.querySelector('#revisit-inner');
+    const revisit = root.querySelector('#revisit');
+    const W = currentWorthCount;
+    const sampleCount = worthTopics.length;
+    const showN = revisitExpanded ? W : Math.min(W, REVISIT_CAP);
+    let html = '';
+    for(let i = 0; i < showN; i++){
+      // Cycle through the sample titles when the demo count exceeds the
+      // mock's curated list; production has 1:1 real titles.
+      const t = worthTopics[i % sampleCount];
+      html += '<div class="rv-item"><span class="rv-topic">' + t + '</span><i class="ph ph-arrow-right rv-arrow" aria-hidden="true"></i></div>';
+    }
+    if(W > REVISIT_CAP){
+      html += revisitExpanded
+        ? '<div class="rv-all" data-act="collapse" role="button" tabindex="0"><i class="ph-bold ph-caret-up" style="font-size:13px;"></i> Show fewer</div>'
+        : '<div class="rv-all" data-act="expand" role="button" tabindex="0">Show all ' + W + ' <i class="ph-bold ph-caret-down" style="font-size:13px;"></i></div>';
+    }
+    inner.innerHTML = html;
+    revisit.classList.toggle('expanded', revisitExpanded);
   }
 
   function renderBadges(variant){
@@ -531,9 +567,13 @@
         W === 1 ? "1 open loop to come back to." :
                   W + " open loops to come back to.";
 
-      revisitInner.innerHTML = worthTopics.slice(0, W).map(t =>
-        '<div class="rv-item"><span class="rv-topic">' + t + '</span><i class="ph ph-arrow-right rv-arrow" aria-hidden="true"></i></div>'
-      ).join('');
+      // Capped peek with inline expansion. Render via renderRevisit() so
+      // the rv-all click handler can re-render without re-running the
+      // whole applyState pipeline.
+      currentWorthCount = W;
+      revisitExpanded = false;
+      renderRevisit();
+
       // Collapse revisit list on state change
       worthRow.classList.remove('open');
       revisit.classList.remove('open');
@@ -574,9 +614,27 @@
   // Worth row → revisit list
   root.querySelector('#worth-row').addEventListener('click', () => {
     const worth = root.querySelector('#worth-row');
+    const revisit = root.querySelector('#revisit');
     if(worth.classList.contains('is-dim')) return;
+    const opening = !revisit.classList.contains('open');
     worth.classList.toggle('open');
-    root.querySelector('#revisit').classList.toggle('open');
+    revisit.classList.toggle('open');
+    // Collapsing the card resets the inline "Show all" expansion so the
+    // next open starts at the capped peek again.
+    if(!opening && revisitExpanded){
+      revisitExpanded = false;
+      renderRevisit();
+    }
+  });
+
+  // "Show all {N}" / "Show fewer" — grows the list in place, no navigation
+  // off Progress. Individual rows still navigate to their topic.
+  root.querySelector('#revisit-inner').addEventListener('click', e => {
+    const all = e.target.closest('.rv-all');
+    if(!all) return;
+    e.stopPropagation();
+    revisitExpanded = !revisitExpanded;
+    renderRevisit();
   });
 
   // Init
