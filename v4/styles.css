@@ -6722,16 +6722,15 @@ body.page-22 .screen-root .state-tab.active {
 
 /* ── Bottom nav ── */
 body.page-22 .screen-root .bottom-nav {
-    height: 84px; padding: 0 8px 20px;
-    background: rgba(251,239,225,0.92); backdrop-filter: blur(12px);
-    border-top: 1px solid var(--line);
+    height: 84px; padding: 0 8px 20px; background: var(--white);
+    border-top: 1px solid var(--border-default);
     display: flex; align-items: stretch; flex-shrink: 0;
   }
 
 body.page-22 .screen-root .nav-tab {
     flex: 1; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 3px;
-    cursor: pointer; color: var(--ink-45); text-decoration: none;
+    cursor: pointer; color: var(--text-secondary); text-decoration: none;
   }
 
 body.page-22 .screen-root .nav-tab.active { color: var(--purple-500); }
