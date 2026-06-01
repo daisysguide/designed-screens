@@ -82,8 +82,7 @@
 </div>
 
 <div class="state-tabs" role="tablist" aria-label="Progress screen state preview">
-  <button class="state-tab active" data-state="populated" type="button">Populated</button>
-  <button class="state-tab" data-state="balanced" type="button">Balanced</button>
+  <button class="state-tab active" data-state="balanced" type="button">Balanced</button>
   <button class="state-tab" data-state="settled" type="button">Mostly settled</button>
   <button class="state-tab" data-state="heavy" type="button">Orange-heavy</button>
   <button class="state-tab" data-state="early" type="button">All orange</button>
@@ -403,7 +402,6 @@
   // Each defines: align counts, completion (done/prog/plan), in-between flag,
   // empty-state flag, breakdown override (optional), badges variant.
   const states = {
-    populated:  { align:{fully:4, mostly:2, worth:4}, done:10, prog:5, plan:45, badges:"earned" },
     balanced:   { align:{fully:4, mostly:2, worth:4}, done:10, prog:5, plan:45, badges:"earned" },
     settled:    { align:{fully:7, mostly:2, worth:1}, done:10, prog:5, plan:45, badges:"earned" },
     heavy:      { align:{fully:1, mostly:2, worth:7}, done:10, prog:5, plan:45, badges:"earned" },
@@ -568,7 +566,7 @@
     btn.classList.add('on');
     currentMode = btn.dataset.mode;
     const activeStateBtn = root.querySelector('.state-tab.active');
-    const stateKey = activeStateBtn ? activeStateBtn.dataset.state : 'populated';
+    const stateKey = activeStateBtn ? activeStateBtn.dataset.state : 'balanced';
     const s = states[stateKey];
     if(s && s.mode !== 'empty'){
       root.querySelector('#breakdown-rows').innerHTML = renderBreakdown(currentMode, s.plan, s.mode === 'in-between');
@@ -584,7 +582,7 @@
   });
 
   // Init
-  applyState('populated');
+  applyState('balanced');
 })();
 </script>
 
