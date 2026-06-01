@@ -28,6 +28,10 @@ in the repo as the reviewed baseline (no further changes will be made to it).
 
 ## Dated changes
 
+### 2026-05-31
+
+- **Screen 12 (Progress) — full redesign ported in.** Phone mockup rebuilt from `12-progress-redesign.html`; spec panel rewritten against `screen-12-progress-spec.md`. Out: 3-column "74% Aligned" stats slab, "We're good / Needs work / In progress" stacked per-category bar, chaos meter, header-mounted grouping toggle. In: completion lede + 10px bar; alignment distribution card (state-aware note, 14px bar, hybrid "Worth a conversation" row with revisit list); inline grouping toggle as the section header for breakdown (52px tap-target rows, 8px bar, navigate to that group's accordion on Topics); badges with dashed teaser; in-between and empty states. Progress ends after badges — easter egg moves to Home (Screen 11). Doc-page state switcher added above the phone for reviewers (Populated · Balanced · Mostly settled · Orange-heavy · All orange · All aligned · In-between · Nothing answered). Page-desc reworded. The scoping bug (Screen 12 living under `body.page-22`) is left in place per CLAUDE.md repo-hygiene note — the new Progress styles overwrite the existing `body.page-22 .screen-root` block; the eventual `page-22 → page-12` rename will happen in the dedicated page-NN sweep that also fixes Screen 14 (`page-12 → page-14`).
+
 ### 2026-05-28
 
 - **Screen 08 (Personalized Results) — Conversation Preview labels unified:** all section labels now share a single style (small uppercase `purple-500`), identical across the personalized and fallback states. The "from your answers" vs "curated" distinction is carried by dot color + wording, never by label color.

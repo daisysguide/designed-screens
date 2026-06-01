@@ -73,12 +73,23 @@
   <div>
     <div class="screen-tag">Screen 12 · Home Base</div>
     <div class="page-title">Progress</div>
-    <div class="page-desc">Per-category stacked progress bars. Alignment score. Chaos meter. Category / Stage grouping toggle.</div>
+    <div class="page-desc">The reflection view: completion, the alignment distribution, and badges. By category / By stage breakdown. Destination, not a hub.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="11-home.html">← Screen 11: Home</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="13-settings.html">Screen 13: Settings →</a>
   </div>
+</div>
+
+<div class="state-tabs" role="tablist" aria-label="Progress screen state preview">
+  <button class="state-tab active" data-state="populated" type="button">Populated</button>
+  <button class="state-tab" data-state="balanced" type="button">Balanced</button>
+  <button class="state-tab" data-state="settled" type="button">Mostly settled</button>
+  <button class="state-tab" data-state="heavy" type="button">Orange-heavy</button>
+  <button class="state-tab" data-state="early" type="button">All orange</button>
+  <button class="state-tab" data-state="allgreen" type="button">All aligned</button>
+  <button class="state-tab" data-state="in-between" type="button">In-between</button>
+  <button class="state-tab" data-state="empty" type="button">Nothing answered</button>
 </div>
 
 <div class="main-layout">
@@ -92,118 +103,92 @@
 
           <div class="screen-title">Your progress</div>
 
-          <!-- Stats row -->
-          <div class="stats-row">
-            <div class="stat-col">
-              <div class="stat-num">10</div>
-              <div class="stat-label">Complete</div>
+          <!-- ── Populated / in-between body ── -->
+          <div id="progress-body">
+
+            <!-- Completion -->
+            <div id="completion-block">
+              <div class="completion-lede" id="completion-lede">
+                You've worked through <b>10 of 45</b> conversations together.<br>
+                <span class="underway-line">5 more are underway.</span>
+              </div>
+              <div class="completion-bar">
+                <i class="done" id="completion-done" style="width:22%;"></i>
+                <i class="prog" id="completion-prog" style="width:11%;"></i>
+              </div>
             </div>
-            <div class="stat-col">
-              <div class="stat-num">18</div>
-              <div class="stat-label">Remaining</div>
+
+            <div class="progress-rule"></div>
+
+            <!-- Alignment distribution card -->
+            <div class="align-card" id="align-card">
+              <div class="align-eyebrow">Where you've landed so far</div>
+              <div class="align-note" id="align-note"></div>
+
+              <!-- Populated bar -->
+              <div class="align-bar" id="align-bar">
+                <i class="seg-fully"  id="seg-fully"  style="width:0%;"></i>
+                <i class="seg-mostly" id="seg-mostly" style="width:0%;"></i>
+                <i class="seg-worth"  id="seg-worth"  style="width:0%;"></i>
+              </div>
+              <!-- Empty (dashed) bar — shown when nothing revealed -->
+              <div class="align-bar-empty" id="align-bar-empty" style="display:none;"></div>
+
+              <div id="align-rows">
+                <div class="align-row fully">
+                  <span class="align-dot fully"></span>
+                  <div><div class="align-name">Fully aligned</div></div>
+                  <span class="align-count" id="cnt-fully">0</span>
+                </div>
+                <div class="align-row mostly">
+                  <span class="align-dot mostly"></span>
+                  <div><div class="align-name">Mostly aligned</div></div>
+                  <span class="align-count" id="cnt-mostly">0</span>
+                </div>
+                <div class="align-row worth" id="worth-row" role="button" tabindex="0">
+                  <span class="align-dot worth"></span>
+                  <div>
+                    <div class="align-name">Worth a conversation</div>
+                    <div class="align-sub" id="worth-sub">A few open loops to come back to.</div>
+                  </div>
+                  <span class="align-count" id="cnt-worth">0</span>
+                  <span class="chev" aria-hidden="true">›</span>
+                </div>
+                <div class="revisit" id="revisit">
+                  <div class="revisit-inner" id="revisit-inner"></div>
+                </div>
+              </div>
             </div>
-            <div class="stat-col">
-              <div class="stat-num">74%</div>
-              <div class="stat-label">Aligned</div>
+
+            <!-- Breakdown — grouping toggle IS the section header -->
+            <div class="group-toggle" id="grouping-toggle" role="tablist" aria-label="Breakdown grouping">
+              <button class="on" data-mode="category" type="button">By category</button>
+              <button data-mode="stage" type="button">By stage</button>
             </div>
+            <div class="breakdown-rows" id="breakdown-rows"></div>
+
+            <!-- Badges -->
+            <div class="badges-label" id="badges-label">Badges you've earned</div>
+            <div class="badges-row" id="badges-row">
+              <div class="badge"><span class="emo">🫠</span><div class="bname">"Officially panicking together"</div></div>
+              <div class="badge"><span class="emo">🌙</span><div class="bname">"Survived the night-feeds talk"</div></div>
+              <div class="badge"><span class="emo">💸</span><div class="bname">"Looked at the actual numbers"</div></div>
+              <div class="badge locked"><span class="emo">🔒</span><div class="bname">2 more brewing</div></div>
+            </div>
+
           </div>
 
-          <!-- Overall progress bar -->
-          <div class="overall-bar-wrap">
-            <div class="overall-bar-label">
-              <span>Overall</span>
-              <span>10 of 45 topics</span>
-            </div>
-            <div class="progress-track">
-              <div class="progress-fill" style="width:36%;"></div>
-            </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="section-label">By category</div>
-
-          <!-- Category rows -->
-          <div class="cat-row">
-            <div class="cat-row-top">
-              <span class="cat-name">The Basics</span>
-              <span class="cat-count">4 of 5</span>
-            </div>
-            <!-- 2 resolved=40%, 1 pending=20%, 1 in-progress=20%, 1 not-started=20% -->
-            <div class="progress-track" style="height:8px;background:rgba(26,26,26,0.10);border-radius:999px;overflow:hidden;display:flex;">
-              <div style="width:40%;background:#157a46;"></div>
-              <div style="width:20%;background:#1a5170;"></div>
-              <div style="width:20%;background:#5f45f2;"></div>
-            </div>
-          </div>
-
-          <div class="cat-row">
-            <div class="cat-row-top">
-              <span class="cat-name">Pregnancy & Birth</span>
-              <span class="cat-count">3 of 8</span>
-            </div>
-            <!-- 1 resolved=12.5%, 0 pending=0%, 2 in-progress=25%, 5 not-started=62.5% -->
-            <div class="progress-track" style="height:8px;background:rgba(26,26,26,0.10);border-radius:999px;overflow:hidden;display:flex;">
-              <div style="width:12.5%;background:#157a46;"></div>
-              <div style="width:25%;background:#5f45f2;"></div>
-            </div>
-          </div>
-
-          <div class="cat-row">
-            <div class="cat-row-top">
-              <span class="cat-name">The Village</span>
-              <span class="cat-count">2 of 6</span>
-            </div>
-            <!-- 0 resolved=0%, 1 pending=16.7%, 1 in-progress=16.7%, 4 not-started=66.6% -->
-            <div class="progress-track" style="height:8px;background:rgba(26,26,26,0.10);border-radius:999px;overflow:hidden;display:flex;">
-              <div style="width:16.7%;background:#1a5170;"></div>
-              <div style="width:16.7%;background:#5f45f2;"></div>
-            </div>
-          </div>
-
-          <div class="cat-row">
-            <div class="cat-row-top">
-              <span class="cat-name">Eat, Poop, Sleep, Repeat</span>
-              <span class="cat-count">1 of 4</span>
-            </div>
-            <div class="cat-track"><div class="cat-fill" style="width:25%;"></div></div>
-          </div>
-
-          <div class="cat-row">
-            <div class="cat-row-top">
-              <span class="cat-name">Education, Health & Development</span>
-              <span class="cat-count">0 of 2</span>
-            </div>
-            <div class="cat-track"><div class="cat-fill" style="width:0%;"></div></div>
-          </div>
-
-          <div class="cat-row">
-            <div class="cat-row-top">
-              <span class="cat-name">The Existential</span>
-              <span class="cat-count">0 of 2</span>
-            </div>
-            <div class="cat-track"><div class="cat-fill" style="width:0%;"></div></div>
-          </div>
-
-          <div class="cat-row">
-            <div class="cat-row-top">
-              <span class="cat-name">Us</span>
-              <span class="cat-count">0 of 1</span>
-            </div>
-            <div class="cat-track"><div class="cat-fill" style="width:0%;"></div></div>
-          </div>
-
-          <div class="divider" style="margin-top:16px;"></div>
-
-          <!-- Chaos meter -->
-          <div class="chaos-card">
-            <div class="chaos-title">🌡️ Chaos meter</div>
-            <div class="chaos-body">Based on how different your answers have been... you're at <span class="chaos-score">6.5</span> / 10. Perfectly normal. Probably.</div>
+          <!-- ── Empty state body ── -->
+          <div class="empty-state" id="empty-state" style="display:none;">
+            <div class="empty-ic"><i class="ph ph-plant"></i></div>
+            <div class="empty-h">Nothing to look back on yet</div>
+            <div class="empty-b">Once you two start working through topics, your progress, alignment, and badges will gather here.</div>
+            <button class="empty-cta" type="button">Start with your first topic <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i></button>
           </div>
 
         </div>
 
-        <!-- Bottom nav -->
+        <!-- Bottom nav (Home Base only) -->
         <div class="bottom-nav">
           <a class="nav-tab" href="11-home.html">
             <div class="nav-tab-icon"><i class="ph ph-house"></i></div>
@@ -214,7 +199,7 @@
             <div class="nav-tab-label">Topics</div>
           </a>
           <a class="nav-tab active" href="12-progress.html" aria-current="page">
-            <div class="nav-tab-icon"><i class="ph-fill ph-list-checks"></i></div>
+            <div class="nav-tab-icon"><i class="ph-fill ph-chart-donut"></i></div>
             <div class="nav-tab-label">Progress</div>
           </a>
           <a class="nav-tab" href="13-settings.html">
@@ -236,90 +221,128 @@
         <div class="flow-node from">11 Home</div>
         <div class="flow-arrow">→</div>
         <div class="flow-node current">12 Progress</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">14 Topic List</div>
       </div>
-      <div class="info-box">Progress tab is active. Reached via bottom nav or "See full progress →" on Home. No outbound navigation from this screen — it's a destination, not a hub.</div>
+      <div class="info-box"><strong>Destination, not a hub — with two exceptions.</strong> Reached via bottom nav, Home's "See full progress" pointer, or any path that returns the couple to Home Base. The only outbound actions are intentional invitations: tapping a topic inside the "Worth a conversation" revisit list jumps to that topic, and tapping a category/stage row jumps to that group's accordion on Topics. Completion, alignment, badges, and the easter-egg slot are read-only — the easter egg lives on Home, not here.</div>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Grouping toggle</div>
+      <div class="spec-card-title">Completion</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Right side of screen header</td></tr>
-        <tr><td>Options</td><td>"By category" | "By stage"</td></tr>
-        <tr><td>Style</td><td>Segment toggle · <code>radius-full</code> · <code>1.5px solid border-default</code> outline · white bg · 32px height (compact)</td></tr>
-        <tr><td>Default</td><td>"By category"</td></tr>
-        <tr><td>Active option</td><td><code>purple-500</code> fill · white text</td></tr>
-        <tr><td>State persistence</td><td>Per-user, per-screen. Independent of Topic List toggle state.</td></tr>
+        <tr><td>Shape</td><td>A warm headline + bar, not a stat slab. No "% done," no 3-column scorecard.</td></tr>
+        <tr><td>Copy</td><td>"You've worked through <b>{done} of {plan}</b> conversations together." + "<b>{underway}</b> more are underway." <code>{plan}</code> = the user's filtered plan total (45 in this example).</td></tr>
+        <tr><td>Bar height</td><td>10px (summary tier of the bar ladder)</td></tr>
+        <tr><td>Bar segments</td><td>completed = solid <code>#5f45f2</code> · underway = translucent <code>rgba(95,69,242,0.30)</code> · remainder = track. <b>No stripes</b> — solid-translucent is the single underway treatment everywhere on the screen.</td></tr>
+        <tr><td>Reconciliation</td><td>Headline, bar, and per-group sums all template off the same filtered plan total.</td></tr>
+        <tr><td>In-between state</td><td>Headline reframes to <em>"Nothing revealed yet, but <b>{N} conversations</b> are already underway."</em> Bar shows underway-only fill.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Stats Display (columns: 3, surface: card)</div>
+      <div class="spec-card-title">Alignment distribution — the heart of the screen</div>
       <table class="spec-table">
-        <tr><td>Layout</td><td>3 equal-width columns inside a white card · <code>radius-xl</code> · <code>shadow-md</code></td></tr>
-        <tr><td>Dividers</td><td><code>1px solid border-default</code> between columns</td></tr>
-        <tr><td>Number</td><td><code>display-md</code> (Grandstander 24px bold) · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
-        <tr><td>Label</td><td>10px DM Sans semibold · ALL CAPS · <code>text-secondary</code> · 3px below number</td></tr>
-        <tr><td>Col 1</td><td>"10" / "COMPLETE" — dynamic</td></tr>
-        <tr><td>Col 2</td><td>"18" / "REMAINING" — dynamic</td></tr>
-        <tr><td>Col 3</td><td>"74%" / "ALIGNED" — alignment score</td></tr>
-        <tr><td>Threshold gate</td><td>Aligned column hidden when revealed topics &lt; 5. Stats row drops to 2-column layout until threshold is met.</td></tr>
+        <tr><td>Eyebrow</td><td>"Where you've landed so far" (static)</td></tr>
+        <tr><td>Note line</td><td>State-aware — see copy ladder below. Sits beneath the eyebrow, above the bar.</td></tr>
+        <tr><td>Bar height</td><td>14px (centerpiece tier of the bar ladder)</td></tr>
+        <tr><td>Bar fills</td><td>Solid state colors only: green <code>#77eaaf</code> · lighter green <code>#96f1c6</code> · orange <code>#ffad6c</code>. Widths proportional to counts.</td></tr>
+        <tr><td>Rows</td><td>Three: dot · sentence-case name · Grandstander count.</td></tr>
+        <tr><td>Fully / Mostly</td><td>Identical plain rows. <b>No sub-line</b> — the old "A fine place to be." was removed (the color + framing already say "this is fine"; saying it reads defensive).</td></tr>
+        <tr><td>Worth row — hybrid</td><td>The only special row. Fill <code>rgba(255,173,108,0.34)</code> + <b>2px <code>#ffad6c</code> border</b>. Count-aware sub-line ("<b>N</b> open loops to come back to"). Chevron. Tap expands a revisit list.</td></tr>
+        <tr><td>Revisit list</td><td>Each worth-a-conversation topic is its own <b>44px tap target</b> with a right arrow → navigates to that topic. The deliberate "destination, not a hub" exception.</td></tr>
+        <tr><td>Distribution, not score</td><td>Never a percentage, gauge, or pass/fail. A single "% aligned" is explicitly prohibited — it would put "Worth a conversation" on the losing side of a ratio.</td></tr>
+        <tr><td>Zero-row behavior</td><td><b>Case A</b> (some revealed, one state at 0): show the row, dimmed to ~45%. The state-aware note carries reassurance — a dimmed zero reads "not yet." <b>Case B</b> (nothing revealed at all): card takes its empty form — eyebrow + mechanic note + empty <b>dashed</b> track, no rows.</td></tr>
+        <tr><td>Orange-heavy holds</td><td>Design must read calm + inviting at every proportion. The orange is a warm peach off the green→red axis; layout is a distribution (not a gauge); states are journey-ordered (green→orange, not best→worst); orange items are actionable; copy reassures at the extremes.</td></tr>
+      </table>
+      <div class="info-box"><strong>Copy ladder — the note line</strong><br>
+        Nothing revealed → <em>"Once you've each answered a topic, you'll see how your answers compare."</em><br>
+        Worth = 0 → <em>"You're landing in the same place on just about everything."</em><br>
+        All orange → <em>"Early days. These are the conversations to start with."</em><br>
+        Worth ≥ 50% → <em>"Lots to talk through (which is the whole point, right?)."</em><br>
+        Worth ≥ 20% → <em>"A good mix! Plenty settled, a few worth coming back to."</em><br>
+        Otherwise → <em>"Mostly settled, with a few worth a closer look."</em>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Breakdown — By category / By stage</div>
+      <table class="spec-table">
+        <tr><td>What it shows</td><td>Completion only — "how far through each group you are." Alignment lives in the card above; do not cram it into these bars.</td></tr>
+        <tr><td>Grouping toggle</td><td>Same component as Topics (Screen 14): purple-fill active segment, persisted <b>per-user, per-screen</b>, remembered <b>independently</b> of the Topics toggle.</td></tr>
+        <tr><td>Placement vs Topics</td><td><b>Inline section header here</b>, not the floating-pill placement Topics uses. Topics floats because the toggle governs the whole scrolling list; on Progress it governs only this section (completion, alignment, badges do not regroup). Same component; placement follows scope. The toggle absorbs the section label — no separate "By category" text.</td></tr>
+        <tr><td>Row shape</td><td>Group name · "<b>X of Y</b>" · 8px bar (completed solid purple + underway translucent purple + remainder track).</td></tr>
+        <tr><td>Tap target</td><td><b>52px</b> rows with a static right chevron (›) → navigate to that group's accordion on the Topics screen.</td></tr>
+        <tr><td>No inline accordion</td><td>A previously-built per-category expand was removed: it duplicated the alignment card's worth-a-conversation access (scattering it across groups) and turned Progress into a second Topics screen.</td></tr>
+        <tr><td>Titles</td><td>Wrap, never truncate. Untouched groups (0 done / 0 underway) dimmed.</td></tr>
+        <tr><td>Real content</td><td><b>7 categories</b>. <b>4 stages</b>: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Overall progress bar</div>
+      <div class="spec-card-title">Badges</div>
       <table class="spec-table">
-        <tr><td>Track height</td><td>8px — slightly taller than in-topic bar (6px) to signal importance</td></tr>
-        <tr><td>Track color</td><td><code>rgba(26,26,26,0.10)</code></td></tr>
-        <tr><td>Fill color</td><td><code>purple-500</code> · <code>radius-full</code></td></tr>
-        <tr><td>Label left</td><td>"Overall" · 12px · <code>text-secondary</code></td></tr>
-        <tr><td>Label right</td><td>"X of 45 topics" · 12px · <code>text-secondary</code></td></tr>
+        <tr><td>Naming</td><td>Sarcastic, bold, in quotes — e.g. <em>"Officially panicking together."</em></td></tr>
+        <tr><td>Earned</td><td>Chips with deliberate emoji + quoted name.</td></tr>
+        <tr><td>What's next</td><td>Soft, <b>dashed teaser</b> (e.g. "+2 more brewing") — not a grindy lock grid. Celebratory and unhurried, not an achievement treadmill.</td></tr>
+        <tr><td>In-between state</td><td>Single dashed teaser: "Your first is one finished topic away."</td></tr>
+        <tr><td>Screen ends here</td><td>No easter egg below badges — Progress ends after this section.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Stacked per-group progress bar</div>
+      <div class="spec-card-title">Easter egg — cut here, moved to Home</div>
       <table class="spec-table">
-        <tr><td>Bar height</td><td>8px</td></tr>
-        <tr><td>Track bg</td><td><code>rgba(26,26,26,0.10)</code></td></tr>
-        <tr><td>Segments (left to right)</td><td>We're good · Needs work · In progress (Your turn + Waiting combined) · remainder = Not started (empty track)</td></tr>
-        <tr><td>We're good color</td><td><code>status-success-text</code> (#157a46)</td></tr>
-        <tr><td>Needs work color</td><td><code>status-pending-text</code> (#1a5170)</td></tr>
-        <tr><td>In progress color</td><td><code>purple-500</code> (#5f45f2)</td></tr>
-        <tr><td>Not started</td><td>Empty portion of track — no fill, shows track bg</td></tr>
-        <tr><td>Row gap</td><td>12px between rows</td></tr>
-      </table>
-      <div class="info-box">Example: "The Basics: 2 resolved, 1 pending, 1 in progress, 1 not started" renders as a 5-segment track with green + amber + purple + empty.</div>
-    </div>
-
-    <div class="spec-card">
-      <div class="spec-card-title">Empty state gating</div>
-      <table class="spec-table">
-        <tr><td>Chaos meter</td><td>Hidden until user has 3 or more revealed topics. Below that threshold, the card does not render at all.</td></tr>
-        <tr><td>Alignment %</td><td>Hidden until user has 5 or more revealed topics. Below that threshold, the top stats row drops to 2 columns (Complete · Remaining); the third column reappears once threshold is met.</td></tr>
+        <tr><td>Chaos meter</td><td><b>Cut.</b> Scoring "how different your answers have been" on a 1–10 scale pathologizes divergence, directly contradicting the orange-as-invitation framing everywhere else.</td></tr>
+        <tr><td>Replacement</td><td>A <b>wry observation</b> — the app notices something specific and true about the couple, drawn from their data (e.g. <em>"Fastest you've ever agreed: baby names. Slowest: the budget."</em>).</td></tr>
+        <tr><td>Where it lives</td><td><b>Home (Screen 11), not Progress.</b> Progress is already dense and the bottom is easy to miss; Home is sparse, seen every session, and already has a characterful note slot the observation can share.</td></tr>
+        <tr><td>Hard rules (wherever it lands)</td><td>Must <b>not</b> score or rank divergence. Stays <b>gated</b> (appears only after a few reveals). Keeps the dashed AI-card treatment. Stays subordinate to Home's single next action.</td></tr>
+        <tr><td>On Progress</td><td><b>No easter egg.</b> The screen ends after badges.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Chaos meter</div>
+      <div class="spec-card-title">Screen states</div>
       <table class="spec-table">
-        <tr><td>Style</td><td>White card · <code>radius-xl</code> · <code>shadow-md</code> · 16px padding</td></tr>
-        <tr><td>Title</td><td>"🌡️ Chaos meter" · 14px DM Sans bold</td></tr>
-        <tr><td>Score</td><td><code>display-sm</code> (Grandstander 20px bold) · <code>purple-500</code> · inline in sentence</td></tr>
-        <tr><td>Copy</td><td>"Based on how different your answers have been... you're at [X] / 10. Perfectly normal. Probably." — exact copy, the humor is intentional</td></tr>
-        <tr><td>Nature</td><td>Running easter egg — not a primary metric. Sits at the bottom, below all serious data.</td></tr>
-        <tr><td>Calculation</td><td>Higher score = more divergent answers across all topics. Never explain the formula to users.</td></tr>
+        <tr><td>Empty (nothing answered)</td><td>Body collapses to a warm empty state: soft icon, heading <em>"Nothing to look back on yet,"</em> a line setting expectations, and one <b>restrained</b> CTA → "Start with your first topic" → Topics. Grouping toggle hidden. No skeleton of zeros. (Home owns the prominent next action; this is a one-time bootstrap nudge.)</td></tr>
+        <tr><td>In-between (started, nothing revealed yet)</td><td>Completion reframes (see Completion card). Alignment card takes its <b>empty form</b> (Case B): eyebrow + mechanic note + empty dashed track, no rows. Breakdown shows underway slivers with untouched groups dimmed. Badges → single dashed teaser.</td></tr>
+        <tr><td>Populated</td><td>Full screen as specced.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Visual system &amp; tokens</div>
+      <table class="spec-table">
+        <tr><td>Palette</td><td>Cream <code>#fbefe1</code> · ink <code>#1a1a1a</code> · purple <code>#5f45f2</code> · orange <code>#ffad6c</code> · greens <code>#77eaaf</code> / <code>#96f1c6</code>.</td></tr>
+        <tr><td>Alignment text tokens</td><td>Fully <code>#157a46</code> · Mostly <code>#2e7d52</code> · Worth <code>#995611</code>. Worth band: <code>rgba(255,173,108,0.34)</code> with 2px <code>#ffad6c</code> border.</td></tr>
+        <tr><td>Underway treatment</td><td>Solid translucent purple <code>rgba(95,69,242,0.30)</code> everywhere. <b>No stripes anywhere.</b></td></tr>
+        <tr><td>Bar-height ladder</td><td>Alignment <b>14px</b> (centerpiece) · completion <b>10px</b> (summary) · category <b>8px</b> (repeated detail).</td></tr>
+        <tr><td>Dim</td><td>~45% opacity (zero rows · untouched groups).</td></tr>
+        <tr><td>Tap targets</td><td>Breakdown rows <b>52px</b> · revisit items <b>44px</b>.</td></tr>
+        <tr><td>Dashed border</td><td>The AI-generated-content convention (and the empty-alignment-track treatment). AI copy is warm + specific, never mentions being AI.</td></tr>
+        <tr><td>Fonts</td><td>DM Sans (body) · Grandstander 700 (display) · Phosphor (icons).</td></tr>
+        <tr><td>One state per topic</td><td>Alignment is one value per topic (shared per couple), not per question. Resolution is merged into the alignment state. Editing the shared status is asymmetric: anyone can move a topic <b>to</b> "Worth a conversation" instantly; moving it back to settled is propose-and-confirm.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Counts &amp; data</div>
+      <table class="spec-table">
+        <tr><td>Filtered plan</td><td><b>45</b> — the example user's plan total (what Progress, and onboarding 03/08/09, template off).</td></tr>
+        <tr><td>Full library</td><td><b>51</b>. Six topics filtered out by the quiz for this example user. Plan total is <b>per-user</b> — different quiz answers filter different amounts.</td></tr>
+        <tr><td>Known mismatch</td><td>Topics (Screen 14) currently shows 49 topics (and a stray "14 of 30") — to be reconciled against the real data layer. Likely cause: Topics shows closer to the full library for review rather than the filtered plan. Distinction to preserve: <b>filtered plan (45)</b> vs <b>full library (51)</b> vs <b>whatever Topics chooses to display</b>. Progress holds at 45.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
-        <span class="component-tag">Stats Display (columns: 3, surface: card)</span>
-        <span class="component-tag">Progress Bar — labeled</span>
-        <span class="component-tag">Progress Row ×7</span>
-        <span class="component-tag">Chaos Meter card</span>
-        <span class="component-tag">Divider</span>
+        <span class="component-tag">Completion lede + 10px bar</span>
+        <span class="component-tag">Alignment distribution card (14px bar)</span>
+        <span class="component-tag">Hybrid "Worth a conversation" row + revisit list</span>
+        <span class="component-tag">Grouping toggle (inline · section header)</span>
+        <span class="component-tag">Breakdown row ×7 / ×4 (8px bar · 52px tap)</span>
+        <span class="component-tag">Badge chips + dashed teaser</span>
+        <span class="component-tag">Empty / In-between state body</span>
         <span class="component-tag">Bottom Nav (Progress active)</span>
       </div>
     </div>
@@ -327,17 +350,243 @@
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>All numbers are dynamic — update as topics are completed.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Alignment score (74%) is calculated from all revealed topics — ratio of aligned/mostly-aligned to worth-a-conversation reveals.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Milestone animation triggers when a full category reaches 100% — confetti or celebration moment.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>All numbers are dynamic — completion, alignment counts, breakdown rows, and the note line update as topics are completed and reveals happen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The state-aware note picks copy from the ladder based on the current distribution; it's what makes orange-heavy holds read warm at every proportion.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Tapping the "Worth a conversation" row expands the revisit list; each item is a 44px tap target that navigates to that topic.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Breakdown rows navigate to that group's accordion on Topics. No inline accordion on Progress — Progress is reflection, Topics is exploration.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Milestone celebration animation triggers on either a full category at 100% OR a full stage at 100%. Same animation, two triggers.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim. Fixed order matching the book.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Chaos meter never explains its calculation — it's meant to be a little mysterious and funny.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim. Stage names: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Grouping toggle state persists per-user, per-screen — independent of the Topics screen's toggle.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The demo state-switcher above the phone is documentation-only — it does not appear in the shipped app.</span></div>
       </div>
     </div>
 
   </div>
 </div>
+
+<script>
+(function(){
+  const root = document.querySelector('body.page-22 .screen-root');
+  if(!root) return;
+
+  // ── Breakdown data ──
+  const breakdown = {
+    category: [
+      {name:"The Basics",                       total:7, done:4, prog:1},
+      {name:"Pregnancy & Birth",                total:9, done:3, prog:2},
+      {name:"The Village",                      total:6, done:2, prog:1},
+      {name:"Eat, Poop, Sleep, Repeat",         total:8, done:1, prog:1},
+      {name:"Education, Health & Development",  total:6, done:0, prog:0},
+      {name:"The Existential",                  total:5, done:0, prog:0},
+      {name:"Us",                               total:4, done:0, prog:0}
+    ],
+    stage: [
+      {name:"Before Pregnancy",                       total:8,  done:3, prog:1},
+      {name:"First Trimester",                        total:12, done:4, prog:2},
+      {name:"Second Trimester",                       total:13, done:2, prog:1},
+      {name:"Third Trimester & Early Postpartum",     total:12, done:1, prog:1}
+    ]
+  };
+
+  // ── Worth-a-conversation topics (for the revisit list) ──
+  const worthTopics = [
+    "The first month — who's up at night?",
+    "Money — how much cushion do we need?",
+    "Whose family visits, and when",
+    "Going back to work — or not",
+    "Sleep training — cry it out or not?",
+    "Last names",
+    "Daycare, or one of us at home?"
+  ];
+
+  // ── State presets ──
+  // Each defines: align counts, completion (done/prog/plan), in-between flag,
+  // empty-state flag, breakdown override (optional), badges variant.
+  const states = {
+    populated:  { align:{fully:4, mostly:2, worth:4}, done:10, prog:5, plan:45, badges:"earned" },
+    balanced:   { align:{fully:4, mostly:2, worth:4}, done:10, prog:5, plan:45, badges:"earned" },
+    settled:    { align:{fully:7, mostly:2, worth:1}, done:10, prog:5, plan:45, badges:"earned" },
+    heavy:      { align:{fully:1, mostly:2, worth:7}, done:10, prog:5, plan:45, badges:"earned" },
+    early:      { align:{fully:0, mostly:0, worth:5}, done:5,  prog:5, plan:45, badges:"earned" },
+    allgreen:   { align:{fully:7, mostly:2, worth:0}, done:9,  prog:5, plan:45, badges:"earned" },
+    "in-between": {
+      align:{fully:0, mostly:0, worth:0},
+      done:0, prog:6, plan:45,
+      mode:"in-between",
+      badges:"teaser"
+    },
+    empty:      { mode:"empty" }
+  };
+
+  function alignNote(F, M, W){
+    const rev = F + M + W;
+    if(rev === 0)        return "Once you've each answered a topic, you'll see how your answers compare.";
+    if(W === 0)          return "You're landing in the same place on just about everything.";
+    if(F + M === 0)      return "Early days. These are the conversations to start with.";
+    if(W / rev >= 0.5)   return "Lots to talk through (which is the whole point, right?).";
+    if(W / rev >= 0.2)   return "A good mix! Plenty settled, a few worth coming back to.";
+    return "Mostly settled, with a few worth a closer look.";
+  }
+
+  function renderBreakdown(mode, plan, isInBetween){
+    const rows = breakdown[mode];
+    return rows.map(g => {
+      const donePct = (g.done / g.total) * 100;
+      const progPct = (g.prog / g.total) * 100;
+      const untouched = (g.done === 0 && g.prog === 0) ? ' untouched' : '';
+      return `<div class="brow${untouched}" role="button" tabindex="0">
+        <div class="brow-main">
+          <div class="brow-top"><span class="brow-name">${g.name}</span><span class="brow-count">${g.done} of ${g.total}</span></div>
+          <div class="brow-bar">
+            <i class="done" style="width:${donePct}%"></i>
+            <i class="prog" style="width:${progPct}%"></i>
+          </div>
+        </div>
+        <span class="brow-chev" aria-hidden="true">›</span>
+      </div>`;
+    }).join('');
+  }
+
+  function renderBadges(variant){
+    const row = root.querySelector('#badges-row');
+    const label = root.querySelector('#badges-label');
+    if(variant === 'teaser'){
+      label.textContent = 'Badges';
+      row.innerHTML = '<div class="badge locked teaser-wide"><span class="emo">🔒</span><div class="bname">Your first is one finished topic away</div></div>';
+    } else {
+      label.textContent = "Badges you've earned";
+      row.innerHTML =
+        '<div class="badge"><span class="emo">🫠</span><div class="bname">"Officially panicking together"</div></div>' +
+        '<div class="badge"><span class="emo">🌙</span><div class="bname">"Survived the night-feeds talk"</div></div>' +
+        '<div class="badge"><span class="emo">💸</span><div class="bname">"Looked at the actual numbers"</div></div>' +
+        '<div class="badge locked"><span class="emo">🔒</span><div class="bname">2 more brewing</div></div>';
+    }
+  }
+
+  // ── State application ──
+  let currentMode = 'category';
+
+  function applyState(key){
+    const s = states[key];
+    const progressBody = root.querySelector('#progress-body');
+    const emptyEl      = root.querySelector('#empty-state');
+
+    if(s.mode === 'empty'){
+      progressBody.style.display = 'none';
+      emptyEl.style.display = 'flex';
+      return;
+    }
+    progressBody.style.display = '';
+    emptyEl.style.display = 'none';
+
+    // ── Completion ──
+    const lede = root.querySelector('#completion-lede');
+    const done = s.done, prog = s.prog, plan = s.plan;
+    if(s.mode === 'in-between'){
+      lede.innerHTML = 'Nothing revealed yet, but <b>' + prog + ' conversations</b> are already underway.';
+    } else {
+      lede.innerHTML = "You've worked through <b>" + done + " of " + plan + "</b> conversations together.<br>" +
+        '<span class="underway-line">' + prog + ' more are underway.</span>';
+    }
+    root.querySelector('#completion-done').style.width = (done / plan * 100) + '%';
+    root.querySelector('#completion-prog').style.width = (prog / plan * 100) + '%';
+
+    // ── Alignment ──
+    const F = s.align.fully, M = s.align.mostly, W = s.align.worth;
+    const rev = F + M + W;
+    const noteEl       = root.querySelector('#align-note');
+    const barEl        = root.querySelector('#align-bar');
+    const barEmpty     = root.querySelector('#align-bar-empty');
+    const rowsWrap     = root.querySelector('#align-rows');
+    const worthRow     = root.querySelector('#worth-row');
+    const revisit      = root.querySelector('#revisit');
+    const revisitInner = root.querySelector('#revisit-inner');
+
+    noteEl.textContent = alignNote(F, M, W);
+
+    if(rev === 0){
+      // Empty form: dashed track, no rows
+      barEl.style.display = 'none';
+      barEmpty.style.display = '';
+      rowsWrap.style.display = 'none';
+      worthRow.classList.remove('open');
+      revisit.classList.remove('open');
+    } else {
+      barEl.style.display = '';
+      barEmpty.style.display = 'none';
+      rowsWrap.style.display = '';
+
+      const denom = rev || 1;
+      root.querySelector('#seg-fully').style.width  = (F / denom * 100) + '%';
+      root.querySelector('#seg-mostly').style.width = (M / denom * 100) + '%';
+      root.querySelector('#seg-worth').style.width  = (W / denom * 100) + '%';
+      root.querySelector('#cnt-fully').textContent  = F;
+      root.querySelector('#cnt-mostly').textContent = M;
+      root.querySelector('#cnt-worth').textContent  = W;
+
+      root.querySelector('.align-row.fully').classList.toggle('is-dim',  F === 0);
+      root.querySelector('.align-row.mostly').classList.toggle('is-dim', M === 0);
+      worthRow.classList.toggle('is-dim', W === 0);
+      worthRow.style.cursor = W > 0 ? 'pointer' : 'default';
+
+      const sub = root.querySelector('#worth-sub');
+      sub.textContent =
+        W === 0 ? "Nothing open right now." :
+        W === 1 ? "1 open loop to come back to." :
+                  W + " open loops to come back to.";
+
+      revisitInner.innerHTML = worthTopics.slice(0, W).map(t =>
+        '<div class="rv-item"><span class="rv-topic">' + t + '</span><i class="ph ph-arrow-right rv-arrow" aria-hidden="true"></i></div>'
+      ).join('');
+      // Collapse revisit list on state change
+      worthRow.classList.remove('open');
+      revisit.classList.remove('open');
+    }
+
+    // ── Breakdown ──
+    root.querySelector('#breakdown-rows').innerHTML = renderBreakdown(currentMode, plan, s.mode === 'in-between');
+
+    // ── Badges ──
+    renderBadges(s.badges || 'earned');
+  }
+
+  // ── Wiring ──
+
+  // Doc-page state switcher
+  root.querySelectorAll('.state-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      root.querySelectorAll('.state-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyState(btn.dataset.state);
+    });
+  });
+
+  // Grouping toggle (live, in-screen)
+  root.querySelector('#grouping-toggle').addEventListener('click', e => {
+    const btn = e.target.closest('button'); if(!btn) return;
+    [...e.currentTarget.children].forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    currentMode = btn.dataset.mode;
+    const activeStateBtn = root.querySelector('.state-tab.active');
+    const stateKey = activeStateBtn ? activeStateBtn.dataset.state : 'populated';
+    const s = states[stateKey];
+    if(s && s.mode !== 'empty'){
+      root.querySelector('#breakdown-rows').innerHTML = renderBreakdown(currentMode, s.plan, s.mode === 'in-between');
+    }
+  });
+
+  // Worth row → revisit list
+  root.querySelector('#worth-row').addEventListener('click', () => {
+    const worth = root.querySelector('#worth-row');
+    if(worth.classList.contains('is-dim')) return;
+    worth.classList.toggle('open');
+    root.querySelector('#revisit').classList.toggle('open');
+  });
+
+  // Init
+  applyState('populated');
+})();
+</script>
 
 <div class="page-footer">
   <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 12 of 30</span>
