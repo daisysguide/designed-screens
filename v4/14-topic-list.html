@@ -14,11 +14,11 @@
      container above the bottom nav. Overrides the toggle's own absolute
      positioning when it lives inside .dock so the dock owns placement.
 
-     Default: true single inline row (no flex-wrap). flex-wrap is added back
-     only as a last-resort safety net for very large Dynamic Type, sized so
-     it doesn't trigger at normal phone widths. The phone-screen above acts
-     as the query container — when it narrows past the threshold below the
-     inline row stops fitting, the dock stacks. */
+     Default: true single inline row — no flex-wrap, so the row can't
+     silently break onto two lines on the standard phone mock (~327px
+     inner). The phone-screen above acts as the query container, and the
+     dock only stacks when that container narrows past the threshold
+     below — well under the standard mock width. */
   body.page-12 .screen-root .phone-screen { container-type: inline-size; }
 
   body.page-12 .screen-root .dock {
@@ -31,9 +31,10 @@
   body.page-12 .screen-root .dock .group-toggle {
     position: static; left: auto; transform: none; bottom: auto; z-index: auto;
   }
-  /* Tighten the toggle's buttons inside the dock so the inline row fits the
-     phone width (375) with margin to spare — the styles.css default of
-     11px / 18px padding is too generous once a second control sits next to it. */
+  /* Tighten the toggle's buttons inside the dock so the inline row stays
+     ~270–280px — comfortably inside the ~327px inner phone width. The
+     styles.css default of 11px / 18px is too generous once a second
+     control sits next to the toggle. */
   body.page-12 .screen-root .dock .group-toggle button {
     padding: 8px 13px; font-size: 12px;
   }
@@ -42,12 +43,13 @@
   body.page-12 .screen-root .dock.lens-on .group-toggle { display: none; }
 
   /* Needs you chip — cyan, label-only. Hidden when there are zero
-     actionable topics (data-needs-count="0"). */
+     actionable topics (data-needs-count="0"). Off / available state is
+     a quiet tint so the solid fill is reserved for the active state. */
   body.page-12 .screen-root .needs-chip {
     font-family: 'DM Sans', sans-serif;
     display: inline-flex; align-items: center; gap: 6px;
-    border: 1px solid var(--cyan-strong);
-    background: var(--cyan-soft);
+    border: 1.5px solid var(--cyan-strong);
+    background: rgba(127,227,247,0.18);
     color: var(--cyan-text);
     font-size: 12px; font-weight: 600;
     padding: 8px 13px;
@@ -59,6 +61,7 @@
   body.page-12 .screen-root .needs-chip[hidden] { display: none; }
   body.page-12 .screen-root .needs-chip.active {
     background: var(--cyan-strong);
+    border-color: var(--cyan-strong);
     color: var(--cyan-text);
   }
   body.page-12 .screen-root .needs-chip .needs-x {
@@ -66,19 +69,17 @@
   }
   body.page-12 .screen-root .needs-chip.active .needs-x { display: inline; }
 
-  /* Container-query stack: when the phone-screen narrows below the width at
-     which the inline row stops fitting cleanly, switch the dock to a column
-     and put the chip on its own line above the toggle (centered). 340 is
-     just below 375 so a normal phone fits inline with margin to spare. */
-  @container (max-width: 340px) {
+  /* Container-query stack: only triggers BELOW the standard phone mock —
+     ~300px and under — so the mock (~327px inner) stays inline and only
+     genuinely tiny viewports / large Dynamic Type cause a stack. Chip
+     lands above the toggle, centered, via column-reverse. flex-wrap
+     here is a guard in case the stacked column still can't fit. */
+  @container (max-width: 300px) {
     body.page-12 .screen-root .dock {
       flex-direction: column-reverse; gap: 6px;
+      flex-wrap: wrap; row-gap: 6px;
     }
   }
-  /* Safety net for very large Dynamic Type / longer localized labels — if
-     the row overflows its max-width even on a 375 phone, wrap rather than
-     clip. Centered stacking is enforced by justify-content + align-items. */
-  body.page-12 .screen-root .dock { flex-wrap: wrap; row-gap: 6px; }
 
   /* "Needs you" flattened view */
   body.page-12 .screen-root #view-needs { display: none; }
