@@ -9,76 +9,49 @@
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
 <link rel="stylesheet" href="styles.css">
 <style>
-  /* Screen 14 — "Needs you" lens dock.
-     Wraps the existing grouping toggle and the new chip in a single floating
-     container above the bottom nav. Overrides the toggle's own absolute
-     positioning when it lives inside .dock so the dock owns placement.
-
-     Default: true single inline row — no flex-wrap, so the row can't
-     silently break onto two lines on the standard phone mock (~327px
-     inner). The phone-screen above acts as the query container, and the
-     dock only stacks when that container narrows past the threshold
-     below — well under the standard mock width. */
+  /* Dock = one white pill holding all three controls */
   body.page-12 .screen-root .phone-screen { container-type: inline-size; }
-
   body.page-12 .screen-root .dock {
     position: absolute; left: 50%; transform: translateX(-50%);
     bottom: 94px; z-index: 15;
-    display: flex; align-items: center; gap: 8px;
-    justify-content: center;
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(26,26,26,0.10);
+    border-radius: var(--radius-full);
+    padding: 3px; box-shadow: 0 6px 22px rgba(26,26,26,0.16);
     max-width: calc(100% - 24px);
   }
+  /* Toggle is no longer its own pill — just holds its buttons inside the dock */
   body.page-12 .screen-root .dock .group-toggle {
     position: static; left: auto; transform: none; bottom: auto; z-index: auto;
+    background: none; border: none; box-shadow: none; padding: 0; backdrop-filter: none;
   }
-  /* Tighten the toggle's buttons inside the dock so the inline row stays
-     ~270–280px — comfortably inside the ~327px inner phone width. The
-     styles.css default of 11px / 18px is too generous once a second
-     control sits next to the toggle. */
-  body.page-12 .screen-root .dock .group-toggle button {
-    padding: 8px 13px; font-size: 12px;
-  }
-  /* Lens on: stack chip above toggle (toggle is hidden anyway) and shrink gap. */
-  body.page-12 .screen-root .dock.lens-on { flex-direction: column; gap: 0; }
-  body.page-12 .screen-root .dock.lens-on .group-toggle { display: none; }
-
-  /* Needs you chip — cyan, label-only. Hidden when there are zero
-     actionable topics (data-needs-count="0"). Off / available state is
-     a quiet tint so the solid fill is reserved for the active state. */
+  body.page-12 .screen-root .dock .group-toggle button { padding: 8px 13px; font-size: 12px; }
+  /* Divider between the grouping segments and the lens segment */
+  body.page-12 .screen-root .dock-sep { width: 1px; height: 18px; background: rgba(26,26,26,0.12); margin: 0 3px; flex: none; }
+  /* "Needs you" = flat cyan segment inside the white pill (off / available) */
   body.page-12 .screen-root .needs-chip {
     font-family: 'DM Sans', sans-serif;
     display: inline-flex; align-items: center; gap: 6px;
-    border: 1.5px solid var(--cyan-strong);
-    background: rgba(127,227,247,0.18);
-    color: var(--cyan-text);
-    font-size: 12px; font-weight: 600;
-    padding: 8px 13px;
-    border-radius: var(--radius-full);
-    box-shadow: 0 6px 22px rgba(26,26,26,0.16);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: none; border: none; box-shadow: none; backdrop-filter: none;
+    color: var(--cyan-text); font-size: 12px; font-weight: 700;
+    padding: 8px 13px; border-radius: var(--radius-full);
     cursor: pointer; white-space: nowrap;
   }
   body.page-12 .screen-root .needs-chip[hidden] { display: none; }
-  body.page-12 .screen-root .needs-chip.active {
-    background: var(--cyan-strong);
-    border-color: var(--cyan-strong);
-    color: var(--cyan-text);
-  }
-  body.page-12 .screen-root .needs-chip .needs-x {
-    display: none; font-size: 13px; line-height: 1; opacity: 0.8;
-  }
+  body.page-12 .screen-root .needs-chip.active { background: var(--cyan-strong); color: var(--cyan-text); }
+  body.page-12 .screen-root .needs-chip .needs-x { display: none; font-size: 13px; line-height: 1; opacity: 0.8; }
   body.page-12 .screen-root .needs-chip.active .needs-x { display: inline; }
-
-  /* Container-query stack: only triggers BELOW the standard phone mock —
-     ~300px and under — so the mock (~327px inner) stays inline and only
-     genuinely tiny viewports / large Dynamic Type cause a stack. Chip
-     lands above the toggle, centered, via column-reverse. flex-wrap
-     here is a guard in case the stacked column still can't fit. */
+  /* Lens on: drop the white pill + grouping; active chip stands alone, compact + centered */
+  body.page-12 .screen-root .dock.lens-on { background: none; border: none; box-shadow: none; backdrop-filter: none; padding: 0; }
+  body.page-12 .screen-root .dock.lens-on .group-toggle,
+  body.page-12 .screen-root .dock.lens-on .dock-sep { display: none; }
+  body.page-12 .screen-root .dock.lens-on .needs-chip { border: 1.5px solid var(--cyan-strong); box-shadow: 0 6px 22px rgba(26,26,26,0.16); }
+  /* Narrow-container fallback */
   @container (max-width: 300px) {
-    body.page-12 .screen-root .dock {
-      flex-direction: column-reverse; gap: 6px;
-      flex-wrap: wrap; row-gap: 6px;
-    }
+    body.page-12 .screen-root .dock { flex-direction: column; gap: 4px; }
+    body.page-12 .screen-root .dock-sep { display: none; }
   }
 
   /* "Needs you" flattened view */
@@ -429,6 +402,7 @@
             <button class="active">By category</button>
             <button>By stage</button>
           </div>
+          <span class="dock-sep" aria-hidden="true"></span>
           <button class="needs-chip" type="button" data-needs-count="5" aria-pressed="false">
             <span class="needs-label">Needs you</span>
             <span class="needs-x" aria-hidden="true">✕</span>
