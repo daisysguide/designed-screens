@@ -8066,3 +8066,20 @@ body.page-27 .screen-root .variant-label {
     font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
     color: var(--text-tertiary); margin-bottom: 6px;
   }
+
+/* ── Shared: page-desc moved out of .page-header ──
+   The desc used to live inside .page-header's left flex item, which
+   squeezed it next to .nav-pills on every screen. It's now a sibling
+   of .page-header (carrying both `.page-desc` and `.page-desc-full`)
+   so it spans the full 900px centered container width. The header
+   loses its bottom margin since the desc sits 6px below; the desc
+   carries the 32px gap to .main-layout / .two-col underneath.
+   Specificity (body[class*=]+.screen-root+.page-header+:has) wins
+   against per-page `body.page-XX .screen-root .page-header { margin }`
+   rules without needing to touch each one. */
+body[class*="page-"] .screen-root > .page-header:has(~ .page-desc-full) {
+    margin-bottom: 0;
+  }
+body[class*="page-"] .screen-root > .page-desc-full {
+    max-width: 900px; margin: 6px auto 32px;
+  }
