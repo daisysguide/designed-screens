@@ -55,9 +55,20 @@
     body.page-12 .screen-root .dock-sep { display: none; }
   }
 
+  /* Page-desc spans the full centered container width (instead of being
+     squeezed beside the nav-pills inside .page-header). Tighten the
+     header's bottom margin so the desc sits close to the title, and
+     give the desc its own bottom margin to match the original 32px gap
+     before .main-layout. */
+  body.page-12 .screen-root .page-header { margin-bottom: 0; }
+  body.page-12 .screen-root .page-desc-full {
+    max-width: 900px; margin: 6px auto 32px;
+  }
+
   /* Demo state switcher (doc page only) — toggles between
      "has actions" (default) and "all clear" (nothing actionable) states.
-     Doesn't ship in the app; lives above the phone frame like Screen 12. */
+     Doesn't ship in the app; lives inside .phone-wrap so it sits flush
+     with the phone's left edge in the 375px grid column. */
   body.page-12 .screen-root .state-tabs {
     display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
   }
@@ -184,7 +195,6 @@
   <div>
     <div class="screen-tag">Screen 14 · Topic Flow</div>
     <div class="page-title">Topic List</div>
-    <div class="page-desc">All 7 categories. Two-phase topic model: an action-phase pill per user (Not started / Your turn / Ready to reveal / Partner's turn), and after reveal a shared alignment band (Fully · Mostly · Worth a conversation). Floating dock above bottom nav: Category / Stage grouping toggle + a "Needs you" lens chip (cyan, label only) that flattens the list to the prioritized pre-reveal queue. Collapsible groups. "Manage topics" top right. Toggle above the frame previews the "all clear" state — nothing pre-reveal is actionable, so Your-turn / Ready-to-reveal treatments and the Needs-you chip all drop away.</div>
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="13-settings.html">← Screen 13: Settings</a>
@@ -192,15 +202,16 @@
   </div>
 </div>
 
-<div class="state-tabs" role="tablist" aria-label="Topic List state preview">
-  <button class="state-tab active" data-state="has-actions" type="button">Has actions</button>
-  <button class="state-tab" data-state="all-clear" type="button">All clear</button>
-</div>
+<div class="page-desc page-desc-full">All 7 categories. Two-phase topic model: an action-phase pill per user (Not started / Your turn / Ready to reveal / Partner's turn), and after reveal a shared alignment band (Fully · Mostly · Worth a conversation). Floating dock above bottom nav: Category / Stage grouping toggle + a "Needs you" lens chip (cyan, label only) that flattens the list to the prioritized pre-reveal queue. Collapsible groups. "Manage topics" top right. Toggle above the frame previews the "all clear" state — nothing pre-reveal is actionable, so Your-turn / Ready-to-reveal treatments and the Needs-you chip all drop away.</div>
 
 <div class="main-layout">
 
   <!-- PHONE -->
   <div class="phone-wrap">
+    <div class="state-tabs" role="tablist" aria-label="Topic List state preview">
+      <button class="state-tab active" data-state="has-actions" type="button">Has actions</button>
+      <button class="state-tab" data-state="all-clear" type="button">All clear</button>
+    </div>
     <div class="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
