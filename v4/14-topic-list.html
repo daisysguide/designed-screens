@@ -56,13 +56,24 @@
   }
 
   /* "Needs you" flattened view */
-  body.page-12 .screen-root #view-needs { display: none; }
+  body.page-12 .screen-root #view-needs { display: none; padding: 0 12px; }
   body.page-12 .screen-root #view-needs .needs-eyebrow {
     font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--text-tertiary);
     margin: 0 0 8px 4px;
   }
   body.page-12 .screen-root #view-needs .needs-section { margin-bottom: 18px; }
+  /* Lens rows live in contained white cards like the normal topic list,
+     pulled in from the edges (the padding above) so they don't run
+     full-width. Reveal rows stay flush inside the card and borrow its
+     rounded shape, exactly as they do everywhere else. */
+  /* The reveal rows fill the card edge-to-edge with gradient, so the white
+     card background isn't needed — and leaving it white makes Chrome bleed a
+     ~1px white seam at the rounded corners (its border-radius + overflow:hidden
+     antialiasing, invisible under plain white rows). An all-gradient card is
+     made transparent: no white to bleed. The rounded clip and shadow still
+     come from .topic-card. */
+  body.page-12 .screen-root .topic-card.reveal-card { background: transparent; }
 </style>
 </head>
 <body class="page-12">
@@ -377,7 +388,7 @@
           <div id="view-needs">
             <div class="needs-section">
               <div class="needs-eyebrow">Ready to reveal · 3</div>
-              <div class="topic-card">
+              <div class="topic-card reveal-card">
                 <div class="topic-row reveal-row"><div class="topic-name">How will we budget for a baby?</div><span class="pill pill-reveal">Ready to reveal</span></div>
                 <div class="topic-row reveal-row"><div class="topic-name">When will we tell people that we're expecting?</div><span class="pill pill-reveal">Ready to reveal</span></div>
                 <div class="topic-row reveal-row"><div class="topic-name">What is our postpartum plan?</div><span class="pill pill-reveal">Ready to reveal</span></div>
