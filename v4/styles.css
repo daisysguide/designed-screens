@@ -6722,16 +6722,17 @@ body.page-22 .screen-root .empty-cta {
 
 /* ── Demo state switcher (doc page only) ── */
 body.page-22 .screen-root .state-tabs {
-    display: flex; flex-wrap: wrap; gap: 6px;
+    display: flex; flex-wrap: wrap; gap: 8px;
     margin-bottom: 12px;
   }
 
 body.page-22 .screen-root .state-tab {
-    height: 28px; padding: 0 12px; border-radius: var(--radius-full);
-    border: 1.5px solid var(--border-strong); background: var(--white);
-    font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600;
-    color: var(--text-primary); cursor: pointer;
-    display: inline-flex; align-items: center;
+    height: 32px; padding: 0 14px; border-radius: var(--radius-full);
+    border: 1.5px solid var(--border-default); background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+    color: var(--text-secondary); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
   }
 
 body.page-22 .screen-root .state-tab.active {
