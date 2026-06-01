@@ -411,8 +411,8 @@
              Dynamic Type, longer localized labels). -->
         <div class="dock">
           <div class="group-toggle">
-            <button class="active">By category</button>
-            <button>By stage</button>
+            <button class="active">Category</button>
+            <button>Stage</button>
           </div>
           <span class="dock-sep" aria-hidden="true"></span>
           <button class="needs-chip" type="button" data-needs-count="5" aria-pressed="false">
@@ -570,9 +570,9 @@
       <div class="spec-card-title">Grouping toggle</div>
       <table class="spec-table">
         <tr><td>Position</td><td>Lives in the floating dock above the bottom nav, alongside the "Needs you" chip</td></tr>
-        <tr><td>Options</td><td>"By category" | "By stage"</td></tr>
+        <tr><td>Options</td><td>"Category" | "Stage"</td></tr>
         <tr><td>Style</td><td>Frosted-glass pill · <code>radius-full</code> · translucent white bg · 12px backdrop blur · soft shadow · 3px inner padding</td></tr>
-        <tr><td>Default</td><td>"By category"</td></tr>
+        <tr><td>Default</td><td>"Category"</td></tr>
         <tr><td>Active option</td><td><code>purple-500</code> fill · white text</td></tr>
         <tr><td>Inactive option</td><td>transparent · <code>text-secondary</code></td></tr>
         <tr><td>On switch</td><td>Re-group the topic list using the new key. Smooth transition; no full re-render.</td></tr>
@@ -588,7 +588,7 @@
         <tr><td>Chip label</td><td>"Needs you" — label only · no icon (a sparkle reads as Gemini and collides with the app's own ✨ = AI-generated convention; this is a plain filter, not AI) · no count (presence already says "there's something"; numbers turn calm into a backlog at scale, and the breakdown lives inside the lens)</td></tr>
         <tr><td>Chip color</td><td>The "your move" cyan — soft-cyan fill (<code>--cyan-soft</code>), <code>--cyan-strong</code> border, <code>--cyan-text</code> text. Active state fills <code>--cyan-strong</code> and appends ✕</td></tr>
         <tr><td>Position</td><td>In the floating dock above the bottom nav, beside the grouping toggle</td></tr>
-        <tr><td>Default layout</td><td>Inline — one row: <code>[ By category | By stage ]&nbsp;&nbsp;[ Needs you ]</code></td></tr>
+        <tr><td>Default layout</td><td>Inline — one row: <code>[ Category | Stage ]&nbsp;&nbsp;[ Needs you ]</code></td></tr>
         <tr><td>Fallback layout</td><td>Stacked — reflows to two lines (Needs you on its own line, toggle on the other) when the inline row can't fit: small viewports, large Dynamic Type / accessibility text, or longer localized labels. Triggered on actual overflow (container query + <code>flex-wrap</code> safety net), not a fixed width breakpoint</td></tr>
         <tr><td>Visibility</td><td>Only rendered when actionable N ≥ 1. At N = 0 the dock shows just the grouping toggle</td></tr>
         <tr><td>"Actionable" =</td><td>Your turn + Ready to reveal only (per-user, pre-reveal). Excludes Worth a conversation, Partner's turn, Not started, and any settled/aligned state</td></tr>
@@ -600,7 +600,7 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Stage groupings (By stage view)</div>
+      <div class="spec-card-title">Stage groupings (Stage view)</div>
       <table class="spec-table">
         <tr><td>Stages</td><td>Four real stages: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum</td></tr>
         <tr><td>Within-stage order</td><td>Topics in the order they appear in the book's alt-TOC</td></tr>
@@ -710,7 +710,7 @@
     });
   });
 
-  // Grouping toggle: By category / By stage
+  // Grouping toggle: Category / Stage
   var btns = root.querySelectorAll('.group-toggle button');
   var catView = root.querySelector('#view-category');
   var stageView = root.querySelector('#view-stage');
@@ -741,7 +741,7 @@
         var nowOn = !chip.classList.contains('active');
         if (nowOn) {
           var active = root.querySelector('.group-toggle button.active');
-          priorView = (active && active.textContent.indexOf('stage') !== -1) ? 'stage' : 'category';
+          priorView = (active && /stage/i.test(active.textContent)) ? 'stage' : 'category';
           chip.classList.add('active');
           chip.setAttribute('aria-pressed', 'true');
           dock.classList.add('lens-on');
