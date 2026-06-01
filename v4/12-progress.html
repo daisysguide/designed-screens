@@ -388,14 +388,12 @@
   };
 
   // ── Worth-a-conversation topics (for the revisit list) ──
+  // Canonical topic titles, phrased as questions — display verbatim.
   const worthTopics = [
-    "The first month — who's up at night?",
-    "Money — how much cushion do we need?",
-    "Whose family visits, and when",
-    "Going back to work — or not",
-    "Sleep training — cry it out or not?",
-    "Last names",
-    "Daycare, or one of us at home?"
+    "Do we have life insurance, and is it enough?",
+    "Do we want health screenings - even if they reveal something hard?",
+    "How will we share our culture and/or religion with our child?",
+    "How will we make time for ourselves as a couple?"
   ];
 
   // ── State presets ──
@@ -404,8 +402,8 @@
   const states = {
     balanced:   { align:{fully:4, mostly:2, worth:4}, done:10, prog:5, plan:45, badges:"earned" },
     settled:    { align:{fully:7, mostly:2, worth:1}, done:10, prog:5, plan:45, badges:"earned" },
-    heavy:      { align:{fully:1, mostly:2, worth:7}, done:10, prog:5, plan:45, badges:"earned" },
-    early:      { align:{fully:0, mostly:0, worth:5}, done:5,  prog:5, plan:45, badges:"earned" },
+    heavy:      { align:{fully:1, mostly:1, worth:4}, done:6,  prog:5, plan:45, badges:"earned" },
+    early:      { align:{fully:0, mostly:0, worth:4}, done:4,  prog:5, plan:45, badges:"earned" },
     allgreen:   { align:{fully:7, mostly:2, worth:0}, done:9,  prog:5, plan:45, badges:"earned" },
     "in-between": {
       align:{fully:0, mostly:0, worth:0},
