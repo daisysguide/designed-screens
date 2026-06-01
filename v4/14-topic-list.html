@@ -27,7 +27,7 @@
     position: static; left: auto; transform: none; bottom: auto; z-index: auto;
     background: none; border: none; box-shadow: none; padding: 0; backdrop-filter: none;
   }
-  body.page-12 .screen-root .dock .group-toggle button { min-height: 44px; padding: 0 14px; font-size: 12px; }
+  body.page-12 .screen-root .dock .group-toggle button { min-height: 44px; min-width: 44px; padding: 0 14px; font-size: 12px; }
   /* Divider between the grouping segments and the lens segment */
   body.page-12 .screen-root .dock-sep { width: 1px; height: 18px; background: rgba(26,26,26,0.12); margin: 0 3px; flex: none; }
   /* "Needs you" = cyan-tinted segment inside the white pill (off / available);
@@ -37,7 +37,7 @@
     display: inline-flex; align-items: center; gap: 6px;
     background: rgba(127,227,247,0.22); border: none; box-shadow: none; backdrop-filter: none;
     color: var(--cyan-text); font-size: 12px; font-weight: 700;
-    min-height: 44px; padding: 0 14px; border-radius: var(--radius-full);
+    min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: var(--radius-full);
     cursor: pointer; white-space: nowrap;
   }
   body.page-12 .screen-root .needs-chip[hidden] { display: none; }
