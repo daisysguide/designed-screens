@@ -30,11 +30,12 @@
   body.page-12 .screen-root .dock .group-toggle button { padding: 8px 13px; font-size: 12px; }
   /* Divider between the grouping segments and the lens segment */
   body.page-12 .screen-root .dock-sep { width: 1px; height: 18px; background: rgba(26,26,26,0.12); margin: 0 3px; flex: none; }
-  /* "Needs you" = flat cyan segment inside the white pill (off / available) */
+  /* "Needs you" = cyan-tinted segment inside the white pill (off / available);
+     solid cyan when active so the on state still feels like a step up. */
   body.page-12 .screen-root .needs-chip {
     font-family: 'DM Sans', sans-serif;
     display: inline-flex; align-items: center; gap: 6px;
-    background: none; border: none; box-shadow: none; backdrop-filter: none;
+    background: rgba(127,227,247,0.22); border: none; box-shadow: none; backdrop-filter: none;
     color: var(--cyan-text); font-size: 12px; font-weight: 700;
     padding: 8px 13px; border-radius: var(--radius-full);
     cursor: pointer; white-space: nowrap;
