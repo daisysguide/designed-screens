@@ -316,6 +316,38 @@ A few decisions imply schema or integration work worth surfacing explicitly:
 
 ---
 
+## 16. Dashed border means supplemental, not AI · ✨ marks the personalized synthesis
+
+Settles a long-running drift between the design-system doc (which already
+defined dashed correctly) and several v4 spec panels that still called dashed
+"the AI-generated convention."
+
+**Two reconciled rules:**
+
+1. The **dashed border** means "supplemental or authored content distinct from
+   the main flow." It is shared by the For You Two Card, the Credibility Card,
+   the Resources Card, and the Prediction Card Header. It is **not** an AI
+   tell, and was not meant to be one in v4.
+2. **No styling in the app is used to denote AI authorship.** The For You Two
+   Card is generated content, but its distinctness is carried by what it *is*
+   — a personalized synthesis about the couple, marked by **✨ + the "for you
+   two" label** — not by an AI badge. The Topic Article's "medically reviewed"
+   framing carries expert authority the same way. The contrast between a
+   generated reflection and expert content lives in framing ("for you two" vs.
+   "medically reviewed"), never in a styling tell.
+
+**Medical-authority guardrail (capture, not restyle):** a personalized "for
+you two" synthesis must not visually borrow the "medically reviewed"
+authority that expert/authored content carries. The two stay distinguishable
+by their framing, which is why no AI badge is needed.
+
+No restyling of any card or the ✨; no layout changes. This was a wording
+reconciliation across the doc and four v4 spec panels (`20-alignment-reveal`,
+`12-progress`, `14-topic-list`, `09-paywall`) so all four match the
+design-system doc's existing definition.
+
+---
+
 ## What's next
 
 1. Update each affected screen file in `designed-screens/v3/` to reflect these

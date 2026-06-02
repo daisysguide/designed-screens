@@ -1226,7 +1226,7 @@ Used on `alignment-reveal` when the question type is slider. Does NOT use the tw
 
 ### For You Two Card — RENAMED (was AI Summary Card)
 
-The AI-generated couples summary that follows the Reveal Boxes on `alignment-reveal` and appears on `completed-topic`.
+The personalized couples synthesis that follows the Reveal Boxes on `alignment-reveal` and appears on `completed-topic`. (Generated for the couple from their answers; the framing is "for you two," not "this is AI.")
 
 | Property | Value |
 |---|---|
@@ -1241,10 +1241,11 @@ The AI-generated couples summary that follows the Reveal Boxes on `alignment-rev
 
 #### Rules
 
-- The dashed border is part of the broader "supplemental / authored content" treatment, shared with Credibility Card and Resources Card. It is no longer exclusively AI-generated.
-- The "✨" is part of the spec. Don't replace.
-- AI input is all 4 question texts + both partners' answers + both note texts.
+- The dashed border is part of the broader "supplemental / authored content" treatment, shared with Credibility Card and Resources Card. It is not — and never was, in v4 — a signal that the content is AI-generated; see the cross-cutting "Dashed border treatment" section.
+- The "✨" + the "for you two" label together mark this as a **personalized synthesis** (a reflection about *this couple*). They are not an AI flag — no styling in the app is used to denote AI authorship.
+- Synthesis input is all question texts + both partners' answers + both note texts.
 - Copy must be warm, specific, actionable. Never generic ("You have different views"). Never mentions AI.
+- **Medical-authority guardrail:** a personalized "for you two" synthesis must not visually borrow the "medically reviewed" authority that expert/authored content (e.g. the Topic Article and the Credibility Card) carries. The two stay distinguishable by their framing — "for you two" vs. "medically reviewed" — which is why no AI badge is needed.
 
 ### Prediction Card Header
 
@@ -1610,14 +1611,16 @@ Additional links section at the end of `topic-article`. Uses the dashed border t
 
 In v1.0 the dashed border meant "AI-generated content." In v4 it's used on:
 
-- For You Two Card (AI-generated)
+- For You Two Card (personalized synthesis for the couple)
 - Credibility Card (authored by Dr. Daisy)
 - Resources Card (external links)
 - Prediction Card Header (sealed/special)
 
 The unifying meaning is **"supplemental or authored content distinct from the main flow"** — not strictly AI. v2.0 adopts this broader meaning. The dashed border tells the user: "this content was placed here intentionally and isn't part of the standard interaction."
 
-If a fifth use comes up that doesn't fit this definition, it's a sign the treatment is being overused, not a sign to broaden again.
+**No styling in the app is used to denote AI authorship.** The For You Two Card is generated content, but its distinctness is carried by what it *is* — a personalized synthesis about the couple, marked by ✨ + "for you two" — not by an AI badge. The Topic Article's "medically reviewed" framing carries expert authority the same way. The contrast between a generated reflection and expert content lives in framing ("for you two" vs. "medically reviewed"), never in a styling tell.
+
+If a fifth use of the dashed treatment comes up that doesn't fit the supplemental/authored definition, it's a sign the treatment is being overused, not a sign to broaden again.
 
 ### Brand voice in empty states and error states
 
@@ -1803,7 +1806,7 @@ Redesigned `personalized-results` around a Conversation Preview instead of a pla
 Foundational rewrite of the design system to align with v4 screens. All 12 structural decisions resolved:
 
 - **Slider scale:** 1–10 with per-question end labels (was 1–5 in v1.0)
-- **For You Two card:** renamed from "AI Summary Card"; ✨ emoji + label carry the AI signaling, dashed border meaning broadened
+- **For You Two card:** renamed from "AI Summary Card"; ✨ emoji + "for you two" label mark the personalized synthesis (a reflection about the couple), not an AI flag; dashed border meaning broadened
 - **Topic Card and Topic Row:** coexist as separate components (Card = Home spotlight, Row = dense list)
 - **Stats Display:** consolidated former Stats Row + Stats Card into one component with `columns` and `surface` props
 - **Ghost button:** added as 4th non-destructive variant; covers skip / dismiss / soft-exit actions previously specced inconsistently across screens
