@@ -21,20 +21,75 @@
     border-radius: var(--radius-full);
     padding: 2px; box-shadow: 0 6px 22px rgba(26,26,26,0.16);
     max-width: calc(100% - 24px);
+    /* Dock chrome (pill bg, border, shadow, padding) animates when the lens
+       toggles, in lockstep with the toggle-group collapse. ~200ms ease-out,
+       same family as the accordion easing. */
+    transition:
+      background-color 200ms cubic-bezier(.33, 0, .2, 1),
+      border-color     200ms cubic-bezier(.33, 0, .2, 1),
+      box-shadow       200ms cubic-bezier(.33, 0, .2, 1),
+      padding          200ms cubic-bezier(.33, 0, .2, 1);
   }
-  /* Toggle is no longer its own pill — just holds its buttons inside the dock */
+  /* Toggle is no longer its own pill — just holds its buttons inside the dock.
+     Becomes a positioning context for the sliding active-fill indicator. */
   body.page-12 .screen-root .dock .group-toggle {
-    position: static; left: auto; transform: none; bottom: auto; z-index: auto;
+    position: relative;
+    left: auto; transform: none; bottom: auto; z-index: auto;
     background: none; border: none; box-shadow: none; padding: 0; backdrop-filter: none;
+    display: inline-flex;
+    /* Width/opacity/margin animate when the dock collapses into lens mode.
+       min-width:0 lets the flex container actually honor max-width:0
+       (otherwise the buttons' min-width keeps it open). */
+    overflow: hidden;
+    min-width: 0;
+    /* Generous explicit max-width so the transition has a real "from" value
+       to interpolate from when collapsing to 0 in lens mode. */
+    max-width: 200px;
+    transition:
+      max-width 200ms cubic-bezier(.33, 0, .2, 1),
+      opacity   200ms cubic-bezier(.33, 0, .2, 1),
+      margin    200ms cubic-bezier(.33, 0, .2, 1);
   }
-  body.page-12 .screen-root .dock .group-toggle button { min-height: 44px; min-width: 44px; padding: 0 14px; font-size: 12px; }
+  /* Sliding active-fill: one purple pill behind the two buttons that
+     translates between them on toggle. Position-only transition. */
+  body.page-12 .screen-root .dock .group-toggle::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 50%;
+    background: var(--purple-500);
+    border-radius: var(--radius-full);
+    transform: translateX(0);
+    transition: transform 200ms cubic-bezier(.33, 0, .2, 1);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body.page-12 .screen-root .dock .group-toggle[data-active="stage"]::before {
+    transform: translateX(100%);
+  }
+  body.page-12 .screen-root .dock .group-toggle button {
+    min-height: 44px; min-width: 44px; padding: 0 14px; font-size: 12px;
+    position: relative; z-index: 1;
+  }
+  /* Active-state color now comes from the sliding fill underneath; kill
+     the per-button background so the swap reads as motion, not a paint. */
+  body.page-12 .screen-root .dock .group-toggle button.active {
+    background: none; color: #fff;
+  }
   /* Divider between the grouping segments and the lens segment */
-  body.page-12 .screen-root .dock-sep { width: 1px; height: 18px; background: rgba(26,26,26,0.12); margin: 0 3px; flex: none; }
+  body.page-12 .screen-root .dock-sep {
+    width: 1px; height: 18px; background: rgba(26,26,26,0.12); margin: 0 3px; flex: none;
+    transition:
+      max-width 200ms cubic-bezier(.33, 0, .2, 1),
+      opacity   200ms cubic-bezier(.33, 0, .2, 1),
+      margin    200ms cubic-bezier(.33, 0, .2, 1);
+    max-width: 1px;
+  }
   /* "Needs you" = cyan-tinted segment inside the white pill (off / available);
      solid cyan when active so the on state still feels like a step up. */
   body.page-12 .screen-root .needs-chip {
     font-family: 'DM Sans', sans-serif;
-    display: inline-flex; align-items: center; gap: 6px;
+    display: inline-flex; align-items: center;
     background: rgba(127,227,247,0.22); border: none; box-shadow: none; backdrop-filter: none;
     color: var(--cyan-text); font-size: 12px; font-weight: 700;
     min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: var(--radius-full);
@@ -42,13 +97,38 @@
   }
   body.page-12 .screen-root .needs-chip[hidden] { display: none; }
   body.page-12 .screen-root .needs-chip.active { background: var(--cyan-strong); color: var(--cyan-text); }
-  body.page-12 .screen-root .needs-chip .needs-x { display: none; font-size: 13px; line-height: 1; opacity: 0.8; }
-  body.page-12 .screen-root .needs-chip.active .needs-x { display: inline; }
-  /* Lens on: drop the white pill + grouping; active chip stands alone, compact + centered */
-  body.page-12 .screen-root .dock.lens-on { background: none; border: none; box-shadow: none; backdrop-filter: none; padding: 0; }
-  body.page-12 .screen-root .dock.lens-on .group-toggle,
-  body.page-12 .screen-root .dock.lens-on .dock-sep { display: none; }
+  /* ✕ cross-fades in alongside the dock collapse. Reserved as inline-block
+     so it doesn't reflow the chip when it appears. */
+  body.page-12 .screen-root .needs-chip .needs-x {
+    display: inline-block; font-size: 13px; line-height: 1;
+    opacity: 0; max-width: 0; margin-left: 0; overflow: hidden;
+    transition:
+      opacity     200ms cubic-bezier(.33, 0, .2, 1),
+      max-width   200ms cubic-bezier(.33, 0, .2, 1),
+      margin-left 200ms cubic-bezier(.33, 0, .2, 1);
+  }
+  body.page-12 .screen-root .needs-chip.active .needs-x { opacity: 0.8; max-width: 1em; margin-left: 6px; }
+  /* Lens on: drop the white pill + grouping; active chip stands alone, compact + centered.
+     The grouping group + divider collapse to zero width (animatable) rather
+     than display:none-ing, so the dock width transitions smoothly. */
+  body.page-12 .screen-root .dock.lens-on { background: rgba(255,255,255,0); border-color: rgba(26,26,26,0); box-shadow: 0 0 0 rgba(26,26,26,0); backdrop-filter: none; padding: 0; }
+  body.page-12 .screen-root .dock.lens-on .group-toggle {
+    max-width: 0; opacity: 0; margin: 0;
+  }
+  body.page-12 .screen-root .dock.lens-on .dock-sep {
+    max-width: 0; opacity: 0; margin: 0;
+  }
   body.page-12 .screen-root .dock.lens-on .needs-chip { border: 1.5px solid var(--cyan-strong); box-shadow: 0 6px 22px rgba(26,26,26,0.16); }
+
+  /* Reduced-motion: both the fill slide and the dock collapse snap. Matches
+     the page's existing convention (see styles.css for accordion/dot rules). */
+  @media (prefers-reduced-motion: reduce) {
+    body.page-12 .screen-root .dock,
+    body.page-12 .screen-root .dock .group-toggle,
+    body.page-12 .screen-root .dock .group-toggle::before,
+    body.page-12 .screen-root .dock-sep,
+    body.page-12 .screen-root .needs-chip .needs-x { transition: none; }
+  }
   /* Narrow-container fallback */
   @container (max-width: 300px) {
     body.page-12 .screen-root .dock { flex-direction: column; gap: 4px; }
@@ -774,6 +854,7 @@
 
   // Grouping toggle: Category / Stage
   var btns = root.querySelectorAll('.group-toggle button');
+  var toggleEl = root.querySelector('.group-toggle');
   var catView = root.querySelector('#view-category');
   var stageView = root.querySelector('#view-stage');
   var needsView = root.querySelector('#view-needs');
@@ -782,6 +863,11 @@
     if (stageView) stageView.style.display = (which === 'stage') ? 'block' : 'none';
     if (needsView) needsView.style.display = (which === 'needs') ? 'block' : 'none';
     btns.forEach(function (b){ b.classList.remove('active'); });
+    // The sliding indicator reads data-active and translateX-es to match.
+    // Only category/stage drive it; lens view leaves whichever side was last.
+    if (toggleEl && (which === 'category' || which === 'stage')) {
+      toggleEl.setAttribute('data-active', which);
+    }
   }
   if (btns[0]) btns[0].addEventListener('click', function(){ setView('category'); btns[0].classList.add('active'); });
   if (btns[1]) btns[1].addEventListener('click', function(){ setView('stage'); btns[1].classList.add('active'); });
