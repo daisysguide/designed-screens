@@ -15,6 +15,16 @@
     --cyan-text: #0b5263;
   }
 
+  /* Six state tabs don't fit on one row at 375px. Let them wrap, and stop
+     stretching each pill to fill an equal share of the row — at 6 across,
+     equal-share makes each ~46px wide and crops the labels. Sizing pills
+     to their content lets them flow naturally onto a second row. */
+  body.page-13 .screen-root .state-tab-row { flex-wrap: wrap; }
+  body.page-13 .screen-root .state-tab {
+    flex: 0 0 auto;
+    padding: 0 12px;
+  }
+
   /* Top-right exit ✕. Top-left stays empty (this is the flow's entry screen,
      so there is no "back a step" affordance — the ✕ owns the exit). */
   body.page-13 .screen-root .exit-row {
