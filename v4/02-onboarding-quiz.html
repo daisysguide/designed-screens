@@ -185,21 +185,21 @@
           </div>
         </div>
         <div class="q-row">
-          <div class="q-num">Q7</div>
+          <div class="q-num">Q6</div>
           <div>
             <div class="q-text">On a scale of 1 to 5, how aligned do you feel with your partner?</div>
             <div class="q-note"><strong>Slider</strong> — discrete integer 1–5 · End labels: "Not at all" (1) / "Completely aligned" (5) · Ghosted thumb at midpoint (3) on first render — fill absent, value label hidden · First interaction solidifies thumb to <code>action-primary</code>, shows fill and value, enables Continue · No auto-advance · Optional · Skip default = 3</div>
           </div>
         </div>
         <div class="q-row">
-          <div class="q-num">Q8</div>
+          <div class="q-num">Q7</div>
           <div>
             <div class="q-text">What are you nervous about?</div>
             <div class="q-note"><strong>Multi-select.</strong> Options (in order): 1. Who will handle what · 2. How we'll get enough sleep · 3. Deciding the "right way" to parent · 4. Making time for ourselves · 5. All of the above · Options 1–4 toggle independently · Tapping <strong>5</strong> selects 1+2+3+4+5 · Deselecting any of 1–4 also clears 5 (the "all of the above" claim is no longer true) · Optional · Skip default = none selected</div>
           </div>
         </div>
         <div class="q-row">
-          <div class="q-num">Q9</div>
+          <div class="q-num">Q8</div>
           <div>
             <div class="q-text">What have you done to prepare so far?</div>
             <div class="q-note"><strong>Multi-select.</strong> Options (in order): 1. Nothing / just getting started · 2. Talked to my OB · 3. Talked to friends/family · 4. Listened to podcasts · 5. Read books · Options 2–5 toggle independently · Tapping <strong>1</strong> clears 2–5 and selects only 1 · Tapping any of 2–5 while 1 is selected clears 1 · 1 is mutually exclusive with 2–5 · Optional · Skip default = none selected</div>
@@ -211,10 +211,10 @@
     <div class="spec-card">
       <div class="spec-card-title">Question sequence by Q1 answer</div>
       <table class="spec-table">
-        <tr><td>Trying (or thinking about trying)</td><td>Q1 → Q3 → Q5 → Q7 → Q8 → Q9 <em>(6 questions)</em></td></tr>
-        <tr><td>Currently pregnant</td><td>Q1 → Q2 → Q3 → Q4 → Q5 → Q7 → Q8 → Q9 <em>(8 questions)</em></td></tr>
-        <tr><td>Baby is already here</td><td>Q1 → Q2b → Q3 → Q4 → Q5 → Q7 → Q8 → Q9 <em>(8 questions)</em></td></tr>
-        <tr><td>Expecting again</td><td>Q1 → Q2 → Q4 → Q5 → Q7 → Q8 → Q9 <em>(7 questions — Q3 auto-set "No")</em></td></tr>
+        <tr><td>Trying (or thinking about trying)</td><td>Q1 → Q3 → Q5 → Q6 → Q7 → Q8 <em>(6 questions)</em></td></tr>
+        <tr><td>Currently pregnant</td><td>Q1 → Q2 → Q3 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(8 questions)</em></td></tr>
+        <tr><td>Baby is already here</td><td>Q1 → Q2b → Q3 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(8 questions)</em></td></tr>
+        <tr><td>Expecting again</td><td>Q1 → Q2 → Q4 → Q5 → Q6 → Q7 → Q8 <em>(7 questions — Q3 auto-set "No")</em></td></tr>
       </table>
     </div>
 
@@ -226,7 +226,7 @@
         <tr><td>Shadow</td><td><code>shadow-md</code></td></tr>
         <tr><td>Padding</td><td>24px all sides</td></tr>
         <tr><td>Question text</td><td><code>display-sm</code> (Grandstander 20px bold) · <code>text-primary</code> · <code>letter-spacing: -0.02em</code> · 22px below before answer region when no sub-text · 6px below when sub-text is present</td></tr>
-        <tr><td>Sub-text</td><td>DM Sans 13px · <code>text-secondary</code> · 16px below before answer region · <strong>Only used for interaction hints</strong> (e.g., "Select all that apply" on Q8 and Q9). No explanatory copy that describes <em>why</em> we're asking.</td></tr>
+        <tr><td>Sub-text</td><td>DM Sans 13px · <code>text-secondary</code> · 16px below before answer region · <strong>Only used for interaction hints</strong> (e.g., "Select all that apply" on Q7 and Q8). No explanatory copy that describes <em>why</em> we're asking.</td></tr>
         <tr><td>Max options</td><td>6 — never more</td></tr>
       </table>
     </div>
@@ -245,7 +245,7 @@
         <tr><td>Transition</td><td><code>background 0.15s ease · color 0.15s ease</code></td></tr>
         <tr><td>Press state</td><td><code>transform: scale(0.98)</code></td></tr>
         <tr><td>Gap</td><td>8px between options</td></tr>
-        <tr><td>Selection type</td><td>Single-select (Q1, Q3, Q4, Q5) — tapping another option deselects previous · Multi-select (Q8, Q9) — same visual chip, multiple can be selected simultaneously, with question-specific exclusion rules · Slider (Q7) — replaces the answer region entirely, see <a href="design system.md" style="color:var(--purple-500);">design system</a></td></tr>
+        <tr><td>Selection type</td><td>Single-select (Q1, Q3, Q4, Q5) — tapping another option deselects previous · Multi-select (Q7, Q8) — same visual chip, multiple can be selected simultaneously, with question-specific exclusion rules · Slider (Q6) — replaces the answer region entirely, see <a href="design system.md" style="color:var(--purple-500);">design system</a></td></tr>
       </table>
     </div>
 
@@ -263,7 +263,7 @@
       <div class="spec-card-title">Skip discipline — required vs optional</div>
       <table class="spec-table">
         <tr><td>Required (no skip button)</td><td>Q1 · Q2 · Q2b · Q3</td></tr>
-        <tr><td>Optional — "Skip this question"</td><td>Q4 (default: "We're not finding out") · Q5 (default: "Still deciding") · Q7 (slider default: 3 — midpoint) · Q8 (default: no selections recorded) · Q9 (default: no selections recorded)</td></tr>
+        <tr><td>Optional — "Skip this question"</td><td>Q4 (default: "We're not finding out") · Q5 (default: "Still deciding") · Q6 (slider default: 3 — midpoint) · Q7 (default: no selections recorded) · Q8 (default: no selections recorded)</td></tr>
         <tr><td>Skip behavior</td><td>Applies the default silently to the data layer and advances.</td></tr>
         <tr><td>"Continue" — enabled when</td><td>Single-select: one option selected · Multi-select: at least one option selected · Slider: thumb has been interacted with (value confirmed) · Date picker: date set</td></tr>
         <tr><td>"Continue" — disabled state</td><td><code>opacity: 0.4</code> · pointer-events: none — applies to all question types until the answered-condition is met</td></tr>
@@ -292,8 +292,8 @@
         <span class="component-tag">Progress Bar — labeled, dynamic</span>
         <span class="component-tag">Question Card</span>
         <span class="component-tag">Answer Options — single-select</span>
-        <span class="component-tag">Answer Options — multi-select (Q8, Q9)</span>
-        <span class="component-tag">Slider (Q7) — 1–5, ghosted default</span>
+        <span class="component-tag">Answer Options — multi-select (Q7, Q8)</span>
+        <span class="component-tag">Slider (Q6) — 1–5, ghosted default</span>
         <span class="component-tag">Date Picker (Q2, Q2b)</span>
         <span class="component-tag">Button — Primary (lg)</span>
         <span class="component-tag">Screen Header (back)</span>
@@ -312,15 +312,15 @@
         <div class="note-item"><div class="note-bullet"></div><span>Tapping a selected option deselects it — Continue returns to disabled state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Back-nav (within sequence):</strong> Tapping the back chevron returns to the previous question in the current sequence. The previously selected answer is pre-selected on the prior question; Continue is enabled.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Back-nav from Q1:</strong> Returns to Screen 01 (Swipeable Intro) and clears saved state (localStorage). The anonymous server record persists.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Changing Q1 on back-navigation:</strong> Recalculate the sequence from the new Q1 answer. <em>Preserve</em> any answers that exist in both the old and new sequences (Q5, Q7, Q8, Q9 are in every path). <em>Clear</em> Q2/Q2b when switching between a pregnancy stage and "Baby is already here" — the date question changes context (due date vs birthday).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Changing Q1 on back-navigation:</strong> Recalculate the sequence from the new Q1 answer. <em>Preserve</em> any answers that exist in both the old and new sequences (Q5, Q6, Q7, Q8 are in every path). <em>Clear</em> Q2/Q2b when switching between a pregnancy stage and "Baby is already here" — the date question changes context (due date vs birthday).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Expecting again": Q2 (due date) is shown, Q3 is skipped and auto-set to "No" in the data layer. User proceeds from Q2 to Q4.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Baby is already here": Q2b (baby's birthday) is shown instead of Q2. Q3 is shown normally.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Trying (or thinking about trying)": Q2 (due date) and Q4 (baby's sex) are both skipped — neither applies pre-pregnancy. User proceeds Q1 → Q3 → Q5 → Q7 → Q8 → Q9.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Q7 (Slider):</strong> 1–5 discrete integer. Ghosted thumb at midpoint (3) on first render with no fill and no value label. First drag or tap solidifies the thumb to <code>action-primary</code>, reveals the fill and value, and enables Continue. Per design-system Slider spec.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Q8 multi-select rules:</strong> Options 1–4 toggle independently. Tapping option 5 ("All of the above") selects 1+2+3+4+5. Deselecting any of 1–4 also deselects 5, since the "all of the above" claim is no longer true.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Q9 multi-select rules:</strong> Option 1 ("Nothing / just getting started") sits first and is mutually exclusive with 2–5 — tapping it clears any selection in 2–5; tapping any of 2–5 while 1 is selected deselects 1. Options 2–5 toggle independently.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Sub-text policy:</strong> No explanatory "why we're asking" copy under any question. Sub-text is reserved for interaction hints only — Q8 and Q9 show "Select all that apply" because multi-select isn't visually obvious from a single tap.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Trying (or thinking about trying)": Q2 (due date) and Q4 (baby's sex) are both skipped — neither applies pre-pregnancy. User proceeds Q1 → Q3 → Q5 → Q6 → Q7 → Q8.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Q6 (Slider):</strong> 1–5 discrete integer. Ghosted thumb at midpoint (3) on first render with no fill and no value label. First drag or tap solidifies the thumb to <code>action-primary</code>, reveals the fill and value, and enables Continue. Per design-system Slider spec.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Q7 multi-select rules:</strong> Options 1–4 toggle independently. Tapping option 5 ("All of the above") selects 1+2+3+4+5. Deselecting any of 1–4 also deselects 5, since the "all of the above" claim is no longer true.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Q8 multi-select rules:</strong> Option 1 ("Nothing / just getting started") sits first and is mutually exclusive with 2–5 — tapping it clears any selection in 2–5; tapping any of 2–5 while 1 is selected deselects 1. Options 2–5 toggle independently.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Sub-text policy:</strong> No explanatory "why we're asking" copy under any question. Sub-text is reserved for interaction hints only — Q7 and Q8 show "Select all that apply" because multi-select isn't visually obvious from a single tap.</span></div>
       </div>
     </div>
 
@@ -376,14 +376,14 @@ const QUESTIONS = {
     options: ['Yes', 'No', 'Still deciding'],
     required: false, skipLabel: 'Skip this question', skipDefault: 2 // index of "Still deciding"
   },
-  q7: {
-    id: 'q7', label: 'Q7',
+  q6: {
+    id: 'q6', label: 'Q6',
     text: 'On a scale of 1 to 5, how aligned do you feel with your partner?',
     slider: true, sliderMin: 1, sliderMax: 5, sliderLeft: 'Not at all', sliderRight: 'Completely aligned',
     required: false, skipLabel: 'Skip this question', skipDefault: 3
   },
-  q8: {
-    id: 'q8', label: 'Q8',
+  q7: {
+    id: 'q7', label: 'Q7',
     text: 'What are you nervous about?',
     sub: 'Select all that apply',
     multiSelect: true,
@@ -394,12 +394,12 @@ const QUESTIONS = {
       'Making time for ourselves',
       'All of the above'
     ],
-    // Custom toggle logic for Q8 — see toggleMulti() in showQuestion
-    multiKind: 'q8',
+    // Custom toggle logic for Q7 — see toggleMulti() in showQuestion
+    multiKind: 'q7',
     required: false, skipLabel: 'Skip this question', skipDefault: []
   },
-  q9: {
-    id: 'q9', label: 'Q9',
+  q8: {
+    id: 'q8', label: 'Q8',
     text: 'What have you done to prepare so far?',
     sub: 'Select all that apply',
     multiSelect: true,
@@ -410,7 +410,7 @@ const QUESTIONS = {
       'Listened to podcasts',
       'Read books'
     ],
-    multiKind: 'q9',
+    multiKind: 'q8',
     required: false, skipLabel: 'Skip this question', skipDefault: []
   }
 };
@@ -418,20 +418,20 @@ const QUESTIONS = {
 // Build question sequence based on Q1 answer index
 // 0=Trying (or thinking about trying), 1=Currently pregnant, 2=Baby is already here, 3=Expecting again
 function buildSequence(q1Idx) {
-  const { q1, q2, q2b, q3, q4, q5, q7, q8, q9 } = QUESTIONS;
+  const { q1, q2, q2b, q3, q4, q5, q6, q7, q8 } = QUESTIONS;
   switch (q1Idx) {
-    case 0: return [q1, q3, q5, q7, q8, q9];               // Trying (or thinking about trying) — Q2 (no due date) and Q4 (no baby sex) skipped
-    case 1: return [q1, q2, q3, q4, q5, q7, q8, q9];       // Currently pregnant
-    case 2: return [q1, q2b, q3, q4, q5, q7, q8, q9];      // Baby is already here
-    case 3: return [q1, q2, q4, q5, q7, q8, q9];           // Expecting again — Q3 auto-set to "No"
-    default: return [q1, q3, q5, q7, q8, q9];              // Unknown — conservative default
+    case 0: return [q1, q3, q5, q6, q7, q8];               // Trying (or thinking about trying) — Q2 (no due date) and Q4 (no baby sex) skipped
+    case 1: return [q1, q2, q3, q4, q5, q6, q7, q8];       // Currently pregnant
+    case 2: return [q1, q2b, q3, q4, q5, q6, q7, q8];      // Baby is already here
+    case 3: return [q1, q2, q4, q5, q6, q7, q8];           // Expecting again — Q3 auto-set to "No"
+    default: return [q1, q3, q5, q6, q7, q8];              // Unknown — conservative default
   }
 }
 
 // State
 const STORAGE_KEY = 'dg_onboarding_quiz_v4';
 let answers = {};
-let sequence = [QUESTIONS.q1, QUESTIONS.q3, QUESTIONS.q5, QUESTIONS.q7, QUESTIONS.q8, QUESTIONS.q9];
+let sequence = [QUESTIONS.q1, QUESTIONS.q3, QUESTIONS.q5, QUESTIONS.q6, QUESTIONS.q7, QUESTIONS.q8];
 let currentIdx = 0;
 let selectedOpt = null;
 
@@ -469,7 +469,7 @@ function rebuildTabs() {
 // Selection-logic helpers for multi-select questions
 function applyMultiToggle(kind, currentSet, tappedIdx) {
   const sel = new Set(currentSet);
-  if (kind === 'q8') {
+  if (kind === 'q7') {
     // Indices: 0–3 independent · 4 = "All of the above"
     if (tappedIdx <= 3) {
       sel.has(tappedIdx) ? sel.delete(tappedIdx) : sel.add(tappedIdx);
@@ -480,7 +480,7 @@ function applyMultiToggle(kind, currentSet, tappedIdx) {
       if (sel.has(4)) { sel.delete(4); }
       else { sel.add(0); sel.add(1); sel.add(2); sel.add(3); sel.add(4); }
     }
-  } else if (kind === 'q9') {
+  } else if (kind === 'q8') {
     // Indices: 0 = "Nothing / just getting started" (mutex with 1–4) · 1–4 independent
     if (tappedIdx === 0) {
       if (sel.has(0)) { sel.delete(0); }
