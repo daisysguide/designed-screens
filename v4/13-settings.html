@@ -314,7 +314,7 @@
           <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:17px;font-weight:700;color:#1a1a1a;">Partner</span>
         </div>
         <!-- Content -->
-        <div style="padding:20px 16px;overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;">
+        <div class="push-scroll" style="padding:20px 16px;overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;">
           <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">Linked partner</div>
           <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;margin-bottom:24px;">
             <div style="display:flex;align-items:center;padding:13px 16px;min-height:52px;">
@@ -359,7 +359,7 @@
           <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:17px;font-weight:700;color:#1a1a1a;">Lifetime access</span>
         </div>
         <!-- Scrollable content -->
-        <div style="overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;padding:20px 16px 32px;">
+        <div class="push-scroll" style="overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;padding:20px 16px 32px;">
 
           <!-- Proud card -->
           <div style="background:rgba(95,69,242,0.08);border-radius:16px;padding:24px 20px;text-align:center;margin-bottom:24px;">
@@ -791,7 +791,12 @@
     </div>
   </div>
 </div>
-<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+/* Push sub-screens: scrollable but no visible scrollbar (matches native iOS feel). */
+body.page-23 .screen-root .push-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+body.page-23 .screen-root .push-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+</style>
 <script>
 /* ── Q1 tab: controls Pacing date row ── */
 function setQ1(idx) {
