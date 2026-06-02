@@ -50,22 +50,22 @@
       opacity   200ms cubic-bezier(.33, 0, .2, 1),
       margin    200ms cubic-bezier(.33, 0, .2, 1);
   }
-  /* Sliding active-fill: one purple pill behind the two buttons that
-     translates between them on toggle. Position-only transition. */
+  /* Sliding active-fill: one purple pill behind the two buttons.
+     Width matches the active button (snaps, doesn't tween — width changes
+     are masked by the slide). Position transitions via transform only.
+     Both values come from JS-measured CSS vars so the pill hugs the
+     actual button regardless of label length. */
   body.page-12 .screen-root .dock .group-toggle::before {
     content: "";
     position: absolute;
     top: 0; bottom: 0; left: 0;
-    width: 50%;
+    width: var(--fill-width, 0px);
+    transform: translateX(var(--fill-x, 0px));
     background: var(--purple-500);
     border-radius: var(--radius-full);
-    transform: translateX(0);
     transition: transform 200ms cubic-bezier(.33, 0, .2, 1);
     pointer-events: none;
     z-index: 0;
-  }
-  body.page-12 .screen-root .dock .group-toggle[data-active="stage"]::before {
-    transform: translateX(100%);
   }
   body.page-12 .screen-root .dock .group-toggle button {
     min-height: 44px; min-width: 44px; padding: 0 14px; font-size: 12px;
@@ -858,21 +858,30 @@
   var catView = root.querySelector('#view-category');
   var stageView = root.querySelector('#view-stage');
   var needsView = root.querySelector('#view-needs');
+  // The sliding fill's width and x are measured from the currently-active
+  // button and written as CSS vars. Width snaps (the resize is masked by
+  // the slide); x animates via transform.
+  function syncFill(){
+    if (!toggleEl) return;
+    var active = toggleEl.querySelector('button.active');
+    if (!active) return;
+    toggleEl.style.setProperty('--fill-width', active.offsetWidth + 'px');
+    toggleEl.style.setProperty('--fill-x',     active.offsetLeft  + 'px');
+  }
   function setView(which){
     if (catView) catView.style.display = (which === 'category') ? 'block' : 'none';
     if (stageView) stageView.style.display = (which === 'stage') ? 'block' : 'none';
     if (needsView) needsView.style.display = (which === 'needs') ? 'block' : 'none';
     btns.forEach(function (b){ b.classList.remove('active'); });
-    // The sliding indicator reads data-active and translateX-es to match.
-    // Only category/stage drive it; lens view leaves whichever side was last.
-    if (toggleEl && (which === 'category' || which === 'stage')) {
-      toggleEl.setAttribute('data-active', which);
-    }
   }
-  if (btns[0]) btns[0].addEventListener('click', function(){ setView('category'); btns[0].classList.add('active'); });
-  if (btns[1]) btns[1].addEventListener('click', function(){ setView('stage'); btns[1].classList.add('active'); });
+  if (btns[0]) btns[0].addEventListener('click', function(){ setView('category'); btns[0].classList.add('active'); syncFill(); });
+  if (btns[1]) btns[1].addEventListener('click', function(){ setView('stage');    btns[1].classList.add('active'); syncFill(); });
   setView('category');
   if (btns[0]) btns[0].classList.add('active');
+  // Initial measurement — once now, once after fonts settle, once on resize.
+  syncFill();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncFill);
+  window.addEventListener('resize', syncFill);
 
   // "Needs you" lens — flattens the list to a prioritized queue of pre-reveal
   // actionable topics. Chip only rendered when N > 0; tap enters the lens
