@@ -79,18 +79,25 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">Notifications, pacing, plan, partner, account. Name + phone shown. Q1 tab controls date row visibility in Pacing.</div>
+<div class="page-desc page-desc-full">Notifications (rebuilt: OS-denied banner · Partner activity · Nudge frequency · Funny push), Pacing, Your plan, Partner (no avatar · push to detail · Unlink sheet), Account (Name · Phone read-only · Lifetime access push · Delete · Log out). Q1 tab controls the Pacing date row; Push-permission tab toggles the denied banner.</div>
 
 <div class="main-layout">
 
   <div class="phone-wrap">
 
     <!-- Q1 state tabs — controls Pacing date row label + visibility -->
-    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+    <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
       <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Q1 answer</span>
       <button id="q1tab-0" onclick="setQ1(0)" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Pregnant / Again</button>
       <button id="q1tab-1" onclick="setQ1(1)" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Baby is here</button>
       <button id="q1tab-2" onclick="setQ1(2)" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Trying (or thinking about trying)</button>
+    </div>
+
+    <!-- Demo tabs — OS notification permission state + Partner activity toggle preview -->
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Push permission</span>
+      <button id="osperm-0" onclick="setOsPerm(false)" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Granted</button>
+      <button id="osperm-1" onclick="setOsPerm(true)" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Denied (show banner)</button>
     </div>
 
     <div class="phone" style="position:relative;">
@@ -102,12 +109,49 @@
 
           <!-- Notifications -->
           <div class="section-header">Notifications</div>
-          <div class="list-group">
-            <div class="list-row">
-              <div class="row-label">Nudge frequency</div>
-              <div class="row-value">A few times a week</div>
-              <div class="row-chevron">›</div>
+
+          <!-- OS-permission-denied banner (conditional, gates the section) -->
+          <div id="os-denied-banner" style="display:none;background:rgba(255,173,108,0.34);border-radius:16px;padding:14px 16px;margin-bottom:8px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <i class="ph ph-bell-slash" style="color:#995611;font-size:18px;line-height:1.2;flex-shrink:0;margin-top:1px;"></i>
+              <div style="flex:1;font-size:13px;color:#995611;line-height:1.45;">
+                Notifications are turned off in your phone settings.
+                <button onclick="openOsSettings()" style="display:inline-block;margin-top:8px;background:#995611;color:#fff;border:none;border-radius:100px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;">Open Settings</button>
+              </div>
             </div>
+          </div>
+
+          <div class="list-group">
+            <!-- Partner activity (transactional · on by default · ignores Nudge frequency) -->
+            <div class="list-row" id="partner-activity-row" style="align-items:flex-start;padding-top:14px;padding-bottom:14px;">
+              <div class="row-label-block">
+                <div class="row-label-main">Partner activity</div>
+                <div class="row-label-sub">When Jordan answers or a reveal is ready.</div>
+              </div>
+              <div id="partner-activity-toggle" class="toggle" style="margin-top:2px;" onclick="togglePartnerActivity()">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+
+            <!-- Off-warning (inline, attached under the row, inside the card) -->
+            <div id="partner-activity-warning" style="display:none;background:rgba(255,173,108,0.34);padding:12px 16px;border-bottom:1px solid rgba(26,26,26,0.06);">
+              <div style="display:flex;align-items:flex-start;gap:8px;">
+                <i class="ph ph-bell-slash" style="color:#995611;font-size:15px;line-height:1.2;flex-shrink:0;margin-top:1px;"></i>
+                <div style="font-size:12px;color:#995611;line-height:1.45;">With this off, we won't let you know when Jordan answers or a reveal is ready. You'll have to remember to check back yourself.</div>
+              </div>
+            </div>
+
+            <!-- Nudge frequency — engagement reminders -->
+            <div class="list-row" style="align-items:flex-start;padding-top:14px;padding-bottom:14px;">
+              <div class="row-label-block">
+                <div class="row-label-main">Nudge frequency</div>
+                <div class="row-label-sub">How often we remind you about waiting conversations.</div>
+              </div>
+              <div class="row-value" style="margin-top:2px;">A few times a week</div>
+              <div class="row-chevron" style="margin-top:2px;">›</div>
+            </div>
+
+            <!-- Funny push notifications — tone layer -->
             <div class="list-row">
               <div class="row-label">Funny push notifications</div>
               <div class="toggle" onclick="this.classList.toggle('off')">
@@ -152,8 +196,7 @@
           <!-- Partner -->
           <div class="section-header">Partner</div>
           <div class="list-group">
-            <div class="list-row">
-              <div class="partner-avatar">J</div>
+            <div class="list-row" onclick="openPartnerDetail()" style="cursor:pointer;">
               <div class="row-label">Jordan · Linked ✓</div>
               <div class="row-chevron">›</div>
             </div>
@@ -191,22 +234,22 @@
           <!-- Account -->
           <div class="section-header">Account</div>
           <div class="list-group">
-            <!-- 1. Name (new) -->
+            <!-- 1. Name -->
             <div class="list-row" onclick="openEditName()" style="cursor:pointer;">
               <div class="row-label">Name</div>
               <div class="row-value" id="name-row-value">Alex</div>
               <div class="row-chevron">›</div>
             </div>
-            <!-- 2. Phone number -->
-            <div class="list-row">
+            <!-- 2. Phone number (read-only — identity confirmation, no edit) -->
+            <div class="list-row" style="cursor:default;">
               <div class="row-label">Phone number</div>
               <div class="row-value">+1 (972) 555-0182</div>
-              <div class="row-chevron">›</div>
             </div>
-            <!-- 3. Restore purchase (new) -->
-            <div class="list-row" id="restore-row" onclick="handleRestore(event)" style="cursor:pointer;">
-              <div class="row-label" data-restore-label style="color:#5f45f2;">Restore purchase</div>
-              <span id="restore-spinner" style="display:none;margin-left:auto;"><svg width="16" height="16" viewBox="0 0 16 16" style="animation:spin 0.8s linear infinite;display:block;"><circle cx="8" cy="8" r="6" fill="none" stroke="#5f45f2" stroke-width="2.5" stroke-dasharray="20 12"/></svg></span>
+            <!-- 3. Lifetime access -->
+            <div class="list-row" onclick="openLifetime()" style="cursor:pointer;">
+              <div class="row-label">Lifetime access</div>
+              <div class="row-value">Founding member</div>
+              <div class="row-chevron">›</div>
             </div>
             <!-- 4. Delete account -->
             <div class="list-row" onclick="openDeleteSheet()" style="cursor:pointer;">
@@ -263,6 +306,117 @@
         </div>
       </div>
 
+      <!-- Partner detail overlay (full-screen push) -->
+      <div id="partner-overlay" style="display:none;position:absolute;inset:0;background:#fbefe1;z-index:15;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);border-radius:inherit;overflow:hidden;">
+        <!-- Nav bar -->
+        <div style="height:54px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(26,26,26,0.08);background:#fbefe1;position:relative;">
+          <button onclick="closePartnerDetail()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
+            <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
+          </button>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:17px;font-weight:700;color:#1a1a1a;">Partner</span>
+        </div>
+        <!-- Content -->
+        <div style="padding:20px 16px;overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;">
+          <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">Linked partner</div>
+          <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;margin-bottom:24px;">
+            <div style="display:flex;align-items:center;padding:13px 16px;min-height:52px;">
+              <div style="flex:1;font-size:15px;color:#1a1a1a;">Jordan</div>
+              <div style="font-size:13px;color:rgba(26,26,26,0.6);">Linked ✓</div>
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">Connection</div>
+          <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;">
+            <div onclick="openUnlinkSheet()" style="display:flex;align-items:center;padding:13px 16px;min-height:52px;cursor:pointer;">
+              <div style="flex:1;font-size:15px;color:#c0392b;">Unlink partner</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unlink confirmation overlay -->
+      <div id="unlink-overlay" onclick="closeUnlinkSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:20;"></div>
+
+      <!-- Unlink confirmation bottom sheet -->
+      <div id="unlink-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:21;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:16px;">Unlink from Jordan?</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your answers and past reveals stay.</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">The connection is removed, and Jordan's slot will show as Disconnected.</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">You won't be able to reveal new topics until you link with a partner again.</div>
+        </div>
+        <button onclick="handleUnlink()" style="width:100%;height:56px;background:#ff9191;color:#c0392b;border:none;border-radius:100px;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;">Unlink</button>
+        <div style="height:10px;"></div>
+        <button onclick="closeUnlinkSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
+      <!-- Lifetime access / Founding member overlay (full-screen push) -->
+      <div id="lifetime-overlay" style="display:none;position:absolute;inset:0;background:#fbefe1;z-index:15;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);border-radius:inherit;overflow:hidden;">
+        <!-- Nav bar -->
+        <div style="height:54px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(26,26,26,0.08);background:#fbefe1;position:relative;flex-shrink:0;">
+          <button onclick="closeLifetime()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
+            <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
+          </button>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:17px;font-weight:700;color:#1a1a1a;">Lifetime access</span>
+        </div>
+        <!-- Scrollable content -->
+        <div style="overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;padding:20px 16px 32px;">
+
+          <!-- Proud card -->
+          <div style="background:rgba(95,69,242,0.08);border-radius:16px;padding:24px 20px;text-align:center;margin-bottom:24px;">
+            <div style="display:inline-block;background:#5f45f2;color:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:5px 12px;border-radius:100px;margin-bottom:14px;">Founding member</div>
+            <div style="font-family:'Grandstander',cursive;font-size:22px;font-weight:700;color:#1a1a1a;line-height:1.2;margin-bottom:8px;">You're in for good.</div>
+            <div style="font-size:14px;color:rgba(26,26,26,0.65);line-height:1.45;">One purchase, lifetime access for both you and Jordan.</div>
+          </div>
+
+          <!-- What that covers -->
+          <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">What that covers</div>
+          <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;margin-bottom:24px;">
+            <div style="display:flex;align-items:flex-start;padding:13px 16px;min-height:52px;border-bottom:1px solid rgba(26,26,26,0.06);gap:12px;">
+              <i class="ph ph-check" style="color:#5f45f2;font-size:18px;line-height:1.4;flex-shrink:0;"></i>
+              <div style="font-size:14px;color:#1a1a1a;line-height:1.45;">Every topic in the library, plus everything we add down the line.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;padding:13px 16px;min-height:52px;border-bottom:1px solid rgba(26,26,26,0.06);gap:12px;">
+              <i class="ph ph-check" style="color:#5f45f2;font-size:18px;line-height:1.4;flex-shrink:0;"></i>
+              <div style="font-size:14px;color:#1a1a1a;line-height:1.45;">Both partners, one purchase. No second account to buy.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;padding:13px 16px;min-height:52px;gap:12px;">
+              <i class="ph ph-check" style="color:#5f45f2;font-size:18px;line-height:1.4;flex-shrink:0;"></i>
+              <div style="font-size:14px;color:#1a1a1a;line-height:1.45;">Nothing to renew or cancel.</div>
+            </div>
+          </div>
+
+          <!-- Thank-you note (editorial, on cream, no card) -->
+          <div style="padding:4px 8px 4px;margin-bottom:28px;">
+            <div style="font-size:14px;color:#1a1a1a;line-height:1.6;margin-bottom:14px;">We're a small team who think the conversations before a baby arrives matter more than almost anything. You backed us early, which means you're locked in for life: no renewals, no fine print, nothing to think about again. And we'll never sell a word of what you and Jordan tell each other.</div>
+            <div style="font-size:14px;color:#1a1a1a;line-height:1.6;margin-bottom:14px;">Your support helps us keep building. Thank you for that.</div>
+            <div style="font-size:13px;color:rgba(26,26,26,0.5);line-height:1.5;">The Daisy's Guide team</div>
+          </div>
+
+          <!-- Manage -->
+          <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">Manage</div>
+          <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;">
+            <!-- Restore purchase (relocated here from Account) -->
+            <div class="list-row" id="restore-row" onclick="handleRestore(event)" style="cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+              <div class="row-label" data-restore-label style="color:#5f45f2;">Restore purchase</div>
+              <span id="restore-spinner" style="display:none;margin-left:auto;"><svg width="16" height="16" viewBox="0 0 16 16" style="animation:spin 0.8s linear infinite;display:block;"><circle cx="8" cy="8" r="6" fill="none" stroke="#5f45f2" stroke-width="2.5" stroke-dasharray="20 12"/></svg></span>
+            </div>
+            <!-- Terms of Service -->
+            <div class="list-row" style="cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+              <div class="row-label">Terms of Service</div>
+              <div class="row-chevron">›</div>
+            </div>
+            <!-- You & your data -->
+            <div class="list-row" style="cursor:pointer;">
+              <div class="row-label">You &amp; your data</div>
+              <div class="row-chevron">›</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       <!-- Delete account overlay -->
       <div id="delete-overlay" onclick="closeDeleteSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:10;"></div>
 
@@ -305,15 +459,17 @@
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">15 Manage Topics</div>
       </div>
-      <div class="info-box">Settings tab is active. "Manage topics" → Screen 15 Manage Topics. "Partner" row → Partner detail/invite screen. "Name" row → Edit Name sub-screen (push). No other outbound nav in V1.</div>
+      <div class="info-box">Settings tab is active. <strong>Manage topics</strong> → Screen 15. <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push). <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">All settings — full reference</div>
       <div class="settings-map">
         <div class="settings-section-label">Notifications</div>
-        <div class="settings-row">Nudge frequency <span class="settings-row-value">Picker → Daily / A few times a week / Weekly / Don't nudge me</span></div>
-        <div class="settings-row">Funny push notifications <span class="settings-row-value">Toggle · On by default</span></div>
+        <div class="settings-row">OS-permission-denied banner <span class="settings-row-value">Conditional · soft warning (orange band, not error red) · "Notifications are turned off in your phone settings." + "Open Settings" button (deep-links to OS settings) · re-checks on foreground</span></div>
+        <div class="settings-row">Partner activity <span class="settings-row-value">Toggle · On by default · transactional (partner linked/accepted · your turn · ready to reveal) · ignores Nudge frequency · off-warning attached inside the card</span></div>
+        <div class="settings-row">Nudge frequency <span class="settings-row-value">Picker → Daily / A few times a week / Weekly / Don't nudge me · governs engagement reminders only (stalled topics)</span></div>
+        <div class="settings-row">Funny push notifications <span class="settings-row-value">Toggle · On by default · tone layer (wry voice vs plain) — does not create standalone pushes</span></div>
         <div class="settings-section-label">Pacing</div>
         <div class="settings-row">Guided timeline <span class="settings-row-value">Toggle · On = due date sequencing · Off = self-directed · always visible</span></div>
         <div class="settings-row">I'm in a different stage now <span class="settings-row-value">Action (purple-500) · No chevron · Opens Q1 picker bottom sheet → if date needed, collect inline · Save triggers silent topic re-filter · toast: "Your plan was updated."</span></div>
@@ -321,7 +477,7 @@
         <div class="settings-section-label">Your plan</div>
         <div class="settings-row">Manage topics <span class="settings-row-value">→ Screen 15 · "45 active" count shown</span></div>
         <div class="settings-section-label">Partner</div>
-        <div class="settings-row">Partner row <span class="settings-row-value">Avatar + name + "Linked ✓" or "Invite pending"</span></div>
+        <div class="settings-row">Partner row <span class="settings-row-value">Name + "Linked ✓" or "Invite pending" + chevron · no avatar · tap → Partner detail sub-screen</span></div>
         <div class="settings-section-label">Support</div>
         <div class="settings-row">Get help <span class="settings-row-value">→ in-app help / support URL</span></div>
         <div class="settings-row">Give feedback <span class="settings-row-value">→ feedback form or email</span></div>
@@ -331,8 +487,8 @@
         <div class="settings-section-label" style="font-style:italic;opacity:0.6;">— Version line (outside card) —</div>
         <div class="settings-section-label">Account</div>
         <div class="settings-row">Name <span class="settings-row-value">Value + chevron · Shows user's first name · tap → edit screen with single text input pre-filled · Save updates profile</span></div>
-        <div class="settings-row">Phone number <span class="settings-row-value">Value + chevron · Existing — editable · no password field</span></div>
-        <div class="settings-row">Restore purchase <span class="settings-row-value">Action (purple-500 label) · No chevron · calls restorePurchase() · same success/failure states as Paywall restore link</span></div>
+        <div class="settings-row">Phone number <span class="settings-row-value">Value · Read-only (identity confirmation) · no chevron · no edit · label varies by auth path</span></div>
+        <div class="settings-row">Lifetime access <span class="settings-row-value">Value "Founding member" + chevron · tap → Founding member sub-screen (proud card, what's covered, thank-you note, Manage list with Restore purchase + Terms + privacy)</span></div>
         <div class="settings-row">Delete account <span class="settings-row-value">Destructive · No chevron · no value · taps open deletion bottom sheet</span></div>
         <div class="settings-row">Log out <span class="settings-row-value">Destructive · Existing</span></div>
       </div>
@@ -424,8 +580,115 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Restore Purchase</div>
+      <div class="spec-card-title">Notifications section — structure</div>
       <table class="spec-table">
+        <tr><th>Position</th><th>Element</th><th>Notes</th></tr>
+        <tr><td>1</td><td>OS-permission-denied banner (conditional)</td><td>Above everything else in the section · soft warning tone (orange band <code>rgba(255,173,108,0.34)</code> bg, <code>#995611</code> text), <strong>not</strong> error red · gates the section · auto re-checks on app foreground</td></tr>
+        <tr><td>2</td><td>Partner activity (toggle, on by default)</td><td>Transactional events: partner linked/accepted · your turn · ready to reveal · fires on the event and <strong>ignores Nudge frequency</strong> entirely · off-warning attached inside the card</td></tr>
+        <tr><td>3</td><td>Nudge frequency (picker)</td><td>Daily / A few times a week / Weekly / Don't nudge me · governs <strong>engagement reminders only</strong> (stalled-topic nudges) · "Don't nudge me" silences this layer alone</td></tr>
+        <tr><td>4</td><td>Funny push notifications (toggle, on by default)</td><td><strong>Tone layer</strong> — changes the voice of notifications that fire anyway · does not create standalone pushes · applies to engagement reminders and softer transactional events, but never at the cost of time-sensitive "your turn" / "ready to reveal" reading clearly</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">OS-permission-denied banner</div>
+      <table class="spec-table">
+        <tr><td>Visibility</td><td>Conditional · shown only when OS push permission is denied · gates the Notifications section</td></tr>
+        <tr><td>Tone</td><td>Soft warning — orange family (<code>rgba(255,173,108,0.34)</code> bg, <code>#995611</code> text, bell-slash icon) · <strong>not</strong> error red</td></tr>
+        <tr><td>Copy</td><td>"Notifications are turned off in your phone settings."</td></tr>
+        <tr><td>Action</td><td>"Open Settings" button · deep-links to OS settings (<code>UIApplication.openSettingsURLString</code> on iOS / app-details intent on Android)</td></tr>
+        <tr><td>Lifecycle</td><td>Re-checks on app foreground · auto-clears when permission is granted</td></tr>
+        <tr><td>While denied</td><td>Toggles below may render dimmed/disabled (optional)</td></tr>
+        <tr><td>Demo</td><td>Use the "Push permission" tab above the phone (Granted / Denied) to preview the banner state</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Partner activity toggle + off-warning</div>
+      <table class="spec-table">
+        <tr><td>Default</td><td>On</td></tr>
+        <tr><td>Subtext</td><td>"When Jordan answers or a reveal is ready."</td></tr>
+        <tr><td>Scope</td><td>Transactional only · partner linked/accepted · your turn · ready to reveal · fires on the event · <strong>ignores Nudge frequency entirely</strong></td></tr>
+        <tr><td>Off-warning</td><td>Inline notice attached <strong>directly under the row, inside the card</strong> · orange band (<code>rgba(255,173,108,0.34)</code> bg, <code>#995611</code> text, bell-slash icon) · copy: "With this off, we won't let you know when Jordan answers or a reveal is ready. You'll have to remember to check back yourself."</td></tr>
+        <tr><td>Demo</td><td>Tap the toggle in the preview to see the warning attach/detach</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Event inventory (V1)</div>
+      <table class="spec-table">
+        <tr><th>Layer</th><th>Events</th><th>Controlled by</th></tr>
+        <tr><td>Transactional</td><td>Partner linked/accepted · your turn · ready to reveal</td><td>Partner activity toggle</td></tr>
+        <tr><td>Engagement</td><td>Stalled-topic reminders</td><td>Nudge frequency picker</td></tr>
+        <tr><td>Tone</td><td>Wry brand voice vs plain/functional copy on any of the above</td><td>Funny push notifications toggle</td></tr>
+      </table>
+      <div class="info-box" style="margin-top:10px;"><strong>Deferred to V1.1:</strong> milestone/badge pushes · pregnancy-stage / time-based pushes.</div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Phone number — read-only</div>
+      <table class="spec-table">
+        <tr><td>Behavior</td><td>Read-only · identity confirmation only · no chevron · no edit screen · no OTP flow</td></tr>
+        <tr><td>Label varies by auth path</td><td>"Phone number" (phone signup) · "Email" (email signup) · "Connected with Apple" / "Connected with Google" (social) · read-only in all cases</td></tr>
+        <tr><td>Mockup</td><td>Shows "Phone number" variant</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Partner row + Partner detail sub-screen</div>
+      <table class="spec-table">
+        <tr><td>Row</td><td>Name + "Linked ✓" (or "Invite pending") + chevron · <strong>no avatar</strong> · tap → push Partner detail</td></tr>
+        <tr><td>Avatar removal</td><td>Avatars are being removed app-wide · partner identity will ride on name + per-partner accent color, to be confirmed at the Alignment Reveal</td></tr>
+        <tr><td>Detail nav bar</td><td>"‹ Back" <code>purple-500</code> 15px semibold · centered "Partner" title in Grandstander 17px bold</td></tr>
+        <tr><td>Detail content</td><td>Partner name + linked status (no avatar) · "Unlink partner" action row with <code>status-error-text</code> label, no chevron, no value</td></tr>
+        <tr><td>After unlink</td><td>Partner row returns to invite / Disconnected state so the user can re-link</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Unlink confirmation bottom sheet</div>
+      <table class="spec-table">
+        <tr><td>Trigger</td><td>Tapping "Unlink partner" inside Partner detail</td></tr>
+        <tr><td>Title</td><td>"Unlink from {name}?" · <code>display-sm</code> (Grandstander 20px bold)</td></tr>
+        <tr><td>Bullet 1</td><td>"Your answers and past reveals stay."</td></tr>
+        <tr><td>Bullet 2</td><td>"The connection is removed, and {name}'s slot will show as Disconnected."</td></tr>
+        <tr><td>Bullet 3</td><td>"You won't be able to reveal new topics until you link with a partner again."</td></tr>
+        <tr><td>Destructive CTA</td><td>"Unlink" · full width · 56px · <code>radius-full</code> · <code>pink-400</code> (#ff9191) fill · <code>status-error-text</code> (#c0392b) label</td></tr>
+        <tr><td>Ghost CTA</td><td>"Cancel" · full width · 56px · <code>radius-full</code> · <code>border-default</code> outline · <code>text-primary</code> label</td></tr>
+        <tr><td>Container / dismiss</td><td>Same structure as Account Deletion sheet (radius-2xl top corners · drag handle · swipe down / Cancel / tap outside to dismiss)</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Pairing model — partner history is keyed to the pair</div>
+      <div class="info-box">Shared reveal history is keyed to the <strong>unordered pair of account IDs</strong>, never to the connection. Unlink <strong>deactivates</strong> the pairing — it is never deleted.
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.5;">
+          <li>Re-linking the <strong>same</strong> partner reactivates the pairing and restores all prior reveals (not treated as new).</li>
+          <li>Linking a <strong>new</strong> partner creates a fresh pairing. The user's own per-topic answers persist, so they may already sit in "waiting for partner" on topics they previously answered.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Lifetime access row + Founding member sub-screen</div>
+      <table class="spec-table">
+        <tr><td>Row label</td><td>"Lifetime access" · 15px DM Sans regular · <code>text-primary</code></td></tr>
+        <tr><td>Row value</td><td>"Founding member" · 13px DM Sans regular · <code>text-secondary</code> · static</td></tr>
+        <tr><td>Chevron</td><td>Yes — row is navigable</td></tr>
+        <tr><td>Position</td><td>Account section · between Phone number and Delete account</td></tr>
+        <tr><td>Detail nav bar</td><td>"‹ Back" <code>purple-500</code> 15px semibold · centered "Lifetime access" title in Grandstander 17px bold</td></tr>
+        <tr><td>Proud card</td><td>Light purple bg <code>rgba(95,69,242,0.08)</code> · <code>radius-xl</code> · solid-purple uppercase pill "Founding member" (white text on <code>#5f45f2</code>) · Grandstander headline "You're in for good." · sub: "One purchase, lifetime access for both you and Jordan."</td></tr>
+        <tr><td>"What that covers"</td><td>White card · purple check icons · three rows:<br>1. Every topic in the library, plus everything we add down the line.<br>2. Both partners, one purchase. No second account to buy.<br>3. Nothing to renew or cancel.</td></tr>
+        <tr><td>Thank-you note</td><td>Editorial, on cream, no card · last line a muted signature ("The Daisy's Guide team")</td></tr>
+        <tr><td>Manage list</td><td>White card with three rows: <strong>Restore purchase</strong> (relocated from Account · purple action label, no chevron) · <strong>Terms of Service</strong> (chevron → web URL, in-app browser) · <strong>You &amp; your data</strong> (chevron → privacy URL, in-app browser — warmer label than "Privacy Policy")</td></tr>
+        <tr><td>Account Deletion bullet 3</td><td>Left as-is ("use 'Restore purchase' in Settings to recover access") · still accurate, Restore now lives one level deeper but "in Settings" holds</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Restore Purchase (now inside Founding member sub-screen)</div>
+      <table class="spec-table">
+        <tr><td>Position</td><td>Founding member detail screen · "Manage" list · first row · <strong>relocated from Account section</strong></td></tr>
         <tr><td>Row label</td><td>"Restore purchase" · <code>purple-500</code> (#5f45f2) · 15px DM Sans regular</td></tr>
         <tr><td>No chevron</td><td>Action row — not a navigation destination</td></tr>
         <tr><td>No value</td><td>Right side empty in default state</td></tr>
@@ -433,7 +696,7 @@
         <tr><td>On success</td><td>Green toast at bottom of phone: "Purchase restored. You're all set." · bg <code>status-success-text</code> (#157a46) · auto-dismiss after 3s · row re-enables</td></tr>
         <tr><td>On failure</td><td>Dark toast: "No previous purchase found. Contact support at guarantee@daisysguide.com" · auto-dismiss after 4s · row re-enables</td></tr>
         <tr><td><code>restorePurchase()</code></td><td>Stub — connect to App Store / Play Store restore API</td></tr>
-        <tr><td>Demo behavior</td><td>Tap row in preview → simulates success (green toast) after 1.5s</td></tr>
+        <tr><td>Demo behavior</td><td>Open Lifetime access → tap "Restore purchase" → simulates success (green toast) after 1.5s</td></tr>
       </table>
     </div>
 
@@ -464,18 +727,20 @@
     <div class="spec-card">
       <div class="spec-card-title">Key settings notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Nudge frequency</strong> is the most important setting for retention — it's first in the list for a reason.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Partner activity</strong> is now the retention-critical control — it gates the transactional pushes ("your turn", "ready to reveal") and sits at the top of Notifications, above Nudge frequency.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Nudge frequency</strong> is rescoped to engagement reminders only (stalled-topic nudges). "Don't nudge me" silences this layer alone — transactional pushes still fire if Partner activity is on.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Funny push notifications</strong> is a tone layer — it changes the voice of notifications that already fire (wry vs plain). It does not create standalone pushes.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>OS-permission-denied banner</strong> uses the soft orange band, not error red — the user hasn't done anything wrong, the system state is just blocking pushes.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Guided timeline</strong> has an explainer subtext — "When on, we sequence topics based on your due date." The date row is now always shown (when Q1 applies) regardless of toggle state. The toggle controls sequencing logic only.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Name</strong> appears at the top of Account — it's the most personal and frequently referenced field. Tapping pushes a lightweight edit screen.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Phone number</strong> shown instead of password — consistent with the passwordless auth model throughout the app.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Restore purchase</strong> is purple (positive action) — not destructive. Placed between phone number and Delete account so it's easy to find but clearly separated from destructive actions.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Phone number</strong> is read-only — identity confirmation only, no chevron, no edit flow. The label varies by auth path (Phone / Email / Connected with Apple / Connected with Google) but the row is read-only in every case.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Lifetime access</strong> sits between Phone number and Delete account. It's a navigable row whose detail screen is part receipt, part thank-you, and part home for Restore purchase + Terms + privacy.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Partner row has no avatar</strong> — avatars are being removed app-wide. Identity will ride on name + a per-partner accent color, to be confirmed at the Alignment Reveal.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Unlink</strong> deactivates the pairing rather than deleting it. Re-linking the same partner reactivates the same pairing and restores all prior reveals; linking a new partner creates a fresh pairing.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Log out</strong> uses <code>status-error-text</code> label (dark red on white) — destructive list rows use this same treatment for WCAG AA compliance.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Delete account</strong> is placed above Log Out — it is more permanent and warrants its own bottom sheet confirmation before anything happens.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>The Account Deletion bottom sheet is interactive in the preview — tap "Delete account" to open it. Swipe down, tap Cancel, or tap the overlay to dismiss.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>The two toggles (Funny push notifications, Guided timeline) are interactive — tap them in the preview.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab above the phone controls the Pacing date row: label, value, and visibility all change. This reflects data set during onboarding — users cannot change their Q1 answer from Settings directly.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Name row: tapping opens an edit screen with a single pre-filled text input and 'Save' primary CTA. On save, name updates in profile and user returns to Settings.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Due date / Baby's birthday row is context-sensitive based on the user's Q1 onboarding answer. It does not depend on the Guided timeline toggle state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Bottom sheets (Account Deletion, Unlink) and push sub-screens (Edit name, Partner detail, Lifetime access) are interactive in the preview — tap their entry rows to open. Swipe down, tap Cancel, or tap the overlay to dismiss sheets; "‹ Back" pops push screens.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab above the phone controls the Pacing date row: label, value, and visibility all change. The "Push permission" tab toggles the OS-denied banner state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Q1 update ("I'm in a different stage now") triggers re-filter of topic plan. Topics that became eligible appear; topics that became ineligible move to the hidden state (recoverable via Manage Topics). Prediction Cards eligibility is also recomputed (see Screen 24).</span></div>
       </div>
     </div>
@@ -502,16 +767,23 @@
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
         <span class="component-tag">List Row — value + chevron</span>
+        <span class="component-tag">List Row — value, read-only</span>
         <span class="component-tag">List Row — toggle</span>
-        <span class="component-tag">List Row — with avatar</span>
+        <span class="component-tag">List Row — toggle + subtext</span>
         <span class="component-tag">List Row — destructive</span>
         <span class="component-tag">List Row — purple action</span>
+        <span class="component-tag">Inline warning band (orange, in-card)</span>
+        <span class="component-tag">OS-denied banner (orange, section gate)</span>
         <span class="component-tag">Bottom Sheet — Account Deletion</span>
+        <span class="component-tag">Bottom Sheet — Unlink confirmation</span>
         <span class="component-tag">Bottom Sheet — Q1 picker</span>
         <span class="component-tag">Sub-screen — Edit Name (push)</span>
+        <span class="component-tag">Sub-screen — Partner detail (push)</span>
+        <span class="component-tag">Sub-screen — Founding member (push)</span>
+        <span class="component-tag">Proud card (light purple, with pill)</span>
+        <span class="component-tag">Editorial note (on cream, no card)</span>
         <span class="component-tag">Section Header</span>
         <span class="component-tag">Toggle / Switch</span>
-        <span class="component-tag">Avatar (partner)</span>
         <span class="component-tag">Toast — success (green)</span>
         <span class="component-tag">Toast — error</span>
         <span class="component-tag">Version line</span>
@@ -557,6 +829,71 @@ function setQ1(idx) {
   } else {
     row.style.display    = 'none';
   }
+}
+
+/* ── OS notification permission demo tabs ── */
+function setOsPerm(denied) {
+  document.getElementById('osperm-0').style.background  = denied ? 'white' : '#5f45f2';
+  document.getElementById('osperm-0').style.color       = denied ? 'rgba(26,26,26,0.55)' : 'white';
+  document.getElementById('osperm-0').style.borderColor = denied ? 'rgba(26,26,26,0.15)' : '#5f45f2';
+  document.getElementById('osperm-1').style.background  = denied ? '#5f45f2' : 'white';
+  document.getElementById('osperm-1').style.color       = denied ? 'white' : 'rgba(26,26,26,0.55)';
+  document.getElementById('osperm-1').style.borderColor = denied ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  document.getElementById('os-denied-banner').style.display = denied ? 'block' : 'none';
+}
+function openOsSettings() { /* deep-link stub: UIApplication.openSettingsURLString on iOS, app-details intent on Android */ }
+
+/* ── Partner activity toggle + off-warning ── */
+function togglePartnerActivity() {
+  const t = document.getElementById('partner-activity-toggle');
+  t.classList.toggle('off');
+  const off = t.classList.contains('off');
+  document.getElementById('partner-activity-warning').style.display = off ? 'block' : 'none';
+}
+
+/* ── Partner detail push ── */
+function openPartnerDetail() {
+  const o = document.getElementById('partner-overlay');
+  o.style.display = 'block';
+  requestAnimationFrame(() => { o.style.transform = 'translateX(0)'; });
+}
+function closePartnerDetail() {
+  const o = document.getElementById('partner-overlay');
+  o.style.transform = 'translateX(100%)';
+  setTimeout(() => { o.style.display = 'none'; }, 280);
+}
+
+/* ── Unlink confirmation sheet ── */
+function openUnlinkSheet() {
+  document.getElementById('unlink-overlay').style.display = 'block';
+  const s = document.getElementById('unlink-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeUnlinkSheet() {
+  const s = document.getElementById('unlink-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('unlink-overlay').style.display = 'none';
+  }, 280);
+}
+function handleUnlink() {
+  // Demo: close sheet + partner detail; in production: deactivate pairing, mark slot Disconnected, return to Settings invite state.
+  closeUnlinkSheet();
+  setTimeout(closePartnerDetail, 200);
+}
+
+/* ── Lifetime access push ── */
+function openLifetime() {
+  const o = document.getElementById('lifetime-overlay');
+  o.style.display = 'block';
+  requestAnimationFrame(() => { o.style.transform = 'translateX(0)'; });
+}
+function closeLifetime() {
+  const o = document.getElementById('lifetime-overlay');
+  o.style.transform = 'translateX(100%)';
+  setTimeout(() => { o.style.display = 'none'; }, 280);
 }
 
 /* ── Edit Name overlay ── */
