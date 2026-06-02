@@ -79,13 +79,13 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">Notifications (rebuilt: OS-denied banner · Partner activity · Nudge frequency · Funny push), Pacing, Your plan, Partner (no avatar · push to detail · Unlink sheet), Account (Name · Phone read-only · Lifetime access push · Delete · Log out). Q1 tab controls the Pacing date row; Push-permission tab toggles the denied banner.</div>
+<div class="page-desc page-desc-full">Notifications (OS-denied banner · Partner activity · Nudge frequency · Funny push), Where you are (Stage + Q1-conditional date row — no Guided-timeline toggle, not shipping guided timelines at launch), Your plan, Partner (no avatar · push to detail · Unlink sheet), Account (Name · Phone read-only · Lifetime access push · Delete · Log out). Q1 tab updates the Stage row + date row; Push-permission tab toggles the denied banner.</div>
 
 <div class="main-layout">
 
   <div class="phone-wrap">
 
-    <!-- Q1 state tabs — controls Pacing date row label + visibility -->
+    <!-- Q1 state tabs — controls the "Where you are" Stage row value + date row label/visibility -->
     <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
       <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Q1 answer</span>
       <button id="q1tab-0" onclick="setQ1(0)" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Pregnant / Again</button>
@@ -158,23 +158,17 @@
             </div>
           </div>
 
-          <!-- Pacing -->
-          <div class="section-header">Pacing</div>
+          <!-- Where you are -->
+          <div class="section-header">Where you are</div>
           <div class="list-group">
-            <div class="list-row" style="align-items:flex-start;padding-top:14px;padding-bottom:14px;">
-              <div class="row-label-block">
-                <div class="row-label-main">Guided timeline</div>
-                <div class="row-label-sub">When on, we sequence topics based on your due date. Turn off to work through them at your own pace in any order.</div>
-              </div>
-              <div class="toggle" style="margin-top:2px;" onclick="this.classList.toggle('off')">
-                <div class="toggle-thumb"></div>
-              </div>
-            </div>
+            <!-- Stage row — editable Q1 value -->
             <div class="list-row" style="cursor:pointer;">
-              <div class="row-label" style="color:#5f45f2;">I'm in a different stage now</div>
+              <div class="row-label">Stage</div>
+              <div class="row-value" id="stage-value">Pregnant</div>
+              <div class="row-chevron">›</div>
             </div>
-            <!-- Date row — standalone, always visible when Q1 applies; hidden for "Trying (or thinking about trying)" -->
-            <div class="list-row" id="date-row">
+            <!-- Date row — Q1-conditional, hidden for "Trying" -->
+            <div class="list-row" id="date-row" style="cursor:pointer;">
               <div class="row-label" id="date-label">Due date</div>
               <div class="row-value" id="date-value">Aug 14, 2026</div>
               <div class="row-chevron">›</div>
@@ -445,7 +439,7 @@
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">15 Manage Topics</div>
       </div>
-      <div class="info-box">Settings tab is active. <strong>Manage topics</strong> → Screen 15. <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
+      <div class="info-box">Settings tab is active. <strong>Stage</strong> → picker (4 options matching onboarding Q1). <strong>Due date / Birth date</strong> → native date picker. <strong>Manage topics</strong> → Screen 15. <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
     </div>
 
     <div class="spec-card">
@@ -456,10 +450,9 @@
         <div class="settings-row">Partner activity <span class="settings-row-value">Toggle · On by default · transactional (partner linked/accepted · your turn · ready to reveal) · ignores Nudge frequency · off-warning attached inside the card</span></div>
         <div class="settings-row">Nudge frequency <span class="settings-row-value">Picker → Daily / A few times a week / Weekly / Don't nudge me · governs engagement reminders only (stalled topics)</span></div>
         <div class="settings-row">Funny push notifications <span class="settings-row-value">Toggle · On by default · tone layer (wry voice vs plain) — does not create standalone pushes</span></div>
-        <div class="settings-section-label">Pacing</div>
-        <div class="settings-row">Guided timeline <span class="settings-row-value">Toggle · On = due date sequencing · Off = self-directed · always visible</span></div>
-        <div class="settings-row">I'm in a different stage now <span class="settings-row-value">Action (purple-500) · No chevron · Opens Q1 picker bottom sheet → if date needed, collect inline · Save triggers silent topic re-filter · toast: "Your plan was updated."</span></div>
-        <div class="settings-row">Due date / Baby's birthday <span class="settings-row-value">Standalone date row · always visible (when Q1 applies) · independent of Guided timeline toggle</span></div>
+        <div class="settings-section-label">Where you are</div>
+        <div class="settings-row">Stage <span class="settings-row-value">Editable Q1 value · row value reads "Trying" / "Pregnant" / "Baby is here" / "Expecting again" · chevron → picker · no subtext</span></div>
+        <div class="settings-row">Due date / Birth date <span class="settings-row-value">Q1-conditional · "Due date" (Pregnant, Expecting again) · "Birth date" (Baby is here) · row hidden for Trying · chevron → native date picker · no subtext</span></div>
         <div class="settings-section-label">Your plan</div>
         <div class="settings-row">Manage topics <span class="settings-row-value">→ Screen 15 · "45 active" count shown</span></div>
         <div class="settings-section-label">Partner</div>
@@ -516,38 +509,29 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Q1-conditional Date Row (Pacing section)</div>
-      <div class="info-box" style="margin-bottom:14px;">This row is always visible when applicable — it is <strong>not</strong> tied to the Guided timeline toggle state. The toggle controls topic sequencing behavior; this row is the date input.</div>
+      <div class="spec-card-title">"Where you are" section — Stage row + date row</div>
+      <div class="info-box" style="margin-bottom:14px;">Renamed from "Pacing" — we're not shipping guided timelines / custom pacing at launch, so the section is no longer about how the app paces the user. It's just where the user reports where they are. Two rows, both editable, no subtext on either.</div>
       <table class="spec-table">
-        <tr><td>Q1 = "Currently pregnant" or "Expecting again"</td><td>Row label: <strong>"Due date"</strong> · Value: formatted date e.g. "Aug 14, 2026" · Chevron: yes → native date picker · max date: 12 months from today</td></tr>
-        <tr><td>Q1 = "Baby is already here"</td><td>Row label: <strong>"Baby's birthday"</strong> · Value: formatted date e.g. "Mar 3, 2025" · Chevron: yes → native date picker · max date: today</td></tr>
-        <tr><td>Q1 = "Trying (or thinking about trying)"</td><td>Row <strong>hidden entirely</strong> — no due date is applicable</td></tr>
-        <tr><td>Date format</td><td>"MMM D, YYYY" — e.g. "Aug 14, 2026"</td></tr>
-        <tr><td>Value style</td><td>13px DM Sans regular · <code>text-secondary</code></td></tr>
+        <tr><th>Row</th><th>Value</th><th>Behavior</th></tr>
+        <tr><td><strong>Stage</strong></td><td>"Trying" · "Pregnant" · "Baby is here" · "Expecting again"</td><td>Chevron → picker (4 options matching onboarding Q1) · selecting a stage updates the date row label/visibility · no "why we ask" subtext</td></tr>
+        <tr><td><strong>Due date</strong> (Pregnant, Expecting again)</td><td>Formatted date, e.g. "Aug 14, 2026"</td><td>Chevron → native date picker · max date: 12 months from today</td></tr>
+        <tr><td><strong>Birth date</strong> (Baby is here)</td><td>Formatted date, e.g. "Mar 3, 2025"</td><td>Chevron → native date picker · max date: today</td></tr>
+        <tr><td><strong>Date row hidden</strong> (Trying)</td><td>—</td><td>No date is applicable until pregnancy or birth · row is hidden entirely, no placeholder</td></tr>
+        <tr><td>Date format</td><td>"MMM D, YYYY"</td><td>e.g. "Aug 14, 2026"</td></tr>
+        <tr><td>Value style</td><td>13px DM Sans regular · <code>text-secondary</code></td><td>Same as every other value row in Settings</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-  <div class="spec-card-title">Date row — context-sensitive</div>
-  <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-bottom:12px;">Standalone row in Pacing section. Independent of Guided timeline toggle state.</p>
-  <table class="spec-table">
-    <tr><th>Q1 answer</th><th>Row label</th><th>Date picker</th></tr>
-    <tr><td>Currently pregnant or Expecting again</td><td>"Due date"</td><td>Future dates, max 12 months from today</td></tr>
-    <tr><td>Baby is already here</td><td>"Baby's birthday"</td><td>Past dates, max: today</td></tr>
-    <tr><td>Trying (or thinking about trying)</td><td>Row hidden</td><td>N/A</td></tr>
-  </table>
-</div>
-
-    <div class="spec-card">
-      <div class="spec-card-title">Q1 update row — "I'm in a different stage now"</div>
-      <table class="spec-table">
-        <tr><td>Position</td><td>Pacing section · between "Guided timeline" toggle and Due date row</td></tr>
-        <tr><td>Style</td><td>Standard List Row · <code>purple-500</code> label · no chevron (opens a sheet, not a push)</td></tr>
-        <tr><td>On tap</td><td>Opens bottom sheet with Q1 picker (same 4 options as onboarding Q1)</td></tr>
-        <tr><td>After selection</td><td>If new stage requires a date (Currently pregnant / Expecting again / Baby is already here), collect it inline in the same sheet. Save → silently re-run topic filtering and update Pacing section labels.</td></tr>
-        <tr><td>Confirmation</td><td>Brief toast: "Your plan was updated."</td></tr>
-        <tr><td>V1.1</td><td>Adds a "Rebuilding your plan…" animation (reusing Screen 03's animation) and a results screen showing added/removed topics before saving</td></tr>
-      </table>
+      <div class="spec-card-title">Edits are non-destructive (deactivate, never delete)</div>
+      <div class="info-box">Editing Stage or date updates the inputs that drive topic sort + which topics surface. The change is <strong>non-destructive</strong>: it may surface newly-relevant topics, but it <strong>never</strong> removes a started or completed topic and <strong>never</strong> deletes answers or reveals. Same deactivate-never-delete principle as <a href="#" style="color:#5f45f2;text-decoration:none;">partner unlink</a>.
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.5;">
+          <li>No "Rebuilding your plan…" animation, no diff/results screen, no toast at launch — the change just applies silently.</li>
+          <li>Topics that <em>became</em> eligible appear in the topic list; topics that <em>became</em> ineligible <strong>stay</strong> if they're already started/completed, and the user can still revisit them.</li>
+          <li>Prediction Cards eligibility is recomputed (see Screen 24).</li>
+          <li>V1.1 may add a "Rebuilding your plan…" animation (reusing Screen 03's animation) and a diff screen showing what changed — out of scope for V1.</li>
+        </ul>
+      </div>
     </div>
 
     <div class="spec-card">
@@ -718,7 +702,8 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Nudge frequency</strong> is rescoped to engagement reminders only (stalled-topic nudges). "Don't nudge me" silences this layer alone — transactional pushes still fire if Partner activity is on.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Funny push notifications</strong> is a tone layer — it changes the voice of notifications that already fire (wry vs plain). It does not create standalone pushes.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>OS-permission-denied banner</strong> uses the soft orange band, not error red — the user hasn't done anything wrong, the system state is just blocking pushes.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Guided timeline</strong> has an explainer subtext — "When on, we sequence topics based on your due date." The date row is now always shown (when Q1 applies) regardless of toggle state. The toggle controls sequencing logic only.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>"Where you are"</strong> replaces "Pacing." Two rows, both editable, no "why we ask" subtext: <strong>Stage</strong> (Q1 value — Trying / Pregnant / Baby is here / Expecting again) and a Q1-conditional date row (Due date / Birth date / hidden for Trying). The Guided-timeline toggle and "I'm in a different stage now" action row are both gone — we're not shipping guided timelines / custom pacing at launch.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Editing Stage or date is non-destructive</strong> — same deactivate-never-delete principle as partner unlink. New stage may surface newly-relevant topics, but it never removes a started or completed topic and never deletes answers or reveals. No plan-rebuild screen at launch.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Name</strong> appears at the top of Account — it's the most personal and frequently referenced field. Tapping pushes a lightweight edit screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Phone number</strong> is read-only — identity confirmation only, no chevron, no edit flow. The label varies by auth path (Phone / Email / Connected with Apple / Connected with Google) but the row is read-only in every case.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Lifetime access</strong> sits between Phone number and Delete account. It's a navigable row whose detail screen is part receipt, part thank-you, and part home for Restore purchase + Terms + privacy.</span></div>
@@ -727,8 +712,7 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Log out</strong> uses <code>status-error-text</code> label (dark red on white) — destructive list rows use this same treatment for WCAG AA compliance.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Delete account</strong> is placed above Log Out — it is more permanent and warrants its own bottom sheet confirmation before anything happens.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Bottom sheets (Account Deletion, Unlink) and push sub-screens (Edit name, Partner detail, Lifetime access) are interactive in the preview — tap their entry rows to open. Swipe down, tap Cancel, or tap the overlay to dismiss sheets; "‹ Back" pops push screens.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab above the phone controls the Pacing date row: label, value, and visibility all change. The "Push permission" tab toggles the OS-denied banner state.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Q1 update ("I'm in a different stage now") triggers re-filter of topic plan. Topics that became eligible appear; topics that became ineligible move to the hidden state (recoverable via Manage Topics). Prediction Cards eligibility is also recomputed (see Screen 24).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab above the phone updates both rows in "Where you are": Stage row value (Trying / Pregnant / Baby is here) and the date row (label, value, and visibility). The "Push permission" tab toggles the OS-denied banner state.</span></div>
       </div>
     </div>
 
@@ -798,7 +782,7 @@ body.page-23 .screen-root .push-scroll { scrollbar-width: none; -ms-overflow-sty
 body.page-23 .screen-root .push-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
 </style>
 <script>
-/* ── Q1 tab: controls Pacing date row ── */
+/* ── Q1 tab: controls Stage row + date row in the "Where you are" section ── */
 function setQ1(idx) {
   [0, 1, 2].forEach(i => {
     const btn = document.getElementById('q1tab-' + i);
@@ -807,18 +791,22 @@ function setQ1(idx) {
     btn.style.color         = active ? 'white'   : 'rgba(26,26,26,0.55)';
     btn.style.borderColor   = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
   });
+  const stage = document.getElementById('stage-value');
   const row   = document.getElementById('date-row');
   const label = document.getElementById('date-label');
   const value = document.getElementById('date-value');
   if (idx === 0) {
+    stage.textContent    = 'Pregnant';
     row.style.display    = '';
     label.textContent    = 'Due date';
     value.textContent    = 'Aug 14, 2026';
   } else if (idx === 1) {
+    stage.textContent    = 'Baby is here';
     row.style.display    = '';
-    label.textContent    = "Baby's birthday";
+    label.textContent    = 'Birth date';
     value.textContent    = 'Mar 3, 2025';
   } else {
+    stage.textContent    = 'Trying';
     row.style.display    = 'none';
   }
 }
