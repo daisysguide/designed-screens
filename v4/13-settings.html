@@ -219,7 +219,7 @@
           <div class="section-header">Legal</div>
           <div class="list-group">
             <div class="list-row">
-              <div class="row-label">Privacy Policy</div>
+              <div class="row-label">You &amp; your data</div>
               <div class="row-chevron">›</div>
             </div>
             <div class="list-row">
@@ -394,23 +394,11 @@
             <div style="font-size:13px;color:rgba(26,26,26,0.5);line-height:1.5;">The Daisy's Guide team</div>
           </div>
 
-          <!-- Manage -->
-          <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">Manage</div>
+          <!-- Restore purchase — standalone row (Terms + privacy live in the main Legal section) -->
           <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;">
-            <!-- Restore purchase (relocated here from Account) -->
-            <div class="list-row" id="restore-row" onclick="handleRestore(event)" style="cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <div class="list-row" id="restore-row" onclick="handleRestore(event)" style="cursor:pointer;">
               <div class="row-label" data-restore-label style="color:#5f45f2;">Restore purchase</div>
               <span id="restore-spinner" style="display:none;margin-left:auto;"><svg width="16" height="16" viewBox="0 0 16 16" style="animation:spin 0.8s linear infinite;display:block;"><circle cx="8" cy="8" r="6" fill="none" stroke="#5f45f2" stroke-width="2.5" stroke-dasharray="20 12"/></svg></span>
-            </div>
-            <!-- Terms of Service -->
-            <div class="list-row" style="cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
-              <div class="row-label">Terms of Service</div>
-              <div class="row-chevron">›</div>
-            </div>
-            <!-- You & your data -->
-            <div class="list-row" style="cursor:pointer;">
-              <div class="row-label">You &amp; your data</div>
-              <div class="row-chevron">›</div>
             </div>
           </div>
 
@@ -459,7 +447,7 @@
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">15 Manage Topics</div>
       </div>
-      <div class="info-box">Settings tab is active. <strong>Manage topics</strong> → Screen 15. <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push). <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
+      <div class="info-box">Settings tab is active. <strong>Manage topics</strong> → Screen 15. <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
     </div>
 
     <div class="spec-card">
@@ -482,13 +470,13 @@
         <div class="settings-row">Get help <span class="settings-row-value">→ in-app help / support URL</span></div>
         <div class="settings-row">Give feedback <span class="settings-row-value">→ feedback form or email</span></div>
         <div class="settings-section-label">Legal</div>
-        <div class="settings-row">Privacy Policy <span class="settings-row-value">→ opens web URL in-app browser</span></div>
-        <div class="settings-row">Terms of Service <span class="settings-row-value">→ opens web URL in-app browser</span></div>
+        <div class="settings-row">You &amp; your data <span class="settings-row-value">→ opens privacy URL in-app browser · warmer label (was "Privacy Policy") · canonical home for the privacy link</span></div>
+        <div class="settings-row">Terms of Service <span class="settings-row-value">→ opens web URL in-app browser · canonical home for the Terms link</span></div>
         <div class="settings-section-label" style="font-style:italic;opacity:0.6;">— Version line (outside card) —</div>
         <div class="settings-section-label">Account</div>
         <div class="settings-row">Name <span class="settings-row-value">Value + chevron · Shows user's first name · tap → edit screen with single text input pre-filled · Save updates profile</span></div>
         <div class="settings-row">Phone number <span class="settings-row-value">Value · Read-only (identity confirmation) · no chevron · no edit · label varies by auth path</span></div>
-        <div class="settings-row">Lifetime access <span class="settings-row-value">Value "Founding member" + chevron · tap → Founding member sub-screen (proud card, what's covered, thank-you note, Manage list with Restore purchase + Terms + privacy)</span></div>
+        <div class="settings-row">Lifetime access <span class="settings-row-value">Value "Founding member" + chevron · tap → Founding member sub-screen (proud card, what's covered, thank-you note, standalone Restore purchase row · Terms + privacy live in Legal, not duplicated here)</span></div>
         <div class="settings-row">Delete account <span class="settings-row-value">Destructive · No chevron · no value · taps open deletion bottom sheet</span></div>
         <div class="settings-row">Log out <span class="settings-row-value">Destructive · Existing</span></div>
       </div>
@@ -680,7 +668,8 @@
         <tr><td>Proud card</td><td>Light purple bg <code>rgba(95,69,242,0.08)</code> · <code>radius-xl</code> · solid-purple uppercase pill "Founding member" (white text on <code>#5f45f2</code>) · Grandstander headline "You're in for good." · sub: "One purchase, lifetime access for both you and Jordan."</td></tr>
         <tr><td>"What that covers"</td><td>White card · purple check icons · three rows:<br>1. Every topic in the library, plus everything we add down the line.<br>2. Both partners, one purchase. No second account to buy.<br>3. Nothing to renew or cancel.</td></tr>
         <tr><td>Thank-you note</td><td>Editorial, on cream, no card · last line a muted signature ("The Daisy's Guide team")</td></tr>
-        <tr><td>Manage list</td><td>White card with three rows: <strong>Restore purchase</strong> (relocated from Account · purple action label, no chevron) · <strong>Terms of Service</strong> (chevron → web URL, in-app browser) · <strong>You &amp; your data</strong> (chevron → privacy URL, in-app browser — warmer label than "Privacy Policy")</td></tr>
+        <tr><td>Restore purchase</td><td>Standalone white-card row directly under the thank-you note · purple action label, no chevron · tap → restore flow (same spinner + green/dark toasts as before) · relocated from Account at the previous pass · no "Manage" section header (single row doesn't need one)</td></tr>
+        <tr><td>No Terms / privacy here</td><td>Terms of Service and "You &amp; your data" live <strong>only</strong> in the main settings Legal section. They are not duplicated inside the Founding member screen.</td></tr>
         <tr><td>Account Deletion bullet 3</td><td>Left as-is ("use 'Restore purchase' in Settings to recover access") · still accurate, Restore now lives one level deeper but "in Settings" holds</td></tr>
       </table>
     </div>
@@ -688,7 +677,7 @@
     <div class="spec-card">
       <div class="spec-card-title">Restore Purchase (now inside Founding member sub-screen)</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Founding member detail screen · "Manage" list · first row · <strong>relocated from Account section</strong></td></tr>
+        <tr><td>Position</td><td>Founding member detail screen · standalone white-card row directly under the thank-you note · <strong>relocated from Account section</strong> · no surrounding "Manage" section header (single-row group)</td></tr>
         <tr><td>Row label</td><td>"Restore purchase" · <code>purple-500</code> (#5f45f2) · 15px DM Sans regular</td></tr>
         <tr><td>No chevron</td><td>Action row — not a navigation destination</td></tr>
         <tr><td>No value</td><td>Right side empty in default state</td></tr>
