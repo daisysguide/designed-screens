@@ -39,19 +39,32 @@
     font-family: 'DM Sans', sans-serif;
   }
 
+  /* Taller illustration slot — 230px (was 160px in styles.css). Removes
+     the mid-screen void left after the stats card came out. Card chrome
+     unchanged (white card, dashed corner marks, no shadow, label). */
+  body.page-13 .screen-root .illus-slot { height: 230px; }
+
   /* Avatar-free Partner Status Block (pill variant).
      Same component family as Home / Empty Home's Partner Status Block, but
      stripped of the avatar so it can sit inline above the CTA stack. The
      pre-join (purple) variants are tappable and route to Screen 10; the
      joined turn-state variants are informational and reuse 14's color
-     language. */
+     language.
+
+     Width hugs its contents and the pill is centered in the column, so
+     it reads as a status chip — not a third button stacked above the two
+     CTAs. inline-flex + align-self center does both jobs (intrinsic
+     width + horizontal centering inside the phone-screen flex column).
+     Extra bottom margin sets it visually apart from the CTA stack. */
   body.page-13 .screen-root .partner-pill {
-    display: flex; align-items: center; gap: 8px;
+    display: inline-flex; align-self: center;
+    align-items: center; gap: 8px;
     padding: 10px 14px; border-radius: var(--radius-full);
     font-size: 13px; font-weight: 600; line-height: 1.3;
-    margin-bottom: 14px; flex-shrink: 0;
+    margin-bottom: 20px; flex-shrink: 0;
     border: 1px solid transparent;
     font-family: 'DM Sans', sans-serif;
+    max-width: 100%;
   }
   body.page-13 .screen-root .partner-pill .pill-icon {
     width: 16px; height: 16px; flex-shrink: 0;
@@ -61,7 +74,9 @@
   body.page-13 .screen-root .partner-pill .pill-dot {
     width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
   }
-  body.page-13 .screen-root .partner-pill .pill-copy { flex: 1; }
+  /* Copy is intrinsically-sized so the pill hugs its contents — no flex:1,
+     which would stretch the copy and push the pill back to full width. */
+  body.page-13 .screen-root .partner-pill .pill-copy { flex: 0 1 auto; }
   body.page-13 .screen-root .partner-pill .pill-chevron {
     color: var(--purple-500); font-size: 16px; line-height: 1; flex-shrink: 0;
   }
@@ -228,7 +243,7 @@
           <div class="slot-corner tl"></div>
           <div class="slot-corner br"></div>
           <div class="illus-label">Illustration asset</div>
-          <div class="illus-desc">Topic illustration · 160px · white card · no shadow</div>
+          <div class="illus-desc">Topic illustration · 230px · white card · no shadow</div>
         </div>
 
         <!-- Topic meta -->
@@ -297,14 +312,14 @@
 
     <div class="spec-card">
       <div class="spec-card-title">Partner Status Block (avatar-free variant)</div>
-      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:14px;">Same component family as the Home / Empty Home Partner Status Block, but stripped of the avatar so it can sit inline above the CTA stack. Home and Empty Home will converge on this avatar-free variant later (their cleanup is a separate follow-up). The pill is promoted to 13px secondary copy from the previous flat 12px tertiary line, so it carries actual weight.</p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:14px;">Same component family as the Home / Empty Home Partner Status Block, but stripped of the avatar so it can sit above the CTA stack as a centered, content-hugging status chip — not a full-width band that would read as a third button. Home and Empty Home will converge on this avatar-free variant later (their cleanup is a separate follow-up). The pill is promoted to 13px secondary copy from the previous flat 12px tertiary line, so it carries actual weight.</p>
       <table class="spec-table">
-        <tr><td>Layout</td><td>State-tinted pill · <code>radius-full</code> · 10px / 14px padding · leading icon or status dot · copy · optional trailing chevron</td></tr>
+        <tr><td>Layout</td><td>State-tinted pill · <code>radius-full</code> · 10px / 14px padding · leading icon or status dot · copy · optional trailing chevron. <strong>Width hugs its contents</strong> (<code>inline-flex</code>, intrinsic width — not <code>width: 100%</code>) so it reads as a status chip, not a third button.</td></tr>
         <tr><td>Typography</td><td>13px DM Sans 600 · 1.3 line-height</td></tr>
         <tr><td>No avatar / initial circle</td><td>Anywhere on this screen, in any state.</td></tr>
         <tr><td>Pre-join leading mark</td><td>Leading icon (invite / clock) · trailing <code>›</code> chevron · the affordances together read as actionable / navigational, not as a status badge</td></tr>
         <tr><td>Joined leading mark</td><td>Leading status dot · no chevron · informational only, no tap target</td></tr>
-        <tr><td>Position</td><td>Above the CTA stack, sharing the bottom cluster with them</td></tr>
+        <tr><td>Position</td><td><strong>Centered</strong> in the content column, sitting above the CTA stack with a <strong>clear margin below it (20px)</strong> so it's visually separated from the buttons. Applies to every state — cyan / gray / neutral turn-states and purple pre-join prompts alike.</td></tr>
       </table>
     </div>
 
@@ -358,7 +373,7 @@
     <div class="spec-card">
       <div class="spec-card-title">Illustration slot</div>
       <table class="spec-table">
-        <tr><td>Height</td><td>160px — fixed</td></tr>
+        <tr><td>Height</td><td>230px — fixed (was 160px; taller hero absorbs the mid-screen void left after the stats card came out)</td></tr>
         <tr><td>Background</td><td><code>surface-card</code> (white) sitting on cream page</td></tr>
         <tr><td>Border radius</td><td><code>radius-xl</code> (16px)</td></tr>
         <tr><td>Shadow</td><td>None — white-on-cream contrast is the visual anchor</td></tr>
@@ -409,9 +424,9 @@
         <div class="note-item"><div class="note-bullet"></div><span>✕ top-right and swipe-down-from-top both exit to Topic List. Exit is non-destructive and resumable; no confirm dialog.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Swipe-down is gated: only when content is scrolled to the top and the gesture didn't start on an interactive control.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The article (Screen 17) is also accessible mid-question via a persistent "Read guide" link, so users aren't forced to commit to an order.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Partner Status Block sits with the CTA cluster at the bottom. Pre-join variants are tappable (route to Screen 10); joined variants are informational.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Partner Status Block sits above the CTA cluster as a centered, content-hugging status chip — clearly separated from the buttons so it doesn't read as a third CTA. Pre-join variants are tappable (route to Screen 10); joined variants are informational.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Ready-to-reveal carries Screen 14's "charge" treatment verbatim: breathing purple glow + always-on baseline halo. Under <code>prefers-reduced-motion</code>, the breathing animation drops; the baseline halo stays.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Layout fits without scrolling on most devices. CTA region floats to the bottom via spacer, not sticky.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Layout fits without scrolling on most devices, composed top-to-bottom: 230px illustration · topic eyebrow / title / blurb · breathing room (via spacer) · centered status pill · CTA stack anchored at the bottom. The remaining vertical slack absorbs above the pill so there's no mid-screen void; CTAs float to the bottom via spacer, not sticky.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No em dashes in any on-screen copy.</span></div>
       </div>
     </div>
