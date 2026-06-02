@@ -140,12 +140,12 @@
             </div>
 
             <!-- Nudge frequency — engagement reminders -->
-            <div class="list-row" style="align-items:flex-start;padding-top:14px;padding-bottom:14px;">
+            <div class="list-row" onclick="openNudgeSheet()" style="cursor:pointer;align-items:flex-start;padding-top:14px;padding-bottom:14px;">
               <div class="row-label-block">
                 <div class="row-label-main">Nudge frequency</div>
                 <div class="row-label-sub">How often we remind you about waiting conversations.</div>
               </div>
-              <div class="row-value" style="margin-top:2px;">A few times a week</div>
+              <div class="row-value" id="nudge-value" style="margin-top:2px;">A few times a week</div>
               <div class="row-chevron" style="margin-top:2px;">›</div>
             </div>
 
@@ -343,6 +343,34 @@
         <button onclick="closeUnlinkSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
       </div>
 
+      <!-- Nudge frequency picker overlay -->
+      <div id="nudge-overlay" onclick="closeNudgeSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:20;"></div>
+
+      <!-- Nudge frequency picker bottom sheet -->
+      <div id="nudge-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:21;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:16px;">Nudge frequency</div>
+        <div id="nudge-options" style="display:flex;flex-direction:column;margin-bottom:16px;">
+          <div class="nudge-option" data-value="Daily" onclick="selectNudge('Daily')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="nudge-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Daily</span>
+          </div>
+          <div class="nudge-option" data-value="A few times a week" onclick="selectNudge('A few times a week')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="nudge-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">A few times a week</span>
+          </div>
+          <div class="nudge-option" data-value="Weekly" onclick="selectNudge('Weekly')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="nudge-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Weekly</span>
+          </div>
+          <div class="nudge-option" data-value="Don't nudge me" onclick="selectNudge(&quot;Don't nudge me&quot;)" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;">
+            <span class="nudge-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Don't nudge me</span>
+          </div>
+        </div>
+        <button onclick="closeNudgeSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
       <!-- Lifetime access / Founding member overlay (full-screen push) -->
       <div id="lifetime-overlay" style="display:none;position:absolute;inset:0;background:#fbefe1;z-index:15;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);border-radius:inherit;overflow:hidden;">
         <!-- Nav bar -->
@@ -439,7 +467,7 @@
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">15 Manage Topics</div>
       </div>
-      <div class="info-box">Settings tab is active. <strong>Stage</strong> → picker (4 options matching onboarding Q1). <strong>Due date / Birth date</strong> → native date picker. <strong>Manage topics</strong> → Screen 15. <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
+      <div class="info-box">Settings tab is active. <strong>Nudge frequency</strong> → picker bottom sheet (radio list, 4 options). <strong>Stage</strong> → picker (4 options matching onboarding Q1). <strong>Due date / Birth date</strong> → native date picker. <strong>Manage topics</strong> → Screen 15. <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
     </div>
 
     <div class="spec-card">
@@ -448,7 +476,7 @@
         <div class="settings-section-label">Notifications</div>
         <div class="settings-row">OS-permission-denied banner <span class="settings-row-value">Conditional · soft warning (orange band, not error red) · "Notifications are turned off in your phone settings." + "Open Settings" button (deep-links to OS settings) · re-checks on foreground</span></div>
         <div class="settings-row">Partner activity <span class="settings-row-value">Toggle · On by default · transactional (partner linked/accepted · your turn · ready to reveal) · ignores Nudge frequency · off-warning attached inside the card</span></div>
-        <div class="settings-row">Nudge frequency <span class="settings-row-value">Picker → Daily / A few times a week / Weekly / Don't nudge me · governs engagement reminders only (stalled topics)</span></div>
+        <div class="settings-row">Nudge frequency <span class="settings-row-value">Value + chevron · tap → bottom-sheet picker (radio list) → Daily / A few times a week / Weekly / Don't nudge me · governs engagement reminders only (stalled topics) · "Don't nudge me" silences only this layer, not partner-activity events</span></div>
         <div class="settings-row">Funny push notifications <span class="settings-row-value">Toggle · On by default · tone layer (wry voice vs plain) — does not create standalone pushes</span></div>
         <div class="settings-section-label">Where you are</div>
         <div class="settings-row">Stage <span class="settings-row-value">Editable Q1 value · row value reads "Trying" / "Pregnant" / "Baby is here" / "Expecting again" · chevron → picker · no subtext</span></div>
@@ -555,8 +583,22 @@
         <tr><th>Position</th><th>Element</th><th>Notes</th></tr>
         <tr><td>1</td><td>OS-permission-denied banner (conditional)</td><td>Above everything else in the section · soft warning tone (orange band <code>rgba(255,173,108,0.34)</code> bg, <code>#995611</code> text), <strong>not</strong> error red · gates the section · auto re-checks on app foreground</td></tr>
         <tr><td>2</td><td>Partner activity (toggle, on by default)</td><td>Transactional events: partner linked/accepted · your turn · ready to reveal · fires on the event and <strong>ignores Nudge frequency</strong> entirely · off-warning attached inside the card</td></tr>
-        <tr><td>3</td><td>Nudge frequency (picker)</td><td>Daily / A few times a week / Weekly / Don't nudge me · governs <strong>engagement reminders only</strong> (stalled-topic nudges) · "Don't nudge me" silences this layer alone</td></tr>
+        <tr><td>3</td><td>Nudge frequency (picker)</td><td>Tap row → bottom-sheet picker with four radio options: Daily / A few times a week / Weekly / Don't nudge me · governs <strong>engagement reminders only</strong> (stalled-topic nudges) · "Don't nudge me" silences this layer alone — partner-activity events still fire if Partner activity is on · see "Nudge frequency picker" card for the sheet spec</td></tr>
         <tr><td>4</td><td>Funny push notifications (toggle, on by default)</td><td><strong>Tone layer</strong> — changes the voice of notifications that fire anyway · does not create standalone pushes · applies to engagement reminders and softer transactional events, but never at the cost of time-sensitive "your turn" / "ready to reveal" reading clearly</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Nudge frequency picker</div>
+      <table class="spec-table">
+        <tr><td>Trigger</td><td>Tapping the Nudge frequency row inside Notifications</td></tr>
+        <tr><td>Pattern</td><td>Bottom sheet · same structure as Account Deletion and Unlink sheets (drag handle · Grandstander 20px title · sheet body · Cancel ghost button · swipe down / Cancel / tap outside to dismiss)</td></tr>
+        <tr><td>Title</td><td>"Nudge frequency" · <code>display-sm</code> (Grandstander 20px bold)</td></tr>
+        <tr><td>Options</td><td>Four single-select radio rows: <strong>Daily</strong> · <strong>A few times a week</strong> · <strong>Weekly</strong> · <strong>Don't nudge me</strong></td></tr>
+        <tr><td>Selected state</td><td>20px radio circle · border + filled inner dot in <code>purple-500</code> (#5f45f2) · unselected rows use <code>border-default</code> outline, no fill</td></tr>
+        <tr><td>On select</td><td>Update the row's value text · dismiss the sheet · no separate Save button (single-tap commit)</td></tr>
+        <tr><td>Rescoped meaning</td><td>Governs <strong>engagement reminders only</strong> (stalled-topic nudges). "Don't nudge me" silences only that layer — partner-activity events (your turn, ready to reveal) still fire if the Partner activity toggle is on. <strong>Not</strong> stated inside the picker — the row's existing subtext already carries the meaning.</td></tr>
+        <tr><td>No subtext in picker</td><td>Deliberate · the row subtext "How often we remind you about waiting conversations." is the only on-screen explanation · the picker stays a clean 4-row chooser</td></tr>
       </table>
     </div>
 
@@ -711,7 +753,7 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Unlink</strong> deactivates the pairing rather than deleting it. Re-linking the same partner reactivates the same pairing and restores all prior reveals; linking a new partner creates a fresh pairing.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Log out</strong> uses <code>status-error-text</code> label (dark red on white) — destructive list rows use this same treatment for WCAG AA compliance.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Delete account</strong> is placed above Log Out — it is more permanent and warrants its own bottom sheet confirmation before anything happens.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Bottom sheets (Account Deletion, Unlink) and push sub-screens (Edit name, Partner detail, Lifetime access) are interactive in the preview — tap their entry rows to open. Swipe down, tap Cancel, or tap the overlay to dismiss sheets; "‹ Back" pops push screens.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Bottom sheets (Account Deletion, Unlink, Nudge frequency picker) and push sub-screens (Edit name, Partner detail, Lifetime access) are interactive in the preview — tap their entry rows to open. Swipe down, tap Cancel, or tap the overlay to dismiss sheets; "‹ Back" pops push screens. The Nudge frequency picker single-tap-commits: selecting a row updates the value and closes the sheet, no separate Save.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab above the phone updates both rows in "Where you are": Stage row value (Trying / Pregnant / Baby is here) and the date row (label, value, and visibility). The "Push permission" tab toggles the OS-denied banner state.</span></div>
       </div>
     </div>
@@ -747,7 +789,9 @@
         <span class="component-tag">OS-denied banner (orange, section gate)</span>
         <span class="component-tag">Bottom Sheet — Account Deletion</span>
         <span class="component-tag">Bottom Sheet — Unlink confirmation</span>
-        <span class="component-tag">Bottom Sheet — Q1 picker</span>
+        <span class="component-tag">Bottom Sheet — Nudge frequency picker</span>
+        <span class="component-tag">Bottom Sheet — Stage picker</span>
+        <span class="component-tag">Radio row (single-select, purple-500 selected dot)</span>
         <span class="component-tag">Sub-screen — Edit Name (push)</span>
         <span class="component-tag">Sub-screen — Partner detail (push)</span>
         <span class="component-tag">Sub-screen — Founding member (push)</span>
@@ -864,6 +908,33 @@ function handleUnlink() {
   setTimeout(closePartnerDetail, 200);
 }
 
+/* ── Nudge frequency picker ── */
+function openNudgeSheet() {
+  const current = document.getElementById('nudge-value').textContent.trim();
+  document.querySelectorAll('#nudge-options .nudge-option').forEach(opt => {
+    const selected = opt.getAttribute('data-value') === current;
+    const radio    = opt.querySelector('.nudge-radio');
+    radio.style.borderColor = selected ? '#5f45f2' : 'rgba(26,26,26,0.20)';
+    radio.innerHTML         = selected ? '<span style="width:10px;height:10px;border-radius:50%;background:#5f45f2;display:block;"></span>' : '';
+  });
+  document.getElementById('nudge-overlay').style.display = 'block';
+  const s = document.getElementById('nudge-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeNudgeSheet() {
+  const s = document.getElementById('nudge-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('nudge-overlay').style.display = 'none';
+  }, 280);
+}
+function selectNudge(value) {
+  document.getElementById('nudge-value').textContent = value;
+  closeNudgeSheet();
+}
+
 /* ── Lifetime access push ── */
 function openLifetime() {
   const o = document.getElementById('lifetime-overlay');
@@ -961,12 +1032,17 @@ function handleDeleteAccount() {
     });
 }
 
-/* ── Swipe down to dismiss delete sheet ── */
+/* ── Swipe down to dismiss bottom sheets ── */
 document.addEventListener('DOMContentLoaded', () => {
-  const sheet = document.getElementById('delete-sheet');
-  let startY = 0;
-  sheet.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
-  sheet.addEventListener('touchend',   e => { if (e.changedTouches[0].clientY - startY > 60) closeDeleteSheet(); });
+  const wire = (sheetId, closer) => {
+    const sheet = document.getElementById(sheetId);
+    if (!sheet) return;
+    let startY = 0;
+    sheet.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    sheet.addEventListener('touchend',   e => { if (e.changedTouches[0].clientY - startY > 60) closer(); });
+  };
+  wire('delete-sheet', closeDeleteSheet);
+  wire('nudge-sheet',  closeNudgeSheet);
 });
 </script>
 <script src="nav.js"></script>
