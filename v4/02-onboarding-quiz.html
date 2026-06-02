@@ -195,7 +195,7 @@
           <div class="q-num">Q8</div>
           <div>
             <div class="q-text">What are you nervous about?</div>
-            <div class="q-note"><strong>Multi-select.</strong> Options (in order): 1. Who will handle what · 2. How we'll get enough sleep · 3. Deciding the "right way" to parent · 4. Making time for ourselves · 5. All of the above · 6. All of the above (and then some) · Options 1–4 toggle independently · Tapping <strong>5</strong> selects 1+2+3+4+5 (and clears 6) · Tapping <strong>6</strong> selects 1+2+3+4+6 (and clears 5) · 5 and 6 are mutually exclusive · Deselecting any of 1–4 also clears 5 and 6 (the "all of the above" claim is no longer true) · Optional · Skip default = none selected</div>
+            <div class="q-note"><strong>Multi-select.</strong> Options (in order): 1. Who will handle what · 2. How we'll get enough sleep · 3. Deciding the "right way" to parent · 4. Making time for ourselves · 5. All of the above · Options 1–4 toggle independently · Tapping <strong>5</strong> selects 1+2+3+4+5 · Deselecting any of 1–4 also clears 5 (the "all of the above" claim is no longer true) · Optional · Skip default = none selected</div>
           </div>
         </div>
         <div class="q-row">
@@ -318,7 +318,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Baby is already here": Q2b (baby's birthday) is shown instead of Q2. Q3 is shown normally.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>When Q1 = "Trying (or thinking about trying)": Q2 (due date) and Q4 (baby's sex) are both skipped — neither applies pre-pregnancy. User proceeds Q1 → Q3 → Q5 → Q7 → Q8 → Q9.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Q7 (Slider):</strong> 1–5 discrete integer. Ghosted thumb at midpoint (3) on first render with no fill and no value label. First drag or tap solidifies the thumb to <code>action-primary</code>, reveals the fill and value, and enables Continue. Per design-system Slider spec.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Q8 multi-select rules:</strong> Options 1–4 toggle independently. Option 5 ("All of the above") and option 6 ("All of the above (and then some)") are mutually exclusive. Tapping 5 selects 1+2+3+4+5 and clears 6; tapping 6 selects 1+2+3+4+6 and clears 5. Deselecting any of 1–4 also deselects 5 and 6, since the "all of the above" claim is no longer true.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Q8 multi-select rules:</strong> Options 1–4 toggle independently. Tapping option 5 ("All of the above") selects 1+2+3+4+5. Deselecting any of 1–4 also deselects 5, since the "all of the above" claim is no longer true.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Q9 multi-select rules:</strong> Option 1 ("Nothing / just getting started") sits first and is mutually exclusive with 2–5 — tapping it clears any selection in 2–5; tapping any of 2–5 while 1 is selected deselects 1. Options 2–5 toggle independently.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Sub-text policy:</strong> No explanatory "why we're asking" copy under any question. Sub-text is reserved for interaction hints only — Q8 and Q9 show "Select all that apply" because multi-select isn't visually obvious from a single tap.</span></div>
       </div>
@@ -392,8 +392,7 @@ const QUESTIONS = {
       "How we'll get enough sleep",
       'Deciding the "right way" to parent',
       'Making time for ourselves',
-      'All of the above',
-      'All of the above (and then some)'
+      'All of the above'
     ],
     // Custom toggle logic for Q8 — see toggleMulti() in showQuestion
     multiKind: 'q8',
@@ -471,18 +470,15 @@ function rebuildTabs() {
 function applyMultiToggle(kind, currentSet, tappedIdx) {
   const sel = new Set(currentSet);
   if (kind === 'q8') {
-    // Indices: 0–3 independent · 4 = "All of the above" · 5 = "All of the above (and then some)"
+    // Indices: 0–3 independent · 4 = "All of the above"
     if (tappedIdx <= 3) {
       sel.has(tappedIdx) ? sel.delete(tappedIdx) : sel.add(tappedIdx);
-      // Deselecting any of 1–4 invalidates 5 and 6
+      // Deselecting any of 1–4 invalidates 5 (the "all of the above" claim is no longer true)
       const allFourSet = sel.has(0) && sel.has(1) && sel.has(2) && sel.has(3);
-      if (!allFourSet) { sel.delete(4); sel.delete(5); }
+      if (!allFourSet) { sel.delete(4); }
     } else if (tappedIdx === 4) {
       if (sel.has(4)) { sel.delete(4); }
-      else { sel.add(0); sel.add(1); sel.add(2); sel.add(3); sel.add(4); sel.delete(5); }
-    } else if (tappedIdx === 5) {
-      if (sel.has(5)) { sel.delete(5); }
-      else { sel.add(0); sel.add(1); sel.add(2); sel.add(3); sel.add(5); sel.delete(4); }
+      else { sel.add(0); sel.add(1); sel.add(2); sel.add(3); sel.add(4); }
     }
   } else if (kind === 'q9') {
     // Indices: 0 = "Nothing / just getting started" (mutex with 1–4) · 1–4 independent
