@@ -98,7 +98,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v4 · 30 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v4 · 29 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -123,7 +123,6 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
   <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
   <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
   <a class="sidebar-item active" href="18-question.html"><span class="screen-num">18</span>Question</a>
-  <a class="sidebar-item" href="18b-note.html"><span class="screen-num">18b</span>Note Step</a>
   <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
   <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
   <a class="sidebar-item" href="21-post-reveal-reflection.html"><span class="screen-num">21</span>Post-Reveal Reflection</a>
@@ -147,8 +146,8 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="17-topic-article.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">18 / 30</span>
-        <a class="topbar-btn" href="18b-note.html" aria-label="Next">›</a>
+        <span class="topbar-counter">18 / 29</span>
+        <a class="topbar-btn" href="19-waiting-for-partner.html" aria-label="Next">›</a>
       </div>
     </div>
   </div>
@@ -161,7 +160,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
   </div>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;" href="17-topic-article.html">← Screen 17: Topic Article</a>
-    <a class="nav-pill next" style="cursor:pointer;" href="18b-note.html">Screen 18b: Note Step →</a>
+    <a class="nav-pill next" style="cursor:pointer;" href="19-waiting-for-partner.html">Screen 19: Waiting for Partner →</a>
   </div>
 </div>
 
@@ -232,12 +231,10 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <div class="flow-arrow">→</div>
         <div class="flow-node current">18 Questions</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node from">18b Note Step</div>
-        <div class="flow-arrow">→</div>
         <div class="flow-node dest">19 Waiting</div>
       </div>
       <div class="info-box">
-        <strong>Within the question flow:</strong> Q[0] → Q[1] → … → Q[n-1] → Screen 18b (Note Step) → Submit → Screen 19 Waiting for Partner.<br><br>
+        <strong>Within the question flow:</strong> Q[0] → Q[1] → … → Q[n-1] → Note step → Submit → Screen 19 Waiting for Partner.<br><br>
         <strong>Back from Q[0]</strong> → Topic Intro (Screen 16).<br>
         <strong>Back from Q[i &gt; 0]</strong> → Q[i-1].<br>
         <strong>Back from Note step</strong> → Q[n-1].<br><br>
@@ -401,7 +398,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Question text</td><td><code>display-sm</code> (Grandstander 20px bold) · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
         <tr><td>subText</td><td>DM Sans 14px · <code>text-secondary</code> · 6px below question text · rendered when Question.subText is set</td></tr>
         <tr><td>Partner note — question screens</td><td>"[Name] won't see your answer until they've finished too." (unchanged)</td></tr>
-        <tr><td>Partner note — note step (Screen 18b)</td><td>"[partnerName] sees this after you both complete this topic."</td></tr>
+        <tr><td>Partner note — note step</td><td>"[partnerName] sees this after you both complete this topic."</td></tr>
         <tr><td>Top padding</td><td>18px between partner note and answer area</td></tr>
         <tr><td>Max options</td><td>6 answer options maximum per question</td></tr>
       </table>
@@ -424,7 +421,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <div class="note-item"><div class="note-bullet"></div><span>Never auto-advance on selection — user must explicitly tap Next. This app is about considered decisions, not quick taps.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Read guide" opens Screen 17 Article without losing question progress. Back from article returns to the same question at the same state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Selection persists if user taps Back and returns to a question. Answers are saved client-side as the user progresses and committed to the server on Submit.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Flow: Q1 → Q2 → Q3 → Q4 → Screen 18b (Note Step) → Screen 19 (Waiting for Partner). Back from Q1 → Screen 16 (Topic Intro). Back from Note Step → Q4.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Flow: Q1 → Q2 → Q3 → Q4 → Note step → Screen 19 (Waiting for Partner). Back from Q1 → Screen 16 (Topic Intro). Back from Note Step → Q4.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The Note step is the final step. Submit is always enabled — an empty note is valid and saves as an empty string.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Slider questions: no default value. Continue remains disabled until the user sets a value by tapping or dragging the track.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Multi-select questions: Continue becomes active when at least 1 option is selected.</span></div>
@@ -454,10 +451,10 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 18 of 30</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 18 of 29</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;" href="17-topic-article.html">← Screen 17: Topic Article</a>
-    <a class="nav-pill next" style="cursor:pointer;" href="18b-note.html">Screen 18b: Note Step →</a>
+    <a class="nav-pill next" style="cursor:pointer;" href="19-waiting-for-partner.html">Screen 19: Waiting for Partner →</a>
   </div>
 </div>
 

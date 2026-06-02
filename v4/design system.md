@@ -1686,7 +1686,6 @@ The 30 v4 screens (29 main + 1 sub-step). All references in this document use sl
 | `topic-intro` | 16-topic-intro.html | Topic flow | Hidden |
 | `topic-article` | 17-topic-article.html | Topic flow | Hidden |
 | `question` | 18-question.html | Topic flow | Hidden |
-| `note-step` | 18b-note.html | Topic flow | Hidden |
 | `waiting-for-partner` | 19-waiting-for-partner.html | Topic flow | Hidden |
 | `alignment-reveal` | 20-alignment-reveal.html | Topic flow | Hidden |
 | `post-reveal-reflection` | 21-post-reveal-reflection.html | Topic flow | Hidden |
