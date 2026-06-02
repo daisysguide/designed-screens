@@ -38,7 +38,7 @@ a.topbar-btn { text-decoration: none; }
    using `.btn-ghost` with no override resolves to this canonical spec. */
 .btn-ghost {
     display: flex; align-items: center; justify-content: center;
-    width: 100%; height: 44px; border-radius: 9999px;
+    width: 100%; height: 44px; border-radius: 9999px; /* hardcoded: --text-secondary / --radius-full are page-scoped, not global */
     background: transparent; color: rgba(26,26,26,0.6);
     border: none;
     font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
@@ -4932,18 +4932,17 @@ body.page-16 .screen-root /* Poke hint */
 
 body.page-16 .screen-root .poke-hint em { font-style: normal; color: var(--text-secondary); }
 
-/* Diverges from canonical .btn-ghost: bordered, 48px, 15px — heavier "Back to home" button on the waiting screen where it's the only persistent CTA. */
-body.page-16 .screen-root /* Back to home */
-  .btn-ghost {
+/* "Back to home" — Secondary variant. Sits below the Poke button as the persistent exit; needs more weight than a low-emphasis ghost. */
+body.page-16 .screen-root .btn-secondary {
     display: flex; align-items: center; justify-content: center;
     width: 100%; height: 48px; border-radius: var(--radius-full);
-    background: transparent; color: var(--text-secondary);
-    border: 1.5px solid var(--border-default);
+    background: transparent; color: var(--text-primary);
+    border: 1.5px solid var(--border-strong);
     font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
     cursor: pointer; transition: background 0.15s;
   }
 
-body.page-16 .screen-root .btn-ghost:hover { background: rgba(26,26,26,0.03); }
+body.page-16 .screen-root .btn-secondary:hover { background: rgba(26,26,26,0.03); }
 
 body.page-16 .screen-root /* SPEC */
   .spec-panel { display: flex; flex-direction: column; gap: 20px; }
