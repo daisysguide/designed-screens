@@ -14,13 +14,27 @@ body.page-15 .screen-root .q-toprow {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 8px;
 }
-body.page-15 .screen-root .q-back-btn {
+body.page-15 .screen-root .q-back-btn,
+body.page-15 .screen-root .q-exit-btn {
   font-size: 22px; color: #5f45f2; cursor: pointer;
   line-height: 1; width: 24px; flex-shrink: 0;
+  user-select: none;
+}
+body.page-15 .screen-root .q-exit-btn {
+  font-size: 18px; color: rgba(26,26,26,0.55); text-align: right;
 }
 body.page-15 .screen-root .q-step-label {
   font-size: 12px; font-weight: 600; color: rgba(26,26,26,0.38);
   text-align: center; flex: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+/* "Optional" pill rendered inline next to the heading on the note step */
+body.page-15 .screen-root .optional-inline {
+  display: inline-block; padding: 2px 8px; border-radius: 100px;
+  border: 1px solid rgba(26,26,26,0.15);
+  font-size: 11px; font-family: 'DM Sans', sans-serif;
+  color: rgba(26,26,26,0.55); line-height: 1.4;
+  vertical-align: middle; margin-left: 8px;
 }
 
 /* Question sub-text (below question text) */
@@ -29,34 +43,100 @@ body.page-15 .screen-root .question-subtext {
   line-height: 1.5; margin-top: 6px; margin-bottom: 0;
 }
 
-/* Slider */
-body.page-15 .screen-root .slider-container { padding: 4px 0 0; user-select: none; }
-body.page-15 .screen-root .slider-value-display {
-  text-align: center;
-  font-family: 'Grandstander', cursive;
-  font-size: 32px; font-weight: 700;
-  color: #5f45f2; line-height: 1;
+/* Slider — shared with onboarding quiz (see 02-onboarding-quiz.html).
+   Same DOM and visual treatment so the component is one thing in two places. */
+body.page-15 .screen-root .slider-wrap {
+  display: flex; flex-direction: column; padding: 18px 4px 8px; user-select: none;
 }
-body.page-15 .screen-root .slider-gap { height: 24px; }
+body.page-15 .screen-root .slider-value {
+  text-align: center; height: 22px;
+  font-size: 15px; font-weight: 600; color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  /* visibility (not display) so layout doesn't jump when value appears */
+}
+body.page-15 .screen-root .slider-row {
+  position: relative; height: 44px; display: flex; align-items: center;
+  cursor: pointer; margin-top: 6px;
+}
 body.page-15 .screen-root .slider-track {
-  width: 100%; height: 6px;
-  background: rgba(26,26,26,0.12); border-radius: 100px;
-  position: relative; cursor: pointer;
+  position: relative; width: 100%; height: 6px;
+  background: rgba(26,26,26,0.10); border-radius: 9999px;
 }
 body.page-15 .screen-root .slider-fill {
   position: absolute; left: 0; top: 0; height: 100%;
-  background: #5f45f2; border-radius: 100px; pointer-events: none;
+  background: var(--purple-500); border-radius: 9999px;
+  transition: width 0.15s ease;
+}
+body.page-15 .screen-root .slider-tick {
+  position: absolute; top: -1px; transform: translateX(-1px);
+  width: 2px; height: 8px; background: rgba(26,26,26,0.15); border-radius: 1px;
 }
 body.page-15 .screen-root .slider-thumb {
   position: absolute; top: 50%;
-  width: 28px; height: 28px; background: white;
-  border: 2px solid #5f45f2; border-radius: 50%;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--border-default);
+  box-shadow: 0 1px 2px rgba(26,26,26,0.10);
   transform: translate(-50%, -50%);
-  box-shadow: 0 2px 8px rgba(95,69,242,0.28); pointer-events: none;
+  transition: left 0.15s ease, border-color 0.15s ease;
 }
-body.page-15 .screen-root .slider-labels {
-  display: flex; justify-content: space-between;
-  font-size: 12px; color: rgba(26,26,26,0.38); margin-top: 8px;
+body.page-15 .screen-root .slider-thumb.is-confirmed { border-color: var(--purple-500); }
+body.page-15 .screen-root .slider-end-labels {
+  display: flex; justify-content: space-between; margin-top: 14px;
+  font-size: 12px; color: var(--text-secondary); font-family: 'DM Sans', sans-serif;
+}
+
+/* Ranked-choice list (drag-to-reorder) */
+body.page-15 .screen-root .ranked-list {
+  display: flex; flex-direction: column; gap: 8px;
+  padding-top: 4px;
+}
+body.page-15 .screen-root .ranked-item {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface-nested, #fbefe1);
+  border: 1px solid rgba(26,26,26,0.08);
+  border-radius: 12px;
+  padding: 14px 16px; min-height: 56px;
+  cursor: grab; user-select: none;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.2s ease, background 0.15s ease;
+}
+body.page-15 .screen-root .ranked-item.is-dragging {
+  cursor: grabbing; background: white;
+  box-shadow: 0 8px 24px rgba(26,26,26,0.10), 0 2px 4px rgba(26,26,26,0.06);
+  transform: scale(1.02);
+  z-index: 2;
+}
+body.page-15 .screen-root .ranked-rank {
+  font-family: 'Grandstander', cursive; font-size: 20px; font-weight: 700;
+  color: #5f45f2; line-height: 1; width: 24px; text-align: center; flex-shrink: 0;
+}
+body.page-15 .screen-root .ranked-text {
+  flex: 1; font-size: 15px; color: rgba(26,26,26,1); line-height: 1.4;
+}
+body.page-15 .screen-root .ranked-handle {
+  color: rgba(26,26,26,0.38); font-size: 18px; line-height: 1; flex-shrink: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  body.page-15 .screen-root .ranked-item { transition: none; }
+  body.page-15 .screen-root .ranked-item.is-dragging { transform: none; }
+}
+
+/* Note-step "save or discard" mini-sheet */
+body.page-15 .screen-root .leave-overlay {
+  display: none; position: absolute; inset: 0;
+  background: rgba(26,26,26,0.40); z-index: 20; border-radius: inherit;
+}
+body.page-15 .screen-root .leave-sheet {
+  display: none; position: absolute; bottom: 0; left: 0; right: 0;
+  background: #fff; border-radius: 24px 24px 0 0;
+  padding: 24px; z-index: 21;
+  box-shadow: 0 8px 24px rgba(26,26,26,0.10), 0 2px 4px rgba(26,26,26,0.06);
+  transform: translateY(100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+body.page-15 .screen-root .leave-handle {
+  width: 36px; height: 4px; background: rgba(26,26,26,0.15);
+  border-radius: 100px; margin: 0 auto 20px;
 }
 
 /* Note step */
@@ -164,33 +244,39 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
   </div>
 </div>
 
-<div class="page-desc page-desc-full">Three question types: single-select MC, multi-select MC, and 1–10 slider. Always 3 questions per topic. An optional note step follows the last question before submission.</div>
+<div class="page-desc page-desc-full">Four answer types: single-select, multi-select, range-driven slider (shared with onboarding), and ranked-choice. Topics carry <strong>3–5 questions</strong> (dynamic N); the step indicator and progress bar template off <code>topic.questions.length</code>. An optional note step follows the last question and submits to Screen 19. Flow chrome: ‹ back-a-step + ✕ exit to Topic List + swipe-down (gated). Demo tabs let you preview each answer type and the linked / unlinked partner state.</div>
 
 <div class="main-layout">
 
   <!-- PHONE -->
   <div class="phone-wrap">
 
-    <!-- Question type tabs -->
-    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+    <!-- Demo: question type -->
+    <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Type</span>
       <button id="tab-single_select" onclick="showType('single_select')" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Single select</button>
       <button id="tab-multi_select"  onclick="showType('multi_select')"  style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Multi select</button>
       <button id="tab-slider"        onclick="showType('slider')"        style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Slider</button>
+      <button id="tab-ranked_choice" onclick="showType('ranked_choice')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Ranked</button>
       <button id="tab-note"          onclick="showType('note')"          style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Note step</button>
+    </div>
+
+    <!-- Demo: partner link state (drives partner-name fallback) -->
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Partner</span>
+      <button id="pstate-linked" onclick="setPartnerState('linked')" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Linked (Jordan)</button>
+      <button id="pstate-none"   onclick="setPartnerState('none')"   style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Not linked</button>
     </div>
 
     <div class="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
 
-        <!-- Back + step indicator -->
+        <!-- Top row: ‹ back-a-step · centered step label · ✕ exit to Topic List -->
         <div class="q-toprow">
-          <div class="q-back-btn">‹</div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex:1;">
-            <div class="q-step-label" id="q-step-label">Q1 of 3</div>
-            <div id="optional-pill" style="display:none;padding:4px 8px;border:1px solid rgba(26,26,26,0.15);border-radius:100px;font-size:12px;font-family:'DM Sans',sans-serif;color:rgba(26,26,26,0.38);line-height:1.2;">Optional</div>
-          </div>
-          <div style="width:24px;"></div><!-- symmetry spacer -->
+          <div class="q-back-btn" id="q-back-btn" onclick="handleBack()" role="button" aria-label="Back">‹</div>
+          <div class="q-step-label" id="q-step-label">Q1 of 3</div>
+          <div class="q-exit-btn" id="q-exit-btn" onclick="handleExit()" role="button" aria-label="Exit to Topic List">✕</div>
         </div>
 
         <!-- Progress bar -->
@@ -207,13 +293,26 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <div class="question-card">
           <div id="q-text" class="question-text">Who would you trust to babysit regularly?</div>
           <div id="q-subtext" class="question-subtext" style="display:none;"></div>
-          <div id="partner-note" class="partner-note">Jordan won't see your answer until they've finished too.</div>
+          <div id="partner-note" class="partner-note" data-partner-template="{Name} won't see your answer until they've finished too.">Jordan won't see your answer until they've finished too.</div>
           <div id="answer-area"></div>
         </div>
 
         <div class="spacer"></div>
 
         <button class="btn-next" id="next-btn">Continue →</button>
+
+        <!-- Leave-with-unsaved-note confirmation (note step only) -->
+        <div class="leave-overlay" id="leave-overlay" onclick="closeLeaveSheet()"></div>
+        <div class="leave-sheet" id="leave-sheet">
+          <div class="leave-handle"></div>
+          <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:8px;">Save your note?</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;margin-bottom:20px;">You have unsaved text. Saving keeps it on this topic for now; discarding drops it.</div>
+          <button onclick="saveNoteAndExit()" style="width:100%;height:56px;background:#5f45f2;color:#fff;border:none;border-radius:100px;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;">Save and exit</button>
+          <div style="height:10px;"></div>
+          <button onclick="discardNoteAndExit()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Discard and exit</button>
+          <div style="height:6px;"></div>
+          <button onclick="closeLeaveSheet()" style="width:100%;height:44px;background:transparent;border:none;font-size:14px;font-family:inherit;color:rgba(26,26,26,0.55);cursor:pointer;">Cancel</button>
+        </div>
 
       </div>
     </div>
@@ -234,10 +333,11 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <div class="flow-node dest">19 Waiting</div>
       </div>
       <div class="info-box">
-        <strong>Within the question flow:</strong> Q[0] → Q[1] → … → Q[n-1] → Note step → Submit → Screen 19 Waiting for Partner.<br><br>
-        <strong>Back from Q[0]</strong> → Topic Intro (Screen 16).<br>
-        <strong>Back from Q[i &gt; 0]</strong> → Q[i-1].<br>
-        <strong>Back from Note step</strong> → Q[n-1].<br><br>
+        <strong>Within the question flow:</strong> Q[0] → Q[1] → … → Q[n-1] → Note step → Done → Screen 19 Waiting for Partner. <strong>N is dynamic (3–5 per topic);</strong> step indicator and progress bar template off <code>topic.questions.length</code>.<br><br>
+        <strong>‹ Back from Q[0]</strong> → Topic Intro (Screen 16).<br>
+        <strong>‹ Back from Q[i &gt; 0]</strong> → Q[i-1].<br>
+        <strong>‹ Back from Note step</strong> → Q[n-1].<br>
+        <strong>✕ exit (top-right) and swipe-down</strong> → Topic List (Screen 14), from any question step or the note step. <strong>No confirm-exit dialog</strong>, with one exception: leaving mid-way through an unsaved free-text note gets a light save/discard check sheet.<br><br>
         "Read guide" opens Screen 17 Article without losing progress. Back from Article returns to the same question. <strong>No bottom nav.</strong>
       </div>
     </div>
@@ -246,18 +346,18 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
       <div class="spec-card-title">Question Schema</div>
       <table class="spec-table">
         <tr><td><code>id</code></td><td>string · unique question identifier</td></tr>
-        <tr><td><code>type</code></td><td><code>'single_select'</code> | <code>'multi_select'</code> | <code>'slider'</code> · determines UI rendered</td></tr>
+        <tr><td><code>type</code></td><td><code>'single_select'</code> | <code>'multi_select'</code> | <code>'slider'</code> | <code>'ranked_choice'</code> · determines UI rendered</td></tr>
         <tr><td><code>text</code></td><td>string · question text · rendered in Grandstander</td></tr>
         <tr><td><code>subText?</code></td><td>string? · optional · rendered in DM Sans <code>text-secondary</code> below question text</td></tr>
-        <tr><td><code>options?</code></td><td>Option[] · required for <code>single_select</code> and <code>multi_select</code> · omit for <code>slider</code></td></tr>
+        <tr><td><code>options?</code></td><td>Option[] · required for <code>single_select</code>, <code>multi_select</code>, <code>ranked_choice</code> · omit for <code>slider</code></td></tr>
         <tr><td><code>options[].id</code></td><td>string · option identifier · stored in answer value</td></tr>
         <tr><td><code>options[].text</code></td><td>string · option display text</td></tr>
-        <tr><td><code>slider?</code></td><td>SliderConfig · required for <code>slider</code> type only</td></tr>
-        <tr><td><code>slider.min</code></td><td>1 · always 1</td></tr>
-        <tr><td><code>slider.max</code></td><td>10 · always 10</td></tr>
-        <tr><td><code>slider.minLabel</code></td><td>string · left end label · e.g. <code>"Hard no"</code></td></tr>
-        <tr><td><code>slider.maxLabel</code></td><td>string · right end label · e.g. <code>"Totally fine"</code></td></tr>
+        <tr><td><code>sliderMin?</code></td><td>integer · required for <code>slider</code> · typically 1 · the slider is <strong>range-driven</strong> so the same component handles 1–3, 1–5, 1–10, etc.</td></tr>
+        <tr><td><code>sliderMax?</code></td><td>integer · required for <code>slider</code> · tick count equals <code>sliderMax − sliderMin + 1</code></td></tr>
+        <tr><td><code>sliderLeft?</code></td><td>string · left end label · e.g. <code>"Hard no"</code></td></tr>
+        <tr><td><code>sliderRight?</code></td><td>string · right end label · e.g. <code>"Totally fine"</code></td></tr>
       </table>
+      <div class="info-box" style="margin-top:12px;">Field names <code>sliderMin / sliderMax / sliderLeft / sliderRight</code> match the onboarding-quiz slider so the schema can drive one shared component. (Earlier drafts used a nested <code>slider: { min, max, minLabel, maxLabel }</code> object; flattened here to align with onboarding.)</div>
     </div>
 
     <div class="spec-card">
@@ -266,8 +366,13 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td><code>questionId</code></td><td>string · FK → Question.id</td></tr>
         <tr><td><code>topicId</code></td><td>string · FK → Topic.id</td></tr>
         <tr><td><code>userId</code></td><td>string · FK → User.id</td></tr>
-        <tr><td><code>type</code></td><td><code>'single_select'</code> | <code>'multi_select'</code> | <code>'slider'</code> · must match Question.type</td></tr>
-        <tr><td><code>value</code></td><td><strong>single_select:</strong> string (option.id) · <strong>multi_select:</strong> string[] (selected option ids, ≥1) · <strong>slider:</strong> number (integer 1–10)</td></tr>
+        <tr><td><code>type</code></td><td><code>'single_select'</code> | <code>'multi_select'</code> | <code>'slider'</code> | <code>'ranked_choice'</code> · must match Question.type</td></tr>
+        <tr><td><code>value</code></td><td>
+          <strong>single_select:</strong> string (option.id)<br>
+          <strong>multi_select:</strong> string[] (selected option ids, ≥1)<br>
+          <strong>slider:</strong> number (integer, in range <code>[sliderMin, sliderMax]</code>)<br>
+          <strong>ranked_choice:</strong> string[] (option ids in user-presented order, rank 1 = index 0; length equals <code>options.length</code>)
+        </td></tr>
         <tr><td><code>answeredAt</code></td><td>timestamp</td></tr>
       </table>
     </div>
@@ -288,8 +393,8 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     <div class="spec-card">
       <div class="spec-card-title">Topic Schema update</div>
       <table class="spec-table">
-        <tr><td><code>questions</code></td><td>Question[] · ordered array · always 3 questions per topic · rendered in sequence on Screen 18</td></tr>
-        <tr><td>Other fields</td><td>id, title, categoryId, articleContent, etc. — unchanged</td></tr>
+        <tr><td><code>questions</code></td><td>Question[] · ordered array · <strong>3–5 questions per topic</strong> (dynamic N, matches the alignment-logic doc) · rendered in sequence on Screen 18 · step label and progress bar template off <code>questions.length</code></td></tr>
+        <tr><td>Other fields</td><td>id, title, categoryId, articleContent, etc. (unchanged)</td></tr>
       </table>
     </div>
 
@@ -297,9 +402,10 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
       <div class="spec-card-title">Question types — comparison</div>
       <table class="spec-table">
         <tr><th>Type</th><th>Usage</th><th>Continue rule</th></tr>
-        <tr><td><code>single_select</code></td><td>Q1 (position) and Q4 (plan)</td><td>Disabled until 1 option selected</td></tr>
-        <tr><td><code>multi_select</code></td><td>Q2 (nuance)</td><td>Disabled until at least 1 option selected</td></tr>
-        <tr><td><code>slider</code></td><td>Q3 (intensity)</td><td>Disabled until user taps/drags to set a value</td></tr>
+        <tr><td><code>single_select</code></td><td>Position questions (one option fits)</td><td>Disabled until 1 option selected; tapping the selected option deselects it</td></tr>
+        <tr><td><code>multi_select</code></td><td>Nuance questions (several may apply)</td><td>Disabled until ≥1 option selected</td></tr>
+        <tr><td><code>slider</code></td><td>Intensity / scale questions</td><td>Disabled until the user taps or drags the slider · ghosted thumb is an affordance, not a value</td></tr>
+        <tr><td><code>ranked_choice</code></td><td>Priority / preference order questions (e.g. "rank these from most to least important")</td><td><strong>Enabled on the presented order.</strong> No drag is required — the randomized initial order is a valid answer.</td></tr>
       </table>
     </div>
 
@@ -331,62 +437,58 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Multi-select answer options</div>
+      <div class="spec-card-title">Slider — shared with onboarding (range-driven)</div>
+      <div class="info-box" style="margin-bottom:12px;">This is the same slider component used by the onboarding quiz on Screen 02. Should be promoted to a shared design-system slider so the two screens stay aligned — DOM and visuals match (<code>.slider-row</code> / <code>.slider-track</code> / <code>.slider-fill</code> / <code>.slider-tick</code> / <code>.slider-thumb</code>) and the schema drives both. Earlier "drag to answer" helper text and dashed-thumb language are not part of the component and have been dropped.</div>
       <table class="spec-table">
-        <tr><td>Label above options</td><td>"Select all that apply" · 12px DM Sans regular · <code>text-tertiary</code> · 8px below question text</td></tr>
-        <tr><td>Selection behavior</td><td>Multiple options selectable simultaneously · tapping a selected option deselects it</td></tr>
-        <tr><td>Selected state</td><td>Same purple-500 fill + white text as single-select (unchanged visually)</td></tr>
-        <tr><td>Unselected state</td><td>Same cream <code>surface-nested</code> as single-select (unchanged)</td></tr>
-        <tr><td>Transition</td><td>background 0.15s ease · color 0.15s ease (unchanged)</td></tr>
+        <tr><td>Scale</td><td><strong>Range-driven by <code>sliderMin</code> / <code>sliderMax</code></strong>. Same component renders 1–3, 1–5, 1–10, etc.; tick count equals <code>sliderMax − sliderMin + 1</code>.</td></tr>
+        <tr><td>Track</td><td>Full width · 6px · <code>radius-full</code> · <code>rgba(26,26,26,0.10)</code> bg · purple fill from left to thumb (appears only after first interaction)</td></tr>
+        <tr><td>Tick marks</td><td>2 × 8px · <code>rgba(26,26,26,0.15)</code> · one per scale point · positioned along the track at each integer step</td></tr>
+        <tr><td>Thumb</td><td>28px circle · white bg · <code>shadow-md</code></td></tr>
+        <tr><td>Thumb border — ghosted (default)</td><td><strong>2px <code>border-default</code> (<code>rgba(26,26,26,0.15)</code>)</strong> — no track fill, no numeric value, Continue disabled. Affordance without implying a value.</td></tr>
+        <tr><td>Thumb border — confirmed</td><td>2px <code>purple-500</code>. Set on first tap or drag. Track fill appears, numeric value becomes visible, Continue enables.</td></tr>
+        <tr><td>Numeric value</td><td>15px DM Sans 600 · <code>text-primary</code> · centered above track · toggled via <code>visibility</code> (not display) so layout doesn't jump on appear</td></tr>
+        <tr><td>End labels</td><td><code>sliderLeft</code> (left) and <code>sliderRight</code> (right) · 12px DM Sans · <code>text-secondary</code> · below track · always visible</td></tr>
+        <tr><td>Drag interaction</td><td>Pointer events on the row · value follows pointer · snaps to integer · haptic pulse (<code>navigator.vibrate(10)</code>) on each integer change</td></tr>
+        <tr><td>Initial state</td><td>Ghosted thumb at midpoint of the range · no fill · value hidden · Continue disabled</td></tr>
+        <tr><td>Answer stored</td><td>Integer within <code>[sliderMin, sliderMax]</code></td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Slider component</div>
+      <div class="spec-card-title">Ranked choice spec</div>
       <table class="spec-table">
-        <tr><td>Default state</td><td>Ghosted thumb at midpoint (position 5) · 40% opacity · full track <code>rgba(26,26,26,0.12)</code> · Continue disabled</td></tr>
-        <tr><td>On first tap/drag</td><td>Thumb opacity transitions to 100% · value display appears · Continue enables</td></tr>
-        <tr><td>Track height</td><td>6px · <code>radius-full</code></td></tr>
-        <tr><td>Unset track</td><td><code>rgba(26,26,26,0.12)</code> throughout</td></tr>
-        <tr><td>Set track</td><td>Left of thumb: purple-500 · right of thumb: <code>rgba(26,26,26,0.12)</code></td></tr>
-        <tr><td>Thumb</td><td>28px circle · white bg · 2px solid purple-500 border · <code>shadow-md</code></td></tr>
-        <tr><td>Snapping</td><td>Snaps to integer (1–10) on release</td></tr>
-        <tr><td>Haptics</td><td>Light impact on each integer snap</td></tr>
-        <tr><td>Value display</td><td>Grandstander 32px bold · purple-500 · centered above thumb · hidden when unset</td></tr>
-        <tr><td>End labels</td><td>minLabel left · maxLabel right · 11px DM Sans regular · <code>text-tertiary</code></td></tr>
-      </table>
-    </div>
-
-    <div class="spec-card">
-      <div class="spec-card-title">Slider spec</div>
-      <table class="spec-table">
-        <tr><td>Scale</td><td>1–10 · integer steps only</td></tr>
-        <tr><td>Value display</td><td>Grandstander 32px bold · <code>purple-500</code> · centered above track · <strong>hidden when unset</strong></td></tr>
-        <tr><td>Track</td><td>Full width · 6px height · <code>radius-full</code> · <code>rgba(26,26,26,0.12)</code> bg · purple fill from left to thumb</td></tr>
-        <tr><td>Thumb</td><td>Rendered at 40% opacity at midpoint (position 5). Ghosted — indicates affordance without implying a selection.</td></tr>
-        <tr><td>Drag interaction</td><td>Mousedown/touchstart on track starts drag · value follows pointer · snaps to integer on each step · haptic pulse (<code>navigator.vibrate(10)</code>) on each integer change</td></tr>
-        <tr><td>Labels</td><td><code>minLabel</code> (left) and <code>maxLabel</code> (right) · 12px <code>text-tertiary</code> · below track · always visible</td></tr>
-        <tr><td>Initial state</td><td>Ghosted thumb at midpoint (position 5). Thumb rendered at 40% opacity. Value display hidden. Continue disabled.</td></tr>
-        <tr><td>First interaction</td><td>On first touch or drag, thumb opacity transitions to 100%. Value display appears. Continue button enables.</td></tr>
-        <tr><td>Answer stored</td><td>Integer 1–10</td></tr>
+        <tr><td>UI</td><td>Vertical reorderable list of option cards · each row: rank number (left, 20px Grandstander bold, <code>purple-500</code>), option text (center, 15px DM Sans), drag handle (right, ⋮⋮, <code>text-tertiary</code>)</td></tr>
+        <tr><td>Card</td><td><code>surface-nested</code> bg · 1px <code>rgba(26,26,26,0.08)</code> border · <code>radius-lg</code> (12px) · 56px min-height · 8px gap between</td></tr>
+        <tr><td>Drag state</td><td>White bg · <code>shadow-lg</code> · slight scale-up (1.02) · z-index raised · cursor <code>grabbing</code></td></tr>
+        <tr><td><strong>Initial order: randomized</strong></td><td>Same spirit as the slider's ghosted thumb — there's no implied "right" ranking to anchor on. The randomization happens per question instance and persists for the user's session.</td></tr>
+        <tr><td>Rank numbers</td><td>Update live as the user drags. Numbers reflect the current presented order at all times.</td></tr>
+        <tr><td>Reorder animation</td><td>Smooth transition (<code>transform 0.2s cubic-bezier(0.4,0,0.2,1)</code>) when an item settles into a new slot. Under <code>prefers-reduced-motion: reduce</code> the transition becomes instant.</td></tr>
+        <tr><td>Continue rule</td><td><strong>Enabled on the presented order.</strong> Don't force a drag — the randomized initial order is a valid answer.</td></tr>
+        <tr><td>Answer stored</td><td><code>string[]</code> of option ids in the user-presented order (rank 1 = index 0)</td></tr>
+        <tr><td>Scoring</td><td>Defined in the alignment-logic doc (separate from this screen). The format shouldn't ship without its scoring defined — a rank-similarity measure where disagreement on the top-ranked item weighs heavily.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Note step spec</div>
       <table class="spec-table">
-        <tr><td>Position in flow</td><td>After the last question (questions[n-1]) · before Submit → Screen 19</td></tr>
-        <tr><td>Step indicator</td><td>"Note" label + "Optional" pill rendered inline beside it · pill hidden on all question steps</td></tr>
-        <tr><td>Progress bar</td><td>100% fill — all questions are done</td></tr>
+        <tr><td>Position in flow</td><td>After the last question (questions[n-1]) · before Done → Screen 19</td></tr>
+        <tr><td>Top row</td><td><strong>Just ‹ back + "Note" label + ✕ exit.</strong> No "Optional" pill on the top bar — it was reading as part of the chrome rather than the affordance.</td></tr>
+        <tr><td>Optional indicator</td><td>Quiet inline "Optional" pill <strong>next to the card heading</strong> (12px DM Sans, <code>border-default</code> outline, <code>text-secondary</code>). Signals optionality at the affordance itself, not in the chrome.</td></tr>
+        <tr><td>Progress bar</td><td>100% fill (all questions done) · Note step does not extend the bar beyond full</td></tr>
         <tr><td>"Read guide"</td><td>Remains visible — user can still review the article</td></tr>
-        <tr><td>Card heading</td><td>"Anything else [partnerName] should know?" · <code>display-sm</code> (Grandstander 20px bold) · <code>text-primary</code></td></tr>
-        <tr><td>Card subtext</td><td>"[partnerName] sees this after you both complete this topic." · DM Sans 14px <code>text-secondary</code></td></tr>
+        <tr><td>Heading — linked</td><td>"Anything else {firstName} should know?" (e.g. "Anything else Jordan should know?") · <code>display-sm</code> (Grandstander 20px bold) · <code>text-primary</code></td></tr>
+        <tr><td>Heading — unlinked</td><td>"Anything else your partner should know?" — partner-name fallback</td></tr>
+        <tr><td>Sub-line — linked</td><td>"{FirstName} sees this after you both complete this topic." (capitalized when sentence-leading)</td></tr>
+        <tr><td>Sub-line — unlinked</td><td>"Your partner sees this after you both complete this topic."</td></tr>
+        <tr><td>Sharing</td><td>The note is <strong>shared with the partner</strong> and surfaced at the reveal (Screens 20 / 21). It is not private to the author.</td></tr>
         <tr><td>Textarea</td><td>Full width · min-height 96px · white bg · <code>1.5px border-default</code> · <code>radius-md</code> · DM Sans 15px · <code>border-focus</code> + ring on focus</td></tr>
-        <tr><td>Placeholder</td><td>"Your thoughts, context, or questions for later…"</td></tr>
+        <tr><td>Placeholder</td><td>"Your thoughts, context, or questions for later."</td></tr>
         <tr><td>Character count</td><td>"N characters remaining" · 12px <code>text-tertiary</code> · right-aligned below textarea · turns <code>status-error-text</code> (#c0392b) below 50 chars remaining</td></tr>
         <tr><td>Max length</td><td>280 chars · enforced server-side and by <code>maxlength</code> attribute</td></tr>
-        <tr><td>Submit button</td><td>"Submit →" · always active (note may be empty)</td></tr>
+        <tr><td>Submit button</td><td><strong>"Done →"</strong> — final-step language, not "Continue →" (no more steps) or "Submit →" (form-y). Always active (note may be empty).</td></tr>
         <tr><td>On submit</td><td>Save note (even if empty) → navigate to Screen 19 Waiting for Partner</td></tr>
+        <tr><td>Mid-note exit</td><td>If the user has typed something and triggers ✕ or swipe-down, show a small "Save your note?" bottom sheet: <strong>Save and exit</strong> (primary, purple) · <strong>Discard and exit</strong> (ghost) · <strong>Cancel</strong> (tertiary). This is the only confirm-exit dialog in the flow.</td></tr>
         <tr><td>Partner visibility</td><td>Note is hidden from partner until <code>isVisibleToPartner</code> flips to <code>true</code> server-side (both users completed topic answers)</td></tr>
       </table>
     </div>
@@ -397,18 +499,21 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Container</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · 24px padding</td></tr>
         <tr><td>Question text</td><td><code>display-sm</code> (Grandstander 20px bold) · <code>text-primary</code> · <code>letter-spacing: -0.02em</code></td></tr>
         <tr><td>subText</td><td>DM Sans 14px · <code>text-secondary</code> · 6px below question text · rendered when Question.subText is set</td></tr>
-        <tr><td>Partner note — question screens</td><td>"[Name] won't see your answer until they've finished too." (unchanged)</td></tr>
-        <tr><td>Partner note — note step</td><td>"[partnerName] sees this after you both complete this topic."</td></tr>
-        <tr><td>Top padding</td><td>18px between partner note and answer area</td></tr>
-        <tr><td>Max options</td><td>6 answer options maximum per question</td></tr>
+        <tr><td>Per-question privacy line — linked</td><td>"{FirstName} won't see your answer until they've finished too." (e.g. "Jordan won't see…")</td></tr>
+        <tr><td>Per-question privacy line — unlinked</td><td>"Your partner won't see your answer until they've finished too." — partner-name fallback</td></tr>
+        <tr><td>Frequency</td><td><strong>Shown once, on Q1 only.</strong> Reassurance lands at the first question and isn't repeated on every screen; repeating it verbatim each time made the reassurance read as noise.</td></tr>
+        <tr><td>Top padding</td><td>18px between the privacy line (when shown) and the answer area</td></tr>
+        <tr><td>Max options</td><td>6 answer options maximum per question (for select / multi-select / ranked-choice)</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Progress & step indicator</div>
       <table class="spec-table">
-        <tr><td>Step label</td><td>"Q{i} of {n}" (e.g. "Q2 of 3") for question steps · "Note" + inline "Optional" pill for the note step</td></tr>
-        <tr><td>Progress fill</td><td>Questions only — <code>currentQuestion / totalQuestions * 100%</code> · Note step holds at 100% (all questions done) · Note step does not extend the bar beyond full</td></tr>
+        <tr><td>Top row layout</td><td>‹ back (left, 24px purple-500 chevron) · centered step label · ✕ exit (right, 18px <code>text-secondary</code>) · No "Optional" pill on this row in any state.</td></tr>
+        <tr><td>Step label — question</td><td>"Q{i} of {N}" — for example "Q2 of 4". <strong>N is dynamic (3–5);</strong> templated off <code>topic.questions.length</code>.</td></tr>
+        <tr><td>Step label — note</td><td>Just "Note". The Optional indicator moves off the top bar and is rendered as a small inline pill next to the card heading instead.</td></tr>
+        <tr><td>Progress fill</td><td>Questions only — <code>(currentIndex + 1) / N * 100%</code>. Note step holds at 100% and does not extend the bar beyond full.</td></tr>
         <tr><td>Track</td><td>Full-width · 4px · cream bg · <code>radius-full</code> · purple fill</td></tr>
         <tr><td>Animation</td><td><code>transition: width 0.3s ease</code> when advancing</td></tr>
       </table>
@@ -418,15 +523,19 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>One question per screen. Never show multiple questions simultaneously.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Never auto-advance on selection — user must explicitly tap Next. This app is about considered decisions, not quick taps.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>"Read guide" opens Screen 17 Article without losing question progress. Back from article returns to the same question at the same state.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Selection persists if user taps Back and returns to a question. Answers are saved client-side as the user progresses and committed to the server on Submit.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Flow: Q1 → Q2 → Q3 → Q4 → Note step → Screen 19 (Waiting for Partner). Back from Q1 → Screen 16 (Topic Intro). Back from Note Step → Q4.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>The Note step is the final step. Submit is always enabled — an empty note is valid and saves as an empty string.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Slider questions: no default value. Continue remains disabled until the user sets a value by tapping or dragging the track.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Multi-select questions: Continue becomes active when at least 1 option is selected.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Partner note text uses the partner's first name from the linked account, or "Your partner" if not yet linked.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on any question or note step screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Never auto-advance on selection. User must explicitly tap the action button. This app is about considered decisions, not quick taps.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>N is dynamic.</strong> Topics carry 3–5 questions; the step indicator ("Q{i} of {N}") and progress bar both template off <code>topic.questions.length</code>. The screen makes no assumption about a fixed count.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Flow chrome:</strong> ‹ back-a-step (left), centered step label, ✕ exit to Topic List (right). Swipe-down from the top of the screen also exits, gated to "scrolled to top + gesture not on an interactive control." No confirm-exit dialog — except mid-way through an unsaved free-text note, which gets a light Save / Discard / Cancel sheet.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Back routing:</strong> Q[0] → Topic Intro (16). Q[i&gt;0] → Q[i-1]. Note → Q[n-1]. "Read guide" opens Screen 17 without losing progress and returns to the same question.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Selection persists if the user taps ‹ back and returns to a question. Answers are saved client-side as the user progresses and committed to the server on Done.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Note step is the final step.</strong> Button label is <strong>"Done →"</strong>, not "Continue →" or "Submit →". Always enabled; an empty note is valid and saves as an empty string. The note is shared with the partner and surfaced at the reveal (Screens 20 / 21).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Optional indicator</strong> on the note step lives next to the card heading, not on the top bar. The top row stays clean (‹ Note ✕).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Slider</strong> reuses the onboarding-quiz component (range-driven by <code>sliderMin/sliderMax</code>; ghosted thumb with <code>border-default</code> border, no fill, no numeric value until first interaction; first tap or drag enables Continue). The component should be promoted to a shared design-system slider so the two screens stay in sync.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Ranked choice</strong> renders a reorderable list with rank numbers updating live as the user drags. <strong>Initial order is randomized</strong> so there's no implied "right" ranking to anchor on, and <strong>Continue is enabled on the presented order</strong> — no drag is required.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Multi-select questions: Continue becomes active when at least one option is selected.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Partner-name fallback</strong> applies to every partner-referencing string on this screen: per-question privacy line, note-step heading, and note-step sub-line. Linked → first name (e.g. "Jordan"); unlinked → "your partner" / "Your partner" (capitalized when sentence-leading).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Per-question privacy reassurance</strong> is shown <strong>once, on Q1 only</strong> ("{Partner} won't see your answer until they've finished too."). Repeating it on every question made it read as boilerplate; one anchored mention does the work.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on any question or note-step screen.</span></div>
       </div>
     </div>
 
@@ -436,14 +545,18 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <span class="component-tag">Question Card</span>
         <span class="component-tag">Answer Options — single select</span>
         <span class="component-tag">Answer Options — multi select</span>
-        <span class="component-tag">Slider (1–10)</span>
+        <span class="component-tag">Slider — range-driven (shared with onboarding)</span>
+        <span class="component-tag">Ranked Choice list (drag to reorder)</span>
         <span class="component-tag">Note Textarea</span>
         <span class="component-tag">Character Counter</span>
         <span class="component-tag">Progress Bar</span>
-        <span class="component-tag">Step Indicator</span>
-        <span class="component-tag">Button — Primary (Next / Submit)</span>
+        <span class="component-tag">Step Indicator (Q{i} of {N})</span>
+        <span class="component-tag">Optional pill (inline, next to heading)</span>
+        <span class="component-tag">Button — Primary (Continue / Done)</span>
         <span class="component-tag">Guide Link</span>
-        <span class="component-tag">Back Chevron</span>
+        <span class="component-tag">Back Chevron (‹)</span>
+        <span class="component-tag">Exit Chevron (✕)</span>
+        <span class="component-tag">Bottom Sheet — Save / Discard note</span>
       </div>
     </div>
 
@@ -463,221 +576,462 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
 </div>
 
 <script>
-const Q_DATA = {
-  single_select: {
-    stepLabel: 'Q1 of 3', progress: 33,
-    text: 'Who would you trust to babysit regularly?',
-    subText: null,
-    partnerNote: "Jordan won't see your answer until they've finished too.",
-    options: [
-      { id: 'a', text: 'Family only, at least at first' },
-      { id: 'b', text: 'Close friends we both trust' },
-      { id: 'c', text: 'A professional nanny or sitter' },
-      { id: 'd', text: 'Honestly, no one for a while' }
-    ],
-    selected: 'b'
-  },
-  multi_select: {
-    stepLabel: 'Q2 of 3', progress: 66,
-    text: 'What values matter most to you in parenting?',
-    subText: 'Select all that apply.',
-    partnerNote: "Jordan won't see your answer until they've finished too.",
-    options: [
-      { id: 'a', text: 'Independence and self-reliance' },
-      { id: 'b', text: 'Empathy and emotional intelligence' },
-      { id: 'c', text: 'Consistent routines and discipline' },
-      { id: 'd', text: 'Creative and free expression' },
-      { id: 'e', text: 'Academic and career preparation' }
-    ],
-    selected: ['a', 'b']
-  },
-  slider: {
-    stepLabel: 'Q3 of 3', progress: 100,
-    text: 'How strict do you want to be about screen time?',
-    subText: 'There are no wrong answers here.',
-    partnerNote: "Jordan won't see your answer until they've finished too.",
-    slider: { min: 1, max: 10, minLabel: 'No restrictions', maxLabel: 'Screen-free' },
-    selected: null
-  },
-  note: {
-    stepLabel: 'Note', progress: 100,
-    heading: 'Anything else [partnerName] should know?',
-    subText: '[partnerName] sees this after you both complete this topic.',
-  }
+/* ── Partner-name fallback ──
+   The first-name appears when linked; "your partner" otherwise.
+   Drives partner-templated copy across the screen via data-partner-template. */
+let PARTNER_STATE = 'linked';      // 'linked' | 'none'
+const PARTNER_NAME = 'Jordan';
+function partnerName()    { return PARTNER_STATE === 'linked' ? PARTNER_NAME : 'your partner'; }
+function partnerNameCap() { return PARTNER_STATE === 'linked' ? PARTNER_NAME : 'Your partner'; }
+
+/* ── Sample topic — dynamic N (3–5). Demo runs N=4 to make the dynamic part visible. ── */
+const DEMO_TOPIC = {
+  id: 'village',
+  title: 'Building your village',
+  questions: [
+    {
+      id: 'q1', type: 'single_select',
+      text: 'Who would you trust to babysit regularly?',
+      options: [
+        { id: 'a', text: 'Family only, at least at first' },
+        { id: 'b', text: 'Close friends we both trust' },
+        { id: 'c', text: 'A professional nanny or sitter' },
+        { id: 'd', text: 'Honestly, no one for a while' }
+      ]
+    },
+    {
+      id: 'q2', type: 'multi_select',
+      text: 'What values matter most to you in parenting?',
+      subText: 'Select all that apply.',
+      options: [
+        { id: 'a', text: 'Independence and self-reliance' },
+        { id: 'b', text: 'Empathy and emotional intelligence' },
+        { id: 'c', text: 'Consistent routines and discipline' },
+        { id: 'd', text: 'Creative and free expression' },
+        { id: 'e', text: 'Academic and career preparation' }
+      ]
+    },
+    {
+      id: 'q3', type: 'slider',
+      text: 'How strict do you want to be about screen time?',
+      subText: 'There are no wrong answers here.',
+      sliderMin: 1, sliderMax: 10,
+      sliderLeft: 'No restrictions', sliderRight: 'Screen-free'
+    },
+    {
+      id: 'q4', type: 'ranked_choice',
+      text: 'Rank these from most to least important for your first year.',
+      options: [
+        { id: 'a', text: 'Time with extended family' },
+        { id: 'b', text: 'Sleep for both of you' },
+        { id: 'c', text: 'Time alone together as a couple' },
+        { id: 'd', text: 'Time alone for each of you' }
+      ]
+    }
+  ]
+};
+
+/* Which DEMO_TOPIC question to render for each type tab. Single source of truth
+   for "what's the example for this type" — keeps step-label + progress dynamic. */
+const TYPE_TO_QUESTION_INDEX = {
+  single_select: 0,
+  multi_select:  1,
+  slider:        2,
+  ranked_choice: 3,
+  note:          'note'
+};
+
+/* In-flight demo state — mutated by the answer renderers. */
+const DEMO_STATE = {
+  currentType: 'single_select',
+  selectedSingle: 'b',                       // pre-seeded so single-select example reads as answered
+  selectedMulti:  ['a', 'b'],
+  sliderValue:    null,
+  rankedOrder:    null,                      // populated by ranked-choice render
+  noteText:       '',
+  noteDirty:      false
 };
 
 let sliderDrag = { active: false, lastInt: null };
 
+/* ── Partner state demo strip ── */
+function setPartnerState(state) {
+  PARTNER_STATE = state;
+  ['linked', 'none'].forEach(s => {
+    const btn = document.getElementById('pstate-' + s);
+    const active = s === state;
+    btn.style.background  = active ? '#5f45f2' : 'white';
+    btn.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    btn.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+  // Re-render the current type so partner-templated copy updates.
+  showType(DEMO_STATE.currentType);
+}
+
+function renderPartnerTemplates(scope) {
+  const root = scope || document;
+  root.querySelectorAll('[data-partner-template]').forEach(el => {
+    const tpl = el.getAttribute('data-partner-template');
+    el.textContent = tpl
+      .replace('{name}', partnerName())
+      .replace('{Name}', partnerNameCap());
+  });
+}
+
+/* ── Type tab + sub-screen rendering ── */
 function showType(key) {
-  ['single_select','multi_select','slider','note'].forEach(k => {
+  DEMO_STATE.currentType = key;
+  ['single_select','multi_select','slider','ranked_choice','note'].forEach(k => {
     const tab = document.getElementById('tab-' + k);
+    if (!tab) return;
     const active = k === key;
     tab.style.background  = active ? '#5f45f2' : 'white';
     tab.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
     tab.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
   });
 
-  const d = Q_DATA[key];
+  const total = DEMO_TOPIC.questions.length;       // dynamic N
+  const isNote = key === 'note';
+  const idx    = isNote ? null : TYPE_TO_QUESTION_INDEX[key];
+  const q      = isNote ? null : DEMO_TOPIC.questions[idx];
 
-  document.getElementById('q-step-label').textContent  = d.stepLabel;
-  document.getElementById('progress-fill').style.width = d.progress + '%';
-  document.getElementById('optional-pill').style.display = key === 'note' ? 'block' : 'none';
-
-  const textEl = document.getElementById('q-text');
-  if (key === 'note') {
-    textEl.textContent = d.heading;
-    textEl.className   = 'note-heading';
+  /* Step label + progress */
+  const stepLabelEl = document.getElementById('q-step-label');
+  if (isNote) {
+    // Note step: "Note" + an inline Optional pill, set in markup.
+    stepLabelEl.innerHTML = 'Note';
   } else {
-    textEl.textContent = d.text;
+    stepLabelEl.textContent = `Q${idx + 1} of ${total}`;
+  }
+  const pct = isNote ? 100 : Math.round(((idx + 1) / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  /* Question / note text */
+  const textEl = document.getElementById('q-text');
+  if (isNote) {
+    textEl.innerHTML  = `Anything else <span data-partner-template="{name}">${partnerName()}</span> should know?<span class="optional-inline">Optional</span>`;
+    textEl.className  = 'note-heading';
+  } else {
+    textEl.textContent = q.text;
     textEl.className   = 'question-text';
   }
 
+  /* Sub-text under heading */
   const subEl = document.getElementById('q-subtext');
-  if (d.subText) {
-    subEl.textContent   = d.subText;
+  if (isNote) {
+    subEl.innerHTML     = `<span data-partner-template="{Name}">${partnerNameCap()}</span> sees this after you both complete this topic.`;
+    subEl.style.display = 'block';
+  } else if (q.subText) {
+    subEl.textContent   = q.subText;
     subEl.style.display = 'block';
   } else {
     subEl.style.display = 'none';
   }
 
-  const noteEl = document.getElementById('partner-note');
-  noteEl.style.display = key === 'note' ? 'none' : 'block';
-  if (key !== 'note') noteEl.textContent = d.partnerNote;
+  /* Per-question privacy line: shown ONCE, on the first question only. */
+  const partnerNoteEl = document.getElementById('partner-note');
+  const showPrivacyLine = !isNote && idx === 0;
+  if (showPrivacyLine) {
+    partnerNoteEl.setAttribute('data-partner-template', "{Name} won't see your answer until they've finished too.");
+    partnerNoteEl.textContent = `${partnerNameCap()} won't see your answer until they've finished too.`;
+    partnerNoteEl.style.display = 'block';
+  } else {
+    partnerNoteEl.removeAttribute('data-partner-template');
+    partnerNoteEl.style.display = 'none';
+  }
 
+  /* Answer area */
   const area = document.getElementById('answer-area');
   const btn  = document.getElementById('next-btn');
 
   if (key === 'single_select') {
-    const hasSel = d.selected !== null;
-    area.innerHTML = '<div class="answer-opts">' +
-      d.options.map(o =>
-        `<button class="answer-opt${o.id === d.selected ? ' selected' : ''}" data-id="${o.id}" onclick="selectSingle(this)">${o.text}</button>`
-      ).join('') + '</div>';
+    renderSingleSelect(area, q);
     btn.textContent = 'Continue →';
-    btn.classList.toggle('disabled', !hasSel);
+    btn.classList.toggle('disabled', DEMO_STATE.selectedSingle == null);
 
   } else if (key === 'multi_select') {
-    const hasSel = d.selected.length > 0;
-    area.innerHTML = '<div class="answer-opts">' +
-      d.options.map(o => {
-        const sel = d.selected.includes(o.id) ? ' selected' : '';
-        return `<button class="answer-opt${sel}" data-id="${o.id}" onclick="toggleMulti(this)">${o.text}</button>`;
-      }).join('') + '</div>';
+    renderMultiSelect(area, q);
     btn.textContent = 'Continue →';
-    btn.classList.toggle('disabled', !hasSel);
+    btn.classList.toggle('disabled', DEMO_STATE.selectedMulti.length === 0);
 
   } else if (key === 'slider') {
-    area.innerHTML = `
-      <div class="slider-container">
-        <div id="slider-val-wrapper" style="display:none;">
-          <div class="slider-value-display" id="slider-val"></div>
-          <div class="slider-gap"></div>
-        </div>
-        <div class="slider-track" id="slider-track">
-          <div class="slider-fill" id="slider-fill" style="width:0;"></div>
-          <div class="slider-thumb" id="slider-thumb" style="display:none;"></div>
-        </div>
-        <div class="slider-labels">
-          <span>${d.slider.minLabel}</span>
-          <span>${d.slider.maxLabel}</span>
-        </div>
-      </div>`;
+    renderSlider(area, q);
     btn.textContent = 'Continue →';
-    btn.classList.add('disabled');
-    initSlider();
+    btn.classList.toggle('disabled', DEMO_STATE.sliderValue == null);
+
+  } else if (key === 'ranked_choice') {
+    renderRankedChoice(area, q);
+    btn.textContent = 'Continue →';
+    // Continue is enabled on the presented order — no drag required.
+    btn.classList.remove('disabled');
 
   } else {
-    area.innerHTML = `
-      <textarea class="note-textarea" id="note-input" placeholder="Your thoughts, context, or questions for later…" oninput="updateCharCount(this.value.length)" maxlength="280"></textarea>
-      <div class="note-char-count" id="char-count">280 characters remaining</div>`;
-    btn.textContent = 'Submit →';
+    renderNote(area);
+    btn.textContent = 'Done →';     // final-step submit
     btn.classList.remove('disabled');
   }
+
+  renderPartnerTemplates(document);
 }
 
-function selectSingle(el) {
-  const wasSelected = el.classList.contains('selected');
-  document.querySelectorAll('.answer-opt').forEach(o => o.classList.remove('selected'));
-  if (!wasSelected) el.classList.add('selected');
-  const hasSel = document.querySelectorAll('.answer-opt.selected').length > 0;
-  document.getElementById('next-btn').classList.toggle('disabled', !hasSel);
+/* ── Single-select ── */
+function renderSingleSelect(area, q) {
+  area.innerHTML = '<div class="answer-opts">' +
+    q.options.map(o =>
+      `<button class="answer-opt${o.id === DEMO_STATE.selectedSingle ? ' selected' : ''}" data-id="${o.id}" onclick="selectSingle('${o.id}')">${o.text}</button>`
+    ).join('') + '</div>';
+}
+function selectSingle(id) {
+  DEMO_STATE.selectedSingle = (DEMO_STATE.selectedSingle === id) ? null : id;
+  document.querySelectorAll('.answer-opt').forEach(o => {
+    o.classList.toggle('selected', o.getAttribute('data-id') === DEMO_STATE.selectedSingle);
+  });
+  document.getElementById('next-btn').classList.toggle('disabled', DEMO_STATE.selectedSingle == null);
 }
 
-function toggleMulti(el) {
-  el.classList.toggle('selected');
-  const any = document.querySelectorAll('.answer-opt.selected').length > 0;
-  document.getElementById('next-btn').classList.toggle('disabled', !any);
+/* ── Multi-select ── */
+function renderMultiSelect(area, q) {
+  area.innerHTML = '<div class="answer-opts">' +
+    q.options.map(o => {
+      const sel = DEMO_STATE.selectedMulti.includes(o.id) ? ' selected' : '';
+      return `<button class="answer-opt${sel}" data-id="${o.id}" onclick="toggleMulti('${o.id}')">${o.text}</button>`;
+    }).join('') + '</div>';
+}
+function toggleMulti(id) {
+  const i = DEMO_STATE.selectedMulti.indexOf(id);
+  if (i >= 0) DEMO_STATE.selectedMulti.splice(i, 1);
+  else        DEMO_STATE.selectedMulti.push(id);
+  document.querySelectorAll('.answer-opt').forEach(o => {
+    o.classList.toggle('selected', DEMO_STATE.selectedMulti.includes(o.getAttribute('data-id')));
+  });
+  document.getElementById('next-btn').classList.toggle('disabled', DEMO_STATE.selectedMulti.length === 0);
 }
 
-function initSlider() {
-  const track = document.getElementById('slider-track');
-  if (!track) return;
-  track.addEventListener('mousedown', startDrag);
-  track.addEventListener('touchstart', startDrag, { passive: false });
-}
+/* ── Slider — reuses the onboarding component (02-onboarding-quiz.html).
+   Range-driven by q.sliderMin/sliderMax. Ghosted until first interaction:
+   no fill, value hidden via visibility, thumb border-default. ── */
+function renderSlider(area, q) {
+  const min = q.sliderMin, max = q.sliderMax;
+  const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  const pos = v => ((v - min) / (max - min)) * 100;
 
-function startDrag(e) {
-  e.preventDefault();
-  sliderDrag = { active: true, lastInt: null };
-  document.addEventListener('mousemove', moveDrag);
-  document.addEventListener('mouseup', endDrag);
-  document.addEventListener('touchmove', moveDrag, { passive: false });
-  document.addEventListener('touchend', endDrag);
-  moveDrag(e);
-}
+  // Ghosted thumb sits at the midpoint as an affordance, not a value.
+  const initial = Math.round((min + max) / 2);
 
-function moveDrag(e) {
-  if (!sliderDrag.active) return;
-  const track = document.getElementById('slider-track');
-  if (!track) return;
-  const rect    = track.getBoundingClientRect();
-  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-  const pct     = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-  const value   = Math.round(1 + pct * 9);
-  if (value !== sliderDrag.lastInt) { sliderDrag.lastInt = value; triggerHaptic(); }
-  setSlider(value);
-}
+  area.innerHTML = `
+    <div class="slider-wrap">
+      <div class="slider-value" id="slider-value" style="visibility:hidden;">${initial}</div>
+      <div class="slider-row" id="slider-row">
+        <div class="slider-track">
+          <div class="slider-fill" id="slider-fill" style="width:0%;"></div>
+          ${ticks.map(t => `<div class="slider-tick" style="left:${pos(t)}%;"></div>`).join('')}
+          <div class="slider-thumb" id="slider-thumb" style="left:${pos(initial)}%;"></div>
+        </div>
+      </div>
+      <div class="slider-end-labels">
+        <span>${q.sliderLeft}</span>
+        <span>${q.sliderRight}</span>
+      </div>
+    </div>`;
 
-function endDrag(e) {
-  if (!sliderDrag.active) return;
-  sliderDrag.active = false;
-  document.removeEventListener('mousemove', moveDrag);
-  document.removeEventListener('mouseup', endDrag);
-  document.removeEventListener('touchmove', moveDrag);
-  document.removeEventListener('touchend', endDrag);
-  const track = document.getElementById('slider-track');
-  if (!track) return;
-  const rect    = track.getBoundingClientRect();
-  const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
-  const pct     = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-  setSlider(Math.round(1 + pct * 9));
+  initSlider(min, max);
 }
-
-function setSlider(value) {
-  const pct     = ((value - 1) / 9) * 100;
-  const wrapper = document.getElementById('slider-val-wrapper');
-  const valEl   = document.getElementById('slider-val');
+function initSlider(min, max) {
+  const row = document.getElementById('slider-row');
+  if (!row) return;
+  const pickFromEvent = (e) => {
+    const rect = row.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    const v = Math.round(min + ratio * (max - min));
+    if (v !== sliderDrag.lastInt) { sliderDrag.lastInt = v; triggerHaptic(); }
+    setSlider(v, min, max);
+  };
+  row.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    sliderDrag = { active: true, lastInt: null };
+    pickFromEvent(e);
+    const onMove = (ev) => pickFromEvent(ev);
+    const onUp   = () => {
+      sliderDrag.active = false;
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup',   onUp);
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup',   onUp);
+  });
+}
+function setSlider(value, min, max) {
+  const pct = ((value - min) / (max - min)) * 100;
+  const valEl   = document.getElementById('slider-value');
   const fillEl  = document.getElementById('slider-fill');
   const thumbEl = document.getElementById('slider-thumb');
-  if (wrapper) wrapper.style.display = 'block';
-  if (valEl)   valEl.textContent = value;
-  if (fillEl)  fillEl.style.width = pct + '%';
-  if (thumbEl) { thumbEl.style.display = 'block'; thumbEl.style.left = pct + '%'; }
+  if (valEl)   { valEl.textContent = value; valEl.style.visibility = 'visible'; }
+  if (fillEl)  { fillEl.style.width = pct + '%'; }
+  if (thumbEl) { thumbEl.style.left = pct + '%'; thumbEl.classList.add('is-confirmed'); }
+  DEMO_STATE.sliderValue = value;
   document.getElementById('next-btn').classList.remove('disabled');
 }
+function triggerHaptic() { if (navigator.vibrate) navigator.vibrate(10); }
 
-function triggerHaptic() {
-  if (navigator.vibrate) navigator.vibrate(10);
+/* ── Ranked choice — drag to reorder, rank numbers update live.
+   Initial order randomized so there's no implied "right" anchor. ── */
+function renderRankedChoice(area, q) {
+  if (!DEMO_STATE.rankedOrder || DEMO_STATE.rankedOrder.length !== q.options.length) {
+    DEMO_STATE.rankedOrder = shuffle(q.options.map(o => o.id));
+  }
+  const byId = Object.fromEntries(q.options.map(o => [o.id, o.text]));
+  area.innerHTML = `
+    <div class="ranked-list" id="ranked-list">
+      ${DEMO_STATE.rankedOrder.map((id, i) => `
+        <div class="ranked-item" draggable="true" data-id="${id}">
+          <div class="ranked-rank">${i + 1}</div>
+          <div class="ranked-text">${byId[id]}</div>
+          <div class="ranked-handle" aria-hidden="true">⋮⋮</div>
+        </div>
+      `).join('')}
+    </div>`;
+  initRanked();
+}
+function initRanked() {
+  const list = document.getElementById('ranked-list');
+  if (!list) return;
+  let dragging = null;
+  list.querySelectorAll('.ranked-item').forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      dragging = item;
+      item.classList.add('is-dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      // Firefox needs setData to start drag.
+      try { e.dataTransfer.setData('text/plain', item.getAttribute('data-id')); } catch (_) {}
+    });
+    item.addEventListener('dragend', () => {
+      if (dragging) dragging.classList.remove('is-dragging');
+      dragging = null;
+      syncRankedOrder();
+    });
+    item.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!dragging || dragging === item) return;
+      const rect = item.getBoundingClientRect();
+      const before = (e.clientY - rect.top) < rect.height / 2;
+      list.insertBefore(dragging, before ? item : item.nextSibling);
+      updateRankNumbers();
+    });
+  });
+}
+function updateRankNumbers() {
+  document.querySelectorAll('#ranked-list .ranked-item').forEach((el, i) => {
+    el.querySelector('.ranked-rank').textContent = i + 1;
+  });
+}
+function syncRankedOrder() {
+  DEMO_STATE.rankedOrder = Array.from(document.querySelectorAll('#ranked-list .ranked-item'))
+    .map(el => el.getAttribute('data-id'));
+}
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
-function updateCharCount(len) {
-  const remaining = 280 - len;
+/* ── Note step ── */
+function renderNote(area) {
+  area.innerHTML = `
+    <textarea class="note-textarea" id="note-input" placeholder="Your thoughts, context, or questions for later." oninput="onNoteInput(this.value)" maxlength="280">${escapeHtml(DEMO_STATE.noteText)}</textarea>
+    <div class="note-char-count" id="char-count">${280 - DEMO_STATE.noteText.length} characters remaining</div>`;
+  // Re-flag dirtiness: only "dirty" if user has typed something since last save.
+}
+function onNoteInput(text) {
+  DEMO_STATE.noteText = text;
+  DEMO_STATE.noteDirty = text.length > 0;
+  const remaining = 280 - text.length;
   const el = document.getElementById('char-count');
   if (!el) return;
   el.textContent = remaining + ' character' + (remaining === 1 ? '' : 's') + ' remaining';
   el.style.color = remaining < 50 ? '#c0392b' : '';
 }
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
 
+/* ── Chrome: back / exit / swipe-down ── */
+function handleBack() {
+  // Demo: cycle the type tab backwards within the topic flow.
+  const order = ['single_select', 'multi_select', 'slider', 'ranked_choice', 'note'];
+  const i = order.indexOf(DEMO_STATE.currentType);
+  if (i <= 0) return;     // Q0 → Topic Intro (Screen 16) in production
+  showType(order[i - 1]);
+}
+function handleExit() {
+  if (DEMO_STATE.currentType === 'note' && DEMO_STATE.noteDirty) {
+    openLeaveSheet();
+    return;
+  }
+  // Production: navigate to Topic List (Screen 14).
+  // Demo: do nothing destructive — show a console hint instead.
+  console.log('[demo] exit → Screen 14 (Topic List)');
+}
+
+/* ── Leave-with-unsaved-note mini sheet ── */
+function openLeaveSheet() {
+  document.getElementById('leave-overlay').style.display = 'block';
+  const s = document.getElementById('leave-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeLeaveSheet() {
+  const s = document.getElementById('leave-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('leave-overlay').style.display = 'none';
+  }, 280);
+}
+function saveNoteAndExit() {
+  // Demo: clear dirtiness and pretend to navigate.
+  DEMO_STATE.noteDirty = false;
+  closeLeaveSheet();
+  console.log('[demo] note saved → exit to Screen 14');
+}
+function discardNoteAndExit() {
+  DEMO_STATE.noteText = '';
+  DEMO_STATE.noteDirty = false;
+  const ta = document.getElementById('note-input');
+  if (ta) ta.value = '';
+  closeLeaveSheet();
+  console.log('[demo] note discarded → exit to Screen 14');
+}
+
+/* ── Swipe-down to exit (gated: at scroll top + gesture not on interactive control) ── */
+(function attachSwipeDown() {
+  const phoneScreen = document.querySelector('body.page-15 .phone-screen');
+  if (!phoneScreen) return;
+  let startY = 0, startX = 0, startedOnInteractive = false, scrollAtStart = 0;
+  const interactiveSelector = 'button, input, textarea, [role="button"], .answer-opt, .ranked-item, .slider-row, .slider-track, .q-back-btn, .q-exit-btn';
+  phoneScreen.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    startY = t.clientY; startX = t.clientX;
+    startedOnInteractive = !!(e.target.closest && e.target.closest(interactiveSelector));
+    // The scroll-area is what actually scrolls inside the phone.
+    const scroller = phoneScreen.querySelector('.scroll-area, .phone-screen') || phoneScreen;
+    scrollAtStart = scroller.scrollTop || 0;
+  }, { passive: true });
+  phoneScreen.addEventListener('touchend', (e) => {
+    if (startedOnInteractive) return;
+    if (scrollAtStart > 0) return;
+    const t = e.changedTouches[0];
+    const dy = t.clientY - startY;
+    const dx = Math.abs(t.clientX - startX);
+    // Mostly-vertical downward gesture, > 80px.
+    if (dy > 80 && dx < 60) handleExit();
+  });
+})();
+
+/* ── Boot ── */
 showType('single_select');
 </script>
 <script src="nav.js"></script>
