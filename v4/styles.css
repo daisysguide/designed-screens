@@ -4865,6 +4865,11 @@ body.page-16 .screen-root .waiting-exits {
   }
 body.page-16 .screen-root .waiting-nudge { margin-top: 38px; }
 
+body.page-16 .screen-root .phone-screen[data-state="preparing"] .waiting-nudge,
+body.page-16 .screen-root .phone-screen[data-state="preparing"] .waiting-exits {
+    display: none;
+  }
+
 body.page-16 .screen-root /* Waiting animation slot — brand-logo breathe → bloom */
   .waiting-anim {
     width: 128px; height: 128px;
