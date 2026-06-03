@@ -52,3 +52,9 @@ their own dedicated tasks.
   with screen numbers across all v4 files. Do not absorb into other
   tasks — needs its own pass since renames have cross-file CSS
   implications.
+- Re-answer Flow (deferred feature — not built): editing your answers
+  *after* a reveal, which recomputes the topic's alignment. The stale
+  `22-re-answer-flow.html` placeholder was deleted; build fresh when
+  there's real demand. Distinct from the pre-reveal "Change my answers"
+  on Screen 19, and from settle/reopen (which moves the status, not the
+  answers).

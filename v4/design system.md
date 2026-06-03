@@ -193,7 +193,6 @@ These appear in v4 screen files but are not in the type scale. Each one should m
 | Grandstander 22px (Topic Intro title, Home greeting, Topic List title, Chaos Meter score) | Multiple | `display-md` (24px) or `display-sm` (20px) — pick one per screen role |
 | Grandstander 18px (Empty state headings, Prediction locked state) | Multiple | `display-sm` (20px) |
 | Grandstander 17px (Onboarding nudge card) | Empty Home | `display-sm` (20px) |
-| Grandstander 14px (numbered step bullets) | Re-answer Flow | DM Sans `heading-md` or accept as deliberate-display-treatment exception |
 | DM Sans 14px outside `body-sm`/`label-md` | Many | `body-sm` (14px regular) or `label-md` (13px medium) |
 | DM Sans 13px outside `body-xs`/`label-md` | Many | `body-xs` or `label-md` |
 
@@ -1607,18 +1606,9 @@ Easter-egg 1–10 score on `progress`. Running joke about how divergent the coup
 - Never explain the calculation in UI. Mystery is the point.
 - Don't promote this metric. It sits at the bottom of `progress`, below the real data.
 
-### "What Happens Next" Card — NEW
+### "What Happens Next" Card — RETIRED
 
-Tinted explainer card used on `re-answer-flow` to set expectations before triggering a re-answer round.
-
-| Property | Value |
-|---|---|
-| Background | `rgba(26,26,26,0.04)` — subtle tint, not white card |
-| Border | `1px solid border-default` |
-| Border radius | `radius-xl` |
-| Padding | 18px |
-| Step numbers | Grandstander 14px bold · `action-primary` · left of each step |
-| Step text | `body-xs` · `text-secondary` · line-height 1.5 |
+Previously a tinted explainer card on `re-answer-flow` that set expectations before triggering a re-answer round. Retired with the `re-answer-flow` screen (deleted as a stale placeholder; see CLAUDE.md). When re-answer is built fresh, derive the expectations pattern from product needs rather than reintroducing this spec — git history has the prior shape if useful.
 
 ### Article Byline — NEW
 
@@ -1748,7 +1738,9 @@ Returning the topic to its computed value clears the provenance.
 - The pill **at the top**, directly under the title, is the at-a-glance headline.
 - The change control lives in the **bottom status block**, after the answers and the synthesis — the considered moment, not the impulsive one. The same block carries the prompt, the echoed pill, the provenance line (when overridden), and the action link ("Talked it through? Mark settled →" or "Still more to talk about? Reopen →").
 
-### Re-answer round mechanics
+### Re-answer round mechanics — DEFERRED FEATURE
+
+*The `re-answer-flow` screen was cut on 2026-06-03 as a stale placeholder. This section is the canonical sketch of how a re-answer round should work if/when the feature is rebuilt — kept as a record, not as live spec. See CLAUDE.md for the deferred-feature marker.*
 
 Either partner can initiate. Topic state during round:
 
@@ -1763,7 +1755,7 @@ Previous answers are retained server-side but not surfaced in UI for V1.
 
 ## Screen index
 
-The 27 v4 screens. All references in this document use slugs; screen numbers are presentation only and may change. Numbers 21 and 23 are intentionally absent (the screens were folded into `alignment-reveal`'s revisit mode); a renumber is a separate deferred pass.
+The 26 v4 screens. All references in this document use slugs; screen numbers are presentation only and may change. Numbers 21, 22, and 23 are intentionally absent: 21 (post-reveal-reflection) and 23 (completed-topic) were folded into `alignment-reveal`'s revisit mode; 22 (re-answer-flow) was a stale placeholder and is deferred (see CLAUDE.md). A renumber is a separate deferred pass.
 
 | Slug | File | Section | Bottom nav |
 |---|---|---|---|
@@ -1787,7 +1779,6 @@ The 27 v4 screens. All references in this document use slugs; screen numbers are
 | `question` | 18-question.html | Topic flow | Hidden |
 | `waiting-for-partner` | 19-waiting-for-partner.html | Topic flow | Hidden |
 | `alignment-reveal` | 20-alignment-reveal.html | Topic flow | Hidden |
-| `re-answer-flow` | 22-re-answer-flow.html | Topic flow | Hidden |
 | `prediction-card` | 24-prediction-card.html | Special | Hidden |
 | `empty-home` | 25-empty-home.html | Empty states | Shown |
 | `empty-topic-list` | 26-empty-topic-list.html | Empty states | Shown |
@@ -1879,6 +1870,16 @@ This document does not have a version number. It is at HEAD. Changes are dated i
 ## CHANGELOG
 
 Date-stamped record of design system decisions. Add new entries at the top.
+
+### 2026-06-03 — Cut `re-answer-flow` (Screen 22)
+
+Follow-up to the topic-flow reshape below. Screen 22 was a stale placeholder that predated the rework and nothing routed into it; cut now rather than carrying a dead screen. The re-answer capability is a deferred feature — see CLAUDE.md for the marker — and will be rebuilt fresh when there's real demand.
+
+- Catalog: removed the `re-answer-flow` row; the Topic flow section now runs straight from `alignment-reveal` to `prediction-card`. Numbers 21, 22, and 23 are intentionally absent.
+- **"What Happens Next" Card** marked RETIRED (its only consumer was `re-answer-flow`).
+- Type-scale violation row for "Grandstander 14px (numbered step bullets) — Re-answer Flow" removed.
+- **Re-answer round mechanics** section retained as a deferred-feature sketch — it's the canonical shape of the mechanics if/when this gets built; flagged as deferred in CLAUDE.md.
+- Neighbor screens (Screen 20 topbar Next, Screen 24 topbar Prev + nav-pill Prev) re-stitched so 20 → 24 walks cleanly. Screen 20's nav-pill / Done destination stays at `topic-list` (that's the user flow, not catalog order).
 
 ### 2026-06-03 — Topic flow reshape: Alignment Reveal rebuild + lifecycle simplification
 
