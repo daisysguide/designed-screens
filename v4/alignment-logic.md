@@ -34,6 +34,16 @@ Each question's 0–1 score rolls up to a **weighted topic average**, with the s
 
 One override — the **weakest-link rule** — applies to every type, ranking included: a **single large disagreement can pull the whole topic down a level** even when the average is high. We never let averaging hide a real gap — that gap is the point.
 
+## Computed alignment vs current standing (the editable status)
+The rollup above produces the computed alignment — the honest read of the two answer sets. That's the default, but the status is editable, and the edited value is what the rest of the app shows.
+
+- One status per topic, shared. Either partner can change it, **unilaterally and instantly, in both directions** — there is no propose-and-confirm handshake.
+- **Reopen** any topic and it returns to **Worth a conversation** — the one-tap consent valve: if either person still wants to talk, it's worth a conversation. **Settle** restores the topic's **computed** value, with one exception: a topic whose computed value was Worth a conversation settles to **Mostly aligned** (a genuinely-divergent topic that's been talked through — it can't settle back to Worth, and it can never reach Fully, which is computed-only). So a Fully-computed topic that's reopened and then settled returns to Fully, not Mostly.
+- **Provenance is preserved** — the computed value, who changed it, and when. Returning a topic to its computed value clears the override.
+- **Downstream uses the current value.** The Progress distribution and the Topics states reflect this **current standing** (computed alignment as adjusted), not the raw answer-alignment. The "For You Two" summary still describes the answers; the badge is the couple's current call on them.
+
+We deliberately do **not** carry a second resolved/unresolved axis. Resolution is merged into this single status — a settled topic reads "Mostly aligned," an open one "Worth a conversation." A separate to-do axis fought the anti-checklist ethos and doubled the display.
+
 ## The "For You Two" summary
 
 After both partners submit, we generate one short, brand-voice paragraph describing where they line up and where they differ — leading with the biggest gap, framed warmly, never judgmentally.

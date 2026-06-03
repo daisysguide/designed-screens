@@ -29,8 +29,8 @@ All structural decisions for the v2.0 rewrite have been resolved. Date-stamped i
 | 4 | Stats Display | Merged Stats Row + Stats Card into one component with `columns` and `surface` props |
 | 5 | Ghost button | Added as 4th non-destructive variant |
 | 6 | Dashed border | Means "supplemental or authored content distinct from main flow" (not AI-specific) |
-| 7 | Topic lifecycle states | 6 states; UI labels are "Needs work" and "We're good" (data model still says pending/resolved) |
-| 8 | "Needs work" color | Blue family — `blue-text-dark: #1a5170` on `status-pending-surface: rgba(159,236,250,0.40)` |
+| 7 | Topic lifecycle states | ~~6 states; UI labels are "Needs work" and "We're good"~~ **Retired.** The pending/resolved second axis is gone; the post-reveal alignment pill (Fully / Mostly / Worth) is the single shared status, user-editable via settle/reopen. |
+| 8 | "Needs work" color — Blue family | ~~`blue-text-dark: #1a5170` on `status-pending-surface: rgba(159,236,250,0.40)`~~ **Retired** with decision 7. Divergence is the single "Worth a conversation" (orange) state. The blue family tokens that supported the Needs-work pill are retired (see Color tokens). |
 | 9 | Canonical green | `#157a46`; retire `#1c7d3e` and `#1a4d35` |
 | 10 | Letter-spacing | `em` throughout |
 | 11 | Price | $49 |
@@ -62,7 +62,7 @@ A two-layer system. Primitives are the palette — raw hex values. Semantic toke
 | `orange-200` | `#ffc48c` |
 | `yellow-200` | `#ffe375` |
 | `green-200` | `#96f1c6` |
-| `blue-200` | `#9decfa` |
+| `cyan-200` | `#9decfa` *(aliased — see naming reconciliation below)* |
 | `pink-200` | `#ffadad` |
 
 #### Primitive tokens — accents (bold)
@@ -72,8 +72,11 @@ A two-layer system. Primitives are the palette — raw hex values. Semantic toke
 | `orange-400` | `#ffad6c` |
 | `yellow-400` | `#ffd755` |
 | `green-400` | `#77eaaf` |
-| `blue-400` | `#7fe3f7` |
+| `cyan-300` | `#7fe3f7` *(was `blue-400` — see naming reconciliation below)* |
+| `cyan-400` | `#3bb4d4` |
 | `pink-400` | `#ff9191` |
+
+**Naming reconciliation — flag for maintainer:** the v1.0/v2.0 `blue-200` (`#9decfa`) and `blue-400` (`#7fe3f7`) are the same hexes as the `cyan-200`/`cyan-300` introduced in screen 20's CSS. Cyan matches the brand vocabulary and how the color is actually used (action / "you"), so the cyan name is canonical going forward. The blue names should be aliased or renamed to cyan in a single sweep of `styles.css`; until that sweep lands, treat any `blue-200` / `blue-400` reference in older screens as the same color.
 
 #### Primitive tokens — dark text on accent
 
@@ -85,7 +88,9 @@ These are the hard-coded contrast-safe darks paired with each accent's soft fill
 | `yellow-text-dark` | `#8a6800` | yellow-400 soft fills |
 | `orange-text-dark` | `#9a5500` | orange-400 soft fills |
 | `pink-text-dark` | `#c0392b` | pink-400 soft fills (and as standalone error text) |
-| `blue-text-dark` | `#1a5170` | blue-200 / blue-400 soft fills (Needs work state) |
+| `cyan-text-dark` | `#0f7e99` | cyan-200 / cyan-300 soft fills (the brand cyans are too light for text). Parallels `green-text-dark`. |
+
+Retired: `blue-text-dark` (`#1a5170`) — paired with the retired `status-pending-*` surfaces (see Semantic tokens — actions & status). Only rendered on the deleted post-reveal-reflection and completed-topic screens.
 
 #### Semantic tokens — surfaces
 
@@ -125,10 +130,13 @@ These are the hard-coded contrast-safe darks paired with each accent's soft fill
 | `status-highlight` | `yellow-400` | Yellow reserved for highlight only |
 | `status-success-surface` | `green-400` (`#77eaaf`) | Completion fill — progress bars, left borders, checkmarks |
 | `status-success-text` | `green-text-dark` (`#157a46`) | Text/icons on or near green surfaces |
-| `status-pending-surface` | `rgba(159,236,250,0.40)` | "Needs work" state fill — Topic Row, Progress Row segment, status pill bg |
-| `status-pending-text` | `blue-text-dark` (`#1a5170`) | "Needs work" text/icons — WCAG AA on the surface above |
+| `action-you-surface` | `rgba(127,227,247,0.22)` | "You / action" soft fill — your-turn pill, the reveal's You answer bubble, ranking You chip |
+| `action-you-stroke` | `cyan-400` (`#3bb4d4`) | Stroke that pairs with cyan fills (e.g. the slider reveal's You marker) |
+| `action-you-text` | `cyan-text-dark` (`#0f7e99`) | Text/numbers on or near cyan fills (e.g. the slider reveal's You number) |
 
-**Naming note:** the token names use `pending` (the data-model lifecycle state). The user-facing label is "Needs work." Don't change the token name when displaying the label — they're two different layers.
+**Cyan semantic — "you / action":** cyan is the **"you / action / ready"** color. It is used for your-turn signals (your-turn pill, needs-you nudges), ready-to-reveal moments, and — on the reveal screen — the answers that belong to *you* (chat bubble, slider You marker + number, ranking You chip). It is the You-side counterpart to neutral white/gray for the partner side.
+
+**Retired (with the pending/resolved lifecycle):** `status-pending-surface` (`rgba(159,236,250,0.40)`) and `status-pending-text` (`#1a5170`). Verified unused by any surviving screen; the orphaned `body.page-18` (post-reveal-reflection) and `body.page-20` (completed-topic) CSS blocks that referenced them are removed in the same pass.
 
 #### Retired tokens — DO NOT USE
 
@@ -140,6 +148,11 @@ These are the hard-coded contrast-safe darks paired with each accent's soft fill
 | Raw `#157a46` | `status-success-text` |
 | `#1c7d3e` (used briefly on Progress, Settings toast) | `status-success-text` — retire this variant |
 | `#1a4d35` (DS v1.0 toast color) | Retire — use `status-success-text` |
+| `status-pending-surface` (`rgba(159,236,250,0.40)`) | Retired with the pending/resolved lifecycle. No replacement — divergence is the single "Worth a conversation" (orange) alignment state. |
+| `status-pending-text` (`#1a5170`) | Retired with the pending/resolved lifecycle. No replacement. |
+| `blue-text-dark` (`#1a5170`) | Retired (only paired with the retired `status-pending-*` surfaces). |
+| `blue-200` / `blue-400` (names) | Renamed to `cyan-200` / `cyan-300` (same hexes). See Naming reconciliation in primitives. |
+| Mostly aligned pill — `rgba(255,215,85,0.38)` · `yellow-text-dark` | Retired. Mostly is now the lighter green `rgba(150,241,198,0.42)` · `#2e7d52`. No yellow. |
 
 **Accessibility rule (load-bearing — has been violated before):** White text on `pink-400` (`#ff9191`) is approximately 1.75:1 contrast and fails WCAG AA. Never use this combination. The Destructive button uses `status-error-text` (dark) as its label on a `pink-400` fill. Any screen specifying white-on-pink-400 is wrong.
 
@@ -275,7 +288,7 @@ Every flow screen has a 56px screen header containing: back button (left-aligned
 
 Back button navigates to the previous screen in the flow. Device-level back gesture (Android back, iOS swipe-from-left) follows the same path. No screen requires a "confirm exit" dialog in V1.
 
-**Exceptions where back is hidden:** `swipeable-intro`, `sign-up`, `log-in`, `name-entry` (no back affordance — Apple back gesture only), `building-your-plan`, `alignment-reveal`, `post-reveal-reflection`, `home` (and all home base), `connection-error` (variant A).
+**Exceptions where back is hidden:** `swipeable-intro`, `sign-up`, `log-in`, `name-entry` (no back affordance — Apple back gesture only), `building-your-plan`, `alignment-reveal` (a reveal can't be un-revealed; it exits with `✕` to Topics), `home` (and all home base), `connection-error` (variant A).
 
 ### Modal navigation
 
@@ -524,14 +537,17 @@ Linear fill indicator. Three contexts: within-topic question progress, plan over
 
 #### Stacked variant — visual specification
 
-Used on Progress for per-category breakdowns. Multiple colored segments fill the track in order, with empty track representing "not started."
+Used on Progress for per-category breakdowns. Multiple colored segments fill the track in order, with empty track representing "not started." Segments mirror the alignment pill states once both partners have answered.
 
 | Segment | Color | Represents | UI label (in legend or context) |
 |---|---|---|---|
-| 1. Resolved | `status-success-text` (`#157a46`) | Both answered + user marked resolved | "We're good" |
-| 2. Pending | `status-pending-text` (`#1a5170`) | Both answered + reveal seen + user picked "needs more work" | "Needs work" |
-| 3. In progress | `action-primary` | Your turn or Waiting | "In progress" |
+| 1. Fully aligned | `status-success-text` (`#157a46`) | Both answered + current status Fully | "Fully aligned" |
+| 2. Mostly aligned | `#2e7d52` | Both answered + current status Mostly | "Mostly aligned" |
+| 3. Worth a conversation | `#995611` | Both answered + current status Worth | "Worth a conversation" |
+| 4. In progress | `action-primary` | Your turn or Waiting | "In progress" |
 | Remainder | Empty track | Not started | "Not started" |
+
+Segments read from the **current** (possibly overridden) alignment status — see [Editable alignment status + provenance](#editable-alignment-status--provenance). If a couple settles or reopens a topic, the corresponding segment moves accordingly.
 
 Track height: 8px for stacked (slightly taller than bare 6px because there's more information to read).
 
@@ -552,15 +568,15 @@ Small inline labels communicating status, category membership, count, or alignme
 | Category — selected | Filled `purple-500` · white text | Category name |
 | Status: your-turn | Filled `action-primary` · white text | "Your turn" |
 | Status: waiting | Neutral gray fill · `text-secondary` | "Waiting on [name]" |
-| Status: pending | `status-pending-surface` · `status-pending-text` | "Needs work" |
-| Status: resolved | `status-success-surface` · `status-success-text` | "✓ We're good" |
 | Status: locked | Subtle gray · `text-tertiary` | "🔒 Locked" |
 | Alignment: fully-aligned | `status-success-surface` · `status-success-text` | "🎉 Fully aligned" |
-| Alignment: mostly-aligned | `rgba(255,215,85,0.38)` · `yellow-text-dark` | "😌 Mostly aligned" |
-| Alignment: worth-conversation | `rgba(255,173,108,0.30)` · `orange-text-dark` | "🤔 Worth a conversation" |
+| Alignment: mostly-aligned | `rgba(150,241,198,0.42)` · `#2e7d52` | "😌 Mostly aligned" |
+| Alignment: worth-conversation | `rgba(255,173,108,0.34)` · `#995611` | "🤔 Worth a conversation" |
 | Count badge | Neutral gray pill | e.g. "5 topics" |
 
-The three alignment states (**Fully aligned · Mostly aligned · Worth a conversation**) are the visual half of the rollup — what each state *means* and how a topic gets mapped to one of them lives in [`alignment-logic.md`](alignment-logic.md). The doc also covers the **weakest-link override** (a single large disagreement can pull a topic down a level even when the weighted average is high) and the **deferral rule** (answers like *Decide later · Unsure · Haven't thought about it* land in Worth a conversation regardless of partner agreement). Surfaces that show these states (Topic List, Progress, Alignment Reveal, Post-Reveal Reflection, Completed Topic) all read from the same computed result; they never recompute on the client.
+The three alignment states (**Fully aligned · Mostly aligned · Worth a conversation**) are the visual half of the rollup — what each state *means* and how a topic gets mapped to one of them lives in [`alignment-logic.md`](alignment-logic.md). The doc also covers the **weakest-link override** (a single large disagreement can pull a topic down a level even when the weighted average is high) and the **deferral rule** (answers like *Decide later · Unsure · Haven't thought about it* land in Worth a conversation regardless of partner agreement). Surfaces that show these states (Topic List, Progress, Alignment Reveal) all read from the same computed result; they never recompute on the client.
+
+The alignment pill is also the **single shared status** for a topic post-reveal — the second pending/resolved axis is retired (the "Needs work / We're good" two-track from v2.0 is gone). The pill is user-editable via **settle** and **reopen**; see [Editable alignment status + provenance](#editable-alignment-status--provenance).
 
 #### Visual specification
 
@@ -577,7 +593,8 @@ The three alignment states (**Fully aligned · Mostly aligned · Worth a convers
 - Always `radius-full`.
 - Status pills are sentence case — "Your turn", not "YOUR TURN".
 - Alignment pills always include their emoji. Load-bearing for quick scanning on the reveal screen.
-- Maximum one status pill per topic row. Priority: your-turn > waiting > pending > resolved > locked.
+- Maximum one **action-phase** status pill per topic row. Priority: your-turn > waiting > locked. These describe where the topic is in its flow.
+- The post-reveal alignment pill (Fully / Mostly / Worth) is the single shared status once both partners have answered. It's the single source of truth for "where this topic stands" and is user-editable via settle/reopen — see [Editable alignment status + provenance](#editable-alignment-status--provenance).
 
 ### Avatar
 
@@ -731,6 +748,25 @@ The Daisy logo asset. Used at the "done" state on `building-your-plan`, on `name
 | Spacing below | `space-6` (24px) to next element, by default |
 
 If a new use needs a size outside the scale (e.g., a 128px hero treatment), add it as `daisy-xl` rather than introducing a one-off value.
+
+#### Reveal entrance — daisy crown + petal burst
+
+On `alignment-reveal` the daisy sits as a small crown above the eyebrow + title (~64px). On entrance:
+
+- The daisy **blooms** — scale 1 → 1.16 → 1 with a slight rotate, ~0.85s, spring easing (`cubic-bezier(.34,1.56,.64,1)`).
+- ~14 small **petals scatter** radially from the daisy and fade (~0.9s), tinted to the alignment state:
+
+  | State | Petal color | Gold accent (~1 in 5 petals) |
+  |---|---|---|
+  | Fully aligned | `green-400` (`#77eaaf`) | `yellow-400` (`#ffd755`) |
+  | Mostly aligned | `green-200` (`#96f1c6`) | `yellow-400` (`#ffd755`) |
+  | Worth a conversation | `orange-400` (`#ffad6c`) | `yellow-400` (`#ffd755`) |
+
+The burst fires for **every** state on entrance — agreement is not framed as the only "win," because reading where you actually differ is also a successful outcome.
+
+**Reduced motion:** the daisy is static; no bloom and no burst.
+
+**Revisit / completed mode** (the same screen serving a completed topic): static daisy; no burst. The bloom + burst are the reveal moment, not a returning-visit moment.
 
 ### Countdown Pill — NEW
 
@@ -1025,18 +1061,19 @@ The spotlight variant — used on `home` "Up next" and `prediction-card` list en
 
 #### States
 
-| State (data model) | UI label | Meaning | Left border | Opacity | Status pill text |
-|---|---|---|---|---|---|
-| `available` | — | Neither has answered | None | 100% | None |
-| `your-turn` | "Your turn" | Partner has answered; user hasn't | `action-primary` (3px) | 100% | "Your turn" |
-| `waiting` | "Waiting" | User answered; partner hasn't | `border-strong` (3px) | 100% | "Waiting on [name]" |
-| `pending` | "Needs work" | Both answered, user picked "needs more work" on reflection | `status-pending-surface` (3px) | 100% | "Needs work" |
-| `resolved` | "We're good" | User marked resolved on `post-reveal-reflection` | `status-success-surface` (3px) | 100% | "✓ We're good" |
-| `locked` | "Locked" | Paywall or time gate | None | `opacity-locked` (55%) | "🔒 Locked" |
+| State | Meaning | Left border | Opacity | Status pill text |
+|---|---|---|---|---|
+| `available` | Neither has answered | None | 100% | None |
+| `your-turn` | Partner has answered; user hasn't | `action-primary` (3px) | 100% | "Your turn" |
+| `waiting` | User answered; partner hasn't | `border-strong` (3px) | 100% | "Waiting on [name]" |
+| `fully-aligned` | Both answered; current status Fully | `status-success-surface` (3px) | 100% | "🎉 Fully aligned" |
+| `mostly-aligned` | Both answered; current status Mostly | `rgba(150,241,198,0.7)` (3px) | 100% | "😌 Mostly aligned" |
+| `worth-conversation` | Both answered; current status Worth | `rgba(255,173,108,0.55)` (3px) | 100% | "🤔 Worth a conversation" |
+| `locked` | Paywall or time gate | None | `opacity-locked` (55%) | "🔒 Locked" |
 
-Token names stay semantic (`status-pending-*`, `status-resolved-*`) so the data model and CSS stay coherent. The user-facing labels are display-only.
+The post-reveal states (`fully-aligned` / `mostly-aligned` / `worth-conversation`) are the current alignment status — possibly user-overridden via settle/reopen. See [Editable alignment status + provenance](#editable-alignment-status--provenance).
 
-(v1.0 had 5 states with "Complete." v2.0 splits Complete into Pending + Resolved to match the new post-reveal lifecycle.)
+(v1.0 had 5 states with "Complete." v2.0 split Complete into Pending + Resolved. v4 retires the Pending/Resolved second axis entirely — the alignment pill is the single shared post-reveal status.)
 
 #### Visual specification
 
@@ -1069,7 +1106,7 @@ Used on `topic-list` for the dense list view. Multiple rows live inside a single
 | Pressed state | `rgba(26,26,26,0.03)` row background |
 | Locked | No tap animation · no navigation · cursor default |
 
-States and colors match Topic Card. Sort priority within group: your-turn > available > waiting > pending ("Needs work") > resolved ("We're good") > locked.
+States and colors match Topic Card. Sort priority within group: your-turn > available > waiting > worth-conversation > mostly-aligned > fully-aligned > locked. (Post-reveal states sort by "needs the most attention" first, so a Worth topic floats above a Fully aligned one in the same group.)
 
 ### Topic Toggle Row — NEW
 
@@ -1167,87 +1204,136 @@ Single-select OR multi-select — same visual treatment, behavior is the only di
 - Don't add icons to answer options.
 - Don't put question text in ALL CAPS.
 
-### Reveal Box — single-select
+### Reveal answer chat bubbles — NEW
 
-Used on `alignment-reveal` for single-select question reveals. Always used as a pair — two boxes side by side.
+The reveal renders both partners' answers as a small chat. These are **distinct** from the screen-18 input components (which are still picker UIs) — on the reveal, the answers belong to *people*, and chat is the most legible frame for "Jordan said this, you said that." Used for single-select, multi-select, free-text answers, and for notes.
 
-#### Visual specification — each box
+#### Layout
 
-| Property | Value |
-|---|---|
-| Background | `surface-card` |
-| Border | `1.5px solid border-default` |
-| Border radius | `radius-lg` |
-| Padding | 14px |
-| Min height | 100px |
-| Width | `flex: 1` |
-| Gap between boxes | 10px |
+- **Jordan** (partner) bubble on the **left** with a small name label above.
+- **You** bubble on the **right** with a small name label above.
+- Bubbles align left/right inside a `chat-list` flex container; max width ~82%.
+- 10px gap between bubbles.
 
-#### Anatomy
+#### Visual specification
 
 | Element | Spec |
 |---|---|
-| Owner label | "YOU SAID" / "[NAME] SAID" · 11px DM Sans bold · ALL CAPS · `+0.05em` · `text-secondary` · 8px below |
-| Answer text | `body-sm` · `text-primary` · line-height 1.5 · verbatim |
+| Name label | 10px DM Sans bold · ALL CAPS · `+0.06em` · `text-tertiary` · 4px below · 0 6px horizontal padding |
+| Bubble — Jordan | `surface-card` (`#fff`) · `1px solid rgba(26,26,26,0.10)` · `border-bottom-left-radius: 5px` (tail) · other corners 16px |
+| Bubble — You | `action-you-surface` (`rgba(127,227,247,0.22)`) · `1px solid rgba(127,227,247,0.55)` · `border-bottom-right-radius: 5px` (tail) · other corners 16px |
+| Text | `body-sm` · `text-primary` (`#1a1a1a`) · line-height 1.5 |
+| Padding | 10px vertical · 14px horizontal |
+| Empty-note bubble | Italic · `text-tertiary` · bg `rgba(26,26,26,0.03)` · border `rgba(26,26,26,0.08)` — used when a note slot is empty |
 
 #### Rules
 
-- Always paired. Left = "You said". Right = partner. Never inverted.
-- Answer text is the user's verbatim selection — never paraphrased.
-- Always followed by a "For You Two" card on `alignment-reveal`.
+- Answer text is the partner's verbatim selection — never paraphrased.
+- Multi-select answers put their `ms-pill-shared` / `ms-pill-unique` pills *inside* the bubble (one bubble per person), with an `N in common` line centered below the pair. The shared pill is green (`rgba(119,234,175,0.32)` · `status-success-text`); the unique pill is neutral (`rgba(26,26,26,0.07)` · `text-primary`).
+- The chat treatment is reserved for the reveal screen. Don't use it for the input pickers on screen 18.
 
-### Reveal Box — multi-select — NEW
+### Slider reveal — two-marker comparison — NEW
 
-Used on `alignment-reveal` when the question type is multi-select. Same two-box container as single-select, different content layout.
+Distinct from the input Slider (which stays as specced for screen 18). The reveal shows where both partners landed on the same scale. Keeps its visual track — it is **not** a chat bubble — because the spatial comparison is the point.
 
-| Element | Spec |
-|---|---|
-| Container | Same as single-select Reveal Box |
-| Owner labels | "YOU SELECTED" / "[NAME] SELECTED" |
-| Content | Flex-wrap row of pill tags · 6px gap |
-| Shared pill (both selected) | `rgba(119,234,175,0.28)` bg · `status-success-text` · `radius-full` · 4px 10px padding · 12px DM Sans semibold |
-| Unique pill (this person only) | `rgba(26,26,26,0.07)` bg · `text-primary` · same shape/font |
-| Shared count badge | "X in common" · centered below both boxes · 12px DM Sans medium · `status-success-text` · 10px margin top · only shown if overlap > 0 |
-
-### Reveal Box — slider — NEW
-
-Used on `alignment-reveal` when the question type is slider. Does NOT use the two-box layout — it's a single full-width card.
+#### Visual specification
 
 | Property | Value |
 |---|---|
-| Container | `surface-card` · `radius-xl` · `shadow-md` · 20px padding · full width |
-| Values row | Left: user's value (Grandstander 28px bold · `action-primary`) + "You" label (11px DM Sans medium · `text-secondary`) · Right: partner's value (Grandstander 28px bold · `text-primary`) + "[name]" label |
-| Same-value state | Single centered value (Grandstander 28px bold · `status-success-text`) · "You both said {n}" label below in `status-success-text` 13px medium |
+| Container | `surface-card` · `radius-xl` · `shadow-md` · 18px padding · full width |
+| Marker position | **Value-mapped:** `(value − min) / (max − min) × 100%`. Low end of the range → left, high end → right. |
+| You marker | 14px circle · `cyan-300` (`#7fe3f7`) fill · `2px solid cyan-400` (`#3bb4d4`) · z-index 2 |
+| Jordan marker | 14px circle · white fill · `2px solid rgba(26,26,26,0.55)` · z-index 1 |
+| Range fill | Between the two markers · `rgba(127,227,247,0.30)` (faint cyan) · `radius-full` |
 | Track | 6px · `radius-full` · `rgba(26,26,26,0.10)` |
-| Range fill | `rgba(95,69,242,0.12)` between the two markers · omitted when same value |
-| Your marker | 14px circle · `action-primary` fill · z-index 2 |
-| Partner marker | 14px circle · white fill · `2px solid border-strong` · z-index 1 |
-| Same-value marker | Single 16px circle · `status-success-text` fill |
 | End labels | minLabel left · maxLabel right · `body-xs` · `text-tertiary` · 6px below track |
-| Delta label | Centered · 12px · different: "{n} apart" `text-tertiary` · same: "Same ✓" `status-success-text` medium · 12px below end labels |
+| Corner numbers | Lower value → left corner, higher value → right corner. You wins the right corner on a tie (whenever You ≥ Jordan). Grandstander 28px bold. |
+| You number | `cyan-text-dark` (`#0f7e99`) |
+| Jordan number | `text-primary` |
+| Delta label | Centered · 12px · "{n} apart" in `text-tertiary` (different) or "Same answer" in `status-success-text` medium (tie) · 10px below end labels |
+| Edge clamp | Markers/numbers clamp inward a few px at min and max so they don't clip the card edge. |
+
+#### Exact tie
+
+When You and Jordan picked the same value, the two markers **merge into a single marker**:
+
+- 18px circle · `cyan-300` fill · `2.5px solid text-primary` (`#1a1a1a`) ring · z-index 3.
+- Delta line reads **"Same answer"** in `status-success-text`, not "0 apart".
+- Both corner numbers still show; You is on the right.
+
+### Ranking reveal — per-item comparison — NEW
+
+Used on `alignment-reveal` when the question type is ranking. One card with one row per option, each row carrying both partners' rank chips.
+
+#### Visual specification
+
+| Property | Value |
+|---|---|
+| Container | `surface-card` · `radius-xl` · `shadow-md` · 12px padding · cursor pointer |
+| Row | 8px vertical · 10px horizontal · `radius: 10px` · flex space-between |
+| Row name | `body-sm` medium · `text-primary` · left |
+| Chip — You | `radius-full` · bg `rgba(127,227,247,0.28)` · text `cyan-text-dark` (`#0f7e99`) · Grandstander 15px bold · min 32px wide · 28px tall |
+| Chip — Jordan | `radius-full` · bg `rgba(26,26,26,0.07)` · text `text-primary` · same dimensions and font as You chip |
+| Row tint — gap 0 | bg `rgba(119,234,175,0.12)` (faint green) — both ranked this option identically |
+| Row tint — biggest gap | bg `rgba(255,173,108,0.13)` (faint orange) — the largest split in the topic |
+| Cue line | Below card · 12px · `text-tertiary` · "⇄ Ordered by your ranking · tap for Jordan's" / "⇄ Ordered by Jordan's ranking · tap for yours" |
+| Note line | Below cue · 12px · `text-secondary` · e.g. "Same call on Trust · biggest split on Cost." |
+
+#### Behavior
+
+- **Default sort:** by your rank, low → high.
+- **Tap the card:** re-sort by Jordan. Tap again returns to yours.
+- **Reflow:** FLIP animation — capture row tops before reorder, invert with `translateY`, transition `transform 0.42s cubic-bezier(.4,0,.2,1)` to 0.
+- **Reduced motion:** reorder is instant.
+- **Dimming:** chips for the partner you're *not* sorting by dim to ~0.5 opacity. So if the card is sorted by your ranks, Jordan's chips dim; tap to flip, and yours dim. Always clear whose order you're reading.
 
 ### For You Two Card — RENAMED (was AI Summary Card)
 
-The personalized couples synthesis that follows the Reveal Boxes on `alignment-reveal` and appears on `completed-topic`. (Generated for the couple from their answers; the framing is "for you two," not "this is AI.")
+The personalized couples synthesis that sits under the alignment pill on `alignment-reveal` and is shown in the same screen's revisit/completed mode. (Generated for the couple from their answers; the framing is "for you two," not "this is AI.")
+
+The card carries a **soft state tint** matched to the topic's alignment, with the **Venn mark** in the label as the recognizable wordless cue.
+
+#### Visual specification — state variants
+
+The tint follows the **computed** alignment state, not the current (possibly overridden) status. The card describes the answers; the pill describes the couple's current call.
 
 | Property | Value |
 |---|---|
-| Border | `1.5px dashed border-strong` |
+| Border | `1px solid` in the state color (see table below) |
+| Background | Faint state tint (see table below) |
 | Border radius | `radius-lg` |
-| Background | `rgba(26,26,26,0.02)` |
 | Padding | 16px |
 | Shadow | None |
-| Label | "✨ FOR YOU TWO" · 11px DM Sans bold · ALL CAPS · `+0.05em` · `text-secondary` · 8px below |
+| Label | Venn mark + "FOR YOU TWO" · 11px DM Sans bold · ALL CAPS · `+0.05em` · label ink `rgba(26,26,26,0.7)` · 8px below |
 | Body text | `body-sm` · `text-primary` · line-height 1.6 |
 | Spacing above | `space-3` |
 
+| State | Background | Border |
+|---|---|---|
+| Fully aligned | `rgba(119,234,175,0.14)` | `rgba(119,234,175,0.55)` |
+| Mostly aligned | `rgba(150,241,198,0.20)` | `rgba(150,241,198,0.70)` |
+| Worth a conversation | `rgba(255,173,108,0.15)` | `rgba(255,173,108,0.55)` |
+| Default (no state) | `rgba(26,26,26,0.03)` | `rgba(26,26,26,0.10)` |
+
+The default variant is the neutral fallback for any future placement without an alignment state (e.g. a "for you two" framing on a non-reveal surface).
+
+#### The Venn mark
+
+An inline SVG of two overlapping rings with the shared middle emphasized, rendered in the label-ink color so legibility never depends on the tint. Replaces the v1.0 `✨` on this card.
+
+```html
+<svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
+  <circle cx="9"  cy="12" r="6" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="15" cy="12" r="6" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.6"/>
+</svg>
+```
+
 #### Rules
 
-- The dashed border is part of the broader "supplemental / authored content" treatment, shared with Credibility Card and Resources Card. It is not — and never was, in v4 — a signal that the content is AI-generated; see the cross-cutting "Dashed border treatment" section.
-- The "✨" + the "for you two" label together mark this as a **personalized synthesis** (a reflection about *this couple*). They are not an AI flag — no styling in the app is used to denote AI authorship.
-- Synthesis input is all question texts + both partners' answers + both note texts.
-- Copy must be warm, specific, actionable. Never generic ("You have different views"). Never mentions AI.
+- Synthesis input is all question texts + both partners' answers + both note texts + the computed alignment result.
+- Copy must be warm, specific, actionable. Never generic ("You have different views"). Never mentions AI. Sentence case; no em dashes (matches the on-screen copy rule).
 - **Code/model boundary (load-bearing):** the alignment result is computed by code per [`alignment-logic.md`](alignment-logic.md). The model is handed that result plus both partners' answers and asked only to **narrate** it. The badge ("🎉 Fully aligned" / "😌 Mostly aligned" / "🤔 Worth a conversation") and the For You Two paragraph can therefore never disagree, because they read from the same upstream score. Generated once and cached; regenerated if a partner re-answers; never pre-written; with a templated fallback if generation fails. The model never decides the state.
+- **Tint vs. status:** the tint follows the **computed** state — even after a user has settled or reopened the topic (see [Editable alignment status + provenance](#editable-alignment-status--provenance)), the For You Two card keeps describing the answers as they landed. The change is captured by the pill and the provenance line, not by re-tinting this card.
 - **Medical-authority guardrail:** a personalized "for you two" synthesis must not visually borrow the "medically reviewed" authority that expert/authored content (e.g. the Topic Article and the Credibility Card) carries. The two stay distinguishable by their framing — "for you two" vs. "medically reviewed" — which is why no AI badge is needed.
 
 ### Prediction Card Header
@@ -1463,35 +1549,13 @@ Composed row showing one category's completion. Stacked vertically on `progress`
 
 Names rendered in Title Case verbatim. Order matches book.
 
-### Reflection Status Pill — NEW
+### Reflection Status Pill — RETIRED
 
-Interactive pill on `completed-topic` that shows current reflection state ("We're good" / "Needs work") and opens the selector when tapped.
+Previously interactive pill on `completed-topic` that toggled between "We're good" and "Needs work." Retired with the pending/resolved lifecycle. The single editable alignment status replaces it; on the reveal screen, the change control is the bottom status block ("Talked it through? Mark settled →" / "Still more to talk about? Reopen →"). See [Editable alignment status + provenance](#editable-alignment-status--provenance).
 
-| Property | Value |
-|---|---|
-| Pill | Standard Badge / Status Pill — resolved or pending variant |
-| Inline suffix | " · Tap to change" · `body-xs` · `text-tertiary` |
-| Tap behavior | Opens `post-reveal-reflection` 2-option selector |
+### Option Card — RETIRED
 
-### Option Card — NEW
-
-Selectable card used on `post-reveal-reflection`. Replaces older "Talk about it / Revisit later" pattern.
-
-| Property | Value |
-|---|---|
-| Background | `surface-card` |
-| Border (default) | `1.5px solid border-default` |
-| Border (selected) | `1.5px solid action-primary` + `0 0 0 3px rgba(95,69,242,0.12)` focus ring |
-| Border radius | `radius-xl` |
-| Shadow | `shadow-md` |
-| Padding | 16px vertical · 18px horizontal |
-| Layout | Emoji icon left (22px) · text block right · 14px gap |
-| Title | `label-lg` bold · `text-primary` |
-| Body | `body-xs` · `text-secondary` |
-| Press state | `transform: scale(0.99)` |
-| Gap between cards | 10px |
-
-Single-select. Tapping another deselects previous.
+Previously the selection card for the "We're good / Needs work" picker on `post-reveal-reflection`. The screen is deleted, so the component goes with it. No surviving screen used Option Card. If a future picker pattern needs a similar treatment, lift the spec from git history (commit prior to the post-reveal-reflection deletion) rather than reintroducing it here.
 
 ### Info Card ("How it works") — NEW
 
@@ -1614,14 +1678,15 @@ Additional links section at the end of `topic-article`. Uses the dashed border t
 
 In v1.0 the dashed border meant "AI-generated content." In v4 it's used on:
 
-- For You Two Card (personalized synthesis for the couple)
 - Credibility Card (authored by Dr. Daisy)
 - Resources Card (external links)
 - Prediction Card Header (sealed/special)
 
-The unifying meaning is **"supplemental or authored content distinct from the main flow"** — not strictly AI. v2.0 adopts this broader meaning. The dashed border tells the user: "this content was placed here intentionally and isn't part of the standard interaction."
+The unifying meaning is **"supplemental or authored content distinct from the main flow"** — not strictly AI. The dashed border tells the user: "this content was placed here intentionally and isn't part of the standard interaction."
 
-**No styling in the app is used to denote AI authorship.** The For You Two Card is generated content, but its distinctness is carried by what it *is* — a personalized synthesis about the couple, marked by ✨ + "for you two" — not by an AI badge. The Topic Article's "medically reviewed" framing carries expert authority the same way. The contrast between a generated reflection and expert content lives in framing ("for you two" vs. "medically reviewed"), never in a styling tell.
+The **For You Two Card** has moved out of this family. It now uses a soft, state-tinted surface with the Venn mark in its label (see [For You Two Card](#for-you-two-card--renamed-was-ai-summary-card)). The card was previously listed here for its dashed border; the move is documented in the CHANGELOG.
+
+**No styling in the app is used to denote AI authorship.** The For You Two Card is generated content, but its distinctness is carried by what it *is* — a personalized synthesis about the couple, marked by the Venn + "for you two" — not by an AI badge. The Topic Article's "medically reviewed" framing carries expert authority the same way. The contrast between a generated reflection and expert content lives in framing ("for you two" vs. "medically reviewed"), never in a styling tell.
 
 If a fifth use of the dashed treatment comes up that doesn't fit the supplemental/authored definition, it's a sign the treatment is being overused, not a sign to broaden again.
 
@@ -1634,26 +1699,54 @@ Two voice rules:
 
 The voice never apologizes for the app's existence. It can apologize for specific failures.
 
-### Topic lifecycle — "Needs work" vs "We're good"
-
-Every topic moves through this state machine. Internal state names (pending, resolved) are the data-model values. The labels in parentheses are what users actually see.
+### Topic lifecycle — answer flow, then a single editable status
 
 ```
-available → your-turn / waiting → (both submit) → reveal seen → post-reveal-reflection
-                                                                       ↓
-                                                            ┌──────────┴──────────┐
-                                                         resolved              pending
-                                                       ("We're good")       ("Needs work")
-                                                                                ↓
-                                                                       optional reminder
+available → your-turn / waiting → (both submit) → alignment-reveal
+                                                          ↓
+                                              alignment pill set by code
+                                          (Fully / Mostly / Worth a conversation)
+                                                          ↓
+                                                   user can settle / reopen
 ```
 
-- **`resolved`** (label: "We're good") means the user picked "We're good, mark resolved" on the post-reveal reflection screen. We're done with this topic for now.
-- **`pending`** (label: "Needs work") means the user picked "Needs more work" on the same screen. Optionally sets a reminder.
-- Both states appear in the Topic Row status pill, the Topic Card spotlight on Home, the Reflection Status Pill on Completed Topic, and the stacked bar segments on Progress.
-- These states are NOT shown on the Alignment Reveal screen itself — the reveal is just the reveal. Reflection happens on the screen after.
+The pending/resolved second axis from v2.0 ("Needs work" / "We're good") is retired. There is **one** status per topic: the alignment pill. Pre-reveal, action-phase pills (your-turn / waiting / locked) describe where the topic is in its flow. Post-reveal, the alignment pill is the single shared status — and it's user-editable. See [Editable alignment status + provenance](#editable-alignment-status--provenance) for the change mechanics, provenance string, and downstream impact.
 
-**Why two layers (data model + label):** "Pending" as a label sounds bureaucratic and doesn't match the brand voice. "Needs work" is honest and warm. But the data model needs stable state names that don't change when copy gets reworded. So the tokens, schema, and code use `pending`/`resolved`; only the displayed text uses the labels.
+### Editable alignment status + provenance
+
+One status per topic, shared between partners. By default it is the **computed** alignment from [`alignment-logic.md`](alignment-logic.md). Either partner can change it unilaterally and instantly, in both directions; this is the consent valve that keeps the "where do we stand?" answer in sync with how they actually feel.
+
+#### The two moves
+
+- **Reopen** — anything → **Worth a conversation**. One-tap consent valve: if either partner still wants to talk, it's worth a conversation. Available from any state.
+- **Settle** — restores the topic's **computed** value, with one exception: a topic whose computed value was Worth a conversation settles to **Mostly aligned** (a genuinely-divergent topic that's been talked through). So:
+
+  | Computed value | Reopened to | Settle returns to |
+  |---|---|---|
+  | Fully aligned | Worth | **Fully aligned** |
+  | Mostly aligned | Worth | **Mostly aligned** |
+  | Worth a conversation | (already Worth) | **Mostly aligned** *(cannot settle back to Worth; cannot jump to Fully)* |
+
+Either partner, anytime. No propose/confirm handshake. Instant and shared. The model never decides this — it's strictly user-driven. Fully aligned is **computed-only**: the only path to Fully is the answers landing there.
+
+#### Provenance
+
+When the current status differs from the computed status, show a provenance line in the bottom status block:
+
+> Computed: {original state}. {Name} {settled|reopened} this on {date}.
+
+Returning the topic to its computed value clears the provenance.
+
+#### Downstream
+
+- **Topic Row** / **Progress** / any list of topic states reads the **current** (possibly overridden) value. "Current standing" is what matters in those surfaces, not raw answer-alignment.
+- **For You Two Card** keeps describing the answers — its tint follows the **computed** state, so it never re-narrates itself when a couple settles or reopens. The card describes how they answered; the pill describes where they currently stand.
+- **Pre-reveal** there is no alignment pill yet; the topic shows action-phase pills only.
+
+#### Placement on `alignment-reveal`
+
+- The pill **at the top**, directly under the title, is the at-a-glance headline.
+- The change control lives in the **bottom status block**, after the answers and the synthesis — the considered moment, not the impulsive one. The same block carries the prompt, the echoed pill, the provenance line (when overridden), and the action link ("Talked it through? Mark settled →" or "Still more to talk about? Reopen →").
 
 ### Re-answer round mechanics
 
@@ -1662,7 +1755,7 @@ Either partner can initiate. Topic state during round:
 - Initiator's old reveal remains canonical until both have re-answered
 - Partner gets a push: "[name] wants to re-answer [topic]. Want to re-answer together?"
 - 14-day expiry. Nudges at day 7 and day 13.
-- If partner doesn't respond, round expires and topic returns to prior Completed state. Initiator's pending re-answers are discarded.
+- If partner doesn't respond, round expires and the topic returns to its prior alignment status (Fully / Mostly / Worth, including any settle/reopen override). Initiator's pending re-answers are discarded.
 
 Previous answers are retained server-side but not surfaced in UI for V1.
 
@@ -1670,7 +1763,7 @@ Previous answers are retained server-side but not surfaced in UI for V1.
 
 ## Screen index
 
-The 30 v4 screens (29 main + 1 sub-step). All references in this document use slugs; screen numbers are presentation only and may change.
+The 27 v4 screens. All references in this document use slugs; screen numbers are presentation only and may change. Numbers 21 and 23 are intentionally absent (the screens were folded into `alignment-reveal`'s revisit mode); a renumber is a separate deferred pass.
 
 | Slug | File | Section | Bottom nav |
 |---|---|---|---|
@@ -1694,9 +1787,7 @@ The 30 v4 screens (29 main + 1 sub-step). All references in this document use sl
 | `question` | 18-question.html | Topic flow | Hidden |
 | `waiting-for-partner` | 19-waiting-for-partner.html | Topic flow | Hidden |
 | `alignment-reveal` | 20-alignment-reveal.html | Topic flow | Hidden |
-| `post-reveal-reflection` | 21-post-reveal-reflection.html | Topic flow | Hidden |
 | `re-answer-flow` | 22-re-answer-flow.html | Topic flow | Hidden |
-| `completed-topic` | 23-completed-topic.html | Topic flow | Hidden |
 | `prediction-card` | 24-prediction-card.html | Special | Hidden |
 | `empty-home` | 25-empty-home.html | Empty states | Shown |
 | `empty-topic-list` | 26-empty-topic-list.html | Empty states | Shown |
@@ -1716,7 +1807,12 @@ Each screen file is its own spec. The design system documents foundations and co
 - **`status-error` and `status-success` bare tokens** — retired. Use `status-error-text` / `status-error-surface` / `border-error` and `status-success-text` / `status-success-surface`.
 - **Hardcoded greens `#1c7d3e` and `#1a4d35`** — retired. Use `status-success-text` (`#157a46`).
 - **"AI summary" card name** — renamed to "For you two."
-- **Topic state "Complete"** — split into pending (UI label: "Needs work") and resolved (UI label: "We're good").
+- **Topic state "Complete"** — v2.0 split it into pending ("Needs work") and resolved ("We're good"). v4 retires that split: alignment (Fully / Mostly / Worth) is the single post-reveal status, user-editable via settle/reopen.
+- **`post-reveal-reflection` and `completed-topic` screens** — removed. The completed-topic view is now `alignment-reveal`'s revisit mode; post-reveal-reflection is no longer a separate step.
+- **Reflection Status Pill, Option Card** — retired with the screens above. No replacement.
+- **`blue-text-dark`, `status-pending-surface`, `status-pending-text`, `blue-200`/`blue-400` token names** — retired. Cyan tokens (`cyan-200`/`cyan-300`/`cyan-400`/`cyan-text-dark`) carry the "you / action" semantic going forward.
+- **Mostly aligned pill yellow** (`rgba(255,215,85,0.38)` · `yellow-text-dark`) — retired in favor of the lighter green (`rgba(150,241,198,0.42)` · `#2e7d52`).
+- **Dashed treatment on For You Two Card** — moved to state-tinted treatment with the Venn mark.
 - **Slider 1–5 scale** — replaced with 1–10 scale and per-question end labels.
 - **Stats Row and Stats Card** — merged into single Stats Display component.
 - **Drag handle 4×36px** — standardized to 40×4px. (v1.0 had both.)
@@ -1729,9 +1825,9 @@ Each screen file is its own spec. The design system documents foundations and co
 - Note Textarea, Segment Toggle, Checkbox, OTP Input, Daisy Mark, Countdown Pill, Category Pill (universal components)
 - Article Nav Bar (navigation)
 - Inline Banner (feedback)
-- Topic Row, Topic Toggle Row, Reveal Box (multi-select), Reveal Box (slider), Credibility Card, Founding Member Card, Reflection Status Pill, Option Card, Info Card, Onboarding Nudge Card, Chaos Meter, "What Happens Next" Card, Article Byline, Sticky CTA Region, Emoji Feedback Block, Resources Card (app-specific components)
-- "Needs work" and "We're good" as the new UI labels for the post-reveal lifecycle states (data model unchanged: still `pending` and `resolved`)
-- Blue family for "Needs work" surface and text (`blue-text-dark` primitive added)
+- Topic Row, Topic Toggle Row, Reveal answer chat bubbles, Slider reveal (two-marker comparison), Ranking reveal (per-item comparison), Credibility Card, Founding Member Card, Info Card, Onboarding Nudge Card, Chaos Meter, "What Happens Next" Card, Article Byline, Sticky CTA Region, Emoji Feedback Block, Resources Card (app-specific components)
+- Single editable alignment status (settle / reopen with provenance) replaces the v2.0 "Needs work / We're good" second axis
+- Cyan token family (`cyan-200`/`cyan-300`/`cyan-400`/`cyan-text-dark`) — the "you / action" color, now load-bearing on the Alignment Reveal
 - Stacked Progress Bar variant
 - Per-question slider end labels (replaces fixed "Strongly disagree / agree")
 - Daisy Mark size scale (sm / md / lg)
@@ -1783,6 +1879,21 @@ This document does not have a version number. It is at HEAD. Changes are dated i
 ## CHANGELOG
 
 Date-stamped record of design system decisions. Add new entries at the top.
+
+### 2026-06-03 — Topic flow reshape: Alignment Reveal rebuild + lifecycle simplification
+
+Reconciliation pass after the Screen 20 rebuild and the screen-cleanup pass. Single ripple through the system:
+
+- **Alignment Reveal rebuilt result-first.** New components: chat bubble (Jordan left/white, You right/cyan), Slider reveal (value-mapped two-marker comparison with cyan You stroke + cyan-dark You number, You-wins-right tie corner, exact-tie merged marker + "Same answer"), Ranking reveal (per-item card with tap-to-reorder FLIP). Daisy crown blooms + petals scatter in the state color (Fully green, Mostly lighter green, Worth orange, ~1-in-5 gold). Bloom + burst fire for every state on entrance; reduced motion and revisit mode are static.
+- **For You Two card** dropped the dashed border and the ✨. New treatment: faint state-tinted background + soft state-colored border, with a **Venn mark** in label ink so legibility doesn't depend on the tint. Tint follows the **computed** state — the card describes the answers, even after the couple settles or reopens. ✨ is freed; the card no longer flags AI.
+- **Single editable alignment status replaces the pending/resolved second axis.** Pre-reveal, action-phase pills (your-turn / waiting / locked) carry the flow. Post-reveal, the alignment pill (Fully / Mostly / Worth) is the single shared status — user-editable via **settle** (Worth → Mostly; cannot jump straight to Fully) and **reopen** (anything → Worth). Either partner, unilaterally, instantly. Provenance line surfaces when the current status differs from the computed one: "Computed: {state}. {Name} {settled\|reopened} this on {date}."
+- **Pill table fixes.** Mostly aligned is now the **lighter green** (`rgba(150,241,198,0.42)` · `#2e7d52`), not yellow. Worth a conversation tightened to `rgba(255,173,108,0.34)` · `#995611`. The pending and resolved rows are removed.
+- **Cyan token family documented.** `cyan-200` (`#9decfa`), `cyan-300` (`#7fe3f7`), `cyan-400` (`#3bb4d4`), `cyan-text-dark` (`#0f7e99`). Semantic: cyan is the "you / action" color. The v1.0/v2.0 `blue-200`/`blue-400` share the same hexes as `cyan-200`/`cyan-300`; cyan is canonical going forward, with a one-pass `styles.css` rename flagged for the maintainer.
+- **Retired:** `Reflection Status Pill`, `Option Card`, `status-pending-surface`, `status-pending-text`, `blue-text-dark`, the Mostly-yellow pill values, and the dashed treatment on For You Two.
+- **Screens cut:** `post-reveal-reflection` (21) and `completed-topic` (23). The completed-topic view is now the revisit mode of `alignment-reveal`. Catalog numbers 21 and 23 are intentionally absent until a separate renumber pass.
+- **Dead CSS removed.** The orphaned `body.page-18` (post-reveal-reflection) and `body.page-20` (completed-topic) blocks in `styles.css` — 510 lines total — were removed after verifying no surviving screen references their selectors. Brace count balanced; spot grep clean.
+
+The model boundary is unchanged: code computes the alignment state per [`alignment-logic.md`](alignment-logic.md); the model only narrates it. The change above is *display* and *editability*, not computation.
 
 ### 2026-05-28 — Screen 08 Conversation Preview label + scope-line polish
 

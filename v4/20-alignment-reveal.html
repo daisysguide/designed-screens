@@ -677,9 +677,9 @@ function renderStatusBlock() {
 
   let provenance = '';
   if (isOverridden && overrideDate) {
-    const verb = currentState === 'conversation' ? 'reopened'
-               : currentState === 'mostly'       ? 'settled'
-               : 'updated';
+    // When overridden, currentState === 'conversation' means a reopen;
+    // anything else means a settle (per the rules in toggleStatus).
+    const verb = currentState === 'conversation' ? 'reopened' : 'settled';
     const origLabel = STATES[computedState].label;
     provenance = `<div class="status-provenance">Computed: ${origLabel}. You ${verb} this on ${fmtDate(overrideDate)}.</div>`;
   }
@@ -700,10 +700,17 @@ function renderStatusBlock() {
 }
 
 function toggleStatus() {
-  // Worth → Mostly aligned (settle).  Anything → Worth (reopen).
+  // Per alignment-logic.md:
+  //   Reopen — anything → Worth a conversation.
+  //   Settle — restores the computed value, except a Worth-computed topic settles to Mostly.
   let next;
-  if (currentState === 'conversation') next = 'mostly';
-  else                                  next = 'conversation';
+  if (currentState === 'conversation') {
+    // Settle.
+    next = (computedState === 'conversation') ? 'mostly' : computedState;
+  } else {
+    // Reopen.
+    next = 'conversation';
+  }
 
   currentState = next;
   overrideDate = (currentState === computedState) ? null : new Date();
