@@ -940,7 +940,6 @@
       <div class="component-tags">
         <span class="component-tag">List Row — value + chevron</span>
         <span class="component-tag">List Row — value, read-only</span>
-        <span class="component-tag">List Row — toggle</span>
         <span class="component-tag">List Row — toggle + subtext</span>
         <span class="component-tag">List Row — destructive</span>
         <span class="component-tag">List Row — purple action</span>
@@ -1225,9 +1224,15 @@ function closeUnlinkSheet() {
   }, 280);
 }
 function handleUnlink() {
-  // Demo: close sheet + partner detail; in production: deactivate pairing, mark slot Disconnected, return to Settings invite state.
+  // Demo: close sheet + pop the Partner detail push, then swap the Partner row
+  // to the Not linked variant so the user lands back in Settings ready to re-link
+  // via Screen 10. In production: deactivate pairing (never delete), mark the
+  // partner slot Disconnected, return to the same Settings invite-state UI.
   closeUnlinkSheet();
-  setTimeout(closePartnerDetail, 200);
+  setTimeout(() => {
+    closePartnerDetail();
+    setPartnerState('none');
+  }, 200);
 }
 
 /* ── Nudge frequency picker ── */
