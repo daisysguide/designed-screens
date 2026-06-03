@@ -537,7 +537,7 @@ Track height: 8px for stacked (slightly taller than bare 6px because there's mor
 
 #### Rules
 
-- Don't use percentages as the primary label — "8 of 23 topics" is more meaningful than "35%". Exception: the alignment score (72%) on Progress is a score, not a count.
+- Don't use percentages as the primary label — "8 of 23 topics" is more meaningful than "35%". Exception: the alignment score (72%) on Progress is a score, not a count. (How that score is computed: see [`alignment-logic.md`](alignment-logic.md) — the canonical home for per-question scoring and the topic-state rollup.)
 - At 0%, show the empty track with no fill.
 
 ### Badge / Status Pill
@@ -559,6 +559,8 @@ Small inline labels communicating status, category membership, count, or alignme
 | Alignment: mostly-aligned | `rgba(255,215,85,0.38)` · `yellow-text-dark` | "😌 Mostly aligned" |
 | Alignment: worth-conversation | `rgba(255,173,108,0.30)` · `orange-text-dark` | "🤔 Worth a conversation" |
 | Count badge | Neutral gray pill | e.g. "5 topics" |
+
+The three alignment states (**Fully aligned · Mostly aligned · Worth a conversation**) are the visual half of the rollup — what each state *means* and how a topic gets mapped to one of them lives in [`alignment-logic.md`](alignment-logic.md). The doc also covers the **weakest-link override** (a single large disagreement can pull a topic down a level even when the weighted average is high) and the **deferral rule** (answers like *Decide later · Unsure · Haven't thought about it* land in Worth a conversation regardless of partner agreement). Surfaces that show these states (Topic List, Progress, Alignment Reveal, Post-Reveal Reflection, Completed Topic) all read from the same computed result; they never recompute on the client.
 
 #### Visual specification
 
@@ -1245,6 +1247,7 @@ The personalized couples synthesis that follows the Reveal Boxes on `alignment-r
 - The "✨" + the "for you two" label together mark this as a **personalized synthesis** (a reflection about *this couple*). They are not an AI flag — no styling in the app is used to denote AI authorship.
 - Synthesis input is all question texts + both partners' answers + both note texts.
 - Copy must be warm, specific, actionable. Never generic ("You have different views"). Never mentions AI.
+- **Code/model boundary (load-bearing):** the alignment result is computed by code per [`alignment-logic.md`](alignment-logic.md). The model is handed that result plus both partners' answers and asked only to **narrate** it. The badge ("🎉 Fully aligned" / "😌 Mostly aligned" / "🤔 Worth a conversation") and the For You Two paragraph can therefore never disagree, because they read from the same upstream score. Generated once and cached; regenerated if a partner re-answers; never pre-written; with a templated fallback if generation fails. The model never decides the state.
 - **Medical-authority guardrail:** a personalized "for you two" synthesis must not visually borrow the "medically reviewed" authority that expert/authored content (e.g. the Topic Article and the Credibility Card) carries. The two stay distinguishable by their framing — "for you two" vs. "medically reviewed" — which is why no AI badge is needed.
 
 ### Prediction Card Header

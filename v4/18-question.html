@@ -393,7 +393,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     <div class="spec-card">
       <div class="spec-card-title">Topic Schema update</div>
       <table class="spec-table">
-        <tr><td><code>questions</code></td><td>Question[] · ordered array · <strong>3–5 questions per topic</strong> (dynamic N, matches the alignment-logic doc) · rendered in sequence on Screen 18 · step label and progress bar template off <code>questions.length</code></td></tr>
+        <tr><td><code>questions</code></td><td>Question[] · ordered array · <strong>3–5 questions per topic</strong> (dynamic N) · one of the questions is flagged as the <strong>spine</strong> (the most decision-relevant question, weighted heaviest and led with on the reveal — see <code>v4/alignment-logic.md</code>) · rendered in sequence on Screen 18 · step label and progress bar template off <code>questions.length</code></td></tr>
         <tr><td>Other fields</td><td>id, title, categoryId, articleContent, etc. (unchanged)</td></tr>
       </table>
     </div>
@@ -401,12 +401,14 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
     <div class="spec-card">
       <div class="spec-card-title">Question types — comparison</div>
       <table class="spec-table">
-        <tr><th>Type</th><th>Usage</th><th>Continue rule</th></tr>
-        <tr><td><code>single_select</code></td><td>Position questions (one option fits)</td><td>Disabled until 1 option selected; tapping the selected option deselects it</td></tr>
-        <tr><td><code>multi_select</code></td><td>Nuance questions (several may apply)</td><td>Disabled until ≥1 option selected</td></tr>
-        <tr><td><code>slider</code></td><td>Intensity / scale questions</td><td>Disabled until the user taps or drags the slider · ghosted thumb is an affordance, not a value</td></tr>
-        <tr><td><code>ranked_choice</code></td><td>Priority / preference order questions (e.g. "rank these from most to least important")</td><td><strong>Enabled on the presented order.</strong> No drag is required — the randomized initial order is a valid answer.</td></tr>
+        <tr><th>Type</th><th>Usage</th><th>Continue rule</th><th>Scoring</th></tr>
+        <tr><td><code>single_select</code> (ordered)</td><td>Sequence: timeframes, amounts, places on a spectrum</td><td>Disabled until 1 option selected; tapping the selected option deselects it</td><td>Closeness of the two chosen positions on the sequence — see <code>v4/alignment-logic.md</code></td></tr>
+        <tr><td><code>single_select</code> (unordered)</td><td>Discrete options with no inherent order</td><td>Same as ordered single-select</td><td>Match (1) / no-match (0), with optional partial-credit pairs — see <code>v4/alignment-logic.md</code></td></tr>
+        <tr><td><code>multi_select</code></td><td>Nuance questions (several may apply)</td><td>Disabled until ≥1 option selected</td><td>Weighted overlap (shared picks ÷ total distinct picks), per-item weights supported — see <code>v4/alignment-logic.md</code></td></tr>
+        <tr><td><code>slider</code></td><td>Intensity / scale questions</td><td>Disabled until the user taps or drags the slider · ghosted thumb is an affordance, not a value</td><td>Closeness of the two values, normalized; tolerance band proportional to the question's range — see <code>v4/alignment-logic.md</code></td></tr>
+        <tr><td><code>ranked_choice</code></td><td>Priority / preference order questions (e.g. "rank these from most to least important")</td><td><strong>Enabled on the presented order.</strong> No drag is required — the randomized initial order is a valid answer.</td><td>Rank-similarity (normalized Spearman footrule), position-agnostic, equal weighting by distance moved — see <code>v4/alignment-logic.md</code></td></tr>
       </table>
+      <div class="info-box" style="margin-top:12px;">All four types produce a 0–1 score that rolls up to a weighted topic average with the spine question weighted heaviest, mapped to one of three states (<strong>Fully aligned · Mostly aligned · Worth a conversation</strong>). The <strong>weakest-link override</strong> can pull a topic down a level even when the average is high. The optional note step is <strong>not scored</strong>. <strong>Presentation order:</strong> ranking and unordered single-select / multi-select render their options in randomized order (no implied "right" answer to anchor on); ordered single-select and sliders keep their fixed sequence (the order itself is the signal). <strong>Deferral answers</strong> (<em>Decide later · Unsure · Haven't thought about it</em>) are tagged so the question always lands in <em>Worth a conversation</em>, even if both partners pick the same one — agreeing to defer isn't alignment. Canonical home: <code>v4/alignment-logic.md</code>.</div>
     </div>
 
     <div class="spec-card">
@@ -465,7 +467,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Reorder animation</td><td>Smooth transition (<code>transform 0.2s cubic-bezier(0.4,0,0.2,1)</code>) when an item settles into a new slot. Under <code>prefers-reduced-motion: reduce</code> the transition becomes instant.</td></tr>
         <tr><td>Continue rule</td><td><strong>Enabled on the presented order.</strong> Don't force a drag — the randomized initial order is a valid answer.</td></tr>
         <tr><td>Answer stored</td><td><code>string[]</code> of option ids in the user-presented order (rank 1 = index 0)</td></tr>
-        <tr><td>Scoring</td><td>Defined in the alignment-logic doc (separate from this screen). The format shouldn't ship without its scoring defined — a rank-similarity measure where disagreement on the top-ranked item weighs heavily.</td></tr>
+        <tr><td>Scoring</td><td>Rank-similarity (normalized Spearman footrule) — <strong>position-agnostic</strong>, every position weighted equally by distance moved. Identical orderings score 1.0; reversed score 0.0. Chosen deliberately over a top-weighted variant: two partners who broadly agree on what matters, give or take some ordering, should read as aligned. See <code>v4/alignment-logic.md</code> for the full rule and rationale.</td></tr>
       </table>
     </div>
 

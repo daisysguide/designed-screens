@@ -334,7 +334,7 @@ body.page-17 .screen-root .rev-item.rev-show {
           <div class="legend-text">Answers diverge meaningfully on ≥1 question. No animation. Orange pill.</div>
         </div>
       </div>
-      <div class="info-box">Alignment is evaluated across all questions — not per question. One pill summarizes the whole topic. Emoji is load-bearing — sentence case only.</div>
+      <div class="info-box">Alignment is evaluated across all questions, not per question. One pill summarizes the whole topic. Emoji is load-bearing — sentence case only. The descriptions above are summaries; the canonical mapping (per-question 0–1 scoring, weighted rollup with the spine question heaviest, weakest-link override, deferral rule) lives in <code>v4/alignment-logic.md</code>.</div>
     </div>
 
     <div class="spec-card">
@@ -429,9 +429,12 @@ body.page-17 .screen-root .rev-item.rev-show {
         <tr><td>Label</td><td>"✨ FOR YOU TWO" · 11px DM Sans bold · ALL CAPS · <code>letter-spacing: +0.05em</code> · text-secondary · ✨ is part of the spec</td></tr>
         <tr><td>Body</td><td>14px DM Sans regular · text-primary · line-height 1.6</td></tr>
         <tr><td>Tone</td><td>Warm, specific, actionable. Never generic ("You have different views"). Never mentions AI.</td></tr>
-        <tr><td>AI input</td><td>All question texts + both partners' answers for all questions + both note texts (if present)</td></tr>
+        <tr><td>Model input</td><td>All question texts + both partners' answers + both note texts (if present) + the computed alignment result</td></tr>
+        <tr><td>Code/model boundary</td><td><strong>Code decides the alignment; the model only writes the words.</strong> Per <code>v4/alignment-logic.md</code>, the per-question 0–1 scores, the topic-state rollup, and any weakest-link override are all computed in code. The model is handed that result and asked only to narrate it, so the alignment pill ("🎉 Fully aligned" / "😌 Mostly aligned" / "🤔 Worth a conversation") and this paragraph can never disagree.</td></tr>
+        <tr><td>Generation</td><td>Generated once after both partners submit; cached; regenerated if either partner re-answers; never pre-written (the combinations are effectively infinite); templated fallback if generation fails.</td></tr>
+        <tr><td>Hardest type to narrate</td><td>Ranking. Two partners can rank the same items differently in ways that read as agreement ("you both put kindness first, split on independence") — the prompt needs extra care on ranking topics.</td></tr>
       </table>
-      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-top:12px;">AI summary endpoint now receives all 3 questions + both partners' answers for all questions + both note texts (if present). Previously only 1 Q+A pair was passed.</p>
+      <p style="font-size:13px;color:rgba(26,26,26,0.55);margin-top:12px;">Summary endpoint receives all questions + both partners' answers for all questions + both note texts (if present) + the computed alignment result. The dynamic question count (3–5 per topic) means the input length varies; the prompt accommodates the range. (Previously, only one Q+A pair was passed.)</p>
     </div>
 
     <div class="spec-card">
