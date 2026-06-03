@@ -96,43 +96,37 @@
 
     <div class="phone">
       <div class="phone-notch"></div>
-      <div class="phone-screen">
+      <div class="phone-screen" id="phone-screen" data-state="waiting">
 
-        <div class="center-block" id="center-block" data-state="waiting">
-
-          <!-- Animation slot — brand logo breathing on the cream screen -->
+        <!-- Status — top zone: logo, heading, one body line -->
+        <div class="waiting-status">
           <div class="waiting-anim" id="anim-slot">
             <div class="waiting-ring"></div>
             <img class="waiting-logo" src="../images/daisy.svg" alt="" aria-hidden="true">
           </div>
-
           <div class="waiting-heading" id="waiting-heading">Your part's done.</div>
-          <div class="waiting-body" id="waiting-body">Waiting on Jordan to finish their side. The reveal happens the moment you've both answered.</div>
+          <div class="waiting-body" id="waiting-body">Waiting on Jordan to finish their side.</div>
+        </div>
 
-          <div style="text-align:center;margin:8px 0 4px;">
-            <span style="font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;color:#5f45f2;cursor:pointer;">Change my answers</span>
-            <div id="edit-helper" style="font-size:12px;color:rgba(26,26,26,0.45);margin-top:4px;">You can edit until Jordan finishes.</div>
-          </div>
-
-          <!-- "In the meantime" lead-in + Poke (linked-waiting state) -->
-          <div class="poke-cluster" id="poke-cluster">
-            <div class="poke-lead">
-              <div class="poke-lead-label">In the meantime</div>
-              <div class="poke-lead-body">Jordan got a notification. If they need a nudge, you know what to do.</div>
-            </div>
+        <!-- Nudge — middle zone: one lead line + Poke (linked); Invite (unlinked) -->
+        <div class="waiting-nudge">
+          <!-- Linked-waiting cluster -->
+          <div class="poke-cluster" id="poke-cluster" style="width:100%;">
+            <div class="poke-lead" id="poke-lead">Jordan's been notified.</div>
             <button class="btn-poke" id="poke-btn" onclick="handlePoke()">Poke Jordan 👉</button>
-            <div class="poke-hint" id="poke-hint">Sends a push: <em>"Your partner is waiting. No pressure. (Pressure.)"</em></div>
+            <div class="poke-confirm" id="poke-confirm"></div>
           </div>
-
-          <!-- Invite CTA (unlinked state) -->
+          <!-- Unlinked cluster (just the invite button — body copy already carries the rationale) -->
           <div class="invite-cluster" id="invite-cluster" style="display:none;width:100%;">
             <button class="btn-poke" id="invite-btn" onclick="location.href='10-partner-linking.html'">Invite your partner →</button>
           </div>
-
         </div>
 
-        <!-- Back to home -->
-        <button class="btn-secondary" onclick="location.href='11-home.html'">Back to home</button>
+        <!-- Exits — bottom zone: Change my answers (link) above Back to home (button) -->
+        <div class="waiting-exits">
+          <span class="edit-link" id="edit-link">Change my answers</span>
+          <button class="btn-secondary" onclick="location.href='11-home.html'">Back to home</button>
+        </div>
 
       </div>
     </div>
@@ -160,32 +154,34 @@
 
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
+      <div class="info-box" style="margin-bottom:14px;">
+        <strong>Three-zone layout.</strong> The phone column splits into Status (top), Nudge (middle), and Exits (bottom), distributed with <code>margin-top: auto</code>. Status sits at the top with the logo + heading + one body line; the nudge floats in the middle (Poke or Invite); the exits anchor at the bottom ("Change my answers" link above "Back to home"). <strong>"Change my answers" lives in the Exits group</strong> now — it's a backward exit, not a setting tucked under the heading. There is no left-aligned element on the screen.
+      </div>
       <table class="spec-table">
         <tr><th colspan="2" style="text-align:left;">Linked-waiting state</th></tr>
-        <tr><td>Heading</td><td>"Your part's done." · Grandstander 24px bold · no lock emoji — the breathing logo carries the feeling, so the lock is redundant</td></tr>
-        <tr><td>Body</td><td>"Waiting on [partner name] to finish their side. The reveal happens the moment you've both answered." · partner name is dynamic</td></tr>
-        <tr><td>"In the meantime"</td><td><strong>Centered lead-in to the Poke</strong> (no card). 13px DM Sans 600 label "In the meantime" above a 14px body: "[Partner name] got a notification. If they need a nudge, you know what to do." Sits directly above the Poke button.</td></tr>
+        <tr><td>Heading (status)</td><td>"Your part's done." · Grandstander 24px bold · no lock emoji</td></tr>
+        <tr><td>Body (status)</td><td>"Waiting on [partner name] to finish their side." · <strong>one line.</strong> The second sentence about the reveal mechanic lived in copy but belongs in spec — moved to Behavior notes.</td></tr>
+        <tr><td>Nudge lead</td><td><strong>One line:</strong> "[Partner name]'s been notified." · 13px DM Sans regular · <code>text-tertiary</code>. The "In the meantime" label and the "If they need a nudge…" explainer were dropped — the line above the Poke is enough context.</td></tr>
         <tr><td>Poke label</td><td>"Poke [partner name] 👉" · name is dynamic · 👉 emoji is part of the label</td></tr>
-        <tr><td>Poke push copy</td><td>"Your partner is waiting. No pressure. (Pressure.)" · <strong>exact copy · do not change</strong> · the humor is load-bearing</td></tr>
-        <tr><td>Edit affordance</td><td>"Change my answers" · helper: "You can edit until [partner name] finishes."</td></tr>
-        <tr><td>"Back to home"</td><td>Secondary button · always visible at bottom · routes to Screen 11</td></tr>
+        <tr><td>Poke confirm line</td><td><strong>Empty until tap.</strong> 13px DM Sans regular · <code>text-tertiary</code> · reserves space (<code>min-height: 1.2em</code>) so the layout doesn't shift when the punchline appears.</td></tr>
+        <tr><td>Push punchline (on tap)</td><td>The pre-tap "Sends a push: …" hint is gone. On tap, the punchline lands inside the confirm line: <strong>Sent. "No pressure. (Pressure.)"</strong> The "<em>No pressure. (Pressure.)</em>" wording is the exact push copy, preserved verbatim. Landing it on the action rather than pre-explaining lets the joke do its job.</td></tr>
+        <tr><td>Edit affordance (exits)</td><td>"Change my answers" · text link · <strong>no helper line</strong> · the link is self-explanatory; the edit-window detail moves to spec.</td></tr>
+        <tr><td>"Back to home" (exits)</td><td>Secondary button · sits under the Change-my-answers link · routes to Screen 11</td></tr>
         <tr><th colspan="2" style="text-align:left;padding-top:10px;">Unlinked variant</th></tr>
-        <tr><td>Heading</td><td>"Your answers are saved."</td></tr>
-        <tr><td>Body</td><td>"Invite your partner so they can answer their side, then you'll reveal together."</td></tr>
-        <tr><td>CTA</td><td>"Invite your partner →" · primary button · routes to Screen 10 (Partner Linking) · <strong>replaces</strong> the "In the meantime" lead-in and the Poke (both hidden in this state)</td></tr>
-        <tr><td>Edit affordance</td><td>"Change my answers" stays · helper reworded: "You can edit anytime before revealing."</td></tr>
-        <tr><td>"Back to home"</td><td>Stays · routes to Screen 11</td></tr>
+        <tr><td>Heading (status)</td><td>"Your answers are saved."</td></tr>
+        <tr><td>Body (status)</td><td>"Invite your partner so they can answer their side, then you'll reveal together." · carries the rationale that the nudge zone no longer states.</td></tr>
+        <tr><td>Nudge</td><td><strong>Just the Invite button.</strong> No lead line — the body copy above already says why. Routes to Screen 10 (Partner Linking).</td></tr>
+        <tr><td>Exits</td><td>"Change my answers" + "Back to home" · same zone as linked variant · no helper line on either state.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Edit my answers affordance</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Below the heading / body block · above the "In the meantime" lead-in (linked) or Invite CTA (unlinked)</td></tr>
+        <tr><td>Position</td><td><strong>Exits zone</strong> (bottom). Sits directly above "Back to home" — the two backward exits group together rather than getting separated by the nudge.</td></tr>
         <tr><td>Style</td><td>Text link · 14px DM Sans semibold · <code>purple-500</code></td></tr>
         <tr><td>Label</td><td>"Change my answers"</td></tr>
-        <tr><td>Helper text — linked</td><td>"You can edit until [partner name] finishes." · 12px · <code>text-tertiary</code> · below label</td></tr>
-        <tr><td>Helper text — unlinked</td><td>"You can edit anytime before revealing."</td></tr>
+        <tr><td>Helper text</td><td><strong>None.</strong> Prior helper lines ("You can edit until …" / "You can edit anytime before revealing.") were removed — the link is self-explanatory; the edit-window detail lives in Behavior notes.</td></tr>
         <tr><td>On tap</td><td>Routes through Screen 18 with previous answers pre-filled</td></tr>
         <tr><td>On submit</td><td>Returns to Screen 19 in Waiting state</td></tr>
       </table>
@@ -210,22 +206,26 @@
     <div class="spec-card">
       <div class="spec-card-title">Poke button</div>
       <table class="spec-table">
-        <tr><td>Lead-in</td><td><strong>"In the meantime" lead-in</strong> sits directly above the button (centered label + body). This used to be a separate boxed card; folded into the Poke as a lead-in so the whole center block reads as one thought.</td></tr>
+        <tr><td>Position</td><td><strong>Nudge zone</strong> (middle). One lead line above ("[Partner]'s been notified.") and the empty confirm line below; tapping fills the confirm line with the punchline.</td></tr>
         <tr><td>Default state</td><td>Primary style · 52px · <code>radius-full</code> · <code>purple-500</code> · "Poke [name] 👉"</td></tr>
-        <tr><td>After poke</td><td>Background changes to <code>rgba(26,26,26,0.07)</code> · label updates to "Poke sent ✓" · disabled for 1 hour · one poke per hour per topic · hint replaced by "[partner name] has been poked. You've done your part."</td></tr>
-        <tr><td>Push notification</td><td>"Your partner is waiting. No pressure. (Pressure.)" — sent to partner's device · fires immediately on tap</td></tr>
-        <tr><td>Auto-push</td><td>A notification is also sent automatically when this screen first loads — the Poke is an optional second nudge</td></tr>
-        <tr><td>Unlinked state</td><td><strong>Hidden</strong> — both the lead-in and the Poke disappear. The Invite CTA takes their place because there's nobody to poke.</td></tr>
+        <tr><td>After poke</td><td>Background changes to <code>rgba(26,26,26,0.07)</code> · label updates to "Poke sent ✓" · disabled for 1 hour · one poke per hour per topic.</td></tr>
+        <tr><td>Confirm line</td><td>The empty <code>.poke-confirm</code> slot fills with <strong>Sent. "No pressure. (Pressure.)"</strong> on tap — the joke now lands at the action rather than being pre-explained.</td></tr>
+        <tr><td>Push notification</td><td>"Your partner is waiting. No pressure. (Pressure.)" — sent to partner's device · fires immediately on tap. <strong>Exact wording preserved.</strong></td></tr>
+        <tr><td>Pre-tap push hint</td><td><strong>Removed.</strong> The "Sends a push: …" line is gone from the resting view — the gag works better as a payoff than a preview.</td></tr>
+        <tr><td>Auto-push</td><td>A notification also fires automatically when this screen first loads — the Poke is an optional second nudge.</td></tr>
+        <tr><td>Unlinked state</td><td><strong>Hidden</strong> — both the lead line and the Poke disappear. The Invite CTA takes their place because there's nobody to poke.</td></tr>
       </table>
-      <div class="info-box"><strong>The humor here is load-bearing.</strong> This is a potential drop-off point. The "(Pressure.)" callback is what makes this screen feel like the app has a personality rather than being another notification.</div>
+      <div class="info-box"><strong>The humor here is load-bearing.</strong> This is a potential drop-off point. Moving the "(Pressure.)" callback from a pre-tap explainer to the post-tap confirm gives it the timing of a joke instead of a description.</div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
+        <span class="component-tag">Three-zone layout (status / nudge / exits)</span>
         <span class="component-tag">Brand logo animation (breathe → bloom)</span>
         <span class="component-tag">Ring pulse / burst</span>
-        <span class="component-tag">Centered lead-in (label + body)</span>
+        <span class="component-tag">Nudge lead line (single, text-tertiary)</span>
+        <span class="component-tag">Poke confirm slot (fills on tap)</span>
         <span class="component-tag">Button — Primary (Poke)</span>
         <span class="component-tag">Button — Primary (Invite, unlinked variant)</span>
         <span class="component-tag">Button — Secondary (Back to home)</span>
@@ -236,12 +236,15 @@
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Three-zone layout.</strong> Phone column distributes status (top) / nudge (middle) / exits (bottom) via <code>margin-top: auto</code> on the nudge and exits — the page-16 <code>.phone-screen</code> flex override is scoped to this screen only. No other screen's phone layout is affected.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Reveal mechanic (was on-screen, now spec-only).</strong> The reveal happens the moment both partners have answered. The on-screen body line only needs to say what state the user is in ("Waiting on Jordan to finish their side."); the mechanic doesn't have to be promised in copy.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Edit window (was on-screen, now spec-only).</strong> Edits allowed until partner submits. Once partner submits, the topic transitions to "Ready to reveal" and the edit affordance is removed. If the user is mid-edit when the partner submits, the user finishes their edit; the partner's submit queues; reveal triggers only when both have a fresh submission. Unlinked variant: edits allowed anytime before revealing — no partner deadline to race.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Push notification auto-fires to partner the moment this screen loads. The Poke button is a second, manual nudge.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Poke limited to once per hour per topic to avoid spamming the partner.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Punchline on tap.</strong> The "(Pressure.)" callback lands in the <code>.poke-confirm</code> line after tap, not in a pre-tap explainer. Wording preserved verbatim: <em>Sent. "No pressure. (Pressure.)"</em></span></div>
         <div class="note-item"><div class="note-bullet"></div><span>When partner completes their answers, the app plays the bloom + ring burst, sends a push to the user, and navigates them to Screen 20 Alignment Reveal — even if they've left this screen and gone to Home.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Unlinked variant.</strong> If the user has no partner linked, "Invite your partner →" replaces the Poke cluster and routes to Screen 10 (Partner Linking). The logo still breathes (calm holding state); there's no resolve until a partner links and finishes.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Unlinked variant.</strong> If the user has no partner linked, "Invite your partner →" replaces the Poke nudge and routes to Screen 10 (Partner Linking). The logo still breathes (calm holding state); there's no resolve until a partner links and finishes.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Chrome exception.</strong> No ✕, no back chevron — this is a completion / hand-off, not an abandonable step. "Back to home" → Screen 11 is the single way to leave. <strong>Swipe-down also exits to Home.</strong> "Change my answers" → Screen 18 is the only backward path. No bottom nav.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Edits allowed until partner submits. Once partner submits, the topic transitions to "Ready to reveal" and the edit affordance is removed. If the user is mid-edit when the partner submits, the user finishes their edit; the partner's submit queues; reveal triggers only when both have a fresh submission.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Reduced motion.</strong> Under <code>prefers-reduced-motion: reduce</code>, the loop and the resolve are both disabled. The logo and ring render static. The reveal still triggers — there's just no animation between waiting and navigation.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Demo state switcher</strong> above the phone (Waiting · Unlinked · Resolve ▶) is doc-page only — not part of the product UI. Resolve plays the bloom, then auto-reverts to Waiting after ~2.2s so reviewers can replay.</span></div>
       </div>
@@ -265,40 +268,37 @@
 /* Demo-screen prototype — partner name is dynamic in production, hardcoded for demo. */
 const PARTNER_NAME = 'Jordan';
 
-/* ── Poke ── */
+/* ── Poke ── Punchline lands on tap, not before. Exact wording preserved. */
 let poked = false;
 function handlePoke() {
   if (poked) return;
   poked = true;
-  const btn  = document.getElementById('poke-btn');
-  const hint = document.getElementById('poke-hint');
+  const btn     = document.getElementById('poke-btn');
+  const confirm = document.getElementById('poke-confirm');
   btn.textContent = 'Poke sent ✓';
   btn.classList.add('sent');
-  hint.textContent = PARTNER_NAME + ' has been poked. You\'ve done your part.';
+  confirm.innerHTML = 'Sent. <em>"No pressure. (Pressure.)"</em>';
 }
 
 /* ── Demo state switcher ── */
 function setDemoState(state) {
-  const block        = document.getElementById('center-block');
+  const screen       = document.getElementById('phone-screen');
   const heading      = document.getElementById('waiting-heading');
   const body         = document.getElementById('waiting-body');
-  const editHelper   = document.getElementById('edit-helper');
   const pokeCluster  = document.getElementById('poke-cluster');
   const inviteCluster= document.getElementById('invite-cluster');
 
-  block.setAttribute('data-state', state);
+  screen.setAttribute('data-state', state);
 
   if (state === 'unlinked') {
-    heading.textContent    = 'Your answers are saved.';
-    body.textContent       = "Invite your partner so they can answer their side, then you'll reveal together.";
-    editHelper.textContent = 'You can edit anytime before revealing.';
+    heading.textContent = 'Your answers are saved.';
+    body.textContent    = "Invite your partner so they can answer their side, then you'll reveal together.";
     pokeCluster.style.display   = 'none';
     inviteCluster.style.display = '';
   } else {
     /* 'waiting' (or anything that falls back) */
-    heading.textContent    = "Your part's done.";
-    body.textContent       = 'Waiting on ' + PARTNER_NAME + " to finish their side. The reveal happens the moment you've both answered.";
-    editHelper.textContent = 'You can edit until ' + PARTNER_NAME + ' finishes.';
+    heading.textContent = "Your part's done.";
+    body.textContent    = 'Waiting on ' + PARTNER_NAME + ' to finish their side.';
     pokeCluster.style.display   = '';
     inviteCluster.style.display = 'none';
   }

@@ -4853,12 +4853,16 @@ body.page-16 .screen-root .phone-screen {
     display: flex; flex-direction: column;
   }
 
-body.page-16 .screen-root /* Centered content */
-  .center-block {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center;
+body.page-16 .screen-root /* Three-zone layout — Status (top) · Nudge (middle) · Exits (bottom).
+                              Separated by whitespace via margin-top: auto. */
+  .waiting-status,
+body.page-16 .screen-root .waiting-nudge,
+body.page-16 .screen-root .waiting-exits {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; width: 100%;
   }
+body.page-16 .screen-root .waiting-nudge { margin-top: auto; }
+body.page-16 .screen-root .waiting-exits { margin-top: auto; }
 
 body.page-16 .screen-root /* Waiting animation slot — brand-logo breathe → bloom */
   .waiting-anim {
@@ -4904,20 +4908,20 @@ body.page-16 .screen-root /* Heading */
 
 body.page-16 .screen-root .waiting-body {
     font-size: 15px; color: var(--text-secondary); line-height: 1.6;
-    margin-bottom: 24px; max-width: 280px;
+    max-width: 280px;
   }
 
-body.page-16 .screen-root /* "In the meantime" centered lead-in to the Poke (replaces the meantime card) */
-  .poke-lead { text-align: center; margin-bottom: 12px; }
-
-body.page-16 .screen-root .poke-lead-label {
-    font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;
+body.page-16 .screen-root /* Nudge zone — single-line lead above the Poke; tap fills the confirm line */
+  .poke-lead {
+    font-size: 13px; color: var(--text-tertiary);
+    margin-bottom: 14px; line-height: 1.5;
   }
 
-body.page-16 .screen-root .poke-lead-body {
-    font-size: 14px; color: var(--text-secondary); line-height: 1.5;
-    max-width: 280px; margin: 0 auto;
+body.page-16 .screen-root .poke-confirm {
+    font-size: 13px; color: var(--text-tertiary);
+    margin-top: 12px; min-height: 1.2em; line-height: 1.5;
   }
+body.page-16 .screen-root .poke-confirm em { font-style: normal; color: var(--text-secondary); }
 
 body.page-16 .screen-root /* Poke button */
   .btn-poke {
@@ -4925,7 +4929,7 @@ body.page-16 .screen-root /* Poke button */
     width: 100%; height: 52px; border-radius: var(--radius-full);
     background: var(--purple-500); color: white; border: none;
     font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
-    cursor: pointer; margin-bottom: 10px; transition: background 0.15s;
+    cursor: pointer; transition: background 0.15s;
   }
 
 body.page-16 .screen-root .btn-poke:hover { background: var(--purple-600); }
@@ -4934,15 +4938,13 @@ body.page-16 .screen-root .btn-poke.sent {
     background: rgba(26,26,26,0.07); color: var(--text-secondary);
   }
 
-body.page-16 .screen-root /* Poke hint */
-  .poke-hint {
-    font-size: 12px; color: var(--text-tertiary); text-align: center;
-    margin-bottom: 16px; line-height: 1.5; padding: 0 8px;
+body.page-16 .screen-root /* Exits zone — Change my answers (link) above Back to home (button) */
+  .edit-link {
+    display: inline-block; margin-bottom: 16px;
+    font-size: 14px; font-weight: 600; color: var(--purple-500); cursor: pointer;
   }
 
-body.page-16 .screen-root .poke-hint em { font-style: normal; color: var(--text-secondary); }
-
-/* "Back to home" — Secondary variant. Sits below the Poke button as the persistent exit; needs more weight than a low-emphasis ghost. */
+/* "Back to home" — Secondary variant. The persistent exit; needs more weight than a low-emphasis ghost. */
 body.page-16 .screen-root .btn-secondary {
     display: flex; align-items: center; justify-content: center;
     width: 100%; height: 48px; border-radius: var(--radius-full);
