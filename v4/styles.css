@@ -4644,11 +4644,6 @@ body.page-15 .screen-root .progress-fill {
     border-radius: var(--radius-full); transition: width 0.4s ease;
   }
 
-body.page-15 .screen-root .guide-link {
-    font-size: 12px; font-weight: 600; color: var(--text-secondary);
-    text-decoration: underline; text-underline-offset: 2px; cursor: pointer;
-  }
-
 body.page-15 .screen-root /* Question card */
   .question-card {
     background: var(--white); border-radius: var(--radius-xl);

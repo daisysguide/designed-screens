@@ -149,7 +149,7 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">Full expert guide per topic. Scrollable long-form. Pinned ‹/✕ chrome; context-aware sticky CTA always visible. Dr. Daisy, MD byline with photo.</div>
+<div class="page-desc page-desc-full">Full expert guide per topic. Scrollable long-form. Pinned ‹/✕ chrome; sticky "Start answering →" CTA always visible. Dr. Daisy, MD byline with photo.</div>
 
 <div class="main-layout">
 
@@ -274,7 +274,7 @@
 
         </div><!-- /scroll-area -->
 
-        <!-- Sticky CTA — context-aware label, always visible -->
+        <!-- Sticky CTA — "Start answering →", always visible -->
         <div class="sticky-cta">
           <button class="btn-primary">Start answering →</button>
         </div>
@@ -296,7 +296,7 @@
         <div class="flow-node dest">18 Question</div>
       </div>
       <div class="info-box">
-        <strong>‹ top-left</strong> = back one step — returns to <em>whatever pushed this screen</em>: Topic Intro when entered from 16, the Question when opened mid-question from 18. <strong>✕ top-right</strong> = exit the whole flow to Topic List. Sticky CTA forward path is context-aware (see Sticky CTA card). Also reachable mid-question via "Read guide" in Screen 18. <strong>No bottom nav.</strong>
+        <strong>‹ top-left</strong> = back one step — returns to Topic Intro (Screen 16), the only screen that pushes this article in v1. <strong>✕ top-right</strong> = exit the whole flow to Topic List. Sticky CTA forward path: "Start answering →" → Screen 18. <strong>No mid-question link back to the article in v1</strong> — Screen 18 no longer surfaces a "Read guide" affordance; the article is offered once in the natural flow on Screen 16. <strong>No bottom nav.</strong>
       </div>
     </div>
 
@@ -344,8 +344,7 @@
         <tr><td>Background</td><td>Gradient fade from transparent (top) to white (30%) — content scrolls under gracefully</td></tr>
         <tr><td>Padding</td><td>12px top · 20px sides · 24px bottom (+ safe area)</td></tr>
         <tr><td>Button</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> · <code>shadow-lg</code> to lift above content</td></tr>
-        <tr><td>Label · entered from intro</td><td>"Start answering →" — forward to Screen 18 Question</td></tr>
-        <tr><td>Label · entered mid-question</td><td><strong>"Return to questions →"</strong> — back to where they were in Screen 18. "Start" is wrong if they're already answering.</td></tr>
+        <tr><td>Label</td><td>"Start answering →" — forward to Screen 18 Question. Only one entry path in v1 (from Topic Intro), so the label is fixed; the earlier "Return to questions →" mid-question variant is no longer needed.</td></tr>
       </table>
     </div>
 
@@ -357,7 +356,7 @@
         <span class="component-tag">Epigraph</span>
         <span class="component-tag">Article body (sections + lists)</span>
         <span class="component-tag">Resources card (dashed · per-topic optional)</span>
-        <span class="component-tag">Button — Primary (sticky, context-aware)</span>
+        <span class="component-tag">Button — Primary (sticky, "Start answering →")</span>
       </div>
     </div>
 
@@ -365,8 +364,8 @@
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>Fully scrollable — no truncation, no "read more" expand. The full guide is always visible.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Sticky CTA is always visible — even mid-scroll. Users can jump to questions at any point without scrolling back to top. Label is context-aware: "Start answering →" when entered from Topic Intro, "Return to questions →" when opened mid-question from Screen 18.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>‹ top-left returns to <em>whatever pushed this screen</em> (Topic Intro from 16, the Question from 18) — not always 16.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Sticky CTA is always visible — even mid-scroll. Users can jump to questions at any point without scrolling back to top. Label is fixed: "Start answering →" — only one entry path in v1 (from Topic Intro 16).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>‹ top-left returns to Topic Intro (Screen 16) — the only screen that pushes this article in v1. The earlier "whatever pushed this screen" framing assumed a second entry path from the question flow, which has been retired.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>✕ top-right and swipe-down-from-top both exit the flow to Topic List. Swipe-down is gated to scroll-top + non-interactive gesture origin (matters here since the article scrolls). No confirm dialog.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Byline uses the real Dr. Daisy headshot at 42px, <code>object-fit: cover</code>. The author byline keeps a real photo — avatar removal is a partner-only convention.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Per-article emoji feedback is <strong>intentionally deferred</strong> as a future test. The guide now ends on its content, with the sticky CTA as the forward step.</span></div>

@@ -284,11 +284,6 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
           <div class="progress-fill" id="progress-fill" style="width:33%;"></div>
         </div>
 
-        <!-- Read guide link -->
-        <div style="display:flex;justify-content:flex-end;margin-bottom:12px;">
-          <div class="guide-link" id="guide-link">Read guide</div>
-        </div>
-
         <!-- Question / Note card -->
         <div class="question-card">
           <div id="q-text" class="question-text">Who would you trust to babysit regularly?</div>
@@ -338,7 +333,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <strong>‹ Back from Q[i &gt; 0]</strong> → Q[i-1].<br>
         <strong>‹ Back from Note step</strong> → Q[n-1].<br>
         <strong>✕ exit (top-right) and swipe-down</strong> → Topic List (Screen 14), from any question step or the note step. <strong>No confirm-exit dialog</strong>, with one exception: leaving mid-way through an unsaved free-text note gets a light save/discard check sheet.<br><br>
-        "Read guide" opens Screen 17 Article without losing progress. Back from Article returns to the same question. <strong>No bottom nav.</strong>
+        <strong>No mid-question link back to the article in v1.</strong> Reading the guide is offered once in the natural flow on Screen 16 (Topic Intro → Article → Questions); each question is meant to stand on its own. <strong>No bottom nav.</strong>
       </div>
     </div>
 
@@ -478,7 +473,6 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Top row</td><td><strong>Just ‹ back + "Note" label + ✕ exit.</strong> No "Optional" pill on the top bar — it was reading as part of the chrome rather than the affordance.</td></tr>
         <tr><td>Optional indicator</td><td>Quiet inline "Optional" pill <strong>next to the card heading</strong> (12px DM Sans, <code>border-default</code> outline, <code>text-secondary</code>). Signals optionality at the affordance itself, not in the chrome.</td></tr>
         <tr><td>Progress bar</td><td>100% fill (all questions done) · Note step does not extend the bar beyond full</td></tr>
-        <tr><td>"Read guide"</td><td>Remains visible — user can still review the article</td></tr>
         <tr><td>Heading — linked</td><td>"Anything else {firstName} should know?" (e.g. "Anything else Jordan should know?") · <code>display-sm</code> (Grandstander 20px bold) · <code>text-primary</code></td></tr>
         <tr><td>Heading — unlinked</td><td>"Anything else your partner should know?" — partner-name fallback</td></tr>
         <tr><td>Sub-line — linked</td><td>"{FirstName} sees this after you both complete this topic." (capitalized when sentence-leading)</td></tr>
@@ -528,7 +522,8 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <div class="note-item"><div class="note-bullet"></div><span>Never auto-advance on selection. User must explicitly tap the action button. This app is about considered decisions, not quick taps.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>N is dynamic.</strong> Topics carry 3–5 questions; the step indicator ("Q{i} of {N}") and progress bar both template off <code>topic.questions.length</code>. The screen makes no assumption about a fixed count.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Flow chrome:</strong> ‹ back-a-step (left), centered step label, ✕ exit to Topic List (right). Swipe-down from the top of the screen also exits, gated to "scrolled to top + gesture not on an interactive control." No confirm-exit dialog — except mid-way through an unsaved free-text note, which gets a light Save / Discard / Cancel sheet.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Back routing:</strong> Q[0] → Topic Intro (16). Q[i&gt;0] → Q[i-1]. Note → Q[n-1]. "Read guide" opens Screen 17 without losing progress and returns to the same question.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Back routing:</strong> Q[0] → Topic Intro (16). Q[i&gt;0] → Q[i-1]. Note → Q[n-1].</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>No mid-question link back to the article in v1.</strong> The article is offered in the natural flow on Screen 16 (Topic Intro → Article → Questions) and each question is meant to stand on its own. Cheaply re-addable later as a quiet icon if testing shows people reach for it.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Selection persists if the user taps ‹ back and returns to a question. Answers are saved client-side as the user progresses and committed to the server on Done.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Note step is the final step.</strong> Button label is <strong>"Done →"</strong>, not "Continue →" or "Submit →". Always enabled; an empty note is valid and saves as an empty string. The note is shared with the partner and surfaced at the reveal (Screens 20 / 21).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Optional indicator</strong> on the note step lives next to the card heading, not on the top bar. The top row stays clean (‹ Note ✕).</span></div>
@@ -555,7 +550,6 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <span class="component-tag">Step Indicator (Q{i} of {N})</span>
         <span class="component-tag">Optional pill (inline, next to heading)</span>
         <span class="component-tag">Button — Primary (Continue / Done)</span>
-        <span class="component-tag">Guide Link</span>
         <span class="component-tag">Back Chevron (‹)</span>
         <span class="component-tag">Exit Chevron (✕)</span>
         <span class="component-tag">Bottom Sheet — Save / Discard note</span>
