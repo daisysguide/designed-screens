@@ -317,7 +317,7 @@
           <button onclick="closeEditName()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
             <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
           </button>
-          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:17px;font-weight:700;color:#1a1a1a;">Edit name</span>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;">Edit name</span>
         </div>
         <!-- Content -->
         <div style="padding:32px 24px;">
@@ -336,7 +336,7 @@
           <button onclick="closePartnerDetail()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
             <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
           </button>
-          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:17px;font-weight:700;color:#1a1a1a;">Partner</span>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;">Partner</span>
         </div>
         <!-- Content -->
         <div class="push-scroll" style="padding:20px 16px;overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;">
@@ -449,7 +449,7 @@
           <button onclick="closeLifetime()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
             <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
           </button>
-          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:17px;font-weight:700;color:#1a1a1a;">Lifetime access</span>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;">Lifetime access</span>
         </div>
         <!-- Scrollable content -->
         <div class="push-scroll" style="overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;padding:20px 16px 32px;">
@@ -457,7 +457,7 @@
           <!-- Proud card -->
           <div style="background:rgba(95,69,242,0.08);border-radius:16px;padding:24px 20px;text-align:center;margin-bottom:24px;">
             <div style="display:inline-block;background:#5f45f2;color:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:5px 12px;border-radius:100px;margin-bottom:14px;">Founding member</div>
-            <div style="font-family:'Grandstander',cursive;font-size:22px;font-weight:700;color:#1a1a1a;line-height:1.2;margin-bottom:8px;">You're in for good.</div>
+            <div style="font-family:'Grandstander',cursive;font-size:24px;font-weight:700;color:#1a1a1a;line-height:1.25;margin-bottom:8px;">You're in for good.</div>
             <div style="font-size:14px;color:rgba(26,26,26,0.65);line-height:1.45;" data-partner-template="One purchase, lifetime access for {bothYouAnd}.">One purchase, lifetime access for both you and Jordan.</div>
           </div>
 
@@ -782,7 +782,7 @@
       <div class="spec-card-title">Partner detail sub-screen (Linked state only)</div>
       <table class="spec-table">
         <tr><td>Reached from</td><td>Partner row, <strong>Linked state only</strong></td></tr>
-        <tr><td>Nav bar</td><td>"‹ Back" <code>purple-500</code> 15px semibold · centered "Partner" title in Grandstander 17px bold</td></tr>
+        <tr><td>Nav bar</td><td>"‹ Back" <code>purple-500</code> 15px semibold · centered "Partner" title in <code>display-sm</code> (Grandstander 20px bold)</td></tr>
         <tr><td>Content</td><td>Partner name + linked status (no avatar) · "Unlink partner" action row with <code>status-error-text</code> label, no chevron, no value</td></tr>
         <tr><td>After unlink</td><td>Partner row swaps to the <strong>Not linked</strong> variant ("Invite your partner") so the user can re-link via Screen 10</td></tr>
       </table>
@@ -842,8 +842,8 @@
         <tr><td>Row value</td><td>"Founding member" · 13px DM Sans regular · <code>text-secondary</code> · static</td></tr>
         <tr><td>Chevron</td><td>Yes — row is navigable</td></tr>
         <tr><td>Position</td><td>Account section · between Phone number and Delete account</td></tr>
-        <tr><td>Detail nav bar</td><td>"‹ Back" <code>purple-500</code> 15px semibold · centered "Lifetime access" title in Grandstander 17px bold</td></tr>
-        <tr><td>Proud card</td><td>Light purple bg <code>rgba(95,69,242,0.08)</code> · <code>radius-xl</code> · solid-purple uppercase pill "Founding member" (white text on <code>#5f45f2</code>) · Grandstander headline "You're in for good." · sub: "One purchase, lifetime access for both you and Jordan."</td></tr>
+        <tr><td>Detail nav bar</td><td>"‹ Back" <code>purple-500</code> 15px semibold · centered "Lifetime access" title in <code>display-sm</code> (Grandstander 20px bold)</td></tr>
+        <tr><td>Proud card</td><td>Light purple bg <code>rgba(95,69,242,0.08)</code> · <code>radius-xl</code> · solid-purple uppercase pill "Founding member" (white text on <code>#5f45f2</code>) · headline "You're in for good." in <code>display-md</code> (Grandstander 24px bold) · sub: "One purchase, lifetime access for both you and Jordan."</td></tr>
         <tr><td>"What that covers"</td><td>White card · purple check icons · three rows:<br>1. Every topic in the library, plus everything we add down the line.<br>2. Both partners, one purchase. No second account to buy.<br>3. Nothing to renew or cancel.</td></tr>
         <tr><td>Thank-you note</td><td>Editorial, on cream, no card · last line a muted signature ("The Daisy's Guide team")</td></tr>
         <tr><td>Restore purchase</td><td>Standalone white-card row directly under the thank-you note · purple action label, no chevron · tap → restore flow (same spinner + green/dark toasts as before) · relocated from Account at the previous pass · no "Manage" section header (single row doesn't need one)</td></tr>
