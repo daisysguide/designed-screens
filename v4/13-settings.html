@@ -161,14 +161,23 @@
           <!-- Where you are -->
           <div class="section-header">Where you are</div>
           <div class="list-group">
-            <!-- Stage row — editable Q1 value -->
-            <div class="list-row" style="cursor:pointer;">
+            <!-- Stage row — opens stage picker -->
+            <div class="list-row" onclick="openStageSheet()" style="cursor:pointer;">
               <div class="row-label">Stage</div>
               <div class="row-value" id="stage-value">Pregnant</div>
               <div class="row-chevron">›</div>
             </div>
-            <!-- Date row — Q1-conditional, hidden for "Trying" -->
-            <div class="list-row" id="date-row" style="cursor:pointer;">
+
+            <!-- Stage-change inline note (purple band, attached inside the card; fires only when Stage actually changes) -->
+            <div id="stage-change-note" style="display:none;background:rgba(95,69,242,0.08);padding:12px 16px;border-bottom:1px solid rgba(26,26,26,0.06);">
+              <div style="display:flex;align-items:flex-start;gap:8px;">
+                <i class="ph ph-arrows-clockwise" style="color:#5f45f2;font-size:15px;line-height:1.2;flex-shrink:0;margin-top:1px;"></i>
+                <div style="font-size:12px;color:#5f45f2;line-height:1.45;">Your topics will re-sort to match.</div>
+              </div>
+            </div>
+
+            <!-- Date row — Q1-conditional, hidden for "Trying"; opens date picker -->
+            <div class="list-row" id="date-row" onclick="openDateSheet()" style="cursor:pointer;">
               <div class="row-label" id="date-label">Due date</div>
               <div class="row-value" id="date-value">Aug 14, 2026</div>
               <div class="row-chevron">›</div>
@@ -178,7 +187,7 @@
           <!-- Your plan -->
           <div class="section-header">Your plan</div>
           <div class="list-group">
-            <div class="list-row">
+            <div class="list-row" onclick="location.href='15-manage-topics.html'" style="cursor:pointer;">
               <div class="row-label">Manage topics</div>
               <div class="row-value">45 active</div>
               <div class="row-chevron">›</div>
@@ -371,6 +380,46 @@
         <button onclick="closeNudgeSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
       </div>
 
+      <!-- Stage picker overlay -->
+      <div id="stage-overlay" onclick="closeStageSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:20;"></div>
+
+      <!-- Stage picker bottom sheet -->
+      <div id="stage-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:21;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:16px;">Stage</div>
+        <div id="stage-options" style="display:flex;flex-direction:column;margin-bottom:16px;">
+          <div class="stage-option" data-value="Trying" onclick="selectStage('Trying')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="stage-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Trying</span>
+          </div>
+          <div class="stage-option" data-value="Pregnant" onclick="selectStage('Pregnant')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="stage-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Pregnant</span>
+          </div>
+          <div class="stage-option" data-value="Baby is here" onclick="selectStage('Baby is here')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="stage-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Baby is here</span>
+          </div>
+          <div class="stage-option" data-value="Expecting again" onclick="selectStage('Expecting again')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;">
+            <span class="stage-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Expecting again</span>
+          </div>
+        </div>
+        <button onclick="closeStageSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
+      <!-- Date picker overlay -->
+      <div id="date-overlay" onclick="closeDateSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:20;"></div>
+
+      <!-- Date picker bottom sheet (preview surrogate for the native iOS/Android date picker; constraints honor onboarding: Due date future-bounded, Birth date past-bounded with max today) -->
+      <div id="date-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:21;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div id="date-sheet-title" style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">Due date</div>
+        <div id="date-sheet-sub" style="font-size:12px;color:rgba(26,26,26,0.55);line-height:1.45;margin-bottom:16px;">Native date picker on device. Demo presets below honor the launch constraints.</div>
+        <div id="date-options" style="display:flex;flex-direction:column;margin-bottom:16px;"></div>
+        <button onclick="closeDateSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
       <!-- Lifetime access / Founding member overlay (full-screen push) -->
       <div id="lifetime-overlay" style="display:none;position:absolute;inset:0;background:#fbefe1;z-index:15;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);border-radius:inherit;overflow:hidden;">
         <!-- Nav bar -->
@@ -467,7 +516,7 @@
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">15 Manage Topics</div>
       </div>
-      <div class="info-box">Settings tab is active. <strong>Nudge frequency</strong> → picker bottom sheet (radio list, 4 options). <strong>Stage</strong> → picker (4 options matching onboarding Q1). <strong>Due date / Birth date</strong> → native date picker. <strong>Manage topics</strong> → Screen 15. <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
+      <div class="info-box">Settings tab is active. <strong>Nudge frequency</strong> → bottom-sheet picker (radio list). <strong>Stage</strong> → bottom-sheet picker (radio list, 4 options matching onboarding Q1) — selecting a different stage live-swaps the date row shape and fires the inline change note. <strong>Due date / Birth date</strong> → native date picker on device; bottom-sheet preset surrogate in the prototype. <strong>Manage topics</strong> → Screen 15 (wired). <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner</strong> → Partner detail sub-screen (push) → Unlink confirmation bottom sheet. <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
     </div>
 
     <div class="spec-card">
@@ -479,8 +528,8 @@
         <div class="settings-row">Nudge frequency <span class="settings-row-value">Value + chevron · tap → bottom-sheet picker (radio list) → Daily / A few times a week / Weekly / Don't nudge me · governs engagement reminders only (stalled topics) · "Don't nudge me" silences only this layer, not partner-activity events</span></div>
         <div class="settings-row">Funny push notifications <span class="settings-row-value">Toggle · On by default · tone layer (wry voice vs plain) — does not create standalone pushes</span></div>
         <div class="settings-section-label">Where you are</div>
-        <div class="settings-row">Stage <span class="settings-row-value">Editable Q1 value · row value reads "Trying" / "Pregnant" / "Baby is here" / "Expecting again" · chevron → picker · no subtext</span></div>
-        <div class="settings-row">Due date / Birth date <span class="settings-row-value">Q1-conditional · "Due date" (Pregnant, Expecting again) · "Birth date" (Baby is here) · row hidden for Trying · chevron → native date picker · no subtext</span></div>
+        <div class="settings-row">Stage <span class="settings-row-value">Value + chevron · tap → Stage picker bottom sheet (radio list, 4 options: Trying / Pregnant / Baby is here / Expecting again) · selecting a different stage swaps the date row shape and fires a quiet "Your topics will re-sort to match." inline note · no subtext on the row</span></div>
+        <div class="settings-row">Due date / Birth date <span class="settings-row-value">Value + chevron · tap → date picker (native on device; bottom-sheet surrogate in the prototype) · "Due date" (Pregnant, Expecting again, future-bounded max 12 months) · "Birth date" (Baby is here, past-bounded max today) · row hidden entirely for Trying · no Stage-change note on date edits · no subtext on the row</span></div>
         <div class="settings-section-label">Your plan</div>
         <div class="settings-row">Manage topics <span class="settings-row-value">→ Screen 15 · "45 active" count shown</span></div>
         <div class="settings-section-label">Partner</div>
@@ -538,12 +587,12 @@
 
     <div class="spec-card">
       <div class="spec-card-title">"Where you are" section — Stage row + date row</div>
-      <div class="info-box" style="margin-bottom:14px;">Renamed from "Pacing" — we're not shipping guided timelines / custom pacing at launch, so the section is no longer about how the app paces the user. It's just where the user reports where they are. Two rows, both editable, no subtext on either.</div>
+      <div class="info-box" style="margin-bottom:14px;">Renamed from "Pacing" — we're not shipping guided timelines / custom pacing at launch, so the section is no longer about how the app paces the user. It's just where the user reports where they are. Both rows are editable; neither carries a "why we ask" subtext.</div>
       <table class="spec-table">
         <tr><th>Row</th><th>Value</th><th>Behavior</th></tr>
-        <tr><td><strong>Stage</strong></td><td>"Trying" · "Pregnant" · "Baby is here" · "Expecting again"</td><td>Chevron → picker (4 options matching onboarding Q1) · selecting a stage updates the date row label/visibility · no "why we ask" subtext</td></tr>
-        <tr><td><strong>Due date</strong> (Pregnant, Expecting again)</td><td>Formatted date, e.g. "Aug 14, 2026"</td><td>Chevron → native date picker · max date: 12 months from today</td></tr>
-        <tr><td><strong>Birth date</strong> (Baby is here)</td><td>Formatted date, e.g. "Mar 3, 2025"</td><td>Chevron → native date picker · max date: today</td></tr>
+        <tr><td><strong>Stage</strong></td><td>"Trying" · "Pregnant" · "Baby is here" · "Expecting again"</td><td>Tap → Stage picker (bottom sheet, radio list — see "Stage picker" card)</td></tr>
+        <tr><td><strong>Due date</strong> (Pregnant, Expecting again)</td><td>Formatted date, e.g. "Aug 14, 2026"</td><td>Tap → date picker (native on device · future-bounded, max 12 months from today)</td></tr>
+        <tr><td><strong>Birth date</strong> (Baby is here)</td><td>Formatted date, e.g. "Mar 3, 2025"</td><td>Tap → date picker (native on device · past-bounded, max today)</td></tr>
         <tr><td><strong>Date row hidden</strong> (Trying)</td><td>—</td><td>No date is applicable until pregnancy or birth · row is hidden entirely, no placeholder</td></tr>
         <tr><td>Date format</td><td>"MMM D, YYYY"</td><td>e.g. "Aug 14, 2026"</td></tr>
         <tr><td>Value style</td><td>13px DM Sans regular · <code>text-secondary</code></td><td>Same as every other value row in Settings</td></tr>
@@ -551,11 +600,55 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Edits are non-destructive (deactivate, never delete)</div>
-      <div class="info-box">Editing Stage or date updates the inputs that drive topic sort + which topics surface. The change is <strong>non-destructive</strong>: it may surface newly-relevant topics, but it <strong>never</strong> removes a started or completed topic and <strong>never</strong> deletes answers or reveals. Same deactivate-never-delete principle as <a href="#" style="color:#5f45f2;text-decoration:none;">partner unlink</a>.
+      <div class="spec-card-title">Stage picker</div>
+      <table class="spec-table">
+        <tr><td>Trigger</td><td>Tapping the Stage row inside "Where you are"</td></tr>
+        <tr><td>Pattern</td><td>Bottom sheet · same structure as Nudge frequency / Account Deletion / Unlink sheets (drag handle · Grandstander 20px title · sheet body · Cancel ghost · swipe down / Cancel / tap outside to dismiss)</td></tr>
+        <tr><td>Title</td><td>"Stage"</td></tr>
+        <tr><td>Options</td><td>Four single-select radio rows in onboarding order: <strong>Trying</strong> · <strong>Pregnant</strong> · <strong>Baby is here</strong> · <strong>Expecting again</strong></td></tr>
+        <tr><td>Selected state</td><td>20px radio circle · <code>purple-500</code> border + filled <code>purple-500</code> inner dot when selected · <code>border-default</code> outline when not</td></tr>
+        <tr><td>On select</td><td>Update Stage row value · swap the date row to the new stage's shape (Pregnant / Expecting again → "Due date" · Baby is here → "Birth date" · Trying → date row hidden) · if Stage actually changed, fire the change note · dismiss sheet · single-tap commit, no Save button</td></tr>
+        <tr><td>Date carry-over</td><td>When the new stage uses the same date row label as the old one (Pregnant ↔ Expecting again, both "Due date"), the existing date value carries over unchanged · stage changes that swap label (Pregnant ↔ Baby is here) get the new stage's default date</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Conditional date row swap + Stage-change inline note</div>
+      <table class="spec-table">
+        <tr><th>Trigger</th><th>Result</th></tr>
+        <tr><td>Stage → Pregnant or Expecting again</td><td>Date row shown · label "Due date" · default value e.g. "Aug 14, 2026"</td></tr>
+        <tr><td>Stage → Baby is here</td><td>Date row shown · label "Birth date" · default value e.g. "Mar 3, 2025"</td></tr>
+        <tr><td>Stage → Trying</td><td>Date row hidden entirely (no placeholder)</td></tr>
+      </table>
+      <div class="info-box" style="margin-top:12px;">
+        <strong>Inline change note:</strong> when Stage <strong>actually changes</strong> (not on every picker open), the row attaches a quiet inline note inside the card directly under the Stage row:
         <ul style="margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.5;">
-          <li>No "Rebuilding your plan…" animation, no diff/results screen, no toast at launch — the change just applies silently.</li>
-          <li>Topics that <em>became</em> eligible appear in the topic list; topics that <em>became</em> ineligible <strong>stay</strong> if they're already started/completed, and the user can still revisit them.</li>
+          <li>Soft purple band (<code>rgba(95,69,242,0.08)</code> bg, <code>purple-500</code> text, refresh icon) · same in-card-warning pattern as the Partner activity off-warning, but in the brand-positive color rather than the warning orange.</li>
+          <li>Copy: "Your topics will re-sort to match."</li>
+          <li>Auto-dismisses after ~4 seconds. No tap-to-dismiss, no action button.</li>
+          <li>Note is <strong>Stage-only</strong> — date edits do not fire it. Selecting the same Stage twice does not fire it either.</li>
+          <li>This is not a confirmation step. The change has already applied; the note is a brief acknowledgement of what's happening underneath.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Date picker (Due date / Birth date)</div>
+      <table class="spec-table">
+        <tr><td>Trigger</td><td>Tapping the date row inside "Where you are"</td></tr>
+        <tr><td>Production behavior</td><td>Native iOS / Android date picker · constraints honor onboarding: <strong>Due date</strong> is future-bounded (max 12 months from today) · <strong>Birth date</strong> is past-bounded (max today)</td></tr>
+        <tr><td>Preview surrogate</td><td>Bottom sheet with three preset date rows so the prototype is functional. Sheet title mirrors the current row label ("Due date" or "Birth date"); subtext names the constraint. Presets are realistic dates within the allowed range. Selecting one updates the row value and dismisses the sheet. The wheel/calendar grid itself is intentionally not mocked — it's a native control on device.</td></tr>
+        <tr><td>On select</td><td>Update date row value · dismiss sheet · <strong>no</strong> Stage-change note (Stage didn't change). The non-destructive re-sort still happens silently underneath.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Edits are non-destructive (deactivate, never delete)</div>
+      <div class="info-box">Editing Stage or date updates the inputs that drive topic sort + which topics surface, and the topic list re-sorts silently underneath. The change is <strong>non-destructive</strong>: it may surface newly-relevant topics, but it <strong>never</strong> removes a started or completed topic and <strong>never</strong> deletes answers or reveals. Same deactivate-never-delete principle as <a href="#" style="color:#5f45f2;text-decoration:none;">partner unlink</a>.
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.5;">
+          <li>At most a quiet inline "Your topics will re-sort to match." note for Stage changes. No "Rebuilding your plan…" animation, no diff/results screen, no full-screen confirmation. Never a hard confirm step.</li>
+          <li>Date edits get no inline note — the re-sort still happens silently, but a date adjustment isn't a stage-level shift worth surfacing.</li>
+          <li>Topics that <em>became</em> eligible appear in the topic list; topics that <em>became</em> ineligible <strong>stay</strong> if they're already started or completed, and the user can still revisit them via Manage Topics.</li>
           <li>Prediction Cards eligibility is recomputed (see Screen 24).</li>
           <li>V1.1 may add a "Rebuilding your plan…" animation (reusing Screen 03's animation) and a diff screen showing what changed — out of scope for V1.</li>
         </ul>
@@ -745,7 +838,9 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Funny push notifications</strong> is a tone layer — it changes the voice of notifications that already fire (wry vs plain). It does not create standalone pushes.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>OS-permission-denied banner</strong> uses the soft orange band, not error red — the user hasn't done anything wrong, the system state is just blocking pushes.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>"Where you are"</strong> replaces "Pacing." Two rows, both editable, no "why we ask" subtext: <strong>Stage</strong> (Q1 value — Trying / Pregnant / Baby is here / Expecting again) and a Q1-conditional date row (Due date / Birth date / hidden for Trying). The Guided-timeline toggle and "I'm in a different stage now" action row are both gone — we're not shipping guided timelines / custom pacing at launch.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Editing Stage or date is non-destructive</strong> — same deactivate-never-delete principle as partner unlink. New stage may surface newly-relevant topics, but it never removes a started or completed topic and never deletes answers or reveals. No plan-rebuild screen at launch.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Stage picker</strong> — tap the row to open a bottom-sheet radio list (Trying / Pregnant / Baby is here / Expecting again). Selecting a different stage live-swaps the date row shape (Pregnant or Expecting again show "Due date"; Baby is here shows "Birth date"; Trying hides the date row) and attaches a quiet "Your topics will re-sort to match." note inside the card directly under the Stage row. The note is Stage-only (date edits don't fire it) and only fires when Stage actually changes. Auto-dismisses after ~4s.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Date picker</strong> — tap the date row to open the picker. On device this is the native iOS / Android date picker with the onboarding constraints carried over: Due date future-bounded (max 12 months from today), Birth date past-bounded (max today). The prototype uses a bottom-sheet preset surrogate so the demo is functional — the wheel itself isn't mocked because it's a native control.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Editing Stage or date is non-destructive</strong> — same deactivate-never-delete principle as partner unlink. New stage may surface newly-relevant topics, but it never removes a started or completed topic and never deletes answers or reveals. The topic list re-sorts silently underneath. No plan-rebuild screen at launch; at most the quiet inline Stage-change note.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Name</strong> appears at the top of Account — it's the most personal and frequently referenced field. Tapping pushes a lightweight edit screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Phone number</strong> is read-only — identity confirmation only, no chevron, no edit flow. The label varies by auth path (Phone / Email / Connected with Apple / Connected with Google) but the row is read-only in every case.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Lifetime access</strong> sits between Phone number and Delete account. It's a navigable row whose detail screen is part receipt, part thank-you, and part home for Restore purchase + Terms + privacy.</span></div>
@@ -753,8 +848,9 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Unlink</strong> deactivates the pairing rather than deleting it. Re-linking the same partner reactivates the same pairing and restores all prior reveals; linking a new partner creates a fresh pairing.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Log out</strong> uses <code>status-error-text</code> label (dark red on white) — destructive list rows use this same treatment for WCAG AA compliance.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Delete account</strong> is placed above Log Out — it is more permanent and warrants its own bottom sheet confirmation before anything happens.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Bottom sheets (Account Deletion, Unlink, Nudge frequency picker) and push sub-screens (Edit name, Partner detail, Lifetime access) are interactive in the preview — tap their entry rows to open. Swipe down, tap Cancel, or tap the overlay to dismiss sheets; "‹ Back" pops push screens. The Nudge frequency picker single-tap-commits: selecting a row updates the value and closes the sheet, no separate Save.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab above the phone updates both rows in "Where you are": Stage row value (Trying / Pregnant / Baby is here) and the date row (label, value, and visibility). The "Push permission" tab toggles the OS-denied banner state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Manage topics</strong> row now navigates to Screen 15 in the prototype (wired alongside the Stage + date pickers).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Bottom sheets (Account Deletion, Unlink, Nudge frequency picker, Stage picker, Date picker) and push sub-screens (Edit name, Partner detail, Lifetime access) are all interactive in the preview — tap their entry rows to open. Swipe down, tap Cancel, or tap the overlay to dismiss sheets; "‹ Back" pops push screens. Nudge / Stage / Date pickers all single-tap-commit: selecting a row updates the value and closes the sheet, no separate Save.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>The Q1 tab strip above the phone is a <strong>demo control</strong> for previewing the three Stage variations quickly — it resets both rows (Stage value + date row label/value/visibility) and intentionally does <strong>not</strong> fire the inline Stage-change note (the note is for real user edits via the Stage picker, not for demo-state resets). The "Push permission" tab toggles the OS-denied banner state.</span></div>
       </div>
     </div>
 
@@ -791,7 +887,9 @@
         <span class="component-tag">Bottom Sheet — Unlink confirmation</span>
         <span class="component-tag">Bottom Sheet — Nudge frequency picker</span>
         <span class="component-tag">Bottom Sheet — Stage picker</span>
+        <span class="component-tag">Bottom Sheet — Date picker (preview surrogate for native)</span>
         <span class="component-tag">Radio row (single-select, purple-500 selected dot)</span>
+        <span class="component-tag">Inline change note (purple band, in-card, auto-dismiss)</span>
         <span class="component-tag">Sub-screen — Edit Name (push)</span>
         <span class="component-tag">Sub-screen — Partner detail (push)</span>
         <span class="component-tag">Sub-screen — Founding member (push)</span>
@@ -826,7 +924,65 @@ body.page-23 .screen-root .push-scroll { scrollbar-width: none; -ms-overflow-sty
 body.page-23 .screen-root .push-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
 </style>
 <script>
-/* ── Q1 tab: controls Stage row + date row in the "Where you are" section ── */
+/* ── "Where you are": Stage row + date row interactions ──
+ * applyStage(stage, opts) is the single source of truth for the section's state.
+ * opts.notify: show the "Your topics will re-sort to match." inline note when
+ *              Stage actually changed (Stage picker uses true; Q1 demo tabs use
+ *              false because tab clicks are a demo-state reset, not a user edit).
+ * opts.silentDateReset: when true, replace the date with the stage's default
+ *              demo value (used by the Q1 demo tabs); when false, keep whatever
+ *              date is showing on a same-shape transition (Pregnant <-> Expecting
+ *              again both use a Due date row, so the date carries over).
+ */
+const STAGE_DEFAULT_DATE = {
+  'Pregnant':        { label: 'Due date',   value: 'Aug 14, 2026' },
+  'Expecting again': { label: 'Due date',   value: 'Aug 14, 2026' },
+  'Baby is here':    { label: 'Birth date', value: 'Mar 3, 2025'  },
+  'Trying':          { label: null,         value: null            }
+};
+
+function applyStage(stage, opts) {
+  opts = opts || {};
+  const stageEl = document.getElementById('stage-value');
+  const prev    = stageEl.textContent.trim();
+  const changed = prev !== stage;
+  stageEl.textContent = stage;
+
+  const row    = document.getElementById('date-row');
+  const labelEl = document.getElementById('date-label');
+  const valueEl = document.getElementById('date-value');
+  const cfg    = STAGE_DEFAULT_DATE[stage];
+
+  if (!cfg.label) {
+    row.style.display = 'none';
+  } else {
+    row.style.display = '';
+    // If the previous stage shared the same date label and we're not on a hard
+    // demo reset, keep the current date so the user doesn't lose what they set.
+    const prevCfg     = STAGE_DEFAULT_DATE[prev] || { label: null };
+    const sameShape   = prevCfg.label === cfg.label;
+    if (opts.silentDateReset || !sameShape) {
+      labelEl.textContent = cfg.label;
+      valueEl.textContent = cfg.value;
+    } else {
+      labelEl.textContent = cfg.label;
+    }
+  }
+
+  if (opts.notify && changed) showStageChangeNote();
+}
+
+let stageNoteTimer = null;
+function showStageChangeNote() {
+  const note = document.getElementById('stage-change-note');
+  note.style.display = 'block';
+  clearTimeout(stageNoteTimer);
+  stageNoteTimer = setTimeout(() => { note.style.display = 'none'; }, 4000);
+}
+
+/* Q1 demo tab strip — reset section state for previewing variations.
+ * Idx 0 = Pregnant, 1 = Baby is here, 2 = Trying.
+ * Demo trigger, so { notify: false, silentDateReset: true }. */
 function setQ1(idx) {
   [0, 1, 2].forEach(i => {
     const btn = document.getElementById('q1tab-' + i);
@@ -835,24 +991,87 @@ function setQ1(idx) {
     btn.style.color         = active ? 'white'   : 'rgba(26,26,26,0.55)';
     btn.style.borderColor   = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
   });
-  const stage = document.getElementById('stage-value');
-  const row   = document.getElementById('date-row');
-  const label = document.getElementById('date-label');
-  const value = document.getElementById('date-value');
-  if (idx === 0) {
-    stage.textContent    = 'Pregnant';
-    row.style.display    = '';
-    label.textContent    = 'Due date';
-    value.textContent    = 'Aug 14, 2026';
-  } else if (idx === 1) {
-    stage.textContent    = 'Baby is here';
-    row.style.display    = '';
-    label.textContent    = 'Birth date';
-    value.textContent    = 'Mar 3, 2025';
-  } else {
-    stage.textContent    = 'Trying';
-    row.style.display    = 'none';
-  }
+  const stages = ['Pregnant', 'Baby is here', 'Trying'];
+  // Hide any lingering change note from a previous user edit.
+  document.getElementById('stage-change-note').style.display = 'none';
+  applyStage(stages[idx], { notify: false, silentDateReset: true });
+}
+
+/* Stage picker bottom sheet */
+function openStageSheet() {
+  const current = document.getElementById('stage-value').textContent.trim();
+  document.querySelectorAll('#stage-options .stage-option').forEach(opt => {
+    const selected = opt.getAttribute('data-value') === current;
+    const radio    = opt.querySelector('.stage-radio');
+    radio.style.borderColor = selected ? '#5f45f2' : 'rgba(26,26,26,0.20)';
+    radio.innerHTML         = selected ? '<span style="width:10px;height:10px;border-radius:50%;background:#5f45f2;display:block;"></span>' : '';
+  });
+  document.getElementById('stage-overlay').style.display = 'block';
+  const s = document.getElementById('stage-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeStageSheet() {
+  const s = document.getElementById('stage-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('stage-overlay').style.display = 'none';
+  }, 280);
+}
+function selectStage(value) {
+  applyStage(value, { notify: true, silentDateReset: false });
+  closeStageSheet();
+}
+
+/* Date picker bottom sheet — preview surrogate for the native date picker.
+ * Constraints: Due date must be in the future; Birth date must be on or before
+ * today. Presets below are the prototype's stand-in for the wheel. */
+function buildDateOptions() {
+  const isDue = document.getElementById('date-label').textContent.trim() === 'Due date';
+  const opts  = isDue
+    ? ['Jul 10, 2026', 'Aug 14, 2026', 'Oct 2, 2026']
+    : ['Jan 18, 2025', 'Mar 3, 2025', 'May 22, 2025'];
+  const container = document.getElementById('date-options');
+  container.innerHTML = '';
+  const current = document.getElementById('date-value').textContent.trim();
+  opts.forEach((d, i) => {
+    const isLast = i === opts.length - 1;
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;' +
+      (isLast ? '' : 'border-bottom:1px solid rgba(26,26,26,0.06);');
+    row.onclick = () => selectDate(d);
+    const selected = d === current;
+    row.innerHTML =
+      '<span style="width:20px;height:20px;border-radius:50%;border:1.5px solid ' + (selected ? '#5f45f2' : 'rgba(26,26,26,0.20)') + ';flex-shrink:0;display:flex;align-items:center;justify-content:center;">' +
+        (selected ? '<span style="width:10px;height:10px;border-radius:50%;background:#5f45f2;display:block;"></span>' : '') +
+      '</span>' +
+      '<span style="flex:1;font-size:15px;color:#1a1a1a;">' + d + '</span>';
+    container.appendChild(row);
+  });
+  document.getElementById('date-sheet-title').textContent = isDue ? 'Due date' : 'Birth date';
+  document.getElementById('date-sheet-sub').textContent =
+    'Native ' + (isDue ? 'future-bounded' : 'past-bounded (max today)') +
+    ' date picker on device. Demo presets below honor the launch constraints.';
+}
+function openDateSheet() {
+  buildDateOptions();
+  document.getElementById('date-overlay').style.display = 'block';
+  const s = document.getElementById('date-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeDateSheet() {
+  const s = document.getElementById('date-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('date-overlay').style.display = 'none';
+  }, 280);
+}
+function selectDate(value) {
+  document.getElementById('date-value').textContent = value;
+  closeDateSheet();
 }
 
 /* ── OS notification permission demo tabs ── */
@@ -1043,6 +1262,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   wire('delete-sheet', closeDeleteSheet);
   wire('nudge-sheet',  closeNudgeSheet);
+  wire('stage-sheet',  closeStageSheet);
+  wire('date-sheet',   closeDateSheet);
+  wire('unlink-sheet', closeUnlinkSheet);
 });
 </script>
 <script src="nav.js"></script>
