@@ -3218,8 +3218,8 @@ body.page-11 .screen-root .greeting-label {
   }
 
 body.page-11 .screen-root .greeting-name {
-    font-family: 'Grandstander', cursive; font-size: 22px; font-weight: 700;
-    color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.1;
+    font-family: 'Grandstander', cursive; font-size: 32px; font-weight: 700;
+    color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.19;
   }
 
 body.page-11 .screen-root .avatar {
@@ -3601,8 +3601,8 @@ body.page-12 .screen-root /* Header */
 body.page-12 .screen-root .screen-header-left {}
 
 body.page-12 .screen-root .screen-title {
-    font-family: 'Grandstander', cursive; font-size: 22px; font-weight: 700;
-    color: var(--text-primary); letter-spacing: -0.02em;
+    font-family: 'Grandstander', cursive; font-size: 24px; font-weight: 700;
+    color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.25;
   }
 
 body.page-12 .screen-root .screen-subtitle {
@@ -6412,7 +6412,7 @@ body.page-22 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
 /* ── Page title ── */
 body.page-22 .screen-root .screen-title {
     font-family: 'Grandstander', cursive; font-weight: 700;
-    font-size: 27px; letter-spacing: -0.01em; line-height: 1;
+    font-size: 24px; letter-spacing: -0.02em; line-height: 1.25;
     color: var(--text-primary); margin-bottom: 18px;
   }
 
@@ -6926,8 +6926,9 @@ body.page-23 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
 
 body.page-23 .screen-root /* Page title */
   .screen-title {
-    font-family: 'Grandstander', cursive; font-size: 22px; font-weight: 700;
-    color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: 20px;
+    font-family: 'Grandstander', cursive; font-size: 24px; font-weight: 700;
+    color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.25;
+    margin-bottom: 20px;
   }
 
 body.page-23 .screen-root /* Section header */
