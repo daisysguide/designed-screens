@@ -84,6 +84,16 @@
   <!-- PHONE -->
   <div class="phone-wrap">
 
+    <!-- Demo-only state switcher (designed-screens doc page; not part of product UI) -->
+    <div style="margin-bottom:12px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(26,26,26,0.4);">Demo · doc page only</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+        <button id="demo-waiting"  onclick="setDemoState('waiting')"  style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Waiting</button>
+        <button id="demo-unlinked" onclick="setDemoState('unlinked')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Unlinked</button>
+        <button id="demo-resolve"  onclick="playResolve()"             style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Resolve ▶</button>
+      </div>
+    </div>
+
     <div class="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
@@ -124,16 +134,6 @@
         <!-- Back to home -->
         <button class="btn-secondary" onclick="location.href='11-home.html'">Back to home</button>
 
-      </div>
-    </div>
-
-    <!-- Demo-only state switcher (designed-screens doc page; not part of product UI) -->
-    <div style="margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:6px;">
-      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(26,26,26,0.4);">Demo · doc page only</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
-        <button id="demo-waiting"  onclick="setDemoState('waiting')"  style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Waiting</button>
-        <button id="demo-unlinked" onclick="setDemoState('unlinked')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Unlinked</button>
-        <button id="demo-resolve"  onclick="playResolve()"             style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Resolve ▶</button>
       </div>
     </div>
 
@@ -243,7 +243,7 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Chrome exception.</strong> No ✕, no back chevron — this is a completion / hand-off, not an abandonable step. "Back to home" → Screen 11 is the single way to leave. <strong>Swipe-down also exits to Home.</strong> "Change my answers" → Screen 18 is the only backward path. No bottom nav.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Edits allowed until partner submits. Once partner submits, the topic transitions to "Ready to reveal" and the edit affordance is removed. If the user is mid-edit when the partner submits, the user finishes their edit; the partner's submit queues; reveal triggers only when both have a fresh submission.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Reduced motion.</strong> Under <code>prefers-reduced-motion: reduce</code>, the loop and the resolve are both disabled. The logo and ring render static. The reveal still triggers — there's just no animation between waiting and navigation.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Demo state switcher</strong> below the phone (Waiting · Unlinked · Resolve ▶) is doc-page only — not part of the product UI. Resolve plays the bloom, then auto-reverts to Waiting after ~2.2s so reviewers can replay.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Demo state switcher</strong> above the phone (Waiting · Unlinked · Resolve ▶) is doc-page only — not part of the product UI. Resolve plays the bloom, then auto-reverts to Waiting after ~2.2s so reviewers can replay.</span></div>
       </div>
     </div>
 
