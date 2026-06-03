@@ -77,52 +77,66 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">User answered. Partner hasn't. Humor is essential here — this is a potential drop-off point.</div>
+<div class="page-desc page-desc-full">User answered. Partner hasn't. Humor is essential — this is a potential drop-off point. The waiting feeling is carried by the brand logo breathing on the cream screen (no spinner, no lock); when the partner finishes, the mark blooms and bursts a soft gold ring before the app navigates to the reveal. An unlinked variant covers the case where there's no partner to wait on yet (user has answered but hasn't linked) — surfaces an Invite CTA instead of the Poke.</div>
 
 <div class="main-layout">
 
   <!-- PHONE -->
   <div class="phone-wrap">
+
     <div class="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
 
-        <div class="center-block">
+        <div class="center-block" id="center-block" data-state="waiting">
 
-          <!-- Animation slot -->
+          <!-- Animation slot — brand logo breathing on the cream screen -->
           <div class="waiting-anim" id="anim-slot">
-            <div class="waiting-ring" id="waiting-ring"></div>
+            <div class="waiting-ring"></div>
+            <img class="waiting-logo" src="../images/daisy.svg" alt="" aria-hidden="true">
           </div>
 
-          <div class="waiting-heading">Your answers are locked in 🔒</div>
-          <div class="waiting-body">Waiting on Jordan to finish their side. The reveal happens the moment you've both answered.</div>
+          <div class="waiting-heading" id="waiting-heading">Your part's done.</div>
+          <div class="waiting-body" id="waiting-body">Waiting on Jordan to finish their side. The reveal happens the moment you've both answered.</div>
 
           <div style="text-align:center;margin:8px 0 4px;">
             <span style="font-size:14px;font-family:'DM Sans',sans-serif;font-weight:600;color:#5f45f2;cursor:pointer;">Change my answers</span>
-            <div style="font-size:12px;color:rgba(26,26,26,0.45);margin-top:4px;">You can edit until Jordan finishes.</div>
+            <div id="edit-helper" style="font-size:12px;color:rgba(26,26,26,0.45);margin-top:4px;">You can edit until Jordan finishes.</div>
           </div>
 
-          <!-- In the meantime card -->
-          <div class="meantime-card">
-            <div class="meantime-title">In the meantime</div>
-            <div class="meantime-body">Jordan got a notification. If they need a nudge, you know what to do.</div>
+          <!-- "In the meantime" lead-in + Poke (linked-waiting state) -->
+          <div class="poke-cluster" id="poke-cluster">
+            <div class="poke-lead">
+              <div class="poke-lead-label">In the meantime</div>
+              <div class="poke-lead-body">Jordan got a notification. If they need a nudge, you know what to do.</div>
+            </div>
+            <button class="btn-poke" id="poke-btn" onclick="handlePoke()">Poke Jordan 👉</button>
+            <div class="poke-hint" id="poke-hint">Sends a push: <em>"Your partner is waiting. No pressure. (Pressure.)"</em></div>
           </div>
 
-          <!-- Poke button -->
-          <button class="btn-poke" id="poke-btn" onclick="handlePoke()">
-            Poke Jordan 👉
-          </button>
-          <div class="poke-hint" id="poke-hint">
-            Sends a push: <em>"Your partner is waiting. No pressure. (Pressure.)"</em>
+          <!-- Invite CTA (unlinked state) -->
+          <div class="invite-cluster" id="invite-cluster" style="display:none;width:100%;">
+            <button class="btn-poke" id="invite-btn" onclick="location.href='10-partner-linking.html'">Invite your partner →</button>
           </div>
 
         </div>
 
         <!-- Back to home -->
-        <button class="btn-secondary">Back to home</button>
+        <button class="btn-secondary" onclick="location.href='11-home.html'">Back to home</button>
 
       </div>
     </div>
+
+    <!-- Demo-only state switcher (designed-screens doc page; not part of product UI) -->
+    <div style="margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(26,26,26,0.4);">Demo · doc page only</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+        <button id="demo-waiting"  onclick="setDemoState('waiting')"  style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Waiting</button>
+        <button id="demo-unlinked" onclick="setDemoState('unlinked')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Unlinked</button>
+        <button id="demo-resolve"  onclick="playResolve()"             style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Resolve ▶</button>
+      </div>
+    </div>
+
   </div>
 
   <!-- SPEC PANEL -->
@@ -138,50 +152,70 @@
         <div class="flow-node dest">20 Alignment Reveal</div>
       </div>
       <div class="info-box">
-        User arrives here automatically after answering the final question. They stay here until partner completes their answers — at which point the app sends a push notification and navigates them to Screen 19. <strong>"Back to home"</strong> lets them leave without feeling stuck — they'll get a push when the reveal is ready. <strong>No bottom nav.</strong>
+        User arrives here automatically after answering the final question. They stay here until partner completes their answers — at which point the app sends a push notification and navigates them to Screen 20. <strong>"Back to home" → Screen 11.</strong> They'll get a push when the reveal is ready. <strong>"Change my answers"</strong> re-enters Screen 18 with previous answers pre-filled — the only backward path. <strong>Chrome exception:</strong> this screen is a completion / hand-off, not an abandonable step, so there is <strong>no ✕</strong> and <strong>no back chevron</strong>. <strong>Swipe-down also exits to Home.</strong> No bottom nav.
+        <br><br>
+        <strong>Unlinked variant:</strong> if the user has answered but has no partner linked, the screen swaps to an Invite CTA → <strong>Screen 10 (Partner Linking)</strong>. The logo still breathes (calm holding state), but there's no resolve until a partner links and finishes.
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
       <table class="spec-table">
-        <tr><td>Heading</td><td>"Your answers are locked in 🔒" · Grandstander 24px bold · 🔒 emoji is part of the copy</td></tr>
+        <tr><th colspan="2" style="text-align:left;">Linked-waiting state</th></tr>
+        <tr><td>Heading</td><td>"Your part's done." · Grandstander 24px bold · no lock emoji — the breathing logo carries the feeling, so the lock is redundant</td></tr>
         <tr><td>Body</td><td>"Waiting on [partner name] to finish their side. The reveal happens the moment you've both answered." · partner name is dynamic</td></tr>
-        <tr><td>"In the meantime"</td><td>Card title · body: "[Partner name] got a notification. If they need a nudge, you know what to do."</td></tr>
+        <tr><td>"In the meantime"</td><td><strong>Centered lead-in to the Poke</strong> (no card). 13px DM Sans 600 label "In the meantime" above a 14px body: "[Partner name] got a notification. If they need a nudge, you know what to do." Sits directly above the Poke button.</td></tr>
         <tr><td>Poke label</td><td>"Poke [partner name] 👉" · name is dynamic · 👉 emoji is part of the label</td></tr>
-        <tr><td>Poke push copy</td><td>"Your partner is waiting. No pressure. (Pressure.)" · exact copy · do not change · the humor is intentional</td></tr>
-        <tr><td>"Back to home"</td><td>Secondary button · always visible at bottom</td></tr>
+        <tr><td>Poke push copy</td><td>"Your partner is waiting. No pressure. (Pressure.)" · <strong>exact copy · do not change</strong> · the humor is load-bearing</td></tr>
+        <tr><td>Edit affordance</td><td>"Change my answers" · helper: "You can edit until [partner name] finishes."</td></tr>
+        <tr><td>"Back to home"</td><td>Secondary button · always visible at bottom · routes to Screen 11</td></tr>
+        <tr><th colspan="2" style="text-align:left;padding-top:10px;">Unlinked variant</th></tr>
+        <tr><td>Heading</td><td>"Your answers are saved."</td></tr>
+        <tr><td>Body</td><td>"Invite your partner so they can answer their side, then you'll reveal together."</td></tr>
+        <tr><td>CTA</td><td>"Invite your partner →" · primary button · routes to Screen 10 (Partner Linking) · <strong>replaces</strong> the "In the meantime" lead-in and the Poke (both hidden in this state)</td></tr>
+        <tr><td>Edit affordance</td><td>"Change my answers" stays · helper reworded: "You can edit anytime before revealing."</td></tr>
+        <tr><td>"Back to home"</td><td>Stays · routes to Screen 11</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Edit my answers affordance</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Below the "Your answers are locked in" card · above the Poke section</td></tr>
+        <tr><td>Position</td><td>Below the heading / body block · above the "In the meantime" lead-in (linked) or Invite CTA (unlinked)</td></tr>
         <tr><td>Style</td><td>Text link · 14px DM Sans semibold · <code>purple-500</code></td></tr>
         <tr><td>Label</td><td>"Change my answers"</td></tr>
-        <tr><td>Helper text</td><td>"You can edit until [partnerName] finishes." · 12px · <code>text-tertiary</code> · below label</td></tr>
+        <tr><td>Helper text — linked</td><td>"You can edit until [partner name] finishes." · 12px · <code>text-tertiary</code> · below label</td></tr>
+        <tr><td>Helper text — unlinked</td><td>"You can edit anytime before revealing."</td></tr>
         <tr><td>On tap</td><td>Routes through Screen 18 with previous answers pre-filled</td></tr>
         <tr><td>On submit</td><td>Returns to Screen 19 in Waiting state</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Waiting animation</div>
+      <div class="spec-card-title">Waiting animation — brand logo breathes → blooms</div>
       <table class="spec-table">
-        <tr><td>Container</td><td>88×88px circle · white bg · <code>shadow-md</code></td></tr>
-        <tr><td>State: waiting</td><td>Purple spinner — 60px · slow rotation (2s linear infinite) · communicates "something is happening"</td></tr>
-        <tr><td>State: partner done</td><td>Spinner replaced by 🎉 emoji at 36px · brief scale-in animation (0.2s) · app navigates to reveal immediately after</td></tr>
+        <tr><td>Container</td><td>128×128px slot · <strong>transparent background, no shadow</strong> — the logo sits on the cream screen, not on a white disc (the daisy petals are white and would vanish on white)</td></tr>
+        <tr><td>Asset</td><td><code>images/daisy.svg</code> (repo root) · loaded as an <code>&lt;img&gt;</code> (whole-mark transforms) · <strong>do not</strong> inline the SVG paths · referenced from this screen as <code>../images/daisy.svg</code></td></tr>
+        <tr><td>Logo size</td><td>106 × 102px · <code>transform-origin: 50% 50%</code></td></tr>
+        <tr><td>Ring</td><td>Absolute · 96 × 96px · <code>2px solid rgba(95,69,242,0.16)</code> — soft purple in the loop, recolored to gold on resolve</td></tr>
+        <tr><td>Loop — logo</td><td><code>daisyBreathe 2.6s ease-in-out infinite</code>: <code>scale(1) rotate(0)</code> → <code>scale(1.05) rotate(-1deg)</code> at 50% → back. Calm 2-frame "inhale."</td></tr>
+        <tr><td>Loop — ring</td><td><code>ringPulse 2.6s ease-out infinite</code>: starts at <code>scale(.85) opacity .5</code> and grows out to <code>scale(1.5) opacity 0</code>. Soft halo, not a spinner.</td></tr>
+        <tr><td>Resolve — logo</td><td><code>daisyBloom .8s cubic-bezier(.34,1.56,.64,1) forwards</code>: pops to <code>scale(1.2) rotate(4deg)</code> at 45%, settles at <code>scale(1.05) rotate(0)</code>. Slight overshoot for the "bloom" feeling.</td></tr>
+        <tr><td>Resolve — ring</td><td><code>ringBurst .8s ease-out forwards</code>: ring recolors to <code>rgba(255,212,0,.75)</code> and bursts out to <code>scale(2)</code> while fading.</td></tr>
+        <tr><td>Implementation</td><td>Adding <code>.done</code> to <code>#anim-slot</code> swaps the loop animations for the resolve animations. After the bloom (~0.8s), the app navigates to Screen 20.</td></tr>
+        <tr><td>Reduced motion</td><td>Under <code>prefers-reduced-motion: reduce</code>: both animations are disabled (<code>!important</code>); the logo renders static, the ring renders static. The screen still functions — there's just no animation. No pulse, no bloom, no rotation.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Poke button</div>
       <table class="spec-table">
-        <tr><td>Default state</td><td>Primary style · 56px · <code>radius-full</code> · <code>purple-500</code> · "Poke [name] 👉"</td></tr>
-        <tr><td>After poke</td><td>Changes to neutral gray · label updates to "Poke sent ✓" · disabled for 1 hour · one poke per hour per topic</td></tr>
+        <tr><td>Lead-in</td><td><strong>"In the meantime" lead-in</strong> sits directly above the button (centered label + body). This used to be a separate boxed card; folded into the Poke as a lead-in so the whole center block reads as one thought.</td></tr>
+        <tr><td>Default state</td><td>Primary style · 52px · <code>radius-full</code> · <code>purple-500</code> · "Poke [name] 👉"</td></tr>
+        <tr><td>After poke</td><td>Background changes to <code>rgba(26,26,26,0.07)</code> · label updates to "Poke sent ✓" · disabled for 1 hour · one poke per hour per topic · hint replaced by "[partner name] has been poked. You've done your part."</td></tr>
         <tr><td>Push notification</td><td>"Your partner is waiting. No pressure. (Pressure.)" — sent to partner's device · fires immediately on tap</td></tr>
         <tr><td>Auto-push</td><td>A notification is also sent automatically when this screen first loads — the Poke is an optional second nudge</td></tr>
+        <tr><td>Unlinked state</td><td><strong>Hidden</strong> — both the lead-in and the Poke disappear. The Invite CTA takes their place because there's nobody to poke.</td></tr>
       </table>
       <div class="info-box"><strong>The humor here is load-bearing.</strong> This is a potential drop-off point. The "(Pressure.)" callback is what makes this screen feel like the app has a personality rather than being another notification.</div>
     </div>
@@ -189,22 +223,27 @@
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
-        <span class="component-tag">Waiting animation slot</span>
-        <span class="component-tag">Info card (meantime)</span>
+        <span class="component-tag">Brand logo animation (breathe → bloom)</span>
+        <span class="component-tag">Ring pulse / burst</span>
+        <span class="component-tag">Centered lead-in (label + body)</span>
         <span class="component-tag">Button — Primary (Poke)</span>
-        <span class="component-tag">Button — Ghost</span>
+        <span class="component-tag">Button — Primary (Invite, unlinked variant)</span>
+        <span class="component-tag">Button — Secondary (Back to home)</span>
+        <span class="component-tag">Text link — Change my answers</span>
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>Push notification auto-fires to partner the moment this screen loads. Poke button is a second, manual nudge.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Push notification auto-fires to partner the moment this screen loads. The Poke button is a second, manual nudge.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Poke limited to once per hour per topic to avoid spamming the partner.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>When partner completes their answers, the app sends a push to the user and navigates them to Screen 20 Alignment Reveal — even if they've left this screen and gone to Home.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>"Back to home" → Screen 11 Home. User will receive a push notification when partner is done.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Edits allowed until partner submits. Once partner submits, the topic transitions to "Ready to reveal" and the edit affordance is removed. If user is mid-edit when partner submits, the user finishes their edit; partner's submit queues; reveal triggers only when both have a fresh submission.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>When partner completes their answers, the app plays the bloom + ring burst, sends a push to the user, and navigates them to Screen 20 Alignment Reveal — even if they've left this screen and gone to Home.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Unlinked variant.</strong> If the user has no partner linked, "Invite your partner →" replaces the Poke cluster and routes to Screen 10 (Partner Linking). The logo still breathes (calm holding state); there's no resolve until a partner links and finishes.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Chrome exception.</strong> No ✕, no back chevron — this is a completion / hand-off, not an abandonable step. "Back to home" → Screen 11 is the single way to leave. <strong>Swipe-down also exits to Home.</strong> "Change my answers" → Screen 18 is the only backward path. No bottom nav.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Edits allowed until partner submits. Once partner submits, the topic transitions to "Ready to reveal" and the edit affordance is removed. If the user is mid-edit when the partner submits, the user finishes their edit; the partner's submit queues; reveal triggers only when both have a fresh submission.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Reduced motion.</strong> Under <code>prefers-reduced-motion: reduce</code>, the loop and the resolve are both disabled. The logo and ring render static. The reveal still triggers — there's just no animation between waiting and navigation.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Demo state switcher</strong> below the phone (Waiting · Unlinked · Resolve ▶) is doc-page only — not part of the product UI. Resolve plays the bloom, then auto-reverts to Waiting after ~2.2s so reviewers can replay.</span></div>
       </div>
     </div>
 
@@ -219,34 +258,76 @@
   </div>
 </div>
 
-<script>
-let poked = false;
-function handlePoke() {
-  if (poked) return;
-  poked = true;
-  const btn = document.getElementById('poke-btn');
-  const hint = document.getElementById('poke-hint');
-  btn.textContent = 'Poke sent ✓';
-  btn.classList.add('sent');
-  hint.textContent = 'Jordan has been poked. You\'ve done your part.';
-}
-</script>
     </div>
   </div>
 </div>
 <script>
+/* Demo-screen prototype — partner name is dynamic in production, hardcoded for demo. */
+const PARTNER_NAME = 'Jordan';
 
+/* ── Poke ── */
 let poked = false;
 function handlePoke() {
   if (poked) return;
   poked = true;
-  const btn = document.getElementById('poke-btn');
+  const btn  = document.getElementById('poke-btn');
   const hint = document.getElementById('poke-hint');
   btn.textContent = 'Poke sent ✓';
   btn.classList.add('sent');
-  hint.textContent = 'Jordan has been poked. You\'ve done your part.';
+  hint.textContent = PARTNER_NAME + ' has been poked. You\'ve done your part.';
 }
 
+/* ── Demo state switcher ── */
+function setDemoState(state) {
+  const block        = document.getElementById('center-block');
+  const heading      = document.getElementById('waiting-heading');
+  const body         = document.getElementById('waiting-body');
+  const editHelper   = document.getElementById('edit-helper');
+  const pokeCluster  = document.getElementById('poke-cluster');
+  const inviteCluster= document.getElementById('invite-cluster');
+
+  block.setAttribute('data-state', state);
+
+  if (state === 'unlinked') {
+    heading.textContent    = 'Your answers are saved.';
+    body.textContent       = "Invite your partner so they can answer their side, then you'll reveal together.";
+    editHelper.textContent = 'You can edit anytime before revealing.';
+    pokeCluster.style.display   = 'none';
+    inviteCluster.style.display = '';
+  } else {
+    /* 'waiting' (or anything that falls back) */
+    heading.textContent    = "Your part's done.";
+    body.textContent       = 'Waiting on ' + PARTNER_NAME + " to finish their side. The reveal happens the moment you've both answered.";
+    editHelper.textContent = 'You can edit until ' + PARTNER_NAME + ' finishes.';
+    pokeCluster.style.display   = '';
+    inviteCluster.style.display = 'none';
+  }
+
+  /* Demo tab pill state */
+  [['demo-waiting','waiting'], ['demo-unlinked','unlinked']].forEach(([id, s]) => {
+    const btn    = document.getElementById(id);
+    const active = s === state;
+    btn.style.background  = active ? '#5f45f2' : 'white';
+    btn.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    btn.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+}
+
+/* ── Resolve animation — plays bloom, then reverts to Waiting so it can be replayed ── */
+let resolveTimer = null;
+function playResolve() {
+  /* Ensure we're in the Waiting state when the bloom plays, so the user sees the
+     contrast between loop and resolve from a single click. */
+  setDemoState('waiting');
+  const slot = document.getElementById('anim-slot');
+  /* Strip and re-add .done to force the animation to play even on rapid replays. */
+  slot.classList.remove('done');
+  /* eslint-disable-next-line no-unused-expressions */
+  void slot.offsetWidth;
+  slot.classList.add('done');
+  clearTimeout(resolveTimer);
+  resolveTimer = setTimeout(() => { slot.classList.remove('done'); }, 2200);
+}
 </script>
 <script src="nav.js"></script>
 </body>

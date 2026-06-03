@@ -4860,27 +4860,40 @@ body.page-16 .screen-root /* Centered content */
     text-align: center;
   }
 
-body.page-16 .screen-root /* Waiting animation slot */
+body.page-16 .screen-root /* Waiting animation slot — brand-logo breathe → bloom */
   .waiting-anim {
-    width: 88px; height: 88px; border-radius: 50%;
-    background: var(--white); box-shadow: var(--shadow-md);
+    width: 128px; height: 128px;
+    background: transparent; box-shadow: none;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 28px; flex-shrink: 0; position: relative;
   }
 
 body.page-16 .screen-root .waiting-ring {
-    width: 60px; height: 60px;
-    border: 3px solid rgba(95,69,242,0.15);
-    border-top-color: var(--purple-500);
-    border-radius: 50%;
-    animation: spin 2s linear infinite;
+    position: absolute; width: 96px; height: 96px; border-radius: 50%;
+    border: 2px solid rgba(95,69,242,0.16); box-sizing: border-box;
   }
 
-@keyframes spin { to { transform: rotate(360deg); } }
-
-  .waiting-lock {
-    font-size: 32px; line-height: 1;
+body.page-16 .screen-root .waiting-logo {
+    width: 106px; height: 102px; display: block; transform-origin: 50% 50%;
   }
+
+/* Waiting loop */
+body.page-16 .screen-root .waiting-anim:not(.done) .waiting-logo { animation: daisyBreathe 2.6s ease-in-out infinite; }
+body.page-16 .screen-root .waiting-anim:not(.done) .waiting-ring { animation: ringPulse 2.6s ease-out infinite; }
+
+/* Resolve — partner finished */
+body.page-16 .screen-root .waiting-anim.done .waiting-logo { animation: daisyBloom .8s cubic-bezier(.34,1.56,.64,1) forwards; }
+body.page-16 .screen-root .waiting-anim.done .waiting-ring { animation: ringBurst .8s ease-out forwards; }
+
+@keyframes daisyBreathe { 0%,100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.05) rotate(-1deg); } }
+@keyframes ringPulse    { 0% { transform: scale(.85); opacity:.5; } 70% { opacity:0; } 100% { transform: scale(1.5); opacity:0; } }
+@keyframes daisyBloom   { 0% { transform: scale(1) rotate(0); } 45% { transform: scale(1.2) rotate(4deg); } 100% { transform: scale(1.05) rotate(0); } }
+@keyframes ringBurst    { 0% { transform: scale(.82); opacity:.7; border-color: rgba(255,212,0,.75); } 100% { transform: scale(2); opacity:0; border-color: rgba(255,212,0,0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  body.page-16 .screen-root .waiting-logo,
+  body.page-16 .screen-root .waiting-ring { animation: none !important; }
+}
 
 body.page-16 .screen-root /* Heading */
   .waiting-heading {
@@ -4894,19 +4907,16 @@ body.page-16 .screen-root .waiting-body {
     margin-bottom: 24px; max-width: 280px;
   }
 
-body.page-16 .screen-root /* In the meantime card */
-  .meantime-card {
-    width: 100%; background: var(--white);
-    border-radius: var(--radius-xl); box-shadow: var(--shadow-md);
-    padding: 16px; text-align: left; margin-bottom: 16px;
+body.page-16 .screen-root /* "In the meantime" centered lead-in to the Poke (replaces the meantime card) */
+  .poke-lead { text-align: center; margin-bottom: 12px; }
+
+body.page-16 .screen-root .poke-lead-label {
+    font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px;
   }
 
-body.page-16 .screen-root .meantime-title {
-    font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;
-  }
-
-body.page-16 .screen-root .meantime-body {
-    font-size: 13px; color: var(--text-secondary); line-height: 1.55;
+body.page-16 .screen-root .poke-lead-body {
+    font-size: 14px; color: var(--text-secondary); line-height: 1.5;
+    max-width: 280px; margin: 0 auto;
   }
 
 body.page-16 .screen-root /* Poke button */
