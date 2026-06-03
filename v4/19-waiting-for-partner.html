@@ -98,31 +98,34 @@
       <div class="phone-notch"></div>
       <div class="phone-screen" id="phone-screen" data-state="waiting">
 
-        <!-- Status — top zone: logo, heading, one body line -->
-        <div class="waiting-status">
-          <div class="waiting-anim" id="anim-slot">
-            <div class="waiting-ring"></div>
-            <img class="waiting-logo" src="../images/daisy.svg" alt="" aria-hidden="true">
+        <!-- Main — status + nudge as one centered cluster (one gap, not two) -->
+        <div class="waiting-main">
+          <!-- Status: logo, heading, one body line -->
+          <div class="waiting-status">
+            <div class="waiting-anim" id="anim-slot">
+              <div class="waiting-ring"></div>
+              <img class="waiting-logo" src="../images/daisy.svg" alt="" aria-hidden="true">
+            </div>
+            <div class="waiting-heading" id="waiting-heading">Your part's done.</div>
+            <div class="waiting-body" id="waiting-body">Waiting on Jordan to finish their side.</div>
           </div>
-          <div class="waiting-heading" id="waiting-heading">Your part's done.</div>
-          <div class="waiting-body" id="waiting-body">Waiting on Jordan to finish their side.</div>
+
+          <!-- Nudge: one lead line + Poke (linked); single Invite button (unlinked) -->
+          <div class="waiting-nudge">
+            <!-- Linked-waiting cluster -->
+            <div class="poke-cluster" id="poke-cluster" style="width:100%;">
+              <div class="poke-lead" id="poke-lead">Jordan's been notified.</div>
+              <button class="btn-poke" id="poke-btn" onclick="handlePoke()">Poke Jordan 👉</button>
+              <div class="poke-confirm" id="poke-confirm"></div>
+            </div>
+            <!-- Unlinked cluster (just the invite button — body copy already carries the rationale) -->
+            <div class="invite-cluster" id="invite-cluster" style="display:none;width:100%;">
+              <button class="btn-poke" id="invite-btn" onclick="location.href='10-partner-linking.html'">Invite your partner →</button>
+            </div>
+          </div>
         </div>
 
-        <!-- Nudge — middle zone: one lead line + Poke (linked); Invite (unlinked) -->
-        <div class="waiting-nudge">
-          <!-- Linked-waiting cluster -->
-          <div class="poke-cluster" id="poke-cluster" style="width:100%;">
-            <div class="poke-lead" id="poke-lead">Jordan's been notified.</div>
-            <button class="btn-poke" id="poke-btn" onclick="handlePoke()">Poke Jordan 👉</button>
-            <div class="poke-confirm" id="poke-confirm"></div>
-          </div>
-          <!-- Unlinked cluster (just the invite button — body copy already carries the rationale) -->
-          <div class="invite-cluster" id="invite-cluster" style="display:none;width:100%;">
-            <button class="btn-poke" id="invite-btn" onclick="location.href='10-partner-linking.html'">Invite your partner →</button>
-          </div>
-        </div>
-
-        <!-- Exits — bottom zone: Change my answers (link) above Back to home (button) -->
+        <!-- Exits — anchors at the bottom as the next sibling of .waiting-main: Change my answers (link) above Back to home (button) -->
         <div class="waiting-exits">
           <span class="edit-link" id="edit-link">Change my answers</span>
           <button class="btn-secondary" onclick="location.href='11-home.html'">Back to home</button>

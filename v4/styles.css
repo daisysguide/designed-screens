@@ -4848,16 +4848,22 @@ body.page-16 .screen-root .phone-screen {
     display: flex; flex-direction: column;
   }
 
-body.page-16 .screen-root /* Three-zone layout — Status (top) · Nudge (middle) · Exits (bottom).
-                              Separated by whitespace via margin-top: auto. */
-  .waiting-status,
+body.page-16 .screen-root /* Layout — status + nudge group as one centered cluster; exits anchor at the bottom.
+                              One intentional gap (status ↔ nudge) instead of two
+                              autos that strand the Poke in the dead center. */
+  .waiting-main {
+    flex: 1;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+  }
+body.page-16 .screen-root .waiting-status,
 body.page-16 .screen-root .waiting-nudge,
 body.page-16 .screen-root .waiting-exits {
     display: flex; flex-direction: column; align-items: center;
     text-align: center; width: 100%;
   }
-body.page-16 .screen-root .waiting-nudge { margin-top: auto; }
-body.page-16 .screen-root .waiting-exits { margin-top: auto; }
+body.page-16 .screen-root .waiting-nudge { margin-top: 38px; }
 
 body.page-16 .screen-root /* Waiting animation slot — brand-logo breathe → bloom */
   .waiting-anim {
