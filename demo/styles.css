@@ -7621,12 +7621,12 @@ body[class*="page-"] .screen-root .demo-layout {
   grid-template-columns: 300px 1fr;
   gap: 32px;
   align-items: start;
-  padding-top: 32px;
+  padding-top: 8px;
 }
 
 body[class*="page-"] .screen-root .demo-layout .phone-wrap {
   position: sticky;
-  top: 32px;
+  top: 8px;
   width: 300px;
   height: 650px;
 }
