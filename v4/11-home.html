@@ -34,6 +34,15 @@
     color: var(--text-secondary);
   }
 
+  /* Up-next card: drop the legacy purple left stripe from .topic-card.
+     The stripe was a "Your turn" signal back when the pill was purple;
+     now the pills are cyan, the stripe clashes with them and signals
+     nothing on the pill-less Available variant. Pill carries the state.
+     Scoped to the up-next slot so other .topic-card uses are untouched.
+     (Global rule lives in styles.css ~line 3350 and stays for the
+     eventual styles.css sweep.) */
+  body.page-11 .screen-root #up-next-slot .topic-card { border-left: none; }
+
   /* Up-next tier pills — mirror Topics' cyan palette so Home and
      Topics speak the same status language. Override the legacy purple
      pill-your-turn rule in styles.css via the cascade (source order). */
@@ -307,7 +316,7 @@
     <div class="spec-card">
       <div class="spec-card-title">Up Next — Topic Card (populated only)</div>
       <table class="spec-table">
-        <tr><td>Background</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · <code>border-left: 3px solid purple-500</code> accent stripe (all tiers)</td></tr>
+        <tr><td>Background</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · <strong>no left stripe</strong> in any tier — pill carries the state. (The legacy <code>border-left: 3px solid purple-500</code> on global <code>.topic-card</code> is neutralized here via a scoped override; global rule stays for the eventual styles.css sweep.)</td></tr>
         <tr><td>Category label</td><td>11px DM Sans bold · ALL CAPS · <code>text-tertiary</code></td></tr>
         <tr><td>Topic title</td><td>15px DM Sans bold · <code>text-primary</code></td></tr>
         <tr><td>Description</td><td>13px DM Sans regular · <code>text-secondary</code> · max 2 lines</td></tr>
