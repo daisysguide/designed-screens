@@ -13,7 +13,7 @@
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
-    <div class="sidebar-brand-sub">Designed Screens v4 · 24 screens</div>
+    <div class="sidebar-brand-sub">Designed Screens v4 · 23 screens</div>
   </div>
   <div class="sidebar-section-label">Intro</div>
   <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
@@ -40,8 +40,6 @@
   <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
   <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
   <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
-  <div class="sidebar-section-label">Empty States</div>
-  <a class="sidebar-item" href="25-empty-home.html"><span class="screen-num">25</span>Empty Home</a>
   <div class="sidebar-section-label">Error States</div>
   <a class="sidebar-item" href="28-connection-error.html"><span class="screen-num">28</span>Connection Error</a>
   <div class="sidebar-section-label">Future Retention Tests</div>
@@ -56,7 +54,7 @@
       <span class="key-hint">← →</span>
       <div class="topbar-nav">
         <a class="topbar-btn" href="10-partner-linking.html" aria-label="Previous">‹</a>
-        <span class="topbar-counter">11 / 24</span>
+        <span class="topbar-counter">11 / 23</span>
         <a class="topbar-btn" href="12-progress.html" aria-label="Next">›</a>
       </div>
     </div>
@@ -74,80 +72,54 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">Three sections: Up next, Partner, Progress. First screen with bottom nav. Home's job is one clear next action.</div>
+<div class="page-desc page-desc-full">The canonical Home, carrying both the zero-started (empty) and populated states. Greeting reclaims full width; alignment-score tile is removed (alignment is a distribution on Progress, not a score); Partner section is avatar-less; Progress is a single category line. The empty state replaces the Up-next topic card with a brand-filled onboarding nudge — the topic flow's single front door — and folds in what used to live on Screen 25.</div>
 
 <div class="main-layout">
 
   <!-- PHONE -->
   <div class="phone-wrap">
-    <div class="state-tab-row">
-      <button class="state-tab active" id="tab-partner" onclick="showState('partner')">Partner linked</button>
-      <button class="state-tab" id="tab-pending" onclick="showState('pending')">Invite pending</button>
-      <button class="state-tab" id="tab-npartner" onclick="showState('npartner')">No partner yet</button>
+    <div class="state-tab-row" role="tablist" aria-label="Home state preview">
+      <button class="state-tab" data-layout="populated" data-partner="linked" type="button">Populated · linked</button>
+      <button class="state-tab active" data-layout="empty" data-partner="linked" type="button">Empty · linked</button>
+      <button class="state-tab" data-layout="empty" data-partner="pending" type="button">Empty · pending</button>
+      <button class="state-tab" data-layout="empty" data-partner="none" type="button">Empty · no partner</button>
+      <button class="state-tab" data-layout="populated" data-partner="pending" type="button">Populated · pending</button>
+      <button class="state-tab" data-layout="populated" data-partner="none" type="button">Populated · no partner</button>
     </div>
 
     <div class="phone">
       <div class="phone-notch"></div>
       <div class="phone-screen">
 
-        <div class="scroll-area">
+        <div class="scroll-area" id="scroll-area">
 
-          <!-- Greeting -->
+          <!-- Greeting (avatar removed; row reclaims full width) -->
           <div class="greeting-row">
-            <div>
-              <div class="greeting-label">Good morning</div>
-              <div class="greeting-name">Hey Alex 👋</div>
-            </div>
-            <div class="avatar">A</div>
+            <div class="greeting-label">Good morning</div>
+            <div class="greeting-name">Hey Alex 👋</div>
           </div>
 
-          <!-- Badge notification -->
-          <div class="badge-card">
-            <div class="badge-emoji">🏅</div>
-            <div class="badge-text"><strong>"Officially panicking together"</strong> — badge unlocked</div>
-          </div>
+          <!-- Main content slot. Up-next card OR onboarding nudge.
+               Behavior:
+                 layout=empty     → onboarding nudge (brand-filled)
+                 layout=populated → Up-next topic card + Start button -->
+          <div id="up-next-slot"></div>
 
           <div class="section-divider"></div>
 
-          <!-- Up next -->
-          <div class="section-label">Up next</div>
-          <div class="topic-card">
-            <div class="topic-category">The Village</div>
-            <div class="topic-title">Who will we trust to watch the baby?</div>
-            <div class="topic-desc">You might be surprised how differently you two think about this one.</div>
-            <div class="status-pill pill-your-turn">Your turn</div>
-          </div>
-          <button class="btn-start">Start this topic</button>
-
-          <div class="section-divider" style="margin-top:16px;"></div>
-
-          <!-- Partner -->
+          <!-- Partner section. Three states. Avatar-less in all three.
+               Whole row is the tap target → Settings (partner row). -->
           <div class="section-label">Partner</div>
-          <div id="partner-section">
-            <div class="partner-row">
-              <div class="partner-avatar">J</div>
-              <div>
-                <div class="partner-name">Jordan</div>
-                <div class="partner-status">Linked ✓</div>
-              </div>
-            </div>
-          </div>
+          <div id="partner-section"></div>
 
           <div class="section-divider" style="margin-top:16px;"></div>
 
-          <!-- Progress -->
+          <!-- Progress: single category line. No tiles, no score. -->
           <div class="section-label">Progress</div>
-          <div class="progress-stats">
-            <div class="progress-stat">
-              <div class="progress-stat-num">3<span>/45</span></div>
-              <div class="progress-stat-label">Topics complete</div>
-            </div>
-            <div class="progress-stat">
-              <div class="progress-stat-num">74<span>%</span></div>
-              <div class="progress-stat-label">Aligned</div>
-            </div>
+          <div class="progress-category-row">
+            <div class="progress-category-label" id="progress-line">0 of 7 categories started</div>
+            <a class="see-progress" href="12-progress.html">See full progress →</a>
           </div>
-          <a class="see-progress">See full progress →</a>
 
         </div>
 
@@ -188,18 +160,17 @@
         <div class="flow-node dest">16 Topic Intro</div>
       </div>
       <div class="info-box">
-        <strong>First screen with bottom nav.</strong> Home tab is active. "Start this topic" → Topic Intro for that topic. "See full progress →" → Progress tab. Partner avatar → Settings (partner row).
+        <strong>First screen with bottom nav.</strong> Home tab is active. "Start this topic" → Topic Intro for that topic; "Browse topics →" (empty-state nudge) → Topic List (14). "See full progress →" → Progress tab. Settings is reached via the bottom nav, not via an avatar — the top-right avatar that used to live in the greeting row is gone (its only job was a route to Settings, and the Settings tab already owns that).
       </div>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Three sections</div>
+      <div class="spec-card-title">Two states · one canonical Home</div>
       <table class="spec-table">
-        <tr><td>Up next</td><td>Topic Card with left border (purple = Your turn), topic title + description, "Your turn" status pill, "Start this topic" primary button below the card</td></tr>
-        <tr><td>Partner</td><td>Partner avatar + name + last active timestamp. If no partner linked: nudge card with "Invite partner" button</td></tr>
-        <tr><td>Progress</td><td>Two stat tiles side by side: topics complete (X/45) + alignment score (XX%). "See full progress →" link below</td></tr>
+        <tr><td>Empty (zero-started)</td><td>Triggered when the user has 0 topics started (no answers submitted yet). Greeting → onboarding nudge → Partner → Progress ("0 of 7 categories started") → bottom nav. No badge card. <strong>No separate "Nothing started yet" 📋 placeholder</strong> — the nudge owns the empty Up-next state, so a placeholder directly under "Pick your first topic." would be redundant.</td></tr>
+        <tr><td>Populated</td><td>Greeting → Badge card (when earned) → Up-next topic card + "Start this topic" → Partner → Progress (category line) → bottom nav.</td></tr>
+        <tr><td>Folded in</td><td>This screen folds in what used to live on Screen 25 (Empty Home). 25 has been retired from the catalog.</td></tr>
       </table>
-      <div class="info-box">Home's job is a <strong>single clear next action</strong>. Stats and partner are secondary — they're there but not loud.</div>
     </div>
 
     <div class="spec-card">
@@ -207,75 +178,104 @@
       <table class="spec-table">
         <tr><td>Label</td><td>Time-of-day greeting · "Good morning" / "Good afternoon" / "Good evening" · <code>label-sm</code> uppercase · <code>text-tertiary</code></td></tr>
         <tr><td>Name</td><td>"Hey [first name] 👋" · <code>display-lg</code> (Grandstander 32px bold · <code>-0.02em</code> tracking · line-height 1.19) · wave emoji is part of the copy · the loudest Grandstander treatment in the app, reserved for the Home greeting</td></tr>
-        <tr><td>Avatar</td><td>40px circle · <code>purple-500</code> bg · white initial · <code>avatar-lg</code> — taps to Settings</td></tr>
+        <tr><td>Width</td><td>Full-width, left-aligned, no avatar on either side — the row reclaims the full content column.</td></tr>
+        <tr><td>Top-right avatar</td><td><strong>Removed in both states.</strong> No replacement. Settings is reached via the bottom-nav Settings tab.</td></tr>
+        <tr><td>Empty-state copy</td><td>"Hey [first name] 👋" — standardized to match the populated state. The bare "[first name] 👋" variant from old 25 is retired.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Badge Notification Card</div>
+      <div class="spec-card-title">Onboarding nudge card (empty state)</div>
       <table class="spec-table">
+        <tr><td>Background</td><td><code>action-primary</code> (purple-500) — brand-filled</td></tr>
+        <tr><td>Border radius</td><td><code>radius-xl</code></td></tr>
+        <tr><td>Padding</td><td>18px</td></tr>
+        <tr><td>Eyebrow</td><td>"Get started" · 11px DM Sans bold · uppercase · white 60% opacity</td></tr>
+        <tr><td>Heading</td><td>"Pick your first topic." · <code>display-sm</code> (Grandstander 20px) · white</td></tr>
+        <tr><td>Body</td><td>"Each topic takes about 5 to 10 minutes. You and Jordan answer separately, then see where you land." · 13px · white 75% · max 2 lines · no em dashes</td></tr>
+        <tr><td>CTA</td><td>"Browse topics →" · white filled pill · <code>action-primary</code> label · full-width · <strong>42px</strong> — documented button-in-brand-card exception (design system: Onboarding Nudge Card section). Outside this card, button heights follow 56/44/32.</td></tr>
+        <tr><td>Dismissal</td><td>Disappears automatically the moment the user views their first topic intro (Screen 16). Not manually dismissible.</td></tr>
+        <tr><td>Position</td><td>Sits in the Up-next slot, replacing the topic card. <strong>No separate Up-next 📋 block is rendered.</strong></td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Badge Notification Card (populated, conditional)</div>
+      <table class="spec-table">
+        <tr><td>Visibility</td><td>Only when a new badge has been earned. One at a time. <strong>No empty variant.</strong></td></tr>
         <tr><td>Border</td><td><code>1px solid rgba(255,215,85,0.5)</code> — yellow-400 at 50%</td></tr>
         <tr><td>Background</td><td>White</td></tr>
-        <tr><td>Border radius</td><td><code>radius-lg</code> (12px)</td></tr>
+        <tr><td>Border radius</td><td><code>radius-lg</code></td></tr>
         <tr><td>Layout</td><td>🏅 medal emoji (22px) left · text right</td></tr>
-        <tr><td>Badge name</td><td>Always in bold · always in quotes · sarcastic brand names</td></tr>
+        <tr><td>Badge name</td><td>Bold · in quotes · sarcastic brand voice</td></tr>
         <tr><td>Dismissal</td><td>Tapping dismisses — gone on next session load</td></tr>
-        <tr><td>Visibility</td><td>Only shown when a new badge has been earned. One at a time.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Up Next — Topic Card</div>
+      <div class="spec-card-title">Up Next — Topic Card (populated only)</div>
       <table class="spec-table">
-        <tr><td>Background</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · <code>border-left: 3px solid purple-500</code></td></tr>
+        <tr><td>Background</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · <code>border-left: 3px solid purple-500</code> for "Your turn"</td></tr>
         <tr><td>Category label</td><td>11px DM Sans bold · ALL CAPS · <code>text-tertiary</code></td></tr>
         <tr><td>Topic title</td><td>15px DM Sans bold · <code>text-primary</code></td></tr>
         <tr><td>Description</td><td>13px DM Sans regular · <code>text-secondary</code> · max 2 lines</td></tr>
         <tr><td>Status pill</td><td>"Your turn" · filled <code>purple-500</code> · white text</td></tr>
-        <tr><td>"Start this topic"</td><td>Primary button · 56px · <code>radius-full</code> · below the card</td></tr>
+        <tr><td>"Start this topic"</td><td>Primary button · 56px · <code>radius-full</code> · below the card · → Topic Intro (16)</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Partner section — states</div>
+      <div class="spec-card-title">Partner section — three states, avatar-less</div>
       <table class="spec-table">
-        <tr><td>Linked</td><td>Avatar (<code>avatar-md</code> 32px · purple tint) + name (14px bold) + "Linked ✓" (12px <code>text-secondary</code>)</td></tr>
-        <tr><td>Invite pending</td><td>Partner Status Block — pending state: ghost avatar · "Invite sent · hasn't joined yet" · ⏳ pill · "Re-share invite link" secondary button</td></tr>
-              <tr><td>No partner</td><td>Nudge card: "It's more fun with two." body text + "Invite your partner" secondary button</td></tr>
+        <tr><td>Layout</td><td>Whole row tappable → Settings (partner row). <strong>No avatar circle in any state</strong> (no ghost avatar in pending, no initial circle in linked). Plain text first; a small status dot from the topic-state palette is added only if the row reads too bare.</td></tr>
+        <tr><td>Linked</td><td>Name + "Linked ✓" — secondary text. Status dot uses <code>green-400</code>.</td></tr>
+        <tr><td>Invite pending</td><td>"Invite sent · hasn't joined yet" with a ⏳ pill and a "Re-share invite link" secondary action. Status dot uses neutral gray.</td></tr>
+        <tr><td>No partner</td><td>"It's more fun with two." + "Invite your partner" secondary action. In the empty+no-partner combo, this nudge reads as the <strong>secondary</strong> ask under the primary onboarding nudge — hierarchy: onboarding first, partner second.</td></tr>
+        <tr><td>Tap target</td><td>The row (and the inline action button when present) — never just the dot or a former avatar.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Progress stats</div>
+      <div class="spec-card-title">Progress section — category line only</div>
       <table class="spec-table">
-        <tr><td>Layout</td><td>Two equal tiles side by side · 12px gap · white bg · <code>radius-lg</code> · <code>shadow-sm</code></td></tr>
-        <tr><td>Number</td><td>Grandstander 24px bold · <code>text-primary</code> · unit (e.g. "/45", "%") in 14px <code>text-tertiary</code> DM Sans</td></tr>
-        <tr><td>Label</td><td>11px DM Sans semibold · ALL CAPS · <code>text-secondary</code></td></tr>
-        <tr><td>"See full progress →"</td><td>13px DM Sans bold · <code>purple-500</code> · navigates to Progress tab</td></tr>
+        <tr><td>Empty</td><td>"0 of 7 categories started" · 13px · <code>text-tertiary</code> · "See full progress →" 13px bold <code>purple-500</code> → Progress (12)</td></tr>
+        <tr><td>Populated</td><td>"{N} of 7 categories started" · same format · same link label</td></tr>
+        <tr><td>Removed</td><td>Both <strong>stat tiles</strong> (topics-complete + alignment-score) and the standalone "% Aligned" number. Alignment is a distribution, not a score — it lives on Progress.</td></tr>
+        <tr><td>Link label</td><td>Standardized to <strong>"See full progress →"</strong> in both states. The old "See all →" variant from 25 is retired.</td></tr>
+        <tr><td>Progress Stats tiles</td><td>Component is <strong>currently unused on Home</strong>; it stays in the design system in case another surface needs it.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Transitions — three distinct triggers</div>
+      <table class="spec-table">
+        <tr><td>Nudge dismiss</td><td>Onboarding nudge card disappears permanently on <strong>first topic intro view (Screen 16)</strong>. The user does not need to tap a dismiss; reaching 16 is the gesture.</td></tr>
+        <tr><td>Up-next populates</td><td>The Up-next topic card replaces the nudge slot on <strong>first topic entry</strong> (same window as the nudge dismiss). It then carries the most-recently-visited topic.</td></tr>
+        <tr><td>Progress increments</td><td>"0 of 7" → "1 of 7" fires on the <strong>first answer submitted</strong>, not on topic entry. Keep these three triggers separate.</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Bottom nav</div>
       <table class="spec-table">
-        <tr><td>Height</td><td>64px + bottom safe area inset</td></tr>
+        <tr><td>Height</td><td>64px + bottom safe-area inset</td></tr>
         <tr><td>Background</td><td>White · <code>1px solid border-default</code> top border</td></tr>
         <tr><td>Tabs</td><td>Home · Topics · Progress · Settings (fixed order, never changes)</td></tr>
         <tr><td>Active state</td><td>Icon + label both <code>purple-500</code></td></tr>
         <tr><td>Inactive state</td><td>Icon + label both <code>text-secondary</code></td></tr>
-        <tr><td>Icons</td><td>24×24px · replace emoji placeholders with icon assets</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
-        <span class="component-tag">Badge Notification Card</span>
-        <span class="component-tag">Topic Card (Up Next)</span>
-        <span class="component-tag">Button — Primary (md)</span>
-        <span class="component-tag">Partner Status Block</span>
-        <span class="component-tag">Progress Stats tiles</span>
-        <span class="component-tag">Avatar (greeting)</span>
+        <span class="component-tag">Greeting row (avatar-less)</span>
+        <span class="component-tag">Onboarding Nudge Card (empty state)</span>
+        <span class="component-tag">Badge Notification Card (when earned)</span>
+        <span class="component-tag">Topic Card (Up Next, populated)</span>
+        <span class="component-tag">Button — Primary (lg, "Start this topic")</span>
+        <span class="component-tag">Partner Status Block (avatar-less Home variant)</span>
+        <span class="component-tag">Progress category line</span>
         <span class="component-tag">Bottom Nav</span>
         <span class="component-tag">Divider</span>
       </div>
@@ -285,107 +285,139 @@
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>Greeting updates by time of day: "Good morning" / "Good afternoon" / "Good evening".</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Badge card only appears when a new badge is earned — one per session. Tap to dismiss.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>"Up next" always shows the single highest-priority topic — "Your turn" topics first, then available.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>If no partner linked, Partner section shows nudge with "Invite your partner" button instead of avatar row.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Progress stats are read-only here — tap "See full progress →" for the full Progress tab.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Tapping the active tab (Home) scrolls back to top.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Top-right avatar is gone</strong> in both states. Settings is reached via the bottom-nav Settings tab.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Empty state</strong> shows the onboarding nudge in the Up-next slot. A separate "Nothing started yet" 📋 block <em>is not rendered</em> — the nudge owns the empty Up-next state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>If the user has no partner linked and no topics started, the partner "Invite your partner" nudge appears <em>below</em> the onboarding nudge as the secondary ask. Two nudges is acceptable; the hierarchy must read onboarding-first.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Up next</strong> (populated) always shows the single highest-priority topic — "Your turn" topics first, then available.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Partner section is avatar-less</strong> on Home in every state. Other screens still use <code>avatar-md</code>; the Home variant is the exception (see design system, Partner Status Block).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Progress</strong> is a single category line. No tiles, no alignment score — alignment is a distribution on Progress (12), not a number on Home.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Three transition triggers stay distinct:</strong> nudge dismiss + Up-next populate fire on first topic intro view (16); Progress increments fire on first answer submitted.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Tapping the active Home tab scrolls back to top.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No em dashes in any on-screen copy.</span></div>
       </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Demo state switcher (doc page only)</div>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0;">The row of pills above the phone is a doc-only affordance, modeled on Screen 12's state switcher. Two axes: layout (Empty / Populated) × partner sub-state (Linked / Pending / No partner). The Empty + No partner combo shows the two-nudge hierarchy (onboarding primary, partner secondary).</p>
     </div>
 
   </div>
 </div>
 
 <div class="page-footer">
-  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 11 of 24</span>
+  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 11 of 23</span>
   <div class="nav-pills">
     <a class="nav-pill" style="cursor:pointer;"  href="10-partner-linking.html">← Screen 10: Partner Linking</a>
     <a class="nav-pill next" style="cursor:pointer;"  href="12-progress.html">Screen 12: Progress →</a>
   </div>
 </div>
-
-<script>
-function showState(state) {
-  ['partner','pending','npartner'].forEach(s => {
-    const el = document.getElementById('tab-' + s);
-    if (el) el.classList.toggle('active', s === state);
-  });
-
-  const partnerSection = document.getElementById('partner-section');
-  if (state === 'partner') {
-    partnerSection.innerHTML = `
-      <div class="partner-row">
-        <div class="partner-avatar">J</div>
-        <div>
-          <div class="partner-name">Jordan</div>
-          <div class="partner-status">Linked ✓</div>
-        </div>
-      </div>`;
-  } else if (state === 'pending') {
-    partnerSection.innerHTML = `
-      <div class="partner-pending-block">
-        <div class="partner-pending-top">
-          <div class="partner-pending-avatar">👤</div>
-          <div>
-            <div class="partner-pending-label">Your partner</div>
-            <div class="partner-pending-sub">Invite sent · hasn't joined yet</div>
-          </div>
-        </div>
-        <div class="partner-pending-pill">⏳ Invite pending</div>
-        <button class="btn-resend">↗ Re-share invite link</button>
-      </div>`;
-  } else {
-    partnerSection.innerHTML = `
-      <div class="partner-nudge">
-        <div class="partner-nudge-text">It's more fun with two. Invite your partner to unlock the reveal.</div>
-        <button class="btn-nudge">Invite your partner</button>
-      </div>`;
-  }
-}
-</script>
     </div>
   </div>
 </div>
 <script>
+/* Two axes drive the demo:
+     layout  ∈ {empty, populated}
+     partner ∈ {linked, pending, none}
+   In the empty + no-partner combo, the partner "Invite your partner" nudge
+   reads as secondary under the primary onboarding nudge (hierarchy: onboarding
+   first). All other combos render Partner as its normal section row. */
 
-function showState(state) {
-  ['partner','pending','npartner'].forEach(s => {
-    const el = document.getElementById('tab-' + s);
-    if (el) el.classList.toggle('active', s === state);
-  });
+const SAMPLE_TOPIC = {
+  category: 'THE VILLAGE',
+  title:    'Who will we trust to watch the baby?',
+  desc:     'You might be surprised how differently you two think about this one.',
+};
 
-  const partnerSection = document.getElementById('partner-section');
-  if (state === 'partner') {
-    partnerSection.innerHTML = `
-      <div class="partner-row">
-        <div class="partner-avatar">J</div>
-        <div>
-          <div class="partner-name">Jordan</div>
-          <div class="partner-status">Linked ✓</div>
-        </div>
-      </div>`;
-  } else if (state === 'pending') {
-    partnerSection.innerHTML = `
-      <div class="partner-pending-block">
-        <div class="partner-pending-top">
-          <div class="partner-pending-avatar">👤</div>
-          <div>
-            <div class="partner-pending-label">Your partner</div>
-            <div class="partner-pending-sub">Invite sent · hasn't joined yet</div>
-          </div>
-        </div>
-        <div class="partner-pending-pill">⏳ Invite pending</div>
-        <button class="btn-resend">↗ Re-share invite link</button>
+function renderUpNext(layout) {
+  const slot = document.getElementById('up-next-slot');
+  if (layout === 'empty') {
+    slot.innerHTML = `
+      <div class="nudge-card">
+        <div class="nudge-eyebrow">Get started</div>
+        <div class="nudge-heading">Pick your first topic.</div>
+        <div class="nudge-body">Each topic takes about 5 to 10 minutes. You and Jordan answer separately, then see where you land.</div>
+        <a class="btn-nudge-primary" href="14-topic-list.html">Browse topics →</a>
       </div>`;
   } else {
-    partnerSection.innerHTML = `
-      <div class="partner-nudge">
-        <div class="partner-nudge-text">It's more fun with two. Invite your partner to unlock the reveal.</div>
-        <button class="btn-nudge">Invite your partner</button>
-      </div>`;
+    slot.innerHTML = `
+      <div class="section-label" style="margin-top:18px;">Up next</div>
+      <div class="topic-card">
+        <div class="topic-category">${SAMPLE_TOPIC.category}</div>
+        <div class="topic-title">${SAMPLE_TOPIC.title}</div>
+        <div class="topic-desc">${SAMPLE_TOPIC.desc}</div>
+        <div class="status-pill pill-your-turn">Your turn</div>
+      </div>
+      <a class="btn-start" href="16-topic-intro.html">Start this topic</a>`;
   }
 }
 
+function renderPartner(partner, layout) {
+  const section = document.getElementById('partner-section');
+  // In Empty + No partner, soften the nudge so onboarding-first reads correctly.
+  const secondary = (layout === 'empty' && partner === 'none');
+
+  if (partner === 'linked') {
+    section.innerHTML = `
+      <a class="partner-row" href="13-settings.html">
+        <span class="partner-dot dot-linked" aria-hidden="true"></span>
+        <span class="partner-text">
+          <span class="partner-name">Jordan</span>
+          <span class="partner-status">Linked ✓</span>
+        </span>
+      </a>`;
+  } else if (partner === 'pending') {
+    section.innerHTML = `
+      <a class="partner-row partner-row-stack" href="13-settings.html">
+        <span class="partner-row-top">
+          <span class="partner-dot dot-pending" aria-hidden="true"></span>
+          <span class="partner-text">
+            <span class="partner-name">Your partner</span>
+            <span class="partner-status">Invite sent · hasn't joined yet</span>
+          </span>
+          <span class="partner-pending-pill">⏳ Invite pending</span>
+        </span>
+        <span class="partner-inline-action">↗ Re-share invite link</span>
+      </a>`;
+  } else {
+    section.innerHTML = `
+      <a class="partner-row partner-row-stack ${secondary ? 'partner-row-secondary' : ''}" href="13-settings.html">
+        <span class="partner-text">
+          <span class="partner-name">It's more fun with two.</span>
+        </span>
+        <span class="partner-inline-action">Invite your partner</span>
+      </a>`;
+  }
+}
+
+function renderProgress(layout) {
+  const el = document.getElementById('progress-line');
+  el.textContent = (layout === 'empty')
+    ? '0 of 7 categories started'
+    : '3 of 7 categories started';
+}
+
+function showState(layout, partner) {
+  document.querySelectorAll('.state-tab').forEach(btn => {
+    const match = btn.dataset.layout === layout && btn.dataset.partner === partner;
+    btn.classList.toggle('active', match);
+  });
+  renderUpNext(layout);
+  renderPartner(partner, layout);
+  renderProgress(layout);
+}
+
+document.querySelectorAll('.state-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    showState(btn.dataset.layout, btn.dataset.partner);
+  });
+});
+
+// Boot: match the active state-tab (Empty · linked by default).
+{
+  const active = document.querySelector('.state-tab.active');
+  showState(active.dataset.layout, active.dataset.partner);
+}
 </script>
 <script src="nav.js"></script>
 </body>

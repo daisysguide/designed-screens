@@ -3493,13 +3493,14 @@ body.page-11 .screen-root .main-layout {
 
 body.page-11 .screen-root .phone-wrap { position: sticky; top: 32px; }
 
-body.page-11 .screen-root /* State tabs */
-  .state-tab-row { display: flex; gap: 8px; margin-bottom: 12px; }
+body.page-11 .screen-root /* State tabs — 6 pills, wrap to a second row */
+  .state-tab-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
 
 body.page-11 .screen-root .state-tab {
-    flex: 1; height: 32px; border-radius: var(--radius-full);
+    flex: 0 0 auto; padding: 0 10px; height: 28px;
+    border-radius: var(--radius-full);
     border: 1.5px solid var(--border-default); background: var(--white);
-    font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
     color: var(--text-secondary); cursor: pointer;
     display: flex; align-items: center; justify-content: center; transition: all 0.15s;
   }
@@ -3530,9 +3531,9 @@ body.page-11 .screen-root /* Scroll area */
 
 body.page-11 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
 
-body.page-11 .screen-root /* Greeting row */
+body.page-11 .screen-root /* Greeting row — full-width, no avatar */
   .greeting-row {
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; flex-direction: column; align-items: flex-start;
     margin-bottom: 16px;
   }
 
@@ -3546,12 +3547,54 @@ body.page-11 .screen-root .greeting-name {
     color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.19;
   }
 
+/* .avatar is kept defined for any cross-screen references but is no longer
+   rendered on Home. The top-right avatar that used to live here is gone. */
 body.page-11 .screen-root .avatar {
     width: 40px; height: 40px; border-radius: 50%;
     background: var(--purple-500); color: white;
     display: flex; align-items: center; justify-content: center;
     font-size: 15px; font-weight: 700; flex-shrink: 0;
   }
+
+/* Onboarding nudge card (empty-state Up-next replacement).
+   Brand-filled card; the contained "Browse topics →" CTA is the documented
+   42px button-in-brand-card exception (see design system: Onboarding Nudge Card).
+   Outside this card, button heights follow 56/44/32. */
+body.page-11 .screen-root .nudge-card {
+    background: var(--purple-500);
+    border-radius: var(--radius-xl);
+    padding: 18px;
+    margin-bottom: 16px;
+    color: rgba(255,255,255,0.92);
+  }
+
+body.page-11 .screen-root .nudge-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
+    margin-bottom: 8px;
+  }
+
+body.page-11 .screen-root .nudge-heading {
+    font-family: 'Grandstander', cursive; font-size: 20px; font-weight: 700;
+    color: var(--white); letter-spacing: -0.02em; line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+body.page-11 .screen-root .nudge-body {
+    font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+body.page-11 .screen-root .btn-nudge-primary {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 42px; border-radius: var(--radius-full);
+    background: var(--white); color: var(--purple-500); border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.15s;
+  }
+
+body.page-11 .screen-root .btn-nudge-primary:hover { background: rgba(255,255,255,0.92); }
 
 body.page-11 .screen-root /* Badge notification card */
   .badge-card {
@@ -3619,27 +3662,69 @@ body.page-11 .screen-root .btn-start {
     font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
     cursor: pointer; margin-top: 4px;
     transition: background 0.15s;
+    text-decoration: none;
   }
 
 body.page-11 .screen-root .btn-start:hover { background: var(--purple-600); }
 
-body.page-11 .screen-root /* Partner section */
+body.page-11 .screen-root /* Partner section — avatar-less, whole row tappable.
+                              Renders as an anchor wrapping its content. */
   .partner-row {
     display: flex; align-items: center; gap: 12px;
     background: var(--white); border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm); padding: 12px 14px;
+    text-decoration: none; color: inherit; cursor: pointer;
   }
 
+body.page-11 .screen-root .partner-row:hover { background: rgba(255,255,255,0.92); }
+
+/* Stacked variant used by pending + no-partner; lays the row out as a
+   vertical block so the inline action sits below the status text. */
+body.page-11 .screen-root .partner-row-stack {
+    flex-direction: column; align-items: stretch; gap: 8px;
+  }
+
+body.page-11 .screen-root .partner-row-top {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+/* Secondary variant — Empty + no-partner combo. Quieter (transparent bg, no
+   shadow), so the primary onboarding nudge above stays the louder ask. */
+body.page-11 .screen-root .partner-row-secondary {
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid var(--border-default);
+  }
+
+/* Small status dot (topic-state palette). Used only on Home — text-first;
+   the dot is the optional cue. */
+body.page-11 .screen-root .partner-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+
+body.page-11 .screen-root .partner-dot.dot-linked  { background: var(--green-400); }
+body.page-11 .screen-root .partner-dot.dot-pending { background: rgba(26,26,26,0.35); }
+
+body.page-11 .screen-root .partner-text { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+
+body.page-11 .screen-root .partner-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+
+body.page-11 .screen-root .partner-status { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+
+body.page-11 .screen-root .partner-inline-action {
+    font-size: 13px; font-weight: 600; color: var(--purple-500);
+    align-self: flex-start;
+  }
+
+/* Avatar circles inside the Partner section are retired on Home. The
+   .partner-avatar / .partner-pending-avatar selectors below remain defined
+   for legacy callers but are not rendered by the current markup. */
 body.page-11 .screen-root .partner-avatar {
     width: 36px; height: 36px; border-radius: 50%;
     background: rgba(95,69,242,0.15); color: var(--purple-500);
     display: flex; align-items: center; justify-content: center;
     font-size: 14px; font-weight: 700; flex-shrink: 0;
   }
-
-body.page-11 .screen-root .partner-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
-
-body.page-11 .screen-root .partner-status { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
 
 body.page-11 .screen-root /* Partner no-join nudge */
   .partner-nudge {
@@ -3727,6 +3812,23 @@ body.page-11 .screen-root .see-progress {
     font-size: 13px; font-weight: 700; color: var(--purple-500);
     text-decoration: none; display: inline-block;
   }
+
+/* Progress category line — single row replacing the old two-tile layout.
+   No bars, no rows, no score number on Home — alignment is a distribution
+   on Progress (12), not a score here. */
+body.page-11 .screen-root .progress-category-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+  }
+
+body.page-11 .screen-root .progress-category-label {
+    font-size: 13px; color: var(--text-tertiary);
+  }
+
+/* .progress-stats / .progress-stat / .progress-stat-num / .progress-stat-label
+   remain defined above as currently-unused-on-Home selectors; the design
+   system keeps the Progress Stats tiles component in case it returns
+   elsewhere. */
 
 body.page-11 .screen-root /* Bottom nav */
   .bottom-nav {
@@ -7303,274 +7405,6 @@ body.page-23 .screen-root .page-footer {
   }
 
 body.page-23 .screen-root .footer-label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
-
-/* ── Screen 25-empty-home.html ── */
-body.page-24 {
-    --cream: #fbefe1;
-    --black: #1a1a1a;
-    --white: #ffffff;
-    --purple-500: #5f45f2;
-    --purple-600: #4f37d4;
-    --green-400: #77eaaf;
-    --yellow-400: #ffd755;
-    --text-primary: #1a1a1a;
-    --text-secondary: rgba(26,26,26,0.6);
-    --text-tertiary: rgba(26,26,26,0.4);
-    --text-on-brand: #ffffff;
-    --border-default: rgba(26,26,26,0.15);
-    --border-strong: rgba(26,26,26,0.3);
-    --shadow-sm: 0 1px 2px rgba(26,26,26,0.05);
-    --shadow-md: 0 2px 8px rgba(26,26,26,0.06), 0 1px 2px rgba(26,26,26,0.04);
-    --radius-lg: 12px; --radius-xl: 16px; --radius-full: 9999px;
-  }
-
-body.page-24 .screen-root, body.page-24 .screen-root * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body.page-24 .screen-root {
-    font-family: 'DM Sans', -apple-system, sans-serif;
-    background: #f0ece6; color: var(--text-primary);
-    min-height: 100vh; padding: 40px 24px 60px;
-  }
-
-body.page-24 .screen-root .page-header {
-    max-width: 900px; margin: 0 auto 32px;
-    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
-  }
-
-body.page-24 .screen-root .screen-tag {
-    display: inline-block; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple-500);
-    background: rgba(95,69,242,0.08); padding: 4px 10px;
-    border-radius: var(--radius-full); margin-bottom: 8px;
-  }
-
-body.page-24 .screen-root .page-title {
-    font-family: 'Grandstander', cursive; font-size: 28px; font-weight: 700;
-    color: var(--black); letter-spacing: -0.02em; line-height: 1.1;
-  }
-
-body.page-24 .screen-root .page-desc { font-size: 14px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
-
-body.page-24 .screen-root .nav-pills { display: flex; gap: 8px; flex-shrink: 0; }
-
-body.page-24 .screen-root .nav-pill {
-    height: 36px; padding: 0 16px; border-radius: var(--radius-full);
-    border: 1.5px solid var(--border-strong); background: var(--white);
-    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-    color: var(--text-primary); cursor: pointer; display: flex; align-items: center;
-    gap: 6px; text-decoration: none; transition: background 0.15s;
-  }
-
-body.page-24 .screen-root .nav-pill:hover { background: var(--cream); }
-
-body.page-24 .screen-root .nav-pill.next { background: var(--purple-500); border-color: var(--purple-500); color: white; }
-
-body.page-24 .screen-root .nav-pill.next:hover { background: var(--purple-600); }
-
-body.page-24 .screen-root /* TWO COLUMN LAYOUT */
-  .two-col { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 395px 1fr; gap: 32px; align-items: start; }
-
-body.page-24 .screen-root /* PHONE */
-  .phone-wrap { position: sticky; top: 32px; }
-
-body.page-24 .screen-root .phone {
-    width: 375px; height: 812px; border-radius: 48px; overflow: hidden;
-    position: relative; background: var(--cream);
-    box-shadow: 0 0 0 2px var(--black), 0 32px 64px rgba(26,26,26,0.22), 0 8px 16px rgba(26,26,26,0.1);
-  }
-
-body.page-24 .screen-root .phone-notch {
-    width: 126px; height: 30px; background: var(--black);
-    border-radius: 0 0 20px 20px; margin: 0 auto; position: relative; z-index: 10;
-  }
-
-body.page-24 .screen-root .phone-screen {
-    height: calc(812px - 30px);
-    display: flex; flex-direction: column; overflow: hidden;
-  }
-
-body.page-24 .screen-root .scroll-area {
-    flex: 1; overflow-y: auto; padding: 16px 20px 12px;
-    scrollbar-width: none;
-  }
-
-body.page-24 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
-
-body.page-24 .screen-root /* GREETING */
-  .greeting-row {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 20px;
-  }
-
-body.page-24 .screen-root .greeting-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 3px;
-  }
-
-body.page-24 .screen-root .greeting-name {
-    font-family: 'Grandstander', cursive; font-size: 22px; font-weight: 700;
-    color: var(--text-primary); letter-spacing: -0.02em; line-height: 1.1;
-  }
-
-body.page-24 .screen-root .avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--purple-500); color: white;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 700; flex-shrink: 0;
-  }
-
-body.page-24 .screen-root /* SECTION LABEL */
-  .section-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--text-tertiary);
-    margin-bottom: 10px; margin-top: 18px;
-  }
-
-body.page-24 .screen-root .section-label:first-of-type { margin-top: 0; }
-
-body.page-24 .screen-root /* ONBOARDING NUDGE CARD — one-time prompt to start first topic */
-  .nudge-card {
-    background: var(--purple-500); border-radius: var(--radius-xl);
-    padding: 18px 16px; margin-bottom: 16px;
-  }
-
-body.page-24 .screen-root .nudge-eyebrow {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px;
-  }
-
-body.page-24 .screen-root .nudge-heading {
-    font-family: 'Grandstander', cursive; font-size: 17px; font-weight: 700;
-    color: white; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 6px;
-  }
-
-body.page-24 .screen-root .nudge-body {
-    font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; margin-bottom: 14px;
-  }
-
-body.page-24 .screen-root .btn-nudge-primary {
-    display: flex; align-items: center; justify-content: center;
-    width: 100%; height: 42px; border-radius: var(--radius-full);
-    background: white; border: none;
-    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
-    color: var(--purple-500); cursor: pointer;
-  }
-
-body.page-24 .screen-root /* UP NEXT EMPTY STATE */
-  .empty-up-next {
-    background: var(--white); border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-md); padding: 24px 20px;
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-  }
-
-body.page-24 .screen-root .empty-icon { font-size: 32px; margin-bottom: 10px; }
-
-body.page-24 .screen-root .empty-heading {
-    font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;
-  }
-
-body.page-24 .screen-root .empty-sub {
-    font-size: 13px; color: var(--text-secondary); line-height: 1.5;
-  }
-
-body.page-24 .screen-root /* PARTNER SECTION */
-  .partner-row {
-    display: flex; align-items: center; gap: 12px;
-    background: var(--white); border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm); padding: 12px 14px;
-  }
-
-body.page-24 .screen-root .partner-avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(95,69,242,0.15); color: var(--purple-500);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 700; flex-shrink: 0;
-  }
-
-body.page-24 .screen-root .partner-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
-
-body.page-24 .screen-root .partner-status { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
-
-body.page-24 .screen-root /* PROGRESS — empty placeholder */
-  .progress-empty-row {
-    background: var(--white); border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm); padding: 12px 14px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-
-body.page-24 .screen-root .progress-empty-label { font-size: 13px; color: var(--text-tertiary); }
-
-body.page-24 .screen-root .see-all-link { font-size: 13px; font-weight: 700; color: var(--purple-500); }
-
-body.page-24 .screen-root /* BOTTOM NAV */
-  .bottom-nav {
-    height: 84px; padding: 0 8px 20px; background: var(--white);
-    border-top: 1px solid var(--border-default);
-    display: flex; align-items: stretch; flex-shrink: 0;
-  }
-
-body.page-24 .screen-root .nav-tab {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 3px; cursor: pointer;
-  }
-
-body.page-24 .screen-root .nav-tab-icon { font-size: 22px; line-height: 1; }
-
-body.page-24 .screen-root .nav-tab-label { font-size: 11px; font-weight: 500; color: var(--text-secondary); }
-
-body.page-24 .screen-root .nav-tab.active .nav-tab-label { color: var(--purple-500); font-weight: 600; }
-
-body.page-24 .screen-root /* SPEC */
-  .spec-panel { display: flex; flex-direction: column; gap: 20px; }
-
-body.page-24 .screen-root .spec-card {
-    background: var(--white); border-radius: var(--radius-xl);
-    padding: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-default);
-  }
-
-body.page-24 .screen-root .spec-card-title {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 14px;
-  }
-
-body.page-24 .screen-root .flow-map { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
-body.page-24 .screen-root .flow-node { padding: 6px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; }
-
-body.page-24 .screen-root .flow-node.from { background: rgba(26,26,26,0.07); color: var(--text-secondary); }
-
-body.page-24 .screen-root .flow-node.current { background: var(--purple-500); color: white; }
-
-body.page-24 .screen-root .flow-node.dest { background: rgba(95,69,242,0.1); color: var(--purple-500); }
-
-body.page-24 .screen-root .flow-arrow { color: var(--text-tertiary); font-size: 14px; }
-
-body.page-24 .screen-root table { width: 100%; border-collapse: collapse; font-size: 13px; }
-
-body.page-24 .screen-root td { padding: 7px 0; border-bottom: 1px solid var(--border-default); vertical-align: top; }
-
-body.page-24 .screen-root td:first-child { color: var(--text-secondary); width: 38%; padding-right: 12px; font-size: 12px; }
-
-body.page-24 .screen-root tr:last-child td { border-bottom: none; }
-
-body.page-24 .screen-root code { background: rgba(95,69,242,0.08); color: var(--purple-500); padding: 2px 6px; border-radius: 4px; font-size: 11px; }
-
-body.page-24 .screen-root .note-list { display: flex; flex-direction: column; gap: 8px; }
-
-body.page-24 .screen-root .note-item { display: flex; gap: 8px; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
-
-body.page-24 .screen-root .note-bullet { width: 5px; height: 5px; border-radius: 50%; background: var(--purple-500); margin-top: 6px; flex-shrink: 0; }
-
-body.page-24 .screen-root .info-box {
-    background: rgba(95,69,242,0.06); border-radius: var(--radius-lg);
-    padding: 12px 14px; font-size: 13px; color: var(--text-secondary); line-height: 1.55;
-  }
-
-body.page-24 .screen-root .component-tag {
-    display: inline-block; padding: 3px 10px; border-radius: var(--radius-full);
-    background: rgba(26,26,26,0.06); font-size: 11px; font-weight: 600;
-    color: var(--text-secondary); margin: 2px;
-  }
 
 /* ── Screen 28-connection-error.html ── */
 body.page-27 {

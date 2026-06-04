@@ -273,7 +273,7 @@ How navigation works at the app level. Individual screen specs reference these r
 
 The app has a persistent bottom nav with four destinations: **Home**, **Topics**, **Progress**, **Settings**. Shown on the four "home base" screens; hidden during focused flows.
 
-**Bottom nav shown:** `home`, `topic-list`, `progress`, `settings`, `empty-home`, `empty-topic-list`, `connection-error` (variant B inline banner only)
+**Bottom nav shown:** `home` (both populated and zero-started states), `topic-list`, `progress`, `settings`, `connection-error` (variant B inline banner only)
 
 **Bottom nav hidden:** everything else — all of `swipeable-intro`, `onboarding-quiz`, `building-your-plan`, all auth screens, all onboarding pre-purchase screens, `partner-linking`, all topic-flow screens, `prediction-card`, `payment-failure`, `connection-error` (variant A full-screen)
 
@@ -1360,18 +1360,25 @@ A special treatment that sits above the question card on `prediction-card`. Sign
 
 ### Partner Status Block
 
-Inline display of partner's avatar, name, and activity status.
+Inline display of partner's name and activity status, with an optional avatar.
 
 | Property | Value |
 |---|---|
-| Layout | Flex row · avatar left · text middle · optional action right |
+| Layout | Flex row · avatar left (when present) · text middle · optional action right |
 | Background | `surface-card` |
 | Border radius | `radius-lg` |
 | Shadow | `shadow-sm` |
 | Padding | 14px 16px |
-| Avatar | `avatar-md` |
+| Avatar | `avatar-md` everywhere **except Home**, which uses the avatar-less variant (see below) |
 | Name | `body-sm` bold · `text-primary` |
 | Status | `body-xs` · `text-secondary` |
+| Tap target | The whole row (and any inline action) — never just the avatar |
+
+#### Avatar-less variant — used on Home
+
+On `home`, the block renders with no avatar circle (and no ghost-avatar in the pending state). The text reads as the primary content; an optional 8px status dot from the topic-state palette can lead the row when the row otherwise reads too bare (`green-400` for linked, neutral gray for pending). No initial circle, no avatar in any state. This variant exists because the Home greeting row also dropped its top-right avatar — keeping a partner avatar would have made the Partner section read as the heaviest thing on the screen, which it isn't.
+
+Other screens continue to render the standard `avatar-md` block. The avatar-less treatment is Home-specific and is not the default.
 
 ### Stats Display — CONSOLIDATED
 
@@ -1573,7 +1580,7 @@ Numbered-step explainer card. A general pattern; it was previously on `personali
 
 ### Onboarding Nudge Card — NEW
 
-Purple-filled brand card used on `empty-home` to push first-time users toward their first action.
+Purple-filled brand card used on `home`'s zero-started state to push first-time users toward their first action. (Was on the standalone `empty-home` screen before that was folded into `home`.)
 
 | Property | Value |
 |---|---|
@@ -1755,7 +1762,7 @@ Previous answers are retained server-side but not surfaced in UI for V1.
 
 ## Screen index
 
-The 24 v4 screens. All references in this document use slugs; screen numbers are presentation only and may change. Numbers 21, 22, 23, 26, and 27 are intentionally absent: 21 (post-reveal-reflection) and 23 (completed-topic) were folded into `alignment-reveal`'s revisit mode; 22 (re-answer-flow) was a stale placeholder and is deferred (see CLAUDE.md); 26 (empty-topic-list) and 27 (payment-failure) were cut on 2026-06-03 — restore/payment-failure are handled inline on `paywall` and `settings`. A renumber is a separate deferred pass.
+The 23 v4 screens. All references in this document use slugs; screen numbers are presentation only and may change. Numbers 21, 22, 23, 25, 26, and 27 are intentionally absent: 21 (post-reveal-reflection) and 23 (completed-topic) were folded into `alignment-reveal`'s revisit mode; 22 (re-answer-flow) was a stale placeholder and is deferred (see CLAUDE.md); **25 (empty-home) was folded into `home` as its zero-started state** — `home` is now the canonical Home carrying both populated and empty; 26 (empty-topic-list) and 27 (payment-failure) were cut on 2026-06-03 — restore/payment-failure are handled inline on `paywall` and `settings`. A renumber is a separate deferred pass.
 
 | Slug | File | Section | Bottom nav |
 |---|---|---|---|
@@ -1779,7 +1786,6 @@ The 24 v4 screens. All references in this document use slugs; screen numbers are
 | `question` | 18-question.html | Topic flow | Hidden |
 | `waiting-for-partner` | 19-waiting-for-partner.html | Topic flow | Hidden |
 | `alignment-reveal` | 20-alignment-reveal.html | Topic flow | Hidden |
-| `empty-home` | 25-empty-home.html | Empty states | Shown |
 | `connection-error` | 28-connection-error.html | Error states | Conditional (variant A hidden, variant B shown) |
 | `prediction-card` | 24-prediction-card.html | Future retention tests | Hidden |
 | `onboarding-intro` | 29-onboarding-intro.html | A/B test variant | Hidden |
@@ -1868,6 +1874,19 @@ This document does not have a version number. It is at HEAD. Changes are dated i
 ## CHANGELOG
 
 Date-stamped record of design system decisions. Add new entries at the top.
+
+### 2026-06-03 — Home rework: fold `empty-home` (Screen 25) into `home`; avatar-less greeting + partner; category-only progress
+
+`home` is now the canonical Home, carrying both the populated and the zero-started states. The standalone `empty-home` screen (25) is retired from the catalog. Major component / spec changes:
+
+- **Greeting row** drops the top-right avatar in both states. The greeting reclaims full width; the empty-state copy is standardized to "Hey [first name] 👋" (no bare-name variant). The Avatar component stays in the system — it's used on other screens — just no longer on Home.
+- **Partner Status Block** gains a Home-specific avatar-less variant. The standard `avatar-md` block continues elsewhere; only Home renders the avatar-less treatment. The whole row is the tap target → Settings (partner row).
+- **Progress on Home** is now a single category line — "{N} of 7 categories started · See full progress →" — in both states. Both stat tiles are removed. The single "% aligned" score is prohibited on Home (and anywhere outside `progress`): alignment is a distribution, not a score. The Progress Stats tiles component is currently unused on Home but remains in the system.
+- **Onboarding Nudge Card** (the brand-filled purple card with a 42px white "Browse topics →" CTA) is now Home's empty-state Up-next replacement. The standalone "Nothing started yet" 📋 block is not rendered — the nudge owns the empty Up-next state. In the empty + no-partner combo, the partner "Invite your partner" nudge appears as the secondary ask below the primary onboarding nudge.
+- **Three transition triggers stay distinct:** nudge dismiss + Up-next populate fire on first topic intro view (Screen 16); Progress "0 of 7 → 1 of 7" fires on first answer submitted.
+- Bottom-nav-shown list updated: Empty Home no longer appears as a separate entry.
+
+Catalog cleanup that came with this: the page-24 CSS block tied to the deleted `empty-home` screen (268 lines, no surviving HTML claimed it) was removed from `styles.css`. Sidebar Empty States section is now empty across the catalog and was dropped. Neighbor pointers re-stitched: 24's next → 28; 28's prev → 24.
 
 ### 2026-06-03 — Sidebar reorg: move `prediction-card` out of Special; cut 26 + 27
 
