@@ -1755,7 +1755,7 @@ Previous answers are retained server-side but not surfaced in UI for V1.
 
 ## Screen index
 
-The 26 v4 screens. All references in this document use slugs; screen numbers are presentation only and may change. Numbers 21, 22, and 23 are intentionally absent: 21 (post-reveal-reflection) and 23 (completed-topic) were folded into `alignment-reveal`'s revisit mode; 22 (re-answer-flow) was a stale placeholder and is deferred (see CLAUDE.md). A renumber is a separate deferred pass.
+The 24 v4 screens. All references in this document use slugs; screen numbers are presentation only and may change. Numbers 21, 22, 23, 26, and 27 are intentionally absent: 21 (post-reveal-reflection) and 23 (completed-topic) were folded into `alignment-reveal`'s revisit mode; 22 (re-answer-flow) was a stale placeholder and is deferred (see CLAUDE.md); 26 (empty-topic-list) and 27 (payment-failure) were cut on 2026-06-03 — restore/payment-failure are handled inline on `paywall` and `settings`. A renumber is a separate deferred pass.
 
 | Slug | File | Section | Bottom nav |
 |---|---|---|---|
@@ -1779,11 +1779,9 @@ The 26 v4 screens. All references in this document use slugs; screen numbers are
 | `question` | 18-question.html | Topic flow | Hidden |
 | `waiting-for-partner` | 19-waiting-for-partner.html | Topic flow | Hidden |
 | `alignment-reveal` | 20-alignment-reveal.html | Topic flow | Hidden |
-| `prediction-card` | 24-prediction-card.html | Special | Hidden |
 | `empty-home` | 25-empty-home.html | Empty states | Shown |
-| `empty-topic-list` | 26-empty-topic-list.html | Empty states | Shown |
-| `payment-failure` | 27-payment-failure.html | Error states | Hidden |
 | `connection-error` | 28-connection-error.html | Error states | Conditional (variant A hidden, variant B shown) |
+| `prediction-card` | 24-prediction-card.html | Future retention tests | Hidden |
 | `onboarding-intro` | 29-onboarding-intro.html | A/B test variant | Hidden |
 
 Each screen file is its own spec. The design system documents foundations and components; screens compose them.
@@ -1870,6 +1868,16 @@ This document does not have a version number. It is at HEAD. Changes are dated i
 ## CHANGELOG
 
 Date-stamped record of design system decisions. Add new entries at the top.
+
+### 2026-06-03 — Sidebar reorg: move `prediction-card` out of Special; cut 26 + 27
+
+Catalog hygiene only — no product behavior changes elsewhere.
+
+- **Cut `empty-topic-list` (Screen 26).** No surviving screen routed to it; the empty-state pattern lives on `topic-list` itself if/when a real empty state appears in product.
+- **Cut `payment-failure` (Screen 27).** Restore is handled inline on `paywall` (Screen 09) and `settings` (Screen 13); a standalone payment-failure screen is not the V1 surface for those flows.
+- **Retire the "Special" sidebar section.** Its only member was `prediction-card`. Moved to a new section, **Future Retention Tests**, placed next to "Future A/B Tests" — both are forward-looking groupings that signal "parked for post-launch."
+- **Screen 24 (`prediction-card`) carries a scope note in the chrome:** "Parked for post-launch — not in V1. Prediction Cards are the only time-gated content in the app, so we want baseline retention data before building the locked-state and scheduled-reveal machinery this requires."
+- Catalog table now lists 24 surviving screens. Gaps at 21, 22, 23, 26, 27 are intentional; a renumber remains a separate deferred pass. Neighbor pointers re-stitched so 25 → 28 walks cleanly; 24's keyboard / topbar position is unchanged.
 
 ### 2026-06-03 — Cut `re-answer-flow` (Screen 22)
 
