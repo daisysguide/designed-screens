@@ -72,7 +72,7 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">Notifications (OS-denied banner · Partner activity with partner-name fallback · Nudge frequency, no subtext · Funny push, "I mean, <em>we</em> think we're funny, but it's okay if you don't."), Where you are (Stage + Q1-conditional date row), Your plan (Manage topics → Screen 15), Partner (three link states: Linked → detail/unlink push · Invite pending → Screen 10 · Not linked → Screen 10), Account (Name · Phone read-only · Lifetime access push · Delete · Log out). Demo tabs: Q1 answer, Push permission, Partner status.</div>
+<div class="page-desc page-desc-full">Account (Name · Signed in with read-only · Lifetime access push with founding-member chip), Partner (three link states: Linked → detail/unlink push · Invite pending → Screen 10 · Not linked → Screen 10), Notifications (OS-denied banner · Partner activity with partner-name fallback · Nudge frequency, no subtext · Funny push, "I mean, <em>we</em> think we're funny, but it's okay if you don't."), Where you are (Stage + Q1-conditional date row), Your plan (Manage topics → Screen 15), Support, Legal, headerless destructive group (Delete · Log out). Demo tabs: Q1 answer, Push permission, Partner status.</div>
 
 <div class="main-layout">
 
@@ -107,6 +107,53 @@
 
         <div class="scroll-area">
           <div class="screen-title">Settings</div>
+
+          <!-- Account -->
+          <div class="section-header">Account</div>
+          <div class="list-group">
+            <!-- 1. Name -->
+            <div class="list-row" onclick="openEditName()" style="cursor:pointer;">
+              <div class="row-label">Name</div>
+              <div class="row-value" id="name-row-value">Alex</div>
+              <div class="row-chevron">›</div>
+            </div>
+            <!-- 2. Signed in with (read-only — identity / recovery reference, no edit) -->
+            <div class="list-row" style="cursor:default;">
+              <div class="row-label">Signed in with</div>
+              <div class="row-value">Phone · +1 (972) 555-0182</div>
+            </div>
+            <!-- 3. Lifetime access -->
+            <div class="list-row" onclick="openLifetime()" style="cursor:pointer;">
+              <div class="row-label">Lifetime access</div>
+              <div class="row-value">
+                <span style="display:inline-block;padding:3px 10px;border-radius:100px;background:rgba(95,69,242,0.12);color:#5f45f2;font-size:12px;font-weight:600;line-height:1.3;">Founding member</span>
+              </div>
+              <div class="row-chevron">›</div>
+            </div>
+          </div>
+
+          <!-- Partner -->
+          <div class="section-header">Partner</div>
+          <div class="list-group">
+            <!-- Linked: tap → Partner detail push (with Unlink) -->
+            <div class="list-row partner-row-variant" data-pstate="linked" onclick="openPartnerDetail()" style="cursor:pointer;">
+              <div class="row-label">Jordan · Linked ✓</div>
+              <div class="row-chevron">›</div>
+            </div>
+            <!-- Invite pending: tap → Partner Linking (Screen 10) for resend/cancel -->
+            <div class="list-row partner-row-variant" data-pstate="pending" onclick="location.href='10-partner-linking.html'" style="display:none;cursor:pointer;align-items:flex-start;padding-top:14px;padding-bottom:14px;">
+              <div class="row-label-block">
+                <div class="row-label-main">Invite sent</div>
+                <div class="row-label-sub">Tap to resend or cancel.</div>
+              </div>
+              <div class="row-chevron" style="margin-top:2px;">›</div>
+            </div>
+            <!-- Not linked: gentle CTA → Partner Linking (Screen 10) -->
+            <div class="list-row partner-row-variant" data-pstate="none" onclick="location.href='10-partner-linking.html'" style="display:none;cursor:pointer;">
+              <div class="row-label" style="color:#5f45f2;">Invite your partner</div>
+              <div class="row-chevron" style="color:#5f45f2;">›</div>
+            </div>
+          </div>
 
           <!-- Notifications -->
           <div class="section-header">Notifications</div>
@@ -195,29 +242,6 @@
             </div>
           </div>
 
-          <!-- Partner -->
-          <div class="section-header">Partner</div>
-          <div class="list-group">
-            <!-- Linked: tap → Partner detail push (with Unlink) -->
-            <div class="list-row partner-row-variant" data-pstate="linked" onclick="openPartnerDetail()" style="cursor:pointer;">
-              <div class="row-label">Jordan · Linked ✓</div>
-              <div class="row-chevron">›</div>
-            </div>
-            <!-- Invite pending: tap → Partner Linking (Screen 10) for resend/cancel -->
-            <div class="list-row partner-row-variant" data-pstate="pending" onclick="location.href='10-partner-linking.html'" style="display:none;cursor:pointer;align-items:flex-start;padding-top:14px;padding-bottom:14px;">
-              <div class="row-label-block">
-                <div class="row-label-main">Invite sent</div>
-                <div class="row-label-sub">Tap to resend or cancel.</div>
-              </div>
-              <div class="row-chevron" style="margin-top:2px;">›</div>
-            </div>
-            <!-- Not linked: gentle CTA → Partner Linking (Screen 10) -->
-            <div class="list-row partner-row-variant" data-pstate="none" onclick="location.href='10-partner-linking.html'" style="display:none;cursor:pointer;">
-              <div class="row-label" style="color:#5f45f2;">Invite your partner</div>
-              <div class="row-chevron" style="color:#5f45f2;">›</div>
-            </div>
-          </div>
-
           <!-- Support -->
           <div class="section-header">Support</div>
           <div class="list-group">
@@ -247,31 +271,11 @@
           <!-- App version — below Legal card, not tappable -->
           <div style="text-align:center;margin-top:16px;margin-bottom:8px;font-size:11px;font-family:'DM Sans',sans-serif;color:rgba(26,26,26,0.38);line-height:1.4;">Version 1.0.0 (42)</div>
 
-          <!-- Account -->
-          <div class="section-header">Account</div>
+          <!-- Destructive actions — headerless group, bottom of list -->
           <div class="list-group">
-            <!-- 1. Name -->
-            <div class="list-row" onclick="openEditName()" style="cursor:pointer;">
-              <div class="row-label">Name</div>
-              <div class="row-value" id="name-row-value">Alex</div>
-              <div class="row-chevron">›</div>
-            </div>
-            <!-- 2. Phone number (read-only — identity confirmation, no edit) -->
-            <div class="list-row" style="cursor:default;">
-              <div class="row-label">Phone number</div>
-              <div class="row-value">+1 (972) 555-0182</div>
-            </div>
-            <!-- 3. Lifetime access -->
-            <div class="list-row" onclick="openLifetime()" style="cursor:pointer;">
-              <div class="row-label">Lifetime access</div>
-              <div class="row-value">Founding member</div>
-              <div class="row-chevron">›</div>
-            </div>
-            <!-- 4. Delete account -->
             <div class="list-row" onclick="openDeleteSheet()" style="cursor:pointer;">
               <div class="row-label-destructive">Delete account</div>
             </div>
-            <!-- 5. Log out -->
             <div class="list-row">
               <div class="row-label-destructive">Log out</div>
             </div>
