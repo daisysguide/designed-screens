@@ -33,6 +33,50 @@
     line-height: 1.5;
     color: var(--text-secondary);
   }
+
+  /* Up-next tier pills — mirror Topics' cyan palette so Home and
+     Topics speak the same status language. Override the legacy purple
+     pill-your-turn rule in styles.css via the cascade (source order). */
+  body.page-11 .screen-root .pill-your-turn {
+    background: var(--cyan-soft);
+    border: 1.5px solid var(--cyan-strong);
+    color: var(--cyan-text);
+  }
+  body.page-11 .screen-root .pill-reveal {
+    background: var(--cyan-strong);
+    border: 1.5px solid var(--cyan-strong);
+    color: var(--cyan-text);
+    box-shadow: 0 0 8px 1px rgba(95,69,242,0.34);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    body.page-11 .screen-root .pill-reveal {
+      animation: page11RevealCharge 2.4s ease-in-out infinite;
+    }
+  }
+  @keyframes page11RevealCharge {
+    0%, 100% { transform: scale(1);    box-shadow: 0 0 6px 1px  rgba(95,69,242,0.30); }
+    50%      { transform: scale(1.04); box-shadow: 0 0 12px 2px rgba(95,69,242,0.55); }
+  }
+
+  /* Doc-only tier preview row — secondary affordance under the main
+     state-tab row, modeled on the same state-tab styling. Hidden when
+     the active layout is empty; tier preview only applies to populated. */
+  body.page-11 .screen-root .tier-tab-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 12px;
+  }
+  body.page-11 .screen-root .tier-tab-row[data-hidden="true"] { display: none; }
+  body.page-11 .screen-root .tier-tab-row .tier-tab-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    align-self: center;
+    margin-right: 4px;
+  }
 </style>
 </head>
 <body class="page-11">
@@ -112,6 +156,12 @@
       <button class="state-tab" data-layout="populated" data-partner="pending" type="button">Populated · pending</button>
       <button class="state-tab" data-layout="populated" data-partner="none" type="button">Populated · no partner</button>
     </div>
+    <div class="tier-tab-row" role="tablist" aria-label="Up-next tier preview (populated only)">
+      <span class="tier-tab-label">Up-next tier</span>
+      <button class="state-tab" data-tier="reveal" type="button">Ready to reveal</button>
+      <button class="state-tab active" data-tier="your-turn" type="button">Your turn</button>
+      <button class="state-tab" data-tier="available" type="button">Available</button>
+    </div>
 
     <div class="phone">
       <div class="phone-notch"></div>
@@ -190,7 +240,7 @@
         <div class="flow-node dest">16 Topic Intro</div>
       </div>
       <div class="info-box">
-        <strong>First screen with bottom nav.</strong> Home tab is active. "Start this topic" → Topic Intro for that topic; "Browse topics →" (empty-state nudge) → Topic List (14). "See full progress →" → Progress tab. Settings is reached via the bottom nav, not via an avatar — the top-right avatar that used to live in the greeting row is gone (its only job was a route to Settings, and the Settings tab already owns that).
+        <strong>First screen with bottom nav.</strong> Home tab is active. The populated Up-next button routes by tier — "Start this topic" / "Answer now" → Topic Intro (16), "See where you landed" → Waiting/Preparing (19). "Browse topics →" (empty-state nudge) → Topic List (14). "See full progress →" → Progress tab. Settings is reached via the bottom nav, not via an avatar — the top-right avatar that used to live in the greeting row is gone (its only job was a route to Settings, and the Settings tab already owns that).
       </div>
     </div>
 
@@ -198,7 +248,7 @@
       <div class="spec-card-title">Two states · one canonical Home</div>
       <table class="spec-table">
         <tr><td>Empty (zero-started)</td><td>Triggered when the user has 0 topics started (no answers submitted yet). Greeting → onboarding nudge → Partner → Progress ("0 of 7 categories started") → bottom nav. No badge card. <strong>No Wry Observation card</strong> in this state. <strong>No separate "Nothing started yet" 📋 placeholder</strong> — the nudge owns the empty Up-next state, so a placeholder directly under "Pick your first topic." would be redundant.</td></tr>
-        <tr><td>Populated</td><td>Greeting → Badge card (when earned) → Up-next topic card + "Start this topic" → Partner → Progress (category line) → <strong>Wry Observation</strong> (gated; see below) → bottom nav.</td></tr>
+        <tr><td>Populated</td><td>Greeting → Badge card (when earned) → Up-next topic card + tiered button (see <em>Up Next — Topic Card</em>) → Partner → Progress (category line) → <strong>Wry Observation</strong> (gated; see below) → bottom nav.</td></tr>
         <tr><td>Folded in</td><td>This screen folds in what used to live on Screen 25 (Empty Home). 25 has been retired from the catalog.</td></tr>
       </table>
     </div>
@@ -257,12 +307,16 @@
     <div class="spec-card">
       <div class="spec-card-title">Up Next — Topic Card (populated only)</div>
       <table class="spec-table">
-        <tr><td>Background</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · <code>border-left: 3px solid purple-500</code> for "Your turn"</td></tr>
+        <tr><td>Background</td><td>White · <code>radius-xl</code> · <code>shadow-md</code> · <code>border-left: 3px solid purple-500</code> accent stripe (all tiers)</td></tr>
         <tr><td>Category label</td><td>11px DM Sans bold · ALL CAPS · <code>text-tertiary</code></td></tr>
         <tr><td>Topic title</td><td>15px DM Sans bold · <code>text-primary</code></td></tr>
         <tr><td>Description</td><td>13px DM Sans regular · <code>text-secondary</code> · max 2 lines</td></tr>
-        <tr><td>Status pill</td><td>"Your turn" · filled <code>purple-500</code> · white text</td></tr>
-        <tr><td>"Start this topic"</td><td>Primary button · 56px · <code>radius-full</code> · below the card · → Topic Intro (16)</td></tr>
+        <tr><th colspan="2" style="text-align:left;padding-top:10px;">Three tier variants (one card, pill + button vary)</th></tr>
+        <tr><td>Ready to reveal</td><td>Pill: "Ready to reveal" · <code>cyan-strong</code> bg · <code>cyan-text</code> · always-on purple halo (<code>rgba(95,69,242,0.34)</code>) + breathing <strong>charge</strong> animation (<code>page11RevealCharge</code>, 2.4s; paused under reduced motion — static halo remains). Mirrors the Topics pill; row-level magic gradient is row treatment and stays on Topics. Button: <strong>"See where you landed →"</strong> → Screen 19 (Preparing → Reveal).</td></tr>
+        <tr><td>Your turn</td><td>Pill: "Your turn" · <code>cyan-soft</code> bg · <code>cyan-strong</code> border · <code>cyan-text</code>. <strong>Matches the Topics cyan</strong> — Home was previously purple; aligned 2026-06-04 to remove the inconsistency. Button: <strong>"Answer now →"</strong> → Screen 16 Topic Intro.</td></tr>
+        <tr><td>Available</td><td><strong>No pill.</strong> The absence is the signal (matches Topics' "not started = no pill"); "available" is the neutral default, not a status claim. Don't gap-fill with chrome. Button: <strong>"Start this topic →"</strong> → Screen 16 Topic Intro.</td></tr>
+        <tr><td>Selection</td><td>Up-next never renders Partner's turn, Worth a conversation, or settled — those are excluded by the selection rule (see <em>Up-next selection</em>). Only these three variants can appear on Home.</td></tr>
+        <tr><td>Button</td><td>Primary · 56px · <code>radius-full</code> · below the card. Label and destination per tier (see rows above).</td></tr>
       </table>
     </div>
 
@@ -326,7 +380,7 @@
         <span class="component-tag">Onboarding Nudge Card (empty state)</span>
         <span class="component-tag">Badge Notification Card (when earned)</span>
         <span class="component-tag">Topic Card (Up Next, populated)</span>
-        <span class="component-tag">Button — Primary (lg, "Start this topic")</span>
+        <span class="component-tag">Button — Primary (lg, label per tier — "See where you landed" / "Answer now" / "Start this topic")</span>
         <span class="component-tag">Partner Status Block (avatar-less Home variant)</span>
         <span class="component-tag">Progress category line</span>
         <span class="component-tag">Wry Observation (gated, populated only)</span>
@@ -342,7 +396,7 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Top-right avatar is gone</strong> in both states. Settings is reached via the bottom-nav Settings tab.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Empty state</strong> shows the onboarding nudge in the Up-next slot. A separate "Nothing started yet" 📋 block <em>is not rendered</em> — the nudge owns the empty Up-next state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>If the user has no partner linked and no topics started, the partner "Invite your partner" nudge appears <em>below</em> the onboarding nudge as the secondary ask. Two nudges is acceptable; the hierarchy must read onboarding-first.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Up next</strong> (populated) shows the single highest-priority <strong>actionable</strong> topic — Ready to reveal → Your turn → Available — with most-recently-visited as the in-tier tiebreaker. Partner's turn, Worth a conversation, and completed topics are excluded. See the <em>Up-next selection</em> spec card.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Up next</strong> (populated) shows the single highest-priority <strong>actionable</strong> topic — Ready to reveal → Your turn → Available — with most-recently-visited as the in-tier tiebreaker. Partner's turn, Worth a conversation, and completed topics are excluded. The three populated variants vary only in <strong>pill + button label + route</strong> (Ready to reveal: charged cyan pill / "See where you landed →" → 19 · Your turn: cyan pill / "Answer now →" → 16 · Available: no pill / "Start this topic →" → 16). See the <em>Up-next selection</em> spec card.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Partner section is avatar-less</strong> on Home in every state. Other screens still use <code>avatar-md</code>; the Home variant is the exception (see design system, Partner Status Block).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Progress</strong> is a single category line. No tiles, no alignment score — alignment is a distribution on Progress (12), not a number on Home.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Wry Observation</strong> (gated easter egg) sits at the bottom of the content column, below Progress and above the bottom nav. Populated states only; hidden in the empty / zero-started state. Subordinate to the Up-next card — never competes with the single next action. <strong>Never scores or ranks divergence; never mentions being AI.</strong> Replaces the retired scored-divergence easter egg. Flagged for design review.</span></div>
@@ -354,7 +408,8 @@
 
     <div class="spec-card">
       <div class="spec-card-title">Demo state switcher (doc page only)</div>
-      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0;">The row of pills above the phone is a doc-only affordance, modeled on Screen 12's state switcher. Two axes: layout (Empty / Populated) × partner sub-state (Linked / Pending / No partner). The Empty + No partner combo shows the two-nudge hierarchy (onboarding primary, partner secondary).</p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0 0 8px;">The row of pills above the phone is a doc-only affordance, modeled on Screen 12's state switcher. Two axes: layout (Empty / Populated) × partner sub-state (Linked / Pending / No partner). The Empty + No partner combo shows the two-nudge hierarchy (onboarding primary, partner secondary).</p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin:0;">A second <strong>Up-next tier</strong> row previews the three populated variants the selection rule can resolve to: <strong>Ready to reveal · Your turn · Available</strong>. Tier preview is meaningful only in the populated layout — the row hides in the empty layout, and tapping a tier while on an empty tab jumps to the matching Populated · {partner} state.</p>
     </div>
 
   </div>
@@ -384,7 +439,17 @@ const SAMPLE_TOPIC = {
   desc:     'You might be surprised how differently you two think about this one.',
 };
 
-function renderUpNext(layout, partner) {
+/* Up-next variants — the three populated tiers the selection rule can
+   resolve to. Available has no pill (the absence is the signal, matching
+   Topics' "not started = no pill"). The card structure is identical
+   across tiers; only the pill + button label + route differ. */
+const UP_NEXT_VARIANTS = {
+  'reveal':    { pill: '<div class="status-pill pill-reveal">Ready to reveal</div>', label: 'See where you landed →', href: '19-waiting-for-partner.html' },
+  'your-turn': { pill: '<div class="status-pill pill-your-turn">Your turn</div>',    label: 'Answer now →',           href: '16-topic-intro.html' },
+  'available': { pill: '',                                                           label: 'Start this topic →',     href: '16-topic-intro.html' },
+};
+
+function renderUpNext(layout, partner, tier) {
   const slot = document.getElementById('up-next-slot');
   if (layout === 'empty') {
     const partnerLabel = (partner === 'linked') ? 'Jordan' : 'your partner';
@@ -396,15 +461,16 @@ function renderUpNext(layout, partner) {
         <a class="btn-nudge-primary" href="14-topic-list.html">Browse topics →</a>
       </div>`;
   } else {
+    const v = UP_NEXT_VARIANTS[tier] || UP_NEXT_VARIANTS['available'];
     slot.innerHTML = `
       <div class="section-label" style="margin-top:18px;">Up next</div>
       <div class="topic-card">
         <div class="topic-category">${SAMPLE_TOPIC.category}</div>
         <div class="topic-title">${SAMPLE_TOPIC.title}</div>
         <div class="topic-desc">${SAMPLE_TOPIC.desc}</div>
-        <div class="status-pill pill-your-turn">Your turn</div>
+        ${v.pill}
       </div>
-      <a class="btn-start" href="16-topic-intro.html">Start this topic</a>`;
+      <a class="btn-start" href="${v.href}">${v.label}</a>`;
   }
 }
 
@@ -470,27 +536,51 @@ function renderWry(layout) {
     </div>`;
 }
 
-function showState(layout, partner) {
-  document.querySelectorAll('.state-tab').forEach(btn => {
+// Active tier persists across layout/partner changes within the session.
+let activeTier = 'your-turn';
+
+function showState(layout, partner, tier) {
+  if (tier) activeTier = tier;
+
+  // Main layout × partner tabs.
+  document.querySelectorAll('.state-tab-row .state-tab').forEach(btn => {
     const match = btn.dataset.layout === layout && btn.dataset.partner === partner;
     btn.classList.toggle('active', match);
   });
-  renderUpNext(layout, partner);
+  // Tier tabs (doc-only, populated-only).
+  document.querySelectorAll('.tier-tab-row .state-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tier === activeTier);
+  });
+  // Tier row only meaningful in populated layout.
+  document.querySelector('.tier-tab-row').setAttribute('data-hidden', layout === 'empty' ? 'true' : 'false');
+
+  renderUpNext(layout, partner, activeTier);
   renderPartner(partner, layout);
   renderProgress(layout);
   renderWry(layout);
 }
 
-document.querySelectorAll('.state-tab').forEach(btn => {
+document.querySelectorAll('.state-tab-row .state-tab').forEach(btn => {
   btn.addEventListener('click', () => {
-    showState(btn.dataset.layout, btn.dataset.partner);
+    showState(btn.dataset.layout, btn.dataset.partner, activeTier);
+  });
+});
+
+// Tier preview taps: force layout=populated (tier preview is meaningless
+// in empty), preserve current partner sub-state, swap the tier.
+document.querySelectorAll('.tier-tab-row .state-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const currentMainActive = document.querySelector('.state-tab-row .state-tab.active');
+    const partner = currentMainActive ? currentMainActive.dataset.partner : 'linked';
+    // If the active main tab is on empty, jump to the matching Populated · {partner} tab.
+    showState('populated', partner, btn.dataset.tier);
   });
 });
 
 // Boot: match the active state-tab (Empty · linked by default).
 {
-  const active = document.querySelector('.state-tab.active');
-  showState(active.dataset.layout, active.dataset.partner);
+  const active = document.querySelector('.state-tab-row .state-tab.active');
+  showState(active.dataset.layout, active.dataset.partner, activeTier);
 }
 </script>
 <script src="nav.js"></script>
