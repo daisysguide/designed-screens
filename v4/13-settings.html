@@ -535,12 +535,18 @@
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">15 Manage Topics</div>
       </div>
-      <div class="info-box">Settings tab is active. <strong>Nudge frequency</strong> → bottom-sheet picker (radio list). <strong>Stage</strong> → bottom-sheet picker (radio list, 4 options matching onboarding Q1) — selecting a different stage live-swaps the date row shape and fires the inline change note. <strong>Due date / Birth date</strong> → native date picker on device; bottom-sheet preset surrogate in the prototype. <strong>Manage topics</strong> → Screen 15 (wired). <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner row</strong> branches by link state: Linked → Partner detail sub-screen (push) → Unlink confirmation bottom sheet · <strong>Invite pending</strong> and <strong>Not linked</strong> both → Screen 10 (Partner Linking). <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Phone number</strong> is read-only (no nav). No other outbound nav in V1.</div>
+      <div class="info-box">Settings tab is active. <strong>Nudge frequency</strong> → bottom-sheet picker (radio list). <strong>Stage</strong> → bottom-sheet picker (radio list, 4 options matching onboarding Q1) — selecting a different stage live-swaps the date row shape and fires the inline change note. <strong>Due date / Birth date</strong> → native date picker on device; bottom-sheet preset surrogate in the prototype. <strong>Manage topics</strong> → Screen 15 (wired). <strong>Name</strong> → Edit Name sub-screen (push). <strong>Partner row</strong> branches by link state: Linked → Partner detail sub-screen (push) → Unlink confirmation bottom sheet · <strong>Invite pending</strong> and <strong>Not linked</strong> both → Screen 10 (Partner Linking). <strong>Lifetime access</strong> → Founding member sub-screen (push) — content only, plus a single standalone Restore purchase row; Terms of Service and "You &amp; your data" live in the main Legal section, not duplicated here. <strong>Signed in with</strong> is read-only (no nav). No other outbound nav in V1.</div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">All settings — full reference</div>
       <div class="settings-map">
+        <div class="settings-section-label">Account</div>
+        <div class="settings-row">Name <span class="settings-row-value">Value + chevron · Shows user's first name · tap → edit screen with single text input pre-filled · Save updates profile</span></div>
+        <div class="settings-row">Signed in with <span class="settings-row-value">Value · Read-only (identity / recovery reference) · no chevron · no edit · adapts to the auth method chosen on Screen 04: "Apple · {email}" / "Apple · Hide My Email" / "Google · {email}" / "Email · {email}" / "Phone · {number}" · uniform method prefix on every state</span></div>
+        <div class="settings-row">Lifetime access <span class="settings-row-value">Value "Founding member" rendered as soft-purple pill chip (rgba(95,69,242,0.12) bg, #5f45f2 text, 100px radius) + chevron · tap → Founding member sub-screen (proud card, what's covered, thank-you note, standalone Restore purchase row · Terms + privacy live in Legal, not duplicated here)</span></div>
+        <div class="settings-section-label">Partner</div>
+        <div class="settings-row">Partner row <span class="settings-row-value">Three link states with state-specific copy + routing. <strong>Linked:</strong> "{name} · Linked ✓" + chevron → Partner detail sub-screen. <strong>Invite pending:</strong> "Invite sent" + subtext "Tap to resend or cancel." + chevron → Screen 10. <strong>Not linked:</strong> "Invite your partner" in purple-500 + chevron → Screen 10. No avatar in any state.</span></div>
         <div class="settings-section-label">Notifications</div>
         <div class="settings-row">OS-permission-denied banner <span class="settings-row-value">Conditional · soft warning (orange band, not error red) · "Notifications are turned off in your phone settings." + "Open Settings" button (deep-links to OS settings) · re-checks on foreground</span></div>
         <div class="settings-row">Partner activity <span class="settings-row-value">Toggle · On by default · subtext "When {partner} answers or a reveal is ready." (uses partner-name fallback) · transactional (partner linked/accepted · your turn · ready to reveal) · ignores Nudge frequency · off-warning attached inside the card (also uses fallback)</span></div>
@@ -551,8 +557,6 @@
         <div class="settings-row">Due date / Birth date <span class="settings-row-value">Value + chevron · tap → date picker (native on device; bottom-sheet surrogate in the prototype) · "Due date" (Pregnant, Expecting again, future-bounded max 12 months) · "Birth date" (Baby is here, past-bounded max today) · row hidden entirely for Trying · no Stage-change note on date edits · no subtext on the row</span></div>
         <div class="settings-section-label">Your plan</div>
         <div class="settings-row">Manage topics <span class="settings-row-value">→ Screen 15 · "45 active" count shown</span></div>
-        <div class="settings-section-label">Partner</div>
-        <div class="settings-row">Partner row <span class="settings-row-value">Three link states with state-specific copy + routing. <strong>Linked:</strong> "{name} · Linked ✓" + chevron → Partner detail sub-screen. <strong>Invite pending:</strong> "Invite sent" + subtext "Tap to resend or cancel." + chevron → Screen 10. <strong>Not linked:</strong> "Invite your partner" in purple-500 + chevron → Screen 10. No avatar in any state.</span></div>
         <div class="settings-section-label">Support</div>
         <div class="settings-row">Get help <span class="settings-row-value">→ in-app help / support URL</span></div>
         <div class="settings-row">Give feedback <span class="settings-row-value">→ feedback form or email</span></div>
@@ -560,10 +564,7 @@
         <div class="settings-row">You &amp; your data <span class="settings-row-value">→ opens privacy URL in-app browser · warmer label (was "Privacy Policy") · canonical home for the privacy link</span></div>
         <div class="settings-row">Terms of Service <span class="settings-row-value">→ opens web URL in-app browser · canonical home for the Terms link</span></div>
         <div class="settings-section-label" style="font-style:italic;opacity:0.6;">— Version line (outside card) —</div>
-        <div class="settings-section-label">Account</div>
-        <div class="settings-row">Name <span class="settings-row-value">Value + chevron · Shows user's first name · tap → edit screen with single text input pre-filled · Save updates profile</span></div>
-        <div class="settings-row">Phone number <span class="settings-row-value">Value · Read-only (identity confirmation) · no chevron · no edit · label varies by auth path</span></div>
-        <div class="settings-row">Lifetime access <span class="settings-row-value">Value "Founding member" + chevron · tap → Founding member sub-screen (proud card, what's covered, thank-you note, standalone Restore purchase row · Terms + privacy live in Legal, not duplicated here)</span></div>
+        <div class="settings-section-label" style="font-style:italic;opacity:0.6;">— Headerless destructive group —</div>
         <div class="settings-row">Delete account <span class="settings-row-value">Destructive · No chevron · no value · taps open deletion bottom sheet</span></div>
         <div class="settings-row">Log out <span class="settings-row-value">Destructive · Existing</span></div>
       </div>
@@ -750,11 +751,12 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Phone number — read-only</div>
+      <div class="spec-card-title">Signed in with — read-only identity row</div>
       <table class="spec-table">
-        <tr><td>Behavior</td><td>Read-only · identity confirmation only · no chevron · no edit screen · no OTP flow</td></tr>
-        <tr><td>Label varies by auth path</td><td>"Phone number" (phone signup) · "Email" (email signup) · "Connected with Apple" / "Connected with Google" (social) · read-only in all cases</td></tr>
-        <tr><td>Mockup</td><td>Shows "Phone number" variant</td></tr>
+        <tr><td>Behavior</td><td>Read-only · identity / recovery reference · no chevron · no edit screen · no OTP flow</td></tr>
+        <tr><td>Label</td><td>"Signed in with" — same label in every auth state. The row's job is "which method do I use to get back in," so the method itself rides in the value.</td></tr>
+        <tr><td>Value (adapts to Screen 04 auth)</td><td>Uniform <strong>method prefix</strong> on every state — a bare email can't distinguish Google sign-in from email-OTP, so each state names its method:<br>· <strong>Apple (real email shared):</strong> "Apple · alex@gmail.com"<br>· <strong>Apple (Hide My Email):</strong> "Apple · Hide My Email" — Apple's literal feature name; signals no real address to hunt for (don't show the @privaterelay.appleid.com relay string)<br>· <strong>Google:</strong> "Google · alex@gmail.com"<br>· <strong>Email OTP:</strong> "Email · alex@gmail.com"<br>· <strong>Phone OTP:</strong> "Phone · +1 (972) 555-0182"</td></tr>
+        <tr><td>Mockup</td><td>Shows "Phone · +1 (972) 555-0182" variant (keeps the prior example identity)</td></tr>
       </table>
     </div>
 
@@ -836,9 +838,9 @@
       <div class="spec-card-title">Lifetime access row + Founding member sub-screen</div>
       <table class="spec-table">
         <tr><td>Row label</td><td>"Lifetime access" · 15px DM Sans regular · <code>text-primary</code></td></tr>
-        <tr><td>Row value</td><td>"Founding member" · 13px DM Sans regular · <code>text-secondary</code> · static</td></tr>
-        <tr><td>Chevron</td><td>Yes — row is navigable</td></tr>
-        <tr><td>Position</td><td>Account section · between Phone number and Delete account</td></tr>
+        <tr><td>Row value</td><td>"Founding member" rendered as a soft-purple pill <strong>chip</strong>: inline-block, 3px×10px padding, <code>border-radius:100px</code>, <code>rgba(95,69,242,0.12)</code> bg, <code>#5f45f2</code> text, 12px DM Sans 600 weight. Reads as something earned, not plain row text. Reuses the file's existing purple + pill-shape tokens.</td></tr>
+        <tr><td>Chevron</td><td>Yes — row is navigable (chip is decorative; the whole row is the tap target)</td></tr>
+        <tr><td>Position</td><td>Account section · third row, after Name and Signed in with</td></tr>
         <tr><td>Detail nav bar</td><td>"‹ Back" <code>purple-500</code> 15px semibold · centered "Lifetime access" title in <code>display-sm</code> (Grandstander 20px bold)</td></tr>
         <tr><td>Proud card</td><td>Light purple bg <code>rgba(95,69,242,0.08)</code> · <code>radius-xl</code> · solid-purple uppercase pill "Founding member" (white text on <code>#5f45f2</code>) · headline "You're in for good." in <code>display-md</code> (Grandstander 24px bold) · sub: "One purchase, lifetime access for both you and Jordan."</td></tr>
         <tr><td>"What that covers"</td><td>White card · purple check icons · three rows:<br>1. Every topic in the library, plus everything we add down the line.<br>2. Both partners, one purchase. No second account to buy.<br>3. Nothing to renew or cancel.</td></tr>
@@ -867,12 +869,12 @@
     <div class="spec-card">
       <div class="spec-card-title">App Version</div>
       <table class="spec-table">
-        <tr><td>Position</td><td>Between Legal section card and Account section header · outside any card group</td></tr>
+        <tr><td>Position</td><td>Between the Legal section card and the headerless destructive group at the bottom · outside any card group</td></tr>
         <tr><td>Content</td><td>"Version {APP_VERSION} ({BUILD_NUMBER})" · e.g. "Version 1.0.0 (42)"</td></tr>
         <tr><td>Font</td><td>11px DM Sans regular · <code>text-tertiary</code> · centered</td></tr>
         <tr><td>Not tappable</td><td>Read-only — no interaction, no press state</td></tr>
         <tr><td>Top margin</td><td>16px from Legal card bottom</td></tr>
-        <tr><td>Bottom margin</td><td>32px (to Account section header / safe area breathing room)</td></tr>
+        <tr><td>Bottom margin</td><td>8px (to destructive group / safe area breathing room)</td></tr>
         <tr><td>Values</td><td>Populated from app config / build environment at compile time</td></tr>
       </table>
     </div>
@@ -899,9 +901,11 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Stage picker</strong> — tap the row to open a bottom-sheet radio list (Trying / Pregnant / Baby is here / Expecting again). Selecting a different stage live-swaps the date row shape (Pregnant or Expecting again show "Due date"; Baby is here shows "Birth date"; Trying hides the date row) and attaches a quiet "Your topics will re-sort to match." note inside the card directly under the Stage row. The note is Stage-only (date edits don't fire it) and only fires when Stage actually changes. Auto-dismisses after ~4s.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Date picker</strong> — tap the date row to open the picker. On device this is the native iOS / Android date picker with the onboarding constraints carried over: Due date future-bounded (max 12 months from today), Birth date past-bounded (max today). The prototype uses a bottom-sheet preset surrogate so the demo is functional — the wheel itself isn't mocked because it's a native control.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Editing Stage or date is non-destructive</strong> — same deactivate-never-delete principle as partner unlink. New stage may surface newly-relevant topics, but it never removes a started or completed topic and never deletes answers or reveals. The topic list re-sorts silently underneath. No plan-rebuild screen at launch; at most the quiet inline Stage-change note.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Section order</strong> — Account · Partner · Notifications · Where you are · Your plan · Support · Legal · headerless destructive group. Account and Partner lead because they're the two "who" sections and read better paired at top; high Partner placement also serves the unlinked user's "Invite your partner" CTA.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Name</strong> appears at the top of Account — it's the most personal and frequently referenced field. Tapping pushes a lightweight edit screen.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Phone number</strong> is read-only — identity confirmation only, no chevron, no edit flow. The label varies by auth path (Phone / Email / Connected with Apple / Connected with Google) but the row is read-only in every case.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Lifetime access</strong> sits between Phone number and Delete account. It's a navigable row whose detail screen is part receipt, part thank-you, and part home for Restore purchase + Terms + privacy.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Signed in with</strong> is the read-only identity / recovery row in Account. Same label in every auth state; the value carries a uniform method prefix and adapts to the Screen 04 auth choice (Apple · {email} / Apple · Hide My Email / Google · {email} / Email · {email} / Phone · {number}). The prefix is non-negotiable — a bare email can't distinguish Google sign-in from email-OTP, and the row's job is "which method do I use to get back in."</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Lifetime access</strong> is the third row in Account, after Name and Signed in with. Its value renders as a soft-purple pill chip (founding-member treatment, not plain row text); the whole row is tappable and pushes a detail screen that's part receipt, part thank-you, and part home for Restore purchase. Terms + privacy live in Legal, not duplicated inside.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Headerless destructive group</strong> at the bottom holds Delete account + Log out. Standard iOS pattern — the red <code>row-label-destructive</code> styling carries the meaning; no "Exit" or "Danger" header needed. Sits after the version line, as the last group before the safe-area spacer.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Partner row has three link states</strong> — Linked (name + Linked ✓ → Partner detail push), Invite pending ("Invite sent" + "Tap to resend or cancel." subtext → Screen 10), and Not linked ("Invite your partner" in purple → Screen 10). Settings hosts entry only; Screen 10 owns the linking flow. No avatar in any state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Partner-name fallback</strong> — every string that names the partner uses the first name when linked, otherwise "your partner" / "both of you." Applies on Screen 13 to Partner activity subtext, Partner activity off-warning, Founding member proud-card sub, and Founding member thank-you note. Strings are marked with <code>data-partner-template</code> and re-rendered when state changes. The Unlink sheet's "Unlink from Jordan?" is exempt because the sheet only ever opens in the Linked state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Unlink</strong> deactivates the pairing rather than deleting it. Re-linking the same partner reactivates the same pairing and restores all prior reveals; linking a new partner creates a fresh pairing.</span></div>
