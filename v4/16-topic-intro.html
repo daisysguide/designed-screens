@@ -362,7 +362,7 @@
           <td>Ready to reveal</td>
           <td>Both finished, reveal not yet opened</td>
           <td>Bright cyan <code>#7fe3f7</code> · deeper cyan dot · <strong>breathing purple glow + always-on baseline halo</strong>, ported verbatim from Screen 14's reveal-pill "charge" · "You've both answered. The reveal's ready."</td>
-          <td>"See your results →" + "Read the guide"</td>
+          <td>"See your results →" (→ <strong>19 Preparing → 20 Reveal</strong>) + "Read the guide"</td>
         </tr>
       </table>
       <div class="info-box">Pre-join states are tappable and route to Partner Linking (Screen 10). Answering is allowed pre-link — invite / resend lives in the pill, not the CTA stack. "Ready to reveal" is a real but rare edge case — most users are auto-pushed to Screen 20 when their partner finishes. If they dismissed the push or were offline, the topic sits in this state until they manually tap in. Under <code>prefers-reduced-motion</code>, the glow's breathing animation drops and only the static baseline halo remains.</div>
@@ -385,11 +385,12 @@
       <div class="spec-card-title">CTA stack</div>
       <table class="spec-table">
         <tr><td>"Start answering →"</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> · leads to Screen 18 Question</td></tr>
+        <tr><td>"See your results →"</td><td>Primary · same shape · only appears in Ready to reveal · leads through <strong>Screen 19 (Preparing) → Screen 20 (Alignment Reveal)</strong>, matching the same ready-to-reveal route used from Topic List. Routing through 19 keeps the ceremonial wind-up consistent for every ready-to-reveal entry — when synthesis is already cached, the Preparing beat plays as the short staged hand-off before the reveal lands.</td></tr>
         <tr><td>"Read the guide first" / "Read the guide"</td><td>Secondary · 56px · <code>radius-full</code> · <code>border-strong</code> outline · leads to Screen 17 Topic Article</td></tr>
         <tr><td>"Change my answers"</td><td>Secondary · same shape · only appears in Waiting · leads back into the question flow in edit mode</td></tr>
         <tr><td>Hierarchy</td><td><strong>Answering leads.</strong> Primary / secondary styling kept exactly as before. The guide is supporting, not a required first step, and is offered <em>once</em> here on Topic Intro — there is no persistent mid-question link back to it in v1.</td></tr>
         <tr><td>"Back to topics"</td><td><strong>Removed from every state.</strong> The ✕ top-right owns exit; the ghost button is gone.</td></tr>
-        <tr><td>State-driven label</td><td>"Continue answering →" if mid-flow · "See your results →" once both have answered</td></tr>
+        <tr><td>State-driven label</td><td>"Continue answering →" if mid-flow · "See your results →" once both have answered (see row above for the route)</td></tr>
       </table>
     </div>
 
@@ -424,6 +425,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>Reading the guide is optional. From here a user can read the article first or go straight to the questions. In v1 there is <strong>no persistent mid-question link</strong> back to the article — the article is offered once in the natural flow (Topic Intro → Article → Questions) and each question stands on its own. Cheaply re-addable later as a quiet icon if testing shows people reach for it.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Partner Status Block caps the content group directly under the blurb as a centered, content-hugging status chip — clearly separated from the CTAs by the spacer below so it doesn't read as a third button. Pre-join variants are tappable (route to Screen 10); joined variants are informational.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Ready-to-reveal carries Screen 14's "charge" treatment verbatim: breathing purple glow + always-on baseline halo. Under <code>prefers-reduced-motion</code>, the breathing animation drops; the baseline halo stays.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Ready-to-reveal route.</strong> "See your results →" routes through <strong>Screen 19 (Preparing) → Screen 20</strong>, the same ceremonial path used when entering from Topic List. Skipping 19 here would create a per-entry-point inconsistency; the Preparing beat is the staged wind-up that hands the dramatic reveal over to Screen 20.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Layout fits without scrolling on most devices, composed top-to-bottom: 230px illustration · topic eyebrow / title / blurb · centered status pill (caps the content group) · breathing room (via spacer) · CTA stack anchored at the bottom. The remaining vertical slack absorbs between the content group and the CTAs so it reads as breathing room above the buttons; CTAs float to the bottom via spacer, not sticky.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No em dashes in any on-screen copy.</span></div>
       </div>

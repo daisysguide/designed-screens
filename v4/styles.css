@@ -5043,8 +5043,11 @@ body.page-16 .screen-root .waiting-anim.done .waiting-ring { animation: ringBurs
 
 @keyframes daisyBreathe { 0%,100% { transform: scale(1) rotate(0); } 50% { transform: scale(1.05) rotate(-1deg); } }
 @keyframes ringPulse    { 0% { transform: scale(.85); opacity:.5; } 70% { opacity:0; } 100% { transform: scale(1.5); opacity:0; } }
-@keyframes daisyBloom   { 0% { transform: scale(1) rotate(0); } 45% { transform: scale(1.2) rotate(4deg); } 100% { transform: scale(1.05) rotate(0); } }
-@keyframes ringBurst    { 0% { transform: scale(.82); opacity:.7; border-color: rgba(255,212,0,.75); } 100% { transform: scale(2); opacity:0; border-color: rgba(255,212,0,0); } }
+/* Resolve = restrained "gather" / wind-up. The dramatic bloom + petal burst is
+   Screen 20's job; 19 hands the payoff over rather than competing with it.
+   Peak scale stays well under 20's 1.16. No petals here — petals are 20-only. */
+@keyframes daisyBloom   { 0% { transform: scale(1) rotate(0); } 45% { transform: scale(1.07) rotate(1.5deg); } 100% { transform: scale(1.03) rotate(0); } }
+@keyframes ringBurst    { 0% { transform: scale(.88); opacity:.45; border-color: rgba(95,69,242,0.28); } 100% { transform: scale(1.35); opacity:0; border-color: rgba(95,69,242,0); } }
 
 @media (prefers-reduced-motion: reduce) {
   body.page-16 .screen-root .waiting-logo,

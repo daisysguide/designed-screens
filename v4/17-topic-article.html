@@ -77,6 +77,37 @@
   /* Scroll area now sits under the pinned chrome — reset its top padding
      so the eyebrow doesn't double-pad against the chrome border. */
   body.page-14 .screen-root .scroll-area { padding-top: 20px; }
+
+  /* Doc-only demo mode tabs above the phone — match the family used on the
+     sibling doc pages (16 / 19 / 20). Lives in .phone-wrap so it sits flush
+     with the 375px column. */
+  body.page-14 .screen-root .mode-tabs {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+  }
+  body.page-14 .screen-root .mode-tabs .mode-tab {
+    height: 28px; padding: 0 12px; border-radius: var(--radius-full);
+    border: 1.5px solid var(--border-strong); background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600;
+    color: var(--text-primary); cursor: pointer;
+    display: inline-flex; align-items: center;
+  }
+  body.page-14 .screen-root .mode-tabs .mode-tab.active {
+    background: var(--purple-500); border-color: var(--purple-500); color: #fff;
+  }
+
+  /* Post-reveal read-only mode — replaces the sticky primary CTA with a
+     secondary "Back to your reveal" link. Same sticky footer chrome (gradient
+     fade, padding) inherited from .sticky-cta; only the button styling
+     softens. Routes to Screen 20 in Revisit mode. */
+  body.page-14 .screen-root .btn-back-to-reveal {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; height: 56px; border-radius: var(--radius-full);
+    background: var(--white); color: var(--text-primary);
+    border: 1.5px solid var(--border-strong);
+    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600;
+    cursor: pointer; letter-spacing: -0.01em; flex-shrink: 0;
+    text-decoration: none;
+  }
 </style>
 </head>
 <body class="page-14">
@@ -142,22 +173,30 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">Full expert guide per topic. Scrollable long-form. Pinned ‹/✕ chrome; sticky "Start answering →" CTA always visible. Dr. Daisy, MD byline with photo.</div>
+<div class="page-desc page-desc-full">Full expert guide per topic. Scrollable long-form. Pinned ‹/✕ chrome; sticky CTA always visible. Dr. Daisy, MD byline with photo. <strong>Two entry origins:</strong> <em>pre-answer</em> (from Topic Intro 16, sticky CTA "Start answering →") and <em>post-reveal read-only</em> (from Screen 20's "Read the guide" in Revisit mode, sticky CTA "Back to your reveal"). The article body is identical across both — only the chrome destinations and the sticky CTA swap. Use the demo mode tab above the phone to preview each.</div>
 
 <div class="main-layout">
 
   <!-- PHONE -->
   <div class="phone-wrap">
+    <!-- Doc-only demo mode tabs — Pre-answer is the default render. Post-reveal
+         is the read-only mode used when this article is opened from Screen
+         20's "Read the guide" link (Revisit only). -->
+    <div class="mode-tabs" role="tablist" aria-label="Article mode preview">
+      <button class="mode-tab active" id="mode-pre-answer"  type="button" onclick="setArticleMode('pre-answer')">Pre-answer (default)</button>
+      <button class="mode-tab"        id="mode-post-reveal" type="button" onclick="setArticleMode('post-reveal')">Post-reveal (read-only)</button>
+    </div>
     <div class="phone">
       <div class="phone-notch"></div>
-      <div class="phone-screen">
+      <div class="phone-screen" id="phone-screen">
 
-        <!-- Flow chrome — pinned. ‹ = back a step (Topic Intro or Question,
-             depending on where this article was opened from). ✕ = exit the
-             flow to Topic List. Swipe-down-from-top mirrors ✕, gated to
-             scroll-top + non-interactive start. -->
+        <!-- Flow chrome — pinned. ‹ = back a step. Pre-answer mode: returns
+             to Topic Intro (Screen 16), the only entry path in v1. Post-
+             reveal mode: returns to Screen 20 in Revisit mode (where the
+             "Read the guide" link lives). ✕ = exit the flow to Topic List
+             in both modes. -->
         <div class="flow-chrome">
-          <button class="chrome-btn back" aria-label="Back one step">‹</button>
+          <button class="chrome-btn back" id="article-back" aria-label="Back to Topic Intro">‹</button>
           <button class="chrome-btn exit" aria-label="Exit to topic list">✕</button>
         </div>
 
@@ -267,9 +306,14 @@
 
         </div><!-- /scroll-area -->
 
-        <!-- Sticky CTA — "Start answering →", always visible -->
+        <!-- Sticky CTA — always visible.
+             Pre-answer (default): "Start answering →" primary, routes to
+             Screen 18. Post-reveal (read-only): swaps to a secondary "Back
+             to your reveal" → Screen 20 in Revisit mode. There is no "Start
+             answering" in post-reveal — the user has already answered. -->
         <div class="sticky-cta">
-          <button class="btn-primary">Start answering →</button>
+          <button class="btn-primary" id="cta-start-answering">Start answering →</button>
+          <a class="btn-back-to-reveal" id="cta-back-to-reveal" href="20-alignment-reveal.html" hidden>Back to your reveal</a>
         </div>
 
       </div>
@@ -284,19 +328,31 @@
       <div class="flow-map">
         <div class="flow-node from">16 Topic Intro</div>
         <div class="flow-arrow">→</div>
-        <div class="flow-node current">17 Topic Article</div>
+        <div class="flow-node current">17 Topic Article <span style="opacity:0.7;font-weight:500;">(pre-answer)</span></div>
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">18 Question</div>
       </div>
+      <div class="flow-map" style="margin-top:8px;">
+        <div class="flow-node from">20 Reveal (Revisit)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">17 Topic Article <span style="opacity:0.7;font-weight:500;">(post-reveal)</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">20 Reveal (Revisit)</div>
+      </div>
       <div class="info-box">
-        <strong>‹ top-left</strong> = back one step — returns to Topic Intro (Screen 16), the only screen that pushes this article in v1. <strong>✕ top-right</strong> = exit the whole flow to Topic List. Sticky CTA forward path: "Start answering →" → Screen 18. <strong>No mid-question link back to the article in v1</strong> — Screen 18 no longer surfaces a "Read guide" affordance; the article is offered once in the natural flow on Screen 16. <strong>No bottom nav.</strong>
+        <strong>Two entry origins, two modes.</strong>
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.55;">
+          <li><strong>Pre-answer (default)</strong> — opened from Topic Intro (16). Sticky CTA = "Start answering →" → Screen 18. ‹ back → Screen 16.</li>
+          <li><strong>Post-reveal (read-only)</strong> — opened from Screen 20's "Read the guide" link in Revisit mode (the article would otherwise be orphaned after reveal). Sticky CTA swaps to a secondary "Back to your reveal" → <strong>20 in Revisit mode</strong>. ‹ back also → 20 Revisit. No "Start answering" affordance — the user has already answered. The article body itself is unchanged.</li>
+        </ul>
+        <strong>✕ top-right</strong> = exit the whole flow to Topic List in <em>both</em> modes — unchanged. <strong>No mid-question link back to the article in v1</strong> — Screen 18 no longer surfaces a "Read guide" affordance; the article is offered once in the natural flow on Screen 16. <strong>No bottom nav.</strong>
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Chrome (top bar)</div>
       <table class="spec-table">
-        <tr><td>‹ Back</td><td>Top-left · 36px circle · <code>rgba(26,26,26,0.05)</code> bg · 20px chevron · returns to <em>previous</em> screen (16 or 18), not always 16</td></tr>
+        <tr><td>‹ Back</td><td>Top-left · 36px circle · <code>rgba(26,26,26,0.05)</code> bg · 20px chevron · <strong>destination depends on entry origin:</strong> pre-answer mode → Screen 16 (Topic Intro, the only v1 entry); post-reveal mode → Screen 20 in Revisit mode (where the "Read the guide" link lives). The chevron's aria-label updates in lockstep.</td></tr>
         <tr><td>✕ Exit</td><td>Top-right · 36px circle · same bg · exits flow to Topic List · no confirm dialog</td></tr>
         <tr><td>Position</td><td>Pinned · always visible while the article scrolls · sits on cream background with 1px <code>border-default</code> bottom</td></tr>
         <tr><td>Swipe-down</td><td>Mirrors ✕ (exit to Topic List). Gated: only when scrolled to top <em>and</em> gesture didn't start on an interactive control — matters here since this screen scrolls. No confirm dialog.</td></tr>
@@ -337,7 +393,21 @@
         <tr><td>Background</td><td>Gradient fade from transparent (top) to white (30%) — content scrolls under gracefully</td></tr>
         <tr><td>Padding</td><td>12px top · 20px sides · 24px bottom (+ safe area)</td></tr>
         <tr><td>Button</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code> · <code>shadow-lg</code> to lift above content</td></tr>
-        <tr><td>Label</td><td>"Start answering →" — forward to Screen 18 Question. Only one entry path in v1 (from Topic Intro), so the label is fixed; the earlier "Return to questions →" mid-question variant is no longer needed.</td></tr>
+        <tr><td>Label (pre-answer)</td><td>"Start answering →" — primary, forward to Screen 18 Question. The default render.</td></tr>
+        <tr><td>Label (post-reveal)</td><td>"Back to your reveal" — secondary (outlined, neutral fill, same 56px / radius-full shape as the primary). Routes to Screen 20 in Revisit mode. There is no "Start answering" in this mode — the user has already answered.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Post-reveal read-only mode</div>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:14px;">A second entry origin for this screen. Without it, the guide is orphaned after reveal — Screen 20 in Revisit mode has no link back. The article body itself is unchanged; only the chrome destinations and the sticky CTA swap.</p>
+      <table class="spec-table">
+        <tr><td>Entry</td><td>From Screen 20's "Read the guide" link in Revisit mode. In the demo this is also reachable via <code>?from=revisit</code> on the URL.</td></tr>
+        <tr><td>Sticky CTA</td><td>Secondary "Back to your reveal" → Screen 20 (Revisit). No "Start answering" affordance.</td></tr>
+        <tr><td>‹ back</td><td>→ Screen 20 (Revisit). The aria-label changes to "Back to your reveal" so it round-trips correctly with the sticky CTA destination.</td></tr>
+        <tr><td>✕ exit</td><td>→ Topic List (Screen 14). Unchanged across modes.</td></tr>
+        <tr><td>Article body</td><td>Unchanged. The guide reads the same after the reveal as before — it's a reference, not an answer-prompt.</td></tr>
+        <tr><td>Reviewability</td><td>Doc-only mode tab above the phone (Pre-answer · Post-reveal). Default render stays Pre-answer.</td></tr>
       </table>
     </div>
 
@@ -350,6 +420,7 @@
         <span class="component-tag">Article body (sections + lists)</span>
         <span class="component-tag">Resources card (dashed · per-topic optional)</span>
         <span class="component-tag">Button — Primary (sticky, "Start answering →")</span>
+        <span class="component-tag">Button — Secondary (sticky, "Back to your reveal" · read-only mode)</span>
       </div>
     </div>
 
@@ -357,14 +428,15 @@
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
         <div class="note-item"><div class="note-bullet"></div><span>Fully scrollable — no truncation, no "read more" expand. The full guide is always visible.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Sticky CTA is always visible — even mid-scroll. Users can jump to questions at any point without scrolling back to top. Label is fixed: "Start answering →" — only one entry path in v1 (from Topic Intro 16).</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>‹ top-left returns to Topic Intro (Screen 16) — the only screen that pushes this article in v1. The earlier "whatever pushed this screen" framing assumed a second entry path from the question flow, which has been retired.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Sticky CTA is always visible — even mid-scroll. Pre-answer label: "Start answering →" (primary, → Screen 18). Post-reveal label: "Back to your reveal" (secondary, → Screen 20 Revisit). The pre-answer flow has one entry (Topic Intro 16); the post-reveal flow has one entry (Screen 20's "Read the guide" in Revisit mode).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>‹ top-left destination depends on entry origin. Pre-answer: → Screen 16 (Topic Intro). Post-reveal: → Screen 20 in Revisit mode. The aria-label updates in lockstep so screen readers reach the right destination.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>✕ top-right and swipe-down-from-top both exit the flow to Topic List. Swipe-down is gated to scroll-top + non-interactive gesture origin (matters here since the article scrolls). No confirm dialog.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Byline uses the real Dr. Daisy headshot at 42px, <code>object-fit: cover</code>. The author byline keeps a real photo — avatar removal is a partner-only convention.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Per-article emoji feedback is <strong>intentionally deferred</strong> as a future test. The guide now ends on its content, with the sticky CTA as the forward step.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Resources card is per-topic optional and omitted when a topic has none (as here).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Background is <code>--cream</code> to match every other screen.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Post-reveal read-only mode</strong> un-orphans the guide after reveal. The article body is unchanged; only the back chevron and the sticky CTA swap (→ Screen 20 Revisit). ✕ → Topics is unchanged. The demo mode tab above the phone (Pre-answer · Post-reveal) is doc-only — default render stays pre-answer; the live page also honors <code>?from=revisit</code> on the URL so Screen 20's link reaches the right initial state.</span></div>
       </div>
     </div>
 
@@ -381,6 +453,55 @@
     </div>
   </div>
 </div>
+<script>
+/* ─ Article mode toggle (doc page) ───────────────────────────────────
+   Two modes, same article body:
+   · pre-answer  — default; sticky CTA = "Start answering →" → Screen 18;
+                   ‹ back returns to Screen 16 (the v1 entry point).
+   · post-reveal — opened from Screen 20's "Read the guide" (Revisit only);
+                   sticky CTA swaps to a secondary "Back to your reveal"
+                   → Screen 20 Revisit; ‹ back returns to Screen 20 Revisit;
+                   no "Start answering" affordance (the user has already
+                   answered). The article body itself is unchanged.
+
+   The mode tab is doc-only. In product, mode is decided by entry origin
+   — this page also honors ?from=revisit on load so the link from
+   Screen 20 reaches the right initial state. */
+(function () {
+  function setArticleMode(mode) {
+    var phone     = document.getElementById('phone-screen');
+    var backBtn   = document.getElementById('article-back');
+    var ctaStart  = document.getElementById('cta-start-answering');
+    var ctaBack   = document.getElementById('cta-back-to-reveal');
+    var tabPre    = document.getElementById('mode-pre-answer');
+    var tabPost   = document.getElementById('mode-post-reveal');
+
+    var isRevisit = (mode === 'post-reveal');
+    if (phone) phone.setAttribute('data-mode', mode);
+
+    if (ctaStart) ctaStart.hidden = isRevisit;
+    if (ctaBack)  ctaBack.hidden  = !isRevisit;
+
+    if (backBtn) {
+      backBtn.setAttribute(
+        'aria-label',
+        isRevisit ? 'Back to your reveal' : 'Back to Topic Intro'
+      );
+    }
+
+    if (tabPre)  tabPre.classList.toggle('active',  !isRevisit);
+    if (tabPost) tabPost.classList.toggle('active',  isRevisit);
+  }
+
+  // Expose for the inline onclick handlers on the mode tabs.
+  window.setArticleMode = setArticleMode;
+
+  // Honor ?from=revisit so the link from Screen 20 lands in read-only mode.
+  // Default stays pre-answer.
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('from') === 'revisit') setArticleMode('post-reveal');
+})();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>

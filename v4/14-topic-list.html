@@ -578,9 +578,19 @@
         <div class="flow-node current">14 Topic List</div>
         <div class="flow-arrow">→</div>
         <div class="flow-node dest">16 Topic Intro</div>
+        <div class="flow-arrow">·</div>
+        <div class="flow-node dest">19 Preparing → 20 Reveal</div>
+        <div class="flow-arrow">·</div>
+        <div class="flow-node dest">20 Revisit</div>
       </div>
       <div class="info-box">
-        Topics tab is active. Tapping any topic row → Screen 16 Topic Intro. "Manage topics" top right → Screen 15 Manage Topics.
+        Topics tab is active. <strong>Row destination depends on the row's state:</strong>
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.55;">
+          <li><strong>Not started · Your turn · Partner's turn</strong> → <strong>Screen 16 (Topic Intro)</strong> — the standard pre-answer entry.</li>
+          <li><strong>Ready to reveal</strong> → <strong>Screen 19 (Preparing) → Screen 20 (Alignment Reveal)</strong>. The reveal is the same reveal-ready resolve specced on 19; from a list tap, Preparing plays as the ceremonial wind-up (synthesis is typically already cached). Skipping 19 would cost the staged hand-off into the reveal; routing straight to 20 also creates a per-entry-point inconsistency.</li>
+          <li><strong>Revealed (any band — Fully · Mostly · Worth a conversation)</strong> → <strong>Screen 20 in Revisit mode</strong> (the completed-topic view that absorbed the former Screen 23). Same destination as Progress's "Worth a conversation" revisit items, so a revealed topic has a single destination regardless of entry point.</li>
+        </ul>
+        "Manage topics" top right → Screen 15 Manage Topics.
       </div>
     </div>
 
@@ -779,6 +789,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>Subtitle count updates live ({plan} · {revealed}) as topics move through reveal. Templated off the data layer — same <code>plan</code> source as Progress (45 in this example, not the full library of 51).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Category and stage names in Title Case verbatim — same as throughout the app.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Needs you" lens flattens the list to actionable topics only (Ready to reveal → Your turn). Chip is absent when there's nothing to act on; while on, the grouping toggle hides and the chip shows ✕ to exit. Worth a conversation deliberately stays out of this lens — that belongs on Progress.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Row destinations by state.</strong> Pre-reveal rows (Not started / Your turn / Partner's turn) → Screen 16 Topic Intro. <strong>Ready to reveal</strong> → Screen 19 (Preparing) → 20, so every ready-to-reveal entry passes through the same ceremonial wind-up before the reveal lands. <strong>Revealed</strong> rows → Screen 20 in Revisit mode (the completed view that absorbed the former Screen 23). Progress's "Worth a conversation" revisit items also land on 20-Revisit — a revealed topic has one destination regardless of entry point.</span></div>
       </div>
     </div>
 

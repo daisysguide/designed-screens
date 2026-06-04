@@ -135,8 +135,14 @@
           <div style="height:24px;"></div>
         </div>
 
-        <!-- Sticky CTA -->
+        <!-- Sticky CTA
+             Revisit mode also shows a secondary "Read the guide" link above
+             the primary CTA — the only way back to Screen 17 from a revealed
+             topic. Hidden in Reveal mode so it never competes with the live
+             reveal payoff. Toggled by showMode(). -->
         <div class="reveal-cta">
+          <a class="guide-link-revisit" id="guide-link-revisit" href="17-topic-article.html?from=revisit"
+             style="display:none;align-items:center;justify-content:center;width:100%;height:44px;margin-bottom:10px;border-radius:var(--radius-full);background:transparent;color:var(--text-secondary);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;text-decoration:none;border:none;">Read the guide</a>
           <a class="btn-primary" id="cta-btn" href="14-topic-list.html">Done</a>
         </div>
 
@@ -160,6 +166,8 @@
       </div>
       <div class="info-box">
         <strong>The signature product moment.</strong> Result-first layout, single editable status, ✕ exits to Topics (no back chevron), Done returns to Topics. This screen also serves the completed/revisit view (formerly Screen 23) — toggle Reveal/Revisit above the phone.
+        <br><br>
+        <strong>Entry to Revisit mode:</strong> tapping a revealed row on Screen 14 (any band) or a Progress "Worth a conversation" revisit item routes here in Revisit mode — a revealed topic has a single destination across the app. The "Read the guide" secondary link in the sticky footer (Revisit only) is the one path back to Screen 17 in its post-reveal read-only mode.
       </div>
     </div>
 
@@ -277,10 +285,11 @@
     <div class="spec-card">
       <div class="spec-card-title">Completed / revisit mode</div>
       <table class="spec-table">
-        <tr><td>Trigger</td><td>Same screen with <code>data-mode="revisit"</code>. Replaces what used to be Screen 23.</td></tr>
+        <tr><td>Trigger</td><td>Same screen with <code>data-mode="revisit"</code>. Replaces what used to be Screen 23. <strong>Entry:</strong> tapping any revealed row on Screen 14 (Fully / Mostly / Worth a conversation) lands here, as do Progress's "Worth a conversation" revisit items — so a revealed topic has a single destination regardless of entry point.</td></tr>
         <tr><td>Visuals</td><td>All static: no bloom, no burst.</td></tr>
         <tr><td>Status</td><td>Fully editable — settle/reopen still available in the bottom block. The natural place to reopen a settled topic later.</td></tr>
         <tr><td>CTA</td><td>"Back to topics" → <code>14-topic-list.html</code></td></tr>
+        <tr><td>Read the guide</td><td><strong>Secondary link above the primary CTA, Revisit-only.</strong> Routes to Screen 17 in its post-reveal read-only mode (sticky CTA there becomes "Back to your reveal" → 20-Revisit; back chevron returns here; ✕ still exits to Topics). Without this affordance the guide would be orphaned after reveal. Hidden in Reveal mode so it never competes with the live signature payoff; toggled by <code>showMode()</code> in lockstep with the mode tabs.</td></tr>
       </table>
     </div>
 
@@ -290,6 +299,7 @@
         <tr><td>Top-right</td><td><code>✕</code> exits to Topics (<code>14-topic-list.html</code>). No back chevron — a reveal can't be un-revealed.</td></tr>
         <tr><td>No bottom nav</td><td>This is a flow screen.</td></tr>
         <tr><td>Sticky CTA</td><td>"Done" in Reveal mode, "Back to topics" in Revisit mode. Both → Topics.</td></tr>
+        <tr><td>"Read the guide" (Revisit only)</td><td>Secondary link sitting above the primary CTA inside the sticky footer — the path back to Screen 17 from a revealed topic. Hidden in Reveal mode.</td></tr>
       </table>
     </div>
 
@@ -312,6 +322,7 @@
         <span class="component-tag">Ranking card (tap to reorder)</span>
         <span class="component-tag">Status block (settle/reopen + provenance)</span>
         <span class="component-tag">Button — Primary (sticky)</span>
+        <span class="component-tag">Text link — Read the guide (Revisit only)</span>
       </div>
     </div>
 
@@ -778,6 +789,11 @@ function showMode(next) {
 
   // CTA label per mode.
   document.getElementById('cta-btn').textContent = next === 'revisit' ? 'Back to topics' : 'Done';
+
+  // "Read the guide" is the only path back to Screen 17 from a revealed topic.
+  // Revisit-only — must never appear during the live signature reveal.
+  const guideLink = document.getElementById('guide-link-revisit');
+  if (guideLink) guideLink.style.display = (next === 'revisit') ? 'flex' : 'none';
 
   if (next === 'reveal') {
     bloomDaisy();
