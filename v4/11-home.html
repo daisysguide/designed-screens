@@ -267,6 +267,17 @@
     </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">Up-next selection — how the topic is chosen</div>
+      <table class="spec-table">
+        <tr><td>Rule</td><td>Up-next shows exactly one topic: the single highest-priority <strong>actionable</strong> topic for this user. Home owns one next move; it never lists a queue.</td></tr>
+        <tr><td>Priority ladder</td><td>First match wins. <strong>1 · Ready to reveal</strong> (both partners answered; this user can trigger the reveal) → <strong>2 · Your turn</strong> (this user still needs to answer) → <strong>3 · Available</strong> (not started, nothing pending; the next fresh topic to begin).</td></tr>
+        <tr><td>Tiebreaker</td><td>Within a tier, <strong>most-recently-visited</strong> first (resume what you were in); then plan order for topics with no visit history.</td></tr>
+        <tr><td>Excluded</td><td><strong>Partner's turn</strong> (nothing this user can act on — surfacing it would make Home a status board), <strong>Worth a conversation</strong> (post-reveal reflection; lives on Progress, and the Topics "Needs you" lens already excludes it), and <strong>settled / completed</strong>.</td></tr>
+        <tr><td>Trio boundary</td><td>Home = the one next move · Topics "Needs you" lens = the full Your-turn + Ready-to-reveal queue · Progress = Worth-a-conversation reflection. Non-overlapping by design.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Partner section — three states, avatar-less</div>
       <table class="spec-table">
         <tr><td>Layout</td><td>Whole row tappable → Settings (partner row). <strong>No avatar circle in any state</strong> (no ghost avatar in pending, no initial circle in linked). Plain text first; a small status dot from the topic-state palette is added only if the row reads too bare.</td></tr>
@@ -292,7 +303,7 @@
       <div class="spec-card-title">Transitions — three distinct triggers</div>
       <table class="spec-table">
         <tr><td>Nudge dismiss</td><td>Onboarding nudge card disappears permanently on <strong>first topic intro view (Screen 16)</strong>. The user does not need to tap a dismiss; reaching 16 is the gesture.</td></tr>
-        <tr><td>Up-next populates</td><td>The Up-next topic card replaces the nudge slot on <strong>first topic entry</strong> (same window as the nudge dismiss). It then carries the most-recently-visited topic.</td></tr>
+        <tr><td>Up-next populates</td><td>The Up-next topic card replaces the nudge slot on <strong>first topic entry</strong> (same window as the nudge dismiss). It then carries whatever the up-next selection rule resolves to (see <em>Up-next selection</em>) — the highest-priority actionable topic, with most-recently-visited as the in-tier tiebreaker, not the selector.</td></tr>
         <tr><td>Progress increments</td><td>"0 of 7" → "1 of 7" fires on the <strong>first answer submitted</strong>, not on topic entry. Keep these three triggers separate.</td></tr>
       </table>
     </div>
@@ -331,7 +342,7 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Top-right avatar is gone</strong> in both states. Settings is reached via the bottom-nav Settings tab.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Empty state</strong> shows the onboarding nudge in the Up-next slot. A separate "Nothing started yet" 📋 block <em>is not rendered</em> — the nudge owns the empty Up-next state.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>If the user has no partner linked and no topics started, the partner "Invite your partner" nudge appears <em>below</em> the onboarding nudge as the secondary ask. Two nudges is acceptable; the hierarchy must read onboarding-first.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span><strong>Up next</strong> (populated) always shows the single highest-priority topic — "Your turn" topics first, then available.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Up next</strong> (populated) shows the single highest-priority <strong>actionable</strong> topic — Ready to reveal → Your turn → Available — with most-recently-visited as the in-tier tiebreaker. Partner's turn, Worth a conversation, and completed topics are excluded. See the <em>Up-next selection</em> spec card.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Partner section is avatar-less</strong> on Home in every state. Other screens still use <code>avatar-md</code>; the Home variant is the exception (see design system, Partner Status Block).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Progress</strong> is a single category line. No tiles, no alignment score — alignment is a distribution on Progress (12), not a number on Home.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Wry Observation</strong> (gated easter egg) sits at the bottom of the content column, below Progress and above the bottom nav. Populated states only; hidden in the empty / zero-started state. Subordinate to the Up-next card — never competes with the single next action. <strong>Never scores or ranks divergence; never mentions being AI.</strong> Replaces the retired scored-divergence easter egg. Flagged for design review.</span></div>
