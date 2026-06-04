@@ -234,7 +234,7 @@
         <tr><td>Padding</td><td>18px</td></tr>
         <tr><td>Eyebrow</td><td>"Get started" · 11px DM Sans bold · uppercase · white 60% opacity</td></tr>
         <tr><td>Heading</td><td>"Pick your first topic." · <code>display-sm</code> (Grandstander 20px) · white</td></tr>
-        <tr><td>Body</td><td>"Each topic takes about 5 to 10 minutes. You and Jordan answer separately, then see where you land." · 13px · white 75% · max 2 lines · no em dashes</td></tr>
+        <tr><td>Body</td><td>"Each topic takes about 5 to 10 minutes. You and [partner name] answer separately, then see where you land." · 13px · white 75% · max 2 lines · no em dashes. <strong>[partner name]</strong> = partner's first name when linked, "your partner" when pending or none.</td></tr>
         <tr><td>CTA</td><td>"Browse topics →" · white filled pill · <code>action-primary</code> label · full-width · <strong>42px</strong> — documented button-in-brand-card exception (design system: Onboarding Nudge Card section). Outside this card, button heights follow 56/44/32.</td></tr>
         <tr><td>Dismissal</td><td>Disappears automatically the moment the user views their first topic intro (Screen 16). Not manually dismissible.</td></tr>
         <tr><td>Position</td><td>Sits in the Up-next slot, replacing the topic card. <strong>No separate Up-next 📋 block is rendered.</strong></td></tr>
@@ -373,14 +373,15 @@ const SAMPLE_TOPIC = {
   desc:     'You might be surprised how differently you two think about this one.',
 };
 
-function renderUpNext(layout) {
+function renderUpNext(layout, partner) {
   const slot = document.getElementById('up-next-slot');
   if (layout === 'empty') {
+    const partnerLabel = (partner === 'linked') ? 'Jordan' : 'your partner';
     slot.innerHTML = `
       <div class="nudge-card">
         <div class="nudge-eyebrow">Get started</div>
         <div class="nudge-heading">Pick your first topic.</div>
-        <div class="nudge-body">Each topic takes about 5 to 10 minutes. You and Jordan answer separately, then see where you land.</div>
+        <div class="nudge-body">Each topic takes about 5 to 10 minutes. You and ${partnerLabel} answer separately, then see where you land.</div>
         <a class="btn-nudge-primary" href="14-topic-list.html">Browse topics →</a>
       </div>`;
   } else {
@@ -463,7 +464,7 @@ function showState(layout, partner) {
     const match = btn.dataset.layout === layout && btn.dataset.partner === partner;
     btn.classList.toggle('active', match);
   });
-  renderUpNext(layout);
+  renderUpNext(layout, partner);
   renderPartner(partner, layout);
   renderProgress(layout);
   renderWry(layout);
