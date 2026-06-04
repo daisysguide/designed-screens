@@ -9,6 +9,13 @@
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
 <link rel="stylesheet" href="styles.css">
 <style>
+  /* Section-divider rhythm — global rule is margin: 4px 0 16px, which
+     glues the line to the section above and floats it from the next
+     label. Rebalance to more-above-than-below so the line reads as
+     introducing the section below it (22 above / 16 below). Scoped to
+     page-11; promote to styles.css in the eventual sweep. */
+  body.page-11 .screen-root .section-divider { margin: 22px 0 16px; }
+
   /* Cyan token trio — defined globally at styles.css line 3665 but
      scoped under body.page-12, so Home can't see them. Pill overrides
      below reference these tokens; without this local definition they
@@ -204,7 +211,7 @@
           <div class="section-label">Partner</div>
           <div id="partner-section"></div>
 
-          <div class="section-divider" style="margin-top:16px;"></div>
+          <div class="section-divider"></div>
 
           <!-- Progress: single category line. No tiles, no score. -->
           <div class="section-label">Progress</div>
