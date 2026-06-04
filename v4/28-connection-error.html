@@ -108,7 +108,7 @@
             <!-- Inline offline banner sits at top of content -->
             <div class="offline-banner">
               <div class="offline-banner-icon">📡</div>
-              <div class="offline-banner-text"><strong>You're offline.</strong> Read-only for now — your answers will sync when you reconnect.</div>
+              <div class="offline-banner-text"><strong>You're offline.</strong> Read-only for now. Your answers will sync when you reconnect.</div>
             </div>
 
             <!-- Content renders normally below but CTAs are disabled -->
@@ -167,7 +167,7 @@
       <table>
         <tr><td>Trigger</td><td>Network connection lost while app is open and in use</td></tr>
         <tr><td>Banner bg</td><td>rgba(26,26,26,0.06) — neutral, low-contrast. Not error red — this isn't the user's fault and isn't blocking their current screen.</td></tr>
-        <tr><td>Banner copy</td><td>"You're offline." bold + "Read-only for now — your answers will sync when you reconnect." · 13px · <code>text-secondary</code></td></tr>
+        <tr><td>Banner copy</td><td>"You're offline." bold + "Read-only for now. Your answers will sync when you reconnect." · 13px · <code>text-secondary</code></td></tr>
         <tr><td>Banner position</td><td>Top of scroll area, above content — persistent until reconnected</td></tr>
         <tr><td>CTA behavior</td><td>Any action requiring network (submitting an answer, syncing data) shows a toast: "Can't do that offline. Will sync when you're back." Answer CTAs are disabled / greyed out.</td></tr>
         <tr><td>Read-only content</td><td>Topic articles, question text, and previously loaded content remain visible. Skeletons show for content that hasn't loaded yet.</td></tr>

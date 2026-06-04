@@ -8,6 +8,32 @@
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/regular/style.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* Wry Observation — gated supplemental card at the bottom of Home.
+     Dashed supplemental treatment matches the system convention; never
+     mentions AI, never scores divergence. Subordinate to the Up-next
+     card; only renders in populated + gated states. */
+  body.page-11 .screen-root .wry-card {
+    margin-top: 22px;
+    padding: 14px 16px;
+    border: 1.5px dashed rgba(95,69,242,0.3);
+    border-radius: 12px;
+    background: transparent;
+  }
+  body.page-11 .screen-root .wry-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+  body.page-11 .screen-root .wry-body {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+</style>
 </head>
 <body class="page-11">
 <div class="sidebar">
@@ -121,6 +147,10 @@
             <a class="see-progress" href="12-progress.html">See full progress →</a>
           </div>
 
+          <!-- Wry Observation (gated easter egg). Renders only in
+               populated states; hidden in empty / zero-started. -->
+          <div id="wry-slot"></div>
+
         </div>
 
         <!-- Bottom nav -->
@@ -167,9 +197,21 @@
     <div class="spec-card">
       <div class="spec-card-title">Two states · one canonical Home</div>
       <table class="spec-table">
-        <tr><td>Empty (zero-started)</td><td>Triggered when the user has 0 topics started (no answers submitted yet). Greeting → onboarding nudge → Partner → Progress ("0 of 7 categories started") → bottom nav. No badge card. <strong>No separate "Nothing started yet" 📋 placeholder</strong> — the nudge owns the empty Up-next state, so a placeholder directly under "Pick your first topic." would be redundant.</td></tr>
-        <tr><td>Populated</td><td>Greeting → Badge card (when earned) → Up-next topic card + "Start this topic" → Partner → Progress (category line) → bottom nav.</td></tr>
+        <tr><td>Empty (zero-started)</td><td>Triggered when the user has 0 topics started (no answers submitted yet). Greeting → onboarding nudge → Partner → Progress ("0 of 7 categories started") → bottom nav. No badge card. <strong>No Wry Observation card</strong> in this state. <strong>No separate "Nothing started yet" 📋 placeholder</strong> — the nudge owns the empty Up-next state, so a placeholder directly under "Pick your first topic." would be redundant.</td></tr>
+        <tr><td>Populated</td><td>Greeting → Badge card (when earned) → Up-next topic card + "Start this topic" → Partner → Progress (category line) → <strong>Wry Observation</strong> (gated; see below) → bottom nav.</td></tr>
         <tr><td>Folded in</td><td>This screen folds in what used to live on Screen 25 (Empty Home). 25 has been retired from the catalog.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Wry Observation card (gated easter egg) — FLAG FOR REVIEW</div>
+      <table class="spec-table">
+        <tr><td>What it is</td><td>A warm, specific observation drawn from the couple's data — e.g. <em>"Fastest you've ever agreed: baby names. Slowest: the budget."</em> Replaces the retired scored-divergence easter egg that was cut for pathologizing divergence. <strong>Never scores or ranks divergence.</strong> Never mentions being AI.</td></tr>
+        <tr><td>Treatment</td><td>Dashed supplemental-card pattern (the system's "supplemental / authored content distinct from the main flow" convention). No shadow. Small quiet eyebrow ("Noticed") above the body. Body 13.5px <code>text-secondary</code>.</td></tr>
+        <tr><td>Placement</td><td><strong>Bottom of the content column</strong>, below the Progress category line and above the bottom nav. Subordinate to the Up-next card — it must never compete with Home's single next action.</td></tr>
+        <tr><td>Gating</td><td>Appears only after a few reveals. Hidden in the empty / zero-started state. The exact reveal threshold is content/product to set.</td></tr>
+        <tr><td>Source</td><td>Templated off real couple data (the doc page shows sample copy). The screen never fabricates an observation; if there's nothing specific to say, the card is hidden.</td></tr>
+        <tr><td>Status</td><td><strong>Flagged for design review.</strong> This is the one net-new UI element in the v4 decisions pass. The placement, gating threshold, eyebrow label, and visual treatment are open — built to spec, not final.</td></tr>
       </table>
     </div>
 
@@ -276,6 +318,7 @@
         <span class="component-tag">Button — Primary (lg, "Start this topic")</span>
         <span class="component-tag">Partner Status Block (avatar-less Home variant)</span>
         <span class="component-tag">Progress category line</span>
+        <span class="component-tag">Wry Observation (gated, populated only)</span>
         <span class="component-tag">Bottom Nav</span>
         <span class="component-tag">Divider</span>
       </div>
@@ -291,6 +334,7 @@
         <div class="note-item"><div class="note-bullet"></div><span><strong>Up next</strong> (populated) always shows the single highest-priority topic — "Your turn" topics first, then available.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Partner section is avatar-less</strong> on Home in every state. Other screens still use <code>avatar-md</code>; the Home variant is the exception (see design system, Partner Status Block).</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Progress</strong> is a single category line. No tiles, no alignment score — alignment is a distribution on Progress (12), not a number on Home.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Wry Observation</strong> (gated easter egg) sits at the bottom of the content column, below Progress and above the bottom nav. Populated states only; hidden in the empty / zero-started state. Subordinate to the Up-next card — never competes with the single next action. <strong>Never scores or ranks divergence; never mentions being AI.</strong> Replaces the retired scored-divergence easter egg. Flagged for design review.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Three transition triggers stay distinct:</strong> nudge dismiss + Up-next populate fire on first topic intro view (16); Progress increments fire on first answer submitted.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Tapping the active Home tab scrolls back to top.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>No em dashes in any on-screen copy.</span></div>
@@ -397,6 +441,23 @@ function renderProgress(layout) {
     : '3 of 7 categories started';
 }
 
+/* Wry Observation: gated easter egg, populated states only.
+   Example copy is templated off real couple data (not generated boilerplate);
+   the doc page shows the sample copy. Hidden in empty / zero-started. */
+const WRY_SAMPLE = "Fastest you've ever agreed: baby names. Slowest: the budget.";
+function renderWry(layout) {
+  const slot = document.getElementById('wry-slot');
+  if (layout === 'empty') {
+    slot.innerHTML = '';
+    return;
+  }
+  slot.innerHTML = `
+    <div class="wry-card" role="note" aria-label="Wry observation">
+      <div class="wry-eyebrow">Noticed</div>
+      <div class="wry-body">${WRY_SAMPLE}</div>
+    </div>`;
+}
+
 function showState(layout, partner) {
   document.querySelectorAll('.state-tab').forEach(btn => {
     const match = btn.dataset.layout === layout && btn.dataset.partner === partner;
@@ -405,6 +466,7 @@ function showState(layout, partner) {
   renderUpNext(layout);
   renderPartner(partner, layout);
   renderProgress(layout);
+  renderWry(layout);
 }
 
 document.querySelectorAll('.state-tab').forEach(btn => {

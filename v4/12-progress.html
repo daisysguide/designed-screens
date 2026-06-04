@@ -284,13 +284,10 @@
     </div>
 
     <div class="spec-card">
-      <div class="spec-card-title">Easter egg — cut here, moved to Home</div>
+      <div class="spec-card-title">Easter egg — not on Progress</div>
       <table class="spec-table">
-        <tr><td>Chaos meter</td><td><b>Cut.</b> Scoring "how different your answers have been" on a 1–10 scale pathologizes divergence, directly contradicting the orange-as-invitation framing everywhere else.</td></tr>
-        <tr><td>Replacement</td><td>A <b>wry observation</b> — the app notices something specific and true about the couple, drawn from their data (e.g. <em>"Fastest you've ever agreed: baby names. Slowest: the budget."</em>).</td></tr>
-        <tr><td>Where it lives</td><td><b>Home (Screen 11), not Progress.</b> Progress is already dense and the bottom is easy to miss; Home is sparse, seen every session, and already has a characterful note slot the observation can share.</td></tr>
-        <tr><td>Hard rules (wherever it lands)</td><td>Must <b>not</b> score or rank divergence. Stays <b>gated</b> (appears only after a few reveals). Keeps the dashed supplemental-card treatment (the broader "supplemental or authored content distinct from the main flow" convention — not an AI tell; the app uses no styling to denote AI authorship). Stays subordinate to Home's single next action.</td></tr>
         <tr><td>On Progress</td><td><b>No easter egg.</b> The screen ends after badges.</td></tr>
+        <tr><td>Where it lives instead</td><td>The <b>Wry Observation</b> card on <b>Home (Screen 11)</b>. See Home for the spec; design system documents the component.</td></tr>
       </table>
     </div>
 
@@ -314,7 +311,7 @@
         <tr><td>Tap targets</td><td>Breakdown rows <b>52px</b> · revisit items <b>44px</b>.</td></tr>
         <tr><td>Dashed border</td><td>The "supplemental or authored content distinct from the main flow" treatment (and the empty-alignment-track treatment). Generated copy here is warm + specific and never mentions being AI; the app uses no styling to denote AI authorship.</td></tr>
         <tr><td>Fonts</td><td>DM Sans (body) · Grandstander 700 (display) · Phosphor (icons).</td></tr>
-        <tr><td>One state per topic</td><td>Alignment is one value per topic (shared per couple), not per question. Resolution is merged into the alignment state. Editing the shared status is asymmetric: anyone can move a topic <b>to</b> "Worth a conversation" instantly; moving it back to settled is propose-and-confirm.</td></tr>
+        <tr><td>One state per topic</td><td>Alignment is one value per topic (shared per couple), not per question. Resolution is merged into the alignment state. Either partner can change the shared status in both directions, unilaterally and instantly; there is no propose-and-confirm handshake. <b>Reopening</b> returns the topic to "Worth a conversation"; <b>settling</b> restores its computed value (a Worth-computed topic settles to "Mostly aligned").</td></tr>
       </table>
     </div>
 

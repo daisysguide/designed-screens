@@ -432,7 +432,7 @@ body.page-01 .screen-root .phone-screen {
 body.page-01 .screen-root /* Screen content */
   .label-sm {
     font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 6px;
+    text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;
   }
 
 body.page-01 .screen-root .screen-heading {

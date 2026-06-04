@@ -190,7 +190,7 @@ These appear in v4 screen files but are not in the type scale. Each one should m
 |---|---|---|
 | Grandstander 28px (auth headings) | Sign Up, Log In, OTP | `display-md` (24px) |
 | Grandstander 26px (Name Entry, Partner Linking, Paywall) | 06, 10, 09 | `display-md` (24px) |
-| Grandstander 22px (Topic Intro title, Home greeting, Topic List title, Chaos Meter score) | Multiple | `display-md` (24px) or `display-sm` (20px) — pick one per screen role |
+| Grandstander 22px (Topic Intro title, Home greeting, Topic List title) | Multiple | `display-md` (24px) or `display-sm` (20px) — pick one per screen role |
 | Grandstander 18px (Empty state headings, Prediction locked state) | Multiple | `display-sm` (20px) |
 | Grandstander 17px (Onboarding nudge card) | Empty Home | `display-sm` (20px) |
 | DM Sans 14px outside `body-sm`/`label-md` | Many | `body-sm` (14px regular) or `label-md` (13px medium) |
@@ -1563,9 +1563,9 @@ Previously interactive pill on `completed-topic` that toggled between "We're goo
 
 Previously the selection card for the "We're good / Needs work" picker on `post-reveal-reflection`. The screen is deleted, so the component goes with it. No surviving screen used Option Card. If a future picker pattern needs a similar treatment, lift the spec from git history (commit prior to the post-reveal-reflection deletion) rather than reintroducing it here.
 
-### Info Card ("How it works") — NEW
+### Info Card — DEPRECATED
 
-Numbered-step explainer card. A general pattern; it was previously on `personalized-results` ("How it works"), which has since dropped it — that content is being relocated to a more actionable spot (intro / just-in-time before the first question), so the component stays documented here.
+Numbered-step explainer card. Its only v4 consumer was `personalized-results` ("How it works"), which has retired the pattern — the mechanic is already covered on Screen 01 (intro card 2), Screen 10 (Partner Linking), and the Screen 11 Home nudge. No surviving v4 screen uses Info Card. Spec kept here as a generic numbered-step component in case a future screen needs one; do not reintroduce the "How it works" framing.
 
 | Property | Value |
 |---|---|
@@ -1595,23 +1595,23 @@ Purple-filled brand card used on `home`'s zero-started state to push first-time 
 
 (42px CTA inside is a contained exception — outside this card, button heights follow the standard 56/44/32 scale.)
 
-### Chaos Meter — NEW
+### Wry Observation — NEW
 
-Easter-egg 1–10 score on `progress`. Running joke about how divergent the couple's answers have been.
+Easter-egg supplemental card on `home`. A specific, true note drawn from the couple's data (example: "Fastest you've ever agreed: baby names. Slowest: the budget."). Replaces a retired scored-divergence easter egg that was cut for pathologizing divergence (against the orange-as-invitation framing everywhere else).
 
 | Property | Value |
 |---|---|
-| Container | `surface-card` · `radius-xl` · `shadow-md` · 16px padding |
-| Title | "🌡️ Chaos meter" · `body-sm` bold |
-| Score | Grandstander inline in sentence · `display-sm` · `action-primary` |
-| Body | "Based on how different your answers have been... you're at [X] / 10. Perfectly normal. Probably." — exact copy |
-| Visibility | Hidden until user has 3+ revealed topics |
-| Calculation | Higher = more divergent answers. Never explain the formula to users. |
+| Container | Dashed supplemental-card treatment (the "supplemental or authored content distinct from the main flow" convention used elsewhere in the system). No `shadow-md`. |
+| Body | Warm, specific, observational. Pulled from the couple's reveals; copy is templated off real data, not generated boilerplate. |
+| Visibility | Gated — appears only after a few reveals. Hidden in the empty / zero-started state. |
+| Hierarchy | Strictly subordinate to Home's single next action (the Up-next card). |
+| Placement on `home` | Bottom of the content column, below the Progress category line and above the bottom nav. |
 
-#### Rules
+#### Hard rules
 
-- Never explain the calculation in UI. Mystery is the point.
-- Don't promote this metric. It sits at the bottom of `progress`, below the real data.
+- **Must never score or rank divergence.** That is why the prior scored-divergence easter egg was cut; reintroducing any scored treatment here defeats the purpose.
+- Never mentions being AI. The app uses no styling to denote AI authorship; the dashed treatment is a general "supplemental / authored" convention, not an AI tell.
+- Stays subordinate to the next-action card — never competes with it for the eye.
 
 ### "What Happens Next" Card — RETIRED
 
@@ -1820,7 +1820,7 @@ Each screen file is its own spec. The design system documents foundations and co
 - Note Textarea, Segment Toggle, Checkbox, OTP Input, Daisy Mark, Countdown Pill, Category Pill (universal components)
 - Article Nav Bar (navigation)
 - Inline Banner (feedback)
-- Topic Row, Topic Toggle Row, Reveal answer chat bubbles, Slider reveal (two-marker comparison), Ranking reveal (per-item comparison), Credibility Card, Founding Member Card, Info Card, Onboarding Nudge Card, Chaos Meter, "What Happens Next" Card, Article Byline, Sticky CTA Region, Emoji Feedback Block, Resources Card (app-specific components)
+- Topic Row, Topic Toggle Row, Reveal answer chat bubbles, Slider reveal (two-marker comparison), Ranking reveal (per-item comparison), Credibility Card, Founding Member Card, Info Card, Onboarding Nudge Card, Wry Observation, "What Happens Next" Card, Article Byline, Sticky CTA Region, Emoji Feedback Block, Resources Card (app-specific components)
 - Single editable alignment status (settle / reopen with provenance) replaces the v2.0 "Needs work / We're good" second axis
 - Cyan token family (`cyan-200`/`cyan-300`/`cyan-400`/`cyan-text-dark`) — the "you / action" color, now load-bearing on the Alignment Reveal
 - Stacked Progress Bar variant
@@ -1934,7 +1934,7 @@ Two follow-up tweaks to the `personalized-results` Conversation Preview:
 
 Redesigned `personalized-results` around a Conversation Preview instead of a plan summary:
 
-- **Removed from the screen:** the 3-column Stats Display, the category-pill row + "Your categories" label, and the on-screen "How it works" Info Card. (Stats Display and Info Card stay in the system — Stats Display is used elsewhere; Info Card's content is relocating.)
+- **Removed from the screen:** the 3-column Stats Display, the category-pill row + "Your categories" label, and the on-screen "How it works" Info Card. (Stats Display stays in the system — it is used elsewhere. The "How it works" explainer has since been retired entirely from the product; the Info Card pattern is now deprecated.)
 - **New copy:** eyebrow "Your plan is ready"; heading "You two have a lot to talk about." (no longer leads with a topic count); a subhead; and a scope line "Plus N more, across all 7 areas of parenting prep."
 - **New components:** Conversation Preview (display-only teaser, personalized vs fallback variants, hard rule that it must not look like the tappable Topic Row) and Due-Date Pill (quiet conditional chip, shown only when a due date exists and weeks-remaining ≥ 5).
 - **CTA reworded and rerouted:** "Review and unlock your plan →" became "Let's begin →" and routes directly to `paywall` (was `manage-topics`). Manage Topics moves post-purchase. The cross-screen nav-diagram + Manage-Topics entry-point ripple is tracked as a separate task.
@@ -1966,7 +1966,7 @@ Structural changes:
 - Added type scale tokens: `display-sm`, `body-sm`, `body-xs` to capture sizes that screens were already using off-spec
 - Added new primitive: `blue-text-dark`
 - Retired `status-error` / `status-success` bare tokens (the migration v1.0 noted but didn't enforce across screens)
-- Documented 20+ net-new components introduced in v4 screens (Note Textarea, Segment Toggle, Checkbox, OTP Input, Inline Banner, Topic Row, Topic Toggle Row, Multi-select Reveal Box, Slider Reveal Box, Credibility Card, Founding Member Card, Reflection Status Pill, Option Card, Info Card, Onboarding Nudge Card, Chaos Meter, What Happens Next Card, Article Byline, Sticky CTA Region, Emoji Feedback Block, Resources Card, Daisy Mark, Countdown Pill, Category Pill, Article Nav Bar)
+- Documented 20+ net-new components introduced in v4 screens (Note Textarea, Segment Toggle, Checkbox, OTP Input, Inline Banner, Topic Row, Topic Toggle Row, Multi-select Reveal Box, Slider Reveal Box, Credibility Card, Founding Member Card, Reflection Status Pill, Option Card, Info Card, Onboarding Nudge Card, Wry Observation, What Happens Next Card, Article Byline, Sticky CTA Region, Emoji Feedback Block, Resources Card, Daisy Mark, Countdown Pill, Category Pill, Article Nav Bar)
 - Added Drift Prevention section with concrete safeguards (CHANGELOG, slug references, pre-commit grep, quarterly walk-through)
 - Removed v1.0 inline screen spec for Topic Intro — screen specs now live in their respective screen files
 - Standardized bottom sheet drag handle to 40×4px (v1.0 had it both ways)
