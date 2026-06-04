@@ -108,7 +108,7 @@
           </div>
           <div class="pv-row">
             <span class="pv-dot"></span>
-            <span class="pv-q">What will we keep from how we were raised, and what will we change?</span>
+            <span class="pv-q">What aspects of our upbringing will we replicate, and what will we avoid?</span>
           </div>
         </div>
 
@@ -161,9 +161,9 @@
         <tr><td>Role</td><td>The hero element. Display-only teaser — <strong>not interactive</strong>. No chevrons, status pills, state dots, hover/press, or tap target. Must read as a preview, never as the tappable Topic Row.</td></tr>
         <tr><td>Container</td><td><code>surface-card</code> · <code>radius-2xl</code> · <code>shadow-lg</code> · rows separated by 1px <code>hair</code> hairlines</td></tr>
         <tr><td>Question text</td><td>15px DM Sans medium · <code>text-primary</code> · worries reframed as conversation questions</td></tr>
-        <tr><td>Labels</td><td>All section labels share one style: <code>label-sm</code> uppercase, <code>purple-500</code> — identical across both states. Personalization is signaled by <strong>dot color + wording, not label color</strong>: purple dots = from the user's Q8 answers, neutral dots = curated / universal.</td></tr>
-        <tr><td>Personalized variant</td><td>Label "Starting with what you told us" (purple dots) over the user's Q8 worries, then "...And a few couples don't see coming" (neutral dots) over curated topics. Padded to ~4 rows.</td></tr>
-        <tr><td>Fallback variant</td><td>Single label "A few you'll want to sit down for" + the fixed four topics (neutral dots). Shown when Q8 is skipped / empty.</td></tr>
+        <tr><td>Labels</td><td>All section labels share one style: <code>label-sm</code> uppercase, <code>purple-500</code> — identical across both states. Personalization is signaled by <strong>dot color + wording, not label color</strong>: purple dots = from the user's Q7 answers, neutral dots = curated / universal.</td></tr>
+        <tr><td>Personalized variant</td><td>Label "Starting with what you told us" (purple dots) over the user's Q7 worries, then "...And a few couples don't see coming" (neutral dots) over curated topics. Padded to ~4 rows.</td></tr>
+        <tr><td>Fallback variant</td><td>Single label "A few you'll want to sit down for" + the fixed four topics (neutral dots). Shown when Q7 is skipped / empty.</td></tr>
       </table>
       <div class="info-box">Recognition, not bespoke curation — the curated additions are explicitly labelled as <em>not</em> from the user's input, so we never imply every shown topic was chosen for them.</div>
     </div>
@@ -171,10 +171,10 @@
     <div class="spec-card">
       <div class="spec-card-title">Personalization logic</div>
       <table class="spec-table">
-        <tr><td>Source</td><td>Q8 "What are you nervous about?" When answered, the user's worries lead (reframed as questions, labelled as theirs) and are padded to ~4 with curated universal topics. When skipped / empty, fall back to the fixed four.</td></tr>
+        <tr><td>Source</td><td>Q7 "What are you nervous about?" When answered, the user's worries lead (reframed as questions, labelled as theirs) and are padded to ~4 with curated universal topics. When skipped / empty, fall back to the fixed four.</td></tr>
         <tr><td>"Who will handle what"</td><td>→ How will we share parental and household duties?</td></tr>
         <tr><td>"Making time for ourselves"</td><td>→ How will we make time for ourselves as a couple?</td></tr>
-        <tr><td>"Deciding the right way to parent"</td><td>→ What will we keep from how we were raised, and what will we change?</td></tr>
+        <tr><td>"Deciding the right way to parent"</td><td>→ What aspects of our upbringing will we replicate, and what will we avoid?</td></tr>
         <tr><td>"How we'll get enough sleep"</td><td>→ a sleep conversation topic</td></tr>
       </table>
       <div class="info-box">
@@ -207,7 +207,7 @@
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>Conversation Preview is personalized from Q8 when answered, otherwise falls back to the fixed four. Example content shown here.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Conversation Preview is personalized from Q7 when answered, otherwise falls back to the fixed four. Example content shown here.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Scope-line numbers are dynamic: "Plus N more" where N = plan total − topics shown; the area count is always 7.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Due-date pill renders only when a due date exists and weeks-remaining ≥ 5; hidden for the trying / thinking branch and when the countdown is too short.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Let's begin →" → Screen 09 Paywall. No bottom nav. No back button.</span></div>
@@ -247,7 +247,7 @@
           </div>
           <div class="pv-row">
             <span class="pv-dot"></span>
-            <span class="pv-q">What will we keep from how we were raised, and what will we change?</span>
+            <span class="pv-q">What aspects of our upbringing will we replicate, and what will we avoid?</span>
           </div>
           <div class="pv-row">
             <span class="pv-dot"></span>

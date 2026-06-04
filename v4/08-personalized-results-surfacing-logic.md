@@ -111,10 +111,10 @@ unchanged.
 
 ---
 
-## Flags (carried, still open)
+## Flags (resolved)
 
-- **Counts don't reconcile across screens** — Reveal implies 45 (4 + 41); the Customize mock
-  implies 44 (and sums to 50, short of the 51 library). Lock one plan-total source.
-- **Upbringing title** appears in a third phrasing on the live mock ("What will we keep from
-  how we were raised…"); standardize to canonical or bless it as a reveal-only display
-  variant. This doc uses the canonical title.
+- **Counts** — locked to **51 library / 45 plan / 6 hidden** across Reveal (08), Topics (14),
+  and Manage Topics (15); the footer "Plus 41 more" reconciles (45 − 4). The earlier "44" was
+  a stale screenshot, not the live file.
+- **Upbringing title** — standardized to canonical ("What aspects of our upbringing will we
+  replicate, and what will we avoid?") on Screen 08, matching this doc and Screens 14/15.
