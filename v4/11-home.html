@@ -9,6 +9,13 @@
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
 <link rel="stylesheet" href="styles.css">
 <style>
+  /* Cyan token trio — defined globally at styles.css line 3665 but
+     scoped under body.page-12, so Home can't see them. Pill overrides
+     below reference these tokens; without this local definition they
+     resolve to nothing and the pills render with no fill. Mirrors the
+     page-12 values exactly. Remove if/when tokens are promoted to :root. */
+  body.page-11 { --cyan-soft: #9decfa; --cyan-strong: #7fe3f7; --cyan-text: #0b5263; }
+
   /* Wry Observation — gated supplemental card at the bottom of Home.
      Dashed supplemental treatment matches the system convention; never
      mentions AI, never scores divergence. Subordinate to the Up-next
