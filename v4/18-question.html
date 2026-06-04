@@ -147,12 +147,15 @@ body.page-15 .screen-root .note-heading {
   color: rgba(26,26,26,1); letter-spacing: -0.02em; margin-bottom: 6px;
 }
 body.page-15 .screen-root .note-textarea {
-  width: 100%; min-height: 96px; max-height: 140px;
+  width: 100%; min-height: 96px;
   border-radius: 8px; border: 1.5px solid rgba(26,26,26,0.15);
   background: white; padding: 12px 14px;
   font-family: 'DM Sans', sans-serif; font-size: 15px;
   color: rgba(26,26,26,1); resize: none; outline: none; line-height: 1.5;
   margin-top: 16px; box-sizing: border-box;
+  /* Height is auto-grown by autoGrowNote() in JS (oninput + after render);
+     overflow:hidden prevents a flash of scrollbar before the height update. */
+  overflow: hidden;
 }
 body.page-15 .screen-root .note-textarea:focus {
   border-color: #5f45f2; box-shadow: 0 0 0 3px rgba(95,69,242,0.12);
@@ -473,7 +476,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Sub-line — linked</td><td>"{FirstName} sees this after you both complete this topic." (capitalized when sentence-leading)</td></tr>
         <tr><td>Sub-line — unlinked</td><td>"Your partner sees this after you both complete this topic."</td></tr>
         <tr><td>Sharing</td><td>The note is <strong>shared with the partner</strong> and surfaced at the reveal (Screens 20 / 21). It is not private to the author.</td></tr>
-        <tr><td>Textarea</td><td>Full width · min-height 96px · white bg · <code>1.5px border-default</code> · <code>radius-md</code> · DM Sans 15px · <code>border-focus</code> + ring on focus</td></tr>
+        <tr><td>Textarea</td><td>Full width · min-height 96px · <strong>auto-grows with content</strong> (height tracks <code>scrollHeight</code> on input; no max) · white bg · <code>1.5px border-default</code> · <code>radius-md</code> · DM Sans 15px · <code>border-focus</code> + ring on focus</td></tr>
         <tr><td>Placeholder</td><td>"Your thoughts, context, or questions for later."</td></tr>
         <tr><td>Character count</td><td>"N characters remaining" · 12px <code>text-tertiary</code> · right-aligned below textarea · turns <code>status-error-text</code> (#c0392b) below 50 chars remaining</td></tr>
         <tr><td>Max length</td><td>280 chars · enforced server-side and by <code>maxlength</code> attribute</td></tr>
@@ -932,9 +935,19 @@ function shuffle(arr) {
 /* ── Note step ── */
 function renderNote(area) {
   area.innerHTML = `
-    <textarea class="note-textarea" id="note-input" placeholder="Your thoughts, context, or questions for later." oninput="onNoteInput(this.value)" maxlength="280">${escapeHtml(DEMO_STATE.noteText)}</textarea>
+    <textarea class="note-textarea" id="note-input" placeholder="Your thoughts, context, or questions for later." oninput="onNoteInput(this.value); autoGrowNote(this);" maxlength="280">${escapeHtml(DEMO_STATE.noteText)}</textarea>
     <div class="note-char-count" id="char-count">${280 - DEMO_STATE.noteText.length} characters remaining</div>`;
   // Re-flag dirtiness: only "dirty" if user has typed something since last save.
+  autoGrowNote(document.getElementById('note-input'));
+}
+/* Grow the textarea to fit its content. CSS keeps min-height (96px) as the
+   floor; height beyond that follows scrollHeight so the box expands with
+   what's typed and shrinks when content is deleted. No max — the note step
+   sits above a scrollable container, so a tall note scrolls naturally. */
+function autoGrowNote(ta) {
+  if (!ta) return;
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
 }
 function onNoteInput(text) {
   DEMO_STATE.noteText = text;
