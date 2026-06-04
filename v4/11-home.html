@@ -34,21 +34,15 @@
     border-radius: 12px;
     background: rgba(95,69,242,0.03);           /* faint tint — gentle presence inside the dashed outline */
   }
-  body.page-11 .screen-root .wry-head {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    margin-bottom: 6px;
-  }
-  body.page-11 .screen-root .wry-daisy { flex-shrink: 0; display: block; }
   body.page-11 .screen-root .wry-eyebrow {
+    display: block;
     font-size: 12.5px;
     font-weight: 500;
-    font-style: italic;          /* the soft murmur — framing line italic */
+    font-style: italic;          /* keep — the soft murmur */
     letter-spacing: normal;
     text-transform: none;
     color: rgba(26,26,26,0.5);
-    margin: 0;
+    margin: 0 0 6px;
   }
   body.page-11 .screen-root .wry-body {
     font-size: 13.5px;
@@ -290,7 +284,7 @@
       <div class="spec-card-title">Wry Observation card (gated easter egg) — FLAG FOR REVIEW</div>
       <table class="spec-table">
         <tr><td>What it is</td><td>A warm, specific observation drawn from the couple's data — e.g. <em>"Fastest you've ever agreed: baby names. Slowest: the budget."</em> Replaces the retired scored-divergence easter egg that was cut for pathologizing divergence. <strong>Never scores or ranks divergence.</strong> Never mentions being AI.</td></tr>
-        <tr><td>Treatment</td><td>Dashed supplemental-card pattern (the system's "supplemental / authored content distinct from the main flow" convention — and correct for this card, which IS AI-synthesized content). No shadow. Faint <code>rgba(95,69,242,0.03)</code> tint fill inside the dashed border so the card has gentle presence rather than reading as a hollow outline. Head row: brand daisy mark (<code>../images/daisy.svg</code> at 18px, decorative <code>alt=""</code>) + soft italic framing line "A little thing we noticed" (12.5px, weight 500, sentence case, no tracking, muted). Body: 13.5px regular (never italic — the observation must stay readable) at <code>rgba(26,26,26,0.62)</code>. Reads as Daisy murmuring something she noticed — never a stat.</td></tr>
+        <tr><td>Treatment</td><td>Dashed supplemental-card pattern (the system's "supplemental / authored content distinct from the main flow" convention — and correct for this card, which IS AI-synthesized content). No shadow. Faint <code>rgba(95,69,242,0.03)</code> tint fill inside the dashed border so the card has gentle presence rather than reading as a hollow outline. Soft italic framing line "A little thing we noticed" as the first element (12.5px, weight 500, sentence case, no tracking, muted) — a simplified daisy logomark is a future addition. Body: 13.5px regular (never italic — the observation must stay readable) at <code>rgba(26,26,26,0.62)</code>. Reads as Daisy murmuring something she noticed — never a stat.</td></tr>
         <tr><td>Placement</td><td><strong>Bottom of the content column</strong>, below the Progress category line and above the bottom nav. Subordinate to the Up-next card — it must never compete with Home's single next action.</td></tr>
         <tr><td>Gating</td><td>Appears only after a few reveals. Hidden in the empty / zero-started state. The exact reveal threshold is content/product to set.</td></tr>
         <tr><td>Source</td><td>Templated off real couple data (the doc page shows sample copy). The screen never fabricates an observation; if there's nothing specific to say, the card is hidden.</td></tr>
@@ -564,10 +558,7 @@ function renderWry(layout) {
   }
   slot.innerHTML = `
     <div class="wry-card" role="note" aria-label="A little thing we noticed">
-      <div class="wry-head">
-        <img class="wry-daisy" src="../images/daisy.svg" alt="" width="18" height="18">
-        <span class="wry-eyebrow">A little thing we noticed</span>
-      </div>
+      <span class="wry-eyebrow">A little thing we noticed</span>
       <div class="wry-body">${WRY_SAMPLE}</div>
     </div>`;
 }
