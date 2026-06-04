@@ -157,15 +157,12 @@
      Strips every "your move" affordance: action pills, reveal-row treatment,
      the Needs-you chip, and the category-header dots that flag actionable
      groups. Revealed/alignment content stays (settled outcomes, not pending
-     actions). The unanswered side's eyebrow ("Not revealed yet · 4") drops —
-     without pills it's a label with nothing to label, and the peek becomes a
-     quiet plain list of unanswered topics. The "Revealed · N" eyebrow on the
-     right page stays — it labels settled outcomes, which still belong. */
+     actions). The peek eyebrows ("Not revealed yet · N" and "Revealed · N")
+     also stay — they label the two phases regardless of urgency. */
   body.page-12 .screen-root.clear-state .pill-reveal,
   body.page-12 .screen-root.clear-state .pill-your-turn,
   body.page-12 .screen-root.clear-state .needs-chip,
-  body.page-12 .screen-root.clear-state .cat-dot,
-  body.page-12 .screen-root.clear-state .phase-page:first-child .phase-eyebrow { display: none; }
+  body.page-12 .screen-root.clear-state .cat-dot { display: none; }
   /* Reveal row reverts to a plain topic row — kill the gradient, the inset
      glow, the shine sweep, and the bolder name weight. Keeps the row's tap
      target / padding / divider exactly as plain rows. */
@@ -755,10 +752,10 @@
       <p style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:14px;">When nothing pre-reveal is actionable for the user, the list goes quiet. Every "your move" affordance drops away so the screen stops shouting when there's nothing to shout about. Revealed/alignment content is unchanged — settled outcomes aren't pending actions.</p>
       <table class="spec-table">
         <tr><td>Triggers</td><td>Actionable count = 0 (Your turn + Ready to reveal). All pre-reveal topics are either Not started or Partner's turn.</td></tr>
-        <tr><td>What drops</td><td>Ready-to-reveal gradient row + charge pill · Your-turn pills · "Needs you" chip · the dock divider · category-header dots that flag actionable groups · the "Not revealed yet · N" eyebrow on the peek's unanswered side (the "Revealed · N" eyebrow on the right page stays)</td></tr>
+        <tr><td>What drops</td><td>Ready-to-reveal gradient row + charge pill · Your-turn pills · "Needs you" chip · the dock divider · category-header dots that flag actionable groups</td></tr>
         <tr><td>What stays</td><td>Full topic list with all groups · Category / Stage toggle in the dock · revealed cards with alignment bands · "Manage topics" link · screen header / subtitle</td></tr>
         <tr><td>Dock contents</td><td>Just the grouping toggle, no chip and no divider. The pill is the same white frosted-glass shape; it just contains less.</td></tr>
-        <tr><td>Peek behavior</td><td>Mixed-phase groups still peek (left page: unanswered, right page: revealed) — but the left eyebrow is gone and rows are plain. The peek now reads as "what's left to do" without urgency markers.</td></tr>
+        <tr><td>Peek behavior</td><td>Mixed-phase groups still peek (left page: unanswered, right page: revealed) — both eyebrows stay; rows go plain. The peek now reads as "what's left to do" without urgency markers.</td></tr>
         <tr><td>Partner's-turn pill</td><td>Stays visible — it's information, not a call to action. The user isn't blocked on themselves.</td></tr>
       </table>
     </div>
