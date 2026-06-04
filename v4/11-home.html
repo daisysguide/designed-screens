@@ -104,6 +104,27 @@
     align-self: center;
     margin-right: 4px;
   }
+
+  /* Onboarding nudge → white-card treatment (match Up-next; reduce purple).
+     Overrides the brand-filled rules in styles.css (.nudge-card et al).
+     Card flips to white-on-cream; text to ink; CTA to purple-on-white
+     (standard pill, no longer a button-in-brand-card exception).
+     Shadow matches the Up-next card (--shadow-md) so the two read as
+     the same card family. Radius, padding, margin, and button geometry
+     are inherited unchanged. */
+  body.page-11 .screen-root .nudge-card {
+    background: var(--white);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+  }
+  body.page-11 .screen-root .nudge-eyebrow { color: var(--text-tertiary); }
+  body.page-11 .screen-root .nudge-heading { color: var(--text-primary); }
+  body.page-11 .screen-root .nudge-body    { color: var(--text-secondary); }
+  body.page-11 .screen-root .btn-nudge-primary {
+    background: var(--purple-500);
+    color: var(--white);
+  }
+  body.page-11 .screen-root .btn-nudge-primary:hover { background: var(--purple-600); }
 </style>
 </head>
 <body class="page-11">
@@ -169,7 +190,7 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">The canonical Home, carrying both the zero-started (empty) and populated states. Greeting reclaims full width; alignment-score tile is removed (alignment is a distribution on Progress, not a score); Partner section is avatar-less; Progress is a single category line. The empty state replaces the Up-next topic card with a brand-filled onboarding nudge — the topic flow's single front door — and folds in what used to live on Screen 25.</div>
+<div class="page-desc page-desc-full">The canonical Home, carrying both the zero-started (empty) and populated states. Greeting reclaims full width; alignment-score tile is removed (alignment is a distribution on Progress, not a score); Partner section is avatar-less; Progress is a single category line. The empty state replaces the Up-next topic card with a white-card onboarding nudge — the topic flow's single front door — and folds in what used to live on Screen 25.</div>
 
 <div class="main-layout">
 
@@ -204,7 +225,7 @@
 
           <!-- Main content slot. Up-next card OR onboarding nudge.
                Behavior:
-                 layout=empty     → onboarding nudge (brand-filled)
+                 layout=empty     → onboarding nudge (white card)
                  layout=populated → Up-next topic card + Start button -->
           <div id="up-next-slot"></div>
 
@@ -306,13 +327,13 @@
     <div class="spec-card">
       <div class="spec-card-title">Onboarding nudge card (empty state)</div>
       <table class="spec-table">
-        <tr><td>Background</td><td><code>action-primary</code> (purple-500) — brand-filled</td></tr>
+        <tr><td>Background</td><td>White on cream · matches the Up-next card family. Elevation: <code>shadow-md</code> (same token Up-next uses).</td></tr>
         <tr><td>Border radius</td><td><code>radius-xl</code></td></tr>
         <tr><td>Padding</td><td>18px</td></tr>
-        <tr><td>Eyebrow</td><td>"Get started" · 11px DM Sans bold · uppercase · white 60% opacity</td></tr>
-        <tr><td>Heading</td><td>"Pick your first topic." · <code>display-sm</code> (Grandstander 20px) · white</td></tr>
-        <tr><td>Body</td><td>"Each topic takes about 5 to 10 minutes. You and [partner name] answer separately, then see where you land." · 13px · white 75% · max 2 lines · no em dashes. <strong>[partner name]</strong> = partner's first name when linked, "your partner" when pending or none.</td></tr>
-        <tr><td>CTA</td><td>"Browse topics →" · white filled pill · <code>action-primary</code> label · full-width · <strong>42px</strong> — documented button-in-brand-card exception (design system: Onboarding Nudge Card section). Outside this card, button heights follow 56/44/32.</td></tr>
+        <tr><td>Eyebrow</td><td>"Get started" · 11px DM Sans bold · uppercase · <code>text-tertiary</code></td></tr>
+        <tr><td>Heading</td><td>"Pick your first topic." · <code>display-sm</code> (Grandstander 20px) · <code>text-primary</code></td></tr>
+        <tr><td>Body</td><td>"Start with whatever's on your mind to see where you two land." · 13px · <code>text-secondary</code> · max 2 lines. Warm/invitational — no time estimate, no mechanic, no partner-name interpolation.</td></tr>
+        <tr><td>CTA</td><td>"Browse topics →" · purple-filled pill (<code>purple-500</code> bg, white label) · full-width · <strong>42px</strong>. Standard primary CTA on a white card; the prior button-in-brand-card exception no longer applies.</td></tr>
         <tr><td>Dismissal</td><td>Disappears automatically the moment the user views their first topic intro (Screen 16). Not manually dismissible.</td></tr>
         <tr><td>Position</td><td>Sits in the Up-next slot, replacing the topic card. <strong>No separate Up-next 📋 block is rendered.</strong></td></tr>
       </table>
@@ -479,12 +500,11 @@ const UP_NEXT_VARIANTS = {
 function renderUpNext(layout, partner, tier) {
   const slot = document.getElementById('up-next-slot');
   if (layout === 'empty') {
-    const partnerLabel = (partner === 'linked') ? 'Jordan' : 'your partner';
     slot.innerHTML = `
       <div class="nudge-card">
         <div class="nudge-eyebrow">Get started</div>
         <div class="nudge-heading">Pick your first topic.</div>
-        <div class="nudge-body">Each topic takes about 5 to 10 minutes. You and ${partnerLabel} answer separately, then see where you land.</div>
+        <div class="nudge-body">Start with whatever's on your mind to see where you two land.</div>
         <a class="btn-nudge-primary" href="14-topic-list.html">Browse topics →</a>
       </div>`;
   } else {
