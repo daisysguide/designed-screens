@@ -108,6 +108,13 @@
     cursor: pointer; letter-spacing: -0.01em; flex-shrink: 0;
     text-decoration: none;
   }
+
+  /* Respect the `hidden` attribute on the sticky CTAs — the JS toggles it
+     per mode, but the buttons' own `display: flex` was overriding it, so
+     both CTAs rendered at once. This guard wins on specificity (class +
+     attribute) without !important. */
+  body.page-14 .screen-root .btn-primary[hidden],
+  body.page-14 .screen-root .btn-back-to-reveal[hidden] { display: none; }
 </style>
 </head>
 <body class="page-14">
