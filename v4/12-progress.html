@@ -268,7 +268,7 @@
         <tr><td>Tap target</td><td><b>52px</b> rows with a static right chevron (›) → navigate to that group's accordion on the Topics screen.</td></tr>
         <tr><td>No inline accordion</td><td>A previously-built per-category expand was removed: it duplicated the alignment card's worth-a-conversation access (scattering it across groups) and turned Progress into a second Topics screen.</td></tr>
         <tr><td>Titles</td><td>Wrap, never truncate. Untouched groups (0 done / 0 underway) dimmed.</td></tr>
-        <tr><td>Real content</td><td><b>7 categories</b>. <b>4 stages</b>: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum.</td></tr>
+        <tr><td>Real content</td><td><b>7 categories</b>. <b>4 stages</b>, pre-baby: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum. <b>Baby-here label set:</b> Foundation Work · Early Topics · Mid-Stage Topics · Later Topics. Stage labels vary by life-stage segment: baby-here users see the second set. Same groups, same order — labels only.</td></tr>
       </table>
     </div>
 
@@ -346,7 +346,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>Tapping the "Worth a conversation" row expands the revisit list; each item is a 44px tap target that navigates to that topic. The peek shows up to ~4 rows; "Show all {N}" expands the rest inline (no off-screen navigation), and "Show fewer" collapses back.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Breakdown rows navigate to that group's accordion on Topics. No inline accordion on Progress — Progress is reflection, Topics is exploration.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Milestone celebration animation triggers on either a full category at 100% OR a full stage at 100%. Same animation, two triggers.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim. Stage names: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim and don't vary by segment. <strong>Stage labels are segment-dependent</strong> — pre-baby users see Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum; baby-here users see Foundation Work · Early Topics · Mid-Stage Topics · Later Topics. Same groups, same order, same counts — labels only.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Grouping toggle state persists per-user, per-screen — independent of the Topics screen's toggle.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>The demo state-switcher above the phone is documentation-only — it does not appear in the shipped app.</span></div>
       </div>
@@ -360,7 +360,32 @@
   const root = document.querySelector('body.page-22 .screen-root');
   if(!root) return;
 
+  // ── Life-stage segment + stage labels ──
+  // In the real app, lifeStage derives from the Screen 08 entry data
+  // (TTC / pregnant → 'pre-baby'; baby arrived or due date passed → 'baby-here').
+  // Here it's a single editable flag — flip to preview the baby-here label set.
+  // STAGE_LABELS is duplicated on Screen 14 (no shared JS module yet);
+  // consolidate when the shared layer exists.
+  const lifeStage = 'pre-baby';   // 'pre-baby' | 'baby-here'
+  const STAGE_LABELS = {
+    'pre-baby': {
+      before: 'Before Pregnancy',
+      first:  'First Trimester',
+      second: 'Second Trimester',
+      third:  'Third Trimester & Early Postpartum'
+    },
+    'baby-here': {
+      before: 'Foundation Work',
+      first:  'Early Topics',
+      second: 'Mid-Stage Topics',
+      third:  'Later Topics'
+    }
+  };
+
   // ── Breakdown data ──
+  // Stage rows are keyed; display name is resolved from STAGE_LABELS at
+  // render time so the same data drives both label sets. Category rows
+  // keep `name` — those don't vary by segment.
   const breakdown = {
     category: [
       {name:"The Basics",                       total:7, done:4, prog:1},
@@ -372,10 +397,10 @@
       {name:"Us",                               total:4, done:0, prog:0}
     ],
     stage: [
-      {name:"Before Pregnancy",                       total:8,  done:3, prog:1},
-      {name:"First Trimester",                        total:12, done:4, prog:2},
-      {name:"Second Trimester",                       total:13, done:2, prog:1},
-      {name:"Third Trimester & Early Postpartum",     total:12, done:1, prog:1}
+      {key:"before", total:8,  done:3, prog:1},
+      {key:"first",  total:12, done:4, prog:2},
+      {key:"second", total:13, done:2, prog:1},
+      {key:"third",  total:12, done:1, prog:1}
     ]
   };
 
@@ -426,12 +451,13 @@
   function renderBreakdown(mode, plan, isInBetween){
     const rows = breakdown[mode];
     return rows.map(g => {
+      const name = g.key ? STAGE_LABELS[lifeStage][g.key] : g.name;
       const donePct = (g.done / g.total) * 100;
       const progPct = (g.prog / g.total) * 100;
       const untouched = (g.done === 0 && g.prog === 0) ? ' untouched' : '';
       return `<div class="brow${untouched}" role="button" tabindex="0">
         <div class="brow-main">
-          <div class="brow-top"><span class="brow-name">${g.name}</span><span class="brow-count">${g.done} of ${g.total}</span></div>
+          <div class="brow-top"><span class="brow-name">${name}</span><span class="brow-count">${g.done} of ${g.total}</span></div>
           <div class="brow-bar">
             <i class="done" style="width:${donePct}%"></i>
             <i class="prog" style="width:${progPct}%"></i>

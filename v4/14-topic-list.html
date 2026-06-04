@@ -411,7 +411,7 @@
 
             <!-- Before Pregnancy -->
             <div class="cat-group collapsed">
-              <div class="cat-header"><span class="cat-name">Before Pregnancy</span><span class="cat-chevron">›</span></div>
+              <div class="cat-header"><span class="cat-name" data-stage-key="before">Before Pregnancy</span><span class="cat-chevron">›</span></div>
               <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
                 <div class="topic-row"><div class="topic-name">Where will we raise our family?</div></div>
                 <div class="topic-row"><div class="topic-name">What aspects of our upbringing will we replicate, and what will we avoid?</div></div>
@@ -431,7 +431,7 @@
 
             <!-- First Trimester — expanded, peek -->
             <div class="cat-group">
-              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name">First Trimester</span><span class="cat-chevron">›</span></div>
+              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name" data-stage-key="first">First Trimester</span><span class="cat-chevron">›</span></div>
               <div class="cat-body">
                 <div class="cat-body-inner">
                   <div class="phase-scroller">
@@ -463,7 +463,7 @@
 
             <!-- Second Trimester -->
             <div class="cat-group collapsed">
-              <div class="cat-header"><span class="cat-dot your-turn"></span><span class="cat-name">Second Trimester</span><span class="cat-chevron">›</span></div>
+              <div class="cat-header"><span class="cat-dot your-turn"></span><span class="cat-name" data-stage-key="second">Second Trimester</span><span class="cat-chevron">›</span></div>
               <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
                 <div class="topic-row"><div class="topic-name">What items do we need to get for the baby?</div></div>
                 <div class="topic-row"><div class="topic-name">Where do we want to give birth?</div></div>
@@ -481,7 +481,7 @@
 
             <!-- Third Trimester & Early Postpartum -->
             <div class="cat-group collapsed">
-              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name">Third Trimester &amp; Early Postpartum</span><span class="cat-chevron">›</span></div>
+              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name" data-stage-key="third">Third Trimester &amp; Early Postpartum</span><span class="cat-chevron">›</span></div>
               <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
                 <div class="topic-row reveal-row"><div class="topic-name">What is our postpartum plan?</div><span class="pill pill-reveal">Ready to reveal</span></div>
                 <div class="topic-row"><div class="topic-name">How will we handle lack of sleep, hormones, and/or postpartum depression?</div></div>
@@ -735,7 +735,7 @@
     <div class="spec-card">
       <div class="spec-card-title">Stage groupings (Stage view)</div>
       <table class="spec-table">
-        <tr><td>Stages</td><td>Four real stages: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum</td></tr>
+        <tr><td>Stages</td><td>Four real stages, pre-baby labels: Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum. <b>Baby-here label set:</b> Foundation Work · Early Topics · Mid-Stage Topics · Later Topics. Stage labels vary by life-stage segment: baby-here users see the second set. Same groups, same order — labels only.</td></tr>
         <tr><td>Within-stage order</td><td>Topics in the order they appear in the book's alt-TOC</td></tr>
         <tr><td>Visual</td><td>Same group-header + peek/single-list pattern as categories</td></tr>
       </table>
@@ -787,7 +787,7 @@
         <div class="note-item"><div class="note-bullet"></div><span>Partner's-turn pill label uses the partner's first name (e.g., "Sam's turn"). Falls back to "Partner's turn" if unlinked or the name is too long — never truncate a name.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Manage topics" link always visible top right — never scrolls away.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>Subtitle count updates live ({plan} · {revealed}) as topics move through reveal. Templated off the data layer — same <code>plan</code> source as Progress (45 in this example, not the full library of 51).</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Category and stage names in Title Case verbatim — same as throughout the app.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Category names in Title Case verbatim and don't vary by segment — same as throughout the app. <strong>Stage labels are segment-dependent</strong>: pre-baby users see Before Pregnancy · First Trimester · Second Trimester · Third Trimester &amp; Early Postpartum; baby-here users see Foundation Work · Early Topics · Mid-Stage Topics · Later Topics. Same groups, same order, same counts — labels only.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span>"Needs you" lens flattens the list to actionable topics only (Ready to reveal → Your turn). Chip is absent when there's nothing to act on; while on, the grouping toggle hides and the chip shows ✕ to exit. Worth a conversation deliberately stays out of this lens — that belongs on Progress.</span></div>
         <div class="note-item"><div class="note-bullet"></div><span><strong>Row destinations by state.</strong> Pre-reveal rows (Not started / Your turn / Partner's turn) → Screen 16 Topic Intro. <strong>Ready to reveal</strong> → Screen 19 (Preparing) → 20, so every ready-to-reveal entry passes through the same ceremonial wind-up before the reveal lands. <strong>Revealed</strong> rows → Screen 20 in Revisit mode (the completed view that absorbed the former Screen 23). Progress's "Worth a conversation" revisit items also land on 20-Revisit — a revealed topic has one destination regardless of entry point.</span></div>
       </div>
@@ -811,6 +811,33 @@
   var root = document.querySelector('.screen-root') || document;
   var sa = root.querySelector('.scroll-area');
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Life-stage segment + stage labels ──
+  // In the real app, lifeStage derives from the Screen 08 entry data
+  // (TTC / pregnant → 'pre-baby'; baby arrived or due date passed → 'baby-here').
+  // Here it's a single editable flag — flip to preview the baby-here label set.
+  // STAGE_LABELS is duplicated on Screen 12 (no shared JS module yet);
+  // consolidate when the shared layer exists.
+  var lifeStage = 'pre-baby';   // 'pre-baby' | 'baby-here'
+  var STAGE_LABELS = {
+    'pre-baby': {
+      before: 'Before Pregnancy',
+      first:  'First Trimester',
+      second: 'Second Trimester',
+      third:  'Third Trimester & Early Postpartum'
+    },
+    'baby-here': {
+      before: 'Foundation Work',
+      first:  'Early Topics',
+      second: 'Mid-Stage Topics',
+      third:  'Later Topics'
+    }
+  };
+  // Relabel the four stage headers from the map. The HTML carries the
+  // pre-baby labels as a default so the mock still reads if JS fails.
+  root.querySelectorAll('#view-stage .cat-name[data-stage-key]').forEach(function (el) {
+    el.textContent = STAGE_LABELS[lifeStage][el.dataset.stageKey];
+  });
 
   // Data layer (mock) — Progress/Home/onboarding template off the filtered plan total.
   // Keep this matched to Screen 12's `plan` until a real data source is wired up.
