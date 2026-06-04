@@ -251,7 +251,7 @@
       <div class="info-box"><strong>Copy ladder — the note line</strong><br>
         Nothing revealed → <em>"Once you've each answered a topic, you'll see how your answers compare."</em><br>
         Worth = 0 → <em>"You're landing in the same place on just about everything."</em><br>
-        All orange → <em>"Early days. These are the conversations to start with."</em><br>
+        All orange → <em>"These are the conversations worth having."</em><br>
         Worth ≥ 50% → <em>"Lots to talk through (which is the whole point, right?)."</em><br>
         Worth ≥ 20% → <em>"A good mix! Plenty settled, a few worth coming back to."</em><br>
         Otherwise → <em>"Mostly settled, with a few worth a closer look."</em>
@@ -417,7 +417,7 @@
     const rev = F + M + W;
     if(rev === 0)        return "Once you've each answered a topic, you'll see how your answers compare.";
     if(W === 0)          return "You're landing in the same place on just about everything.";
-    if(F + M === 0)      return "Early days. These are the conversations to start with.";
+    if(F + M === 0)      return "These are the conversations worth having.";
     if(W / rev >= 0.5)   return "Lots to talk through (which is the whole point, right?).";
     if(W / rev >= 0.2)   return "A good mix! Plenty settled, a few worth coming back to.";
     return "Mostly settled, with a few worth a closer look.";
