@@ -852,6 +852,33 @@
     </div>
 
     <div class="spec-card">
+      <div class="spec-card-title">Entitlement row — future states (post-launch, not in current mock)</div>
+      <div class="info-box" style="margin-bottom:14px;">Forward-looking note for when the planned <strong>$40/yr subscription</strong> ships alongside the founding-cohort lifetime entitlement. <strong>No change to the current mockup</strong> — at launch every paid user is a founding member, so the row only ever shows the lifetime state today. Documents the model so the row flexes without a redesign later.</div>
+      <div class="info-box" style="margin-bottom:14px;"><strong>Why the row adapts by entitlement, not just value.</strong> The <strong>tap target differs by entitlement</strong>, so the <em>label</em> changes too — not only the value:
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.5;">
+          <li><strong>Lifetime</strong> users tap to <em>restore purchase / see receipt</em> (proof of a one-time buy).</li>
+          <li><strong>Subscribers</strong> tap to <em>manage / cancel</em>, which on iOS must route to the system Subscription sheet (App Store requirement). Labeling the row "Subscription ›" gives label-to-destination continuity with the platform language they see next.</li>
+        </ul>
+        <p style="margin:10px 0 0;font-size:13px;line-height:1.5;">Same entitlement-driven pattern used for the "Signed in with" row.</p>
+      </div>
+      <table class="spec-table">
+        <tr><th>Entitlement</th><th>Label</th><th>Value</th><th>Tap opens</th></tr>
+        <tr><td>Lifetime (founding member)</td><td>Lifetime access</td><td>Founding member <em>(purple chip)</em></td><td>Restore / receipt detail (current Founding member sub-screen)</td></tr>
+        <tr><td>Annual subscriber, active</td><td>Subscription</td><td>Renews {date}</td><td>Manage subscription (iOS system sheet)</td></tr>
+        <tr><td>Subscriber, cancelled in grace</td><td>Subscription</td><td>Ends {date}</td><td>Manage subscription (iOS system sheet)</td></tr>
+      </table>
+      <div class="info-box" style="margin-top:14px;"><strong>Decisions / notes</strong>
+        <ul style="margin:8px 0 0 18px;padding:0;font-size:13px;line-height:1.5;">
+          <li><strong>Keep "Lifetime access" for the founding cohort.</strong> "Lifetime" is the deliberate differentiator vs. the planned $40/yr subscription — it quietly reminds founding members they got the good deal. Don't genericize to "Membership."</li>
+          <li><strong>Use "Subscription," not "Membership," for subscribers.</strong> "Membership" is vague and reads as recurring even where it shouldn't; "Subscription" matches the iOS "Manage Subscription" language the tap routes into.</li>
+          <li><strong>No "expired" state in this row.</strong> A lapsed subscriber loses access and lands on the <strong>paywall</strong>, not in Settings — unpaid users never reach the Home Base tabs. The only live subscriber states here are active-renewing and cancelled-in-grace.</li>
+          <li><strong>Founding = lifetime = a closed cohort.</strong> After the founding window, new paid users are subscribers. If lifetime is ever re-offered without founding status, add a plain "Lifetime access / Lifetime" (no chip) variant.</li>
+          <li>Value is data-driven off the entitlement record; <code>{date}</code> templates off the renewal/expiry date.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="spec-card">
       <div class="spec-card-title">Restore Purchase (now inside Founding member sub-screen)</div>
       <table class="spec-table">
         <tr><td>Position</td><td>Founding member detail screen · standalone white-card row directly under the thank-you note · <strong>relocated from Account section</strong> · no surrounding "Manage" section header (single-row group)</td></tr>
