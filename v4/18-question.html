@@ -28,13 +28,15 @@ body.page-15 .screen-root .q-step-label {
   text-align: center; flex: 1;
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
 }
-/* "Optional" pill rendered inline next to the heading on the note step */
-body.page-15 .screen-root .optional-inline {
-  display: inline-block; padding: 2px 8px; border-radius: 100px;
-  border: 1px solid rgba(26,26,26,0.15);
-  font-size: 11px; font-family: 'DM Sans', sans-serif;
-  color: rgba(26,26,26,0.55); line-height: 1.4;
-  vertical-align: middle; margin-left: 8px;
+/* Optional indicator on the note step — quiet eyebrow above the heading,
+   left-aligned on the content axis. (Replaces the bordered inline pill,
+   which orphaned after the wrapped heading and added chrome.) */
+body.page-15 .screen-root .note-optional {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  color: rgba(26,26,26,0.45);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
 }
 
 /* Question sub-text (below question text). Matches .partner-note's
@@ -284,6 +286,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
 
         <!-- Question / Note card -->
         <div class="question-card">
+          <div id="note-optional" class="note-optional" style="display:none;">Optional</div>
           <div id="q-text" class="question-text">Who would you trust to babysit regularly?</div>
           <div id="q-subtext" class="question-subtext" style="display:none;"></div>
           <div id="partner-note" class="partner-note" data-partner-template="{Name} won't see your answer until they've finished too.">Jordan won't see your answer until they've finished too.</div>
@@ -703,12 +706,16 @@ function showType(key) {
   /* Question / note text */
   const textEl = document.getElementById('q-text');
   if (isNote) {
-    textEl.innerHTML  = `Anything else <span data-partner-template="{name}">${partnerName()}</span> should know?<span class="optional-inline">Optional</span>`;
+    textEl.innerHTML  = `Anything else <span data-partner-template="{name}">${partnerName()}</span> should know?`;
     textEl.className  = 'note-heading';
   } else {
     textEl.textContent = q.text;
     textEl.className   = 'question-text';
   }
+
+  /* "Optional" eyebrow — note step only */
+  const optEl = document.getElementById('note-optional');
+  if (optEl) optEl.style.display = isNote ? 'block' : 'none';
 
   /* Sub-text under heading */
   const subEl = document.getElementById('q-subtext');
