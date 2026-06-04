@@ -37,10 +37,12 @@ body.page-15 .screen-root .optional-inline {
   vertical-align: middle; margin-left: 8px;
 }
 
-/* Question sub-text (below question text) */
+/* Question sub-text (below question text). Matches .partner-note's
+   margin-bottom so the gap before answer-opts is consistent whether the
+   privacy line is shown (Q1) or only the subtext is (later questions). */
 body.page-15 .screen-root .question-subtext {
   font-size: 14px; color: rgba(26,26,26,0.55);
-  line-height: 1.5; margin-top: 6px; margin-bottom: 0;
+  line-height: 1.5; margin-top: 6px; margin-bottom: 18px;
 }
 
 /* Slider — shared with onboarding quiz (see 02-onboarding-quiz.html).
