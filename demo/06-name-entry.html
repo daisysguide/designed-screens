@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Name Entry · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-28">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item active" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Name Entry</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="name-heading">What should we call you?</div>
+        <div class="name-subtext">Just your first name. We'll use it throughout the app.</div>
+
+        <div class="name-field placeholder" id="name-field">Your first name</div>
+
+        <div class="spacer"></div>
+
+        <button class="name-cta disabled" id="name-cta">Let's go</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 06 · Auth</div>
+    <div class="page-title">Name Entry</div>
+    <div class="page-desc">Phone/email sign-up only. Apple and Google sign-in skip this screen — name comes from auth provider.</div>
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-empty"   onclick="showState('empty')">Empty</button>
+      <button class="state-tab"        id="tab-focused" onclick="showState('focused')">Focused</button>
+      <button class="state-tab"        id="tab-filled"  onclick="showState('filled')">Filled</button>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+function showState(state) {
+  ['empty','focused','filled'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const field = document.getElementById('name-field');
+  const cta   = document.getElementById('name-cta');
+
+  field.classList.remove('placeholder','focused');
+
+  if (state === 'empty') {
+    field.textContent = 'Your first name';
+    field.classList.add('placeholder');
+    cta.classList.add('disabled');
+  } else if (state === 'focused') {
+    field.textContent = 'Your first name';
+    field.classList.add('placeholder', 'focused');
+    cta.classList.add('disabled');
+  } else {
+    field.textContent = 'Alex';
+    cta.classList.remove('disabled');
+  }
+}
+
+showState('empty');
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

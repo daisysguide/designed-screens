@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Home · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Section-divider rhythm — global rule is margin: 4px 0 16px, which
+     glues the line to the section above and floats it from the next
+     label. Rebalance to more-above-than-below so the line reads as
+     introducing the section below it (22 above / 16 below). Scoped to
+     page-11; promote to styles.css in the eventual sweep. */
+  body.page-11 .screen-root .section-divider { margin: 22px 0 16px; }
+
+  /* Cyan token trio — defined globally at styles.css line 3665 but
+     scoped under body.page-12, so Home can't see them. Pill overrides
+     below reference these tokens; without this local definition they
+     resolve to nothing and the pills render with no fill. Mirrors the
+     page-12 values exactly. Remove if/when tokens are promoted to :root. */
+  body.page-11 { --cyan-soft: #9decfa; --cyan-strong: #7fe3f7; --cyan-text: #0b5263; }
+
+  /* Wry Observation — gated supplemental card at the bottom of Home.
+     Dashed supplemental treatment matches the system convention; never
+     mentions AI, never scores divergence. Subordinate to the Up-next
+     card; only renders in populated + gated states. */
+  body.page-11 .screen-root .wry-card {
+    margin-top: 22px;
+    padding: 14px 16px;
+    border: 1.5px dashed rgba(95,69,242,0.3);   /* keep — AI-content convention */
+    border-radius: 12px;
+    background: rgba(95,69,242,0.03);           /* faint tint — gentle presence inside the dashed outline */
+  }
+  body.page-11 .screen-root .wry-eyebrow {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    font-style: italic;          /* keep — the soft murmur */
+    letter-spacing: normal;
+    text-transform: none;
+    color: rgba(26,26,26,0.5);
+    margin: 0 0 6px;
+  }
+  body.page-11 .screen-root .wry-body {
+    font-size: 13.5px;
+    line-height: 1.5;
+    font-style: normal;          /* observation stays regular — never italic */
+    color: rgba(26,26,26,0.62);
+    margin: 0;
+  }
+
+  /* Up-next card: drop the legacy purple left stripe from .topic-card.
+     The stripe was a "Your turn" signal back when the pill was purple;
+     now the pills are cyan, the stripe clashes with them and signals
+     nothing on the pill-less Available variant. Pill carries the state.
+     Scoped to the up-next slot so other .topic-card uses are untouched.
+     (Global rule lives in styles.css ~line 3350 and stays for the
+     eventual styles.css sweep.) */
+  body.page-11 .screen-root #up-next-slot .topic-card { border-left: none; }
+
+  /* Up-next tier pills — mirror Topics' cyan palette so Home and
+     Topics speak the same status language. Override the legacy purple
+     pill-your-turn rule in styles.css via the cascade (source order). */
+  body.page-11 .screen-root .pill-your-turn {
+    background: var(--cyan-soft);
+    border: 1.5px solid var(--cyan-strong);
+    color: var(--cyan-text);
+  }
+  body.page-11 .screen-root .pill-reveal {
+    background: var(--cyan-strong);
+    border: 1.5px solid var(--cyan-strong);
+    color: var(--cyan-text);
+    box-shadow: 0 0 8px 1px rgba(95,69,242,0.34);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    body.page-11 .screen-root .pill-reveal {
+      animation: page11RevealCharge 2.4s ease-in-out infinite;
+    }
+  }
+  @keyframes page11RevealCharge {
+    0%, 100% { transform: scale(1);    box-shadow: 0 0 6px 1px  rgba(95,69,242,0.30); }
+    50%      { transform: scale(1.04); box-shadow: 0 0 12px 2px rgba(95,69,242,0.55); }
+  }
+
+  /* Doc-only tier preview row — secondary affordance under the main
+     state-tab row, modeled on the same state-tab styling. Hidden when
+     the active layout is empty; tier preview only applies to populated. */
+  body.page-11 .screen-root .tier-tab-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 12px;
+  }
+  body.page-11 .screen-root .tier-tab-row[data-hidden="true"] { display: none; }
+  body.page-11 .screen-root .tier-tab-row .tier-tab-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    align-self: center;
+    margin-right: 4px;
+  }
+
+  /* Onboarding nudge → white-card treatment (match Up-next; reduce purple).
+     Overrides the brand-filled rules in styles.css (.nudge-card et al).
+     Card flips to white-on-cream; text to ink; CTA to purple-on-white
+     (standard pill, no longer a button-in-brand-card exception).
+     Shadow matches the Up-next card (--shadow-md) so the two read as
+     the same card family. Radius, padding, margin, and button geometry
+     are inherited unchanged. */
+  body.page-11 .screen-root .nudge-card {
+    background: var(--white);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+  }
+  body.page-11 .screen-root .nudge-eyebrow { color: var(--text-tertiary); }
+  body.page-11 .screen-root .nudge-heading { color: var(--text-primary); }
+  body.page-11 .screen-root .nudge-body    { color: var(--text-secondary); }
+  body.page-11 .screen-root .btn-nudge-primary {
+    background: var(--purple-500);
+    color: var(--white);
+  }
+  body.page-11 .screen-root .btn-nudge-primary:hover { background: var(--purple-600); }
+</style>
+</head>
+<body class="page-11">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item active" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Home</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="demo-layout">
+
+  <!-- COLUMN 1 — phone preview only -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="scroll-area" id="scroll-area">
+
+          <!-- Greeting (avatar removed; row reclaims full width) -->
+          <div class="greeting-row">
+            <div class="greeting-label">Good morning</div>
+            <div class="greeting-name">Hey Alex 👋</div>
+          </div>
+
+          <!-- Main content slot. Up-next card OR onboarding nudge.
+               Behavior:
+                 layout=empty     → onboarding nudge (white card)
+                 layout=populated → Up-next topic card + Start button -->
+          <div id="up-next-slot"></div>
+
+          <div class="section-divider"></div>
+
+          <!-- Partner section. Three states. Avatar-less in all three.
+               Whole row is the tap target → Settings (partner row). -->
+          <div class="section-label">Partner</div>
+          <div id="partner-section"></div>
+
+          <div class="section-divider"></div>
+
+          <!-- Progress: single category line. No tiles, no score. -->
+          <div class="section-label">Progress</div>
+          <div class="progress-category-row">
+            <div class="progress-category-label" id="progress-line">0 of 7 categories started</div>
+            <a class="see-progress" href="12-progress.html">See full progress →</a>
+          </div>
+
+          <!-- Wry Observation (gated easter egg). Renders only in
+               populated states; hidden in empty / zero-started. -->
+          <div id="wry-slot"></div>
+
+        </div>
+
+        <!-- Bottom nav -->
+        <div class="bottom-nav">
+          <a class="nav-tab active" href="11-home.html" aria-current="page">
+            <div class="nav-tab-icon"><i class="ph-fill ph-house"></i></div>
+            <div class="nav-tab-label">Home</div>
+          </a>
+          <a class="nav-tab" href="14-topic-list.html">
+            <div class="nav-tab-icon"><i class="ph ph-cards-three"></i></div>
+            <div class="nav-tab-label">Topics</div>
+          </a>
+          <a class="nav-tab" href="12-progress.html">
+            <div class="nav-tab-icon"><i class="ph ph-list-checks"></i></div>
+            <div class="nav-tab-label">Progress</div>
+          </a>
+          <a class="nav-tab" href="13-settings.html">
+            <div class="nav-tab-icon"><i class="ph ph-gear-six"></i></div>
+            <div class="nav-tab-label">Settings</div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 11 · Home Base</div>
+    <div class="page-title">Home</div>
+    <div class="page-desc">The canonical Home, carrying both the zero-started (empty) and populated states. Greeting reclaims full width; alignment-score tile is removed (alignment is a distribution on Progress, not a score); Partner section is avatar-less; Progress is a single category line. The empty state replaces the Up-next topic card with a white-card onboarding nudge — the topic flow's single front door — and folds in what used to live on Screen 25.</div>
+
+    <div class="state-tab-row" role="tablist" aria-label="Home state preview">
+      <button class="state-tab" data-layout="populated" data-partner="linked" type="button">Populated · linked</button>
+      <button class="state-tab active" data-layout="empty" data-partner="linked" type="button">Empty · linked</button>
+      <button class="state-tab" data-layout="empty" data-partner="pending" type="button">Empty · pending</button>
+      <button class="state-tab" data-layout="empty" data-partner="none" type="button">Empty · no partner</button>
+      <button class="state-tab" data-layout="populated" data-partner="pending" type="button">Populated · pending</button>
+      <button class="state-tab" data-layout="populated" data-partner="none" type="button">Populated · no partner</button>
+    </div>
+    <div class="tier-tab-row" role="tablist" aria-label="Up-next tier preview (populated only)">
+      <span class="tier-tab-label">Up-next tier</span>
+      <button class="state-tab" data-tier="reveal" type="button">Ready to reveal</button>
+      <button class="state-tab active" data-tier="your-turn" type="button">Your turn</button>
+      <button class="state-tab" data-tier="available" type="button">Available</button>
+    </div>
+  </div>
+
+</div><!-- /.demo-layout -->
+    </div><!-- /.screen-root -->
+  </div><!-- /.frame-wrap -->
+</div><!-- /.main -->
+<script>
+/* Two axes drive the demo:
+     layout  ∈ {empty, populated}
+     partner ∈ {linked, pending, none}
+   In the empty + no-partner combo, the partner "Invite your partner" nudge
+   reads as secondary under the primary onboarding nudge (hierarchy: onboarding
+   first). All other combos render Partner as its normal section row. */
+
+const SAMPLE_TOPIC = {
+  category: 'THE VILLAGE',
+  title:    'Who will we trust to watch the baby?',
+  desc:     'You might be surprised how differently you two think about this one.',
+};
+
+/* Up-next variants — the three populated tiers the selection rule can
+   resolve to. Available has no pill (the absence is the signal, matching
+   Topics' "not started = no pill"). The card structure is identical
+   across tiers; only the pill + button label + route differ. */
+const UP_NEXT_VARIANTS = {
+  'reveal':    { pill: '<div class="status-pill pill-reveal">Ready to reveal</div>', label: 'See where you landed →', href: '19-waiting-for-partner.html' },
+  'your-turn': { pill: '<div class="status-pill pill-your-turn">Your turn</div>',    label: 'Answer now →',           href: '16-topic-intro.html' },
+  'available': { pill: '',                                                           label: 'Start this topic →',     href: '16-topic-intro.html' },
+};
+
+function renderUpNext(layout, partner, tier) {
+  const slot = document.getElementById('up-next-slot');
+  if (layout === 'empty') {
+    slot.innerHTML = `
+      <div class="nudge-card">
+        <div class="nudge-eyebrow">Get started</div>
+        <div class="nudge-heading">Pick your first topic.</div>
+        <div class="nudge-body">Start with whatever's on your mind to see where you two land.</div>
+        <a class="btn-nudge-primary" href="14-topic-list.html">Browse topics →</a>
+      </div>`;
+  } else {
+    const v = UP_NEXT_VARIANTS[tier] || UP_NEXT_VARIANTS['available'];
+    slot.innerHTML = `
+      <div class="section-label" style="margin-top:18px;">Up next</div>
+      <div class="topic-card">
+        <div class="topic-category">${SAMPLE_TOPIC.category}</div>
+        <div class="topic-title">${SAMPLE_TOPIC.title}</div>
+        <div class="topic-desc">${SAMPLE_TOPIC.desc}</div>
+        ${v.pill}
+      </div>
+      <a class="btn-start" href="${v.href}">${v.label}</a>`;
+  }
+}
+
+function renderPartner(partner, layout) {
+  const section = document.getElementById('partner-section');
+  // In Empty + No partner, soften the nudge so onboarding-first reads correctly.
+  const secondary = (layout === 'empty' && partner === 'none');
+
+  if (partner === 'linked') {
+    section.innerHTML = `
+      <a class="partner-row" href="13-settings.html">
+        <span class="partner-dot dot-linked" aria-hidden="true"></span>
+        <span class="partner-text">
+          <span class="partner-name">Jordan</span>
+          <span class="partner-status">Linked ✓</span>
+        </span>
+      </a>`;
+  } else if (partner === 'pending') {
+    section.innerHTML = `
+      <a class="partner-row partner-row-stack" href="13-settings.html">
+        <span class="partner-row-top">
+          <span class="partner-dot dot-pending" aria-hidden="true"></span>
+          <span class="partner-text">
+            <span class="partner-name">Your partner</span>
+            <span class="partner-status">Invite sent · hasn't joined yet</span>
+          </span>
+          <span class="partner-pending-pill">⏳ Invite pending</span>
+        </span>
+        <span class="partner-inline-action">↗ Re-share invite link</span>
+      </a>`;
+  } else {
+    section.innerHTML = `
+      <a class="partner-row partner-row-stack ${secondary ? 'partner-row-secondary' : ''}" href="13-settings.html">
+        <span class="partner-text">
+          <span class="partner-name">It's more fun with two.</span>
+        </span>
+        <span class="partner-inline-action">Invite your partner</span>
+      </a>`;
+  }
+}
+
+function renderProgress(layout) {
+  const el = document.getElementById('progress-line');
+  el.textContent = (layout === 'empty')
+    ? '0 of 7 categories started'
+    : '3 of 7 categories started';
+}
+
+/* Wry Observation: gated easter egg, populated states only.
+   Example copy is templated off real couple data (not generated boilerplate);
+   the doc page shows the sample copy. Hidden in empty / zero-started. */
+const WRY_SAMPLE = "Fastest you've ever agreed: baby names. Slowest: the budget.";
+function renderWry(layout) {
+  const slot = document.getElementById('wry-slot');
+  if (layout === 'empty') {
+    slot.innerHTML = '';
+    return;
+  }
+  slot.innerHTML = `
+    <div class="wry-card" role="note" aria-label="A little thing we noticed">
+      <span class="wry-eyebrow">A little thing we noticed</span>
+      <div class="wry-body">${WRY_SAMPLE}</div>
+    </div>`;
+}
+
+// Active tier persists across layout/partner changes within the session.
+let activeTier = 'your-turn';
+
+function showState(layout, partner, tier) {
+  if (tier) activeTier = tier;
+
+  // Main layout × partner tabs.
+  document.querySelectorAll('.state-tab-row .state-tab').forEach(btn => {
+    const match = btn.dataset.layout === layout && btn.dataset.partner === partner;
+    btn.classList.toggle('active', match);
+  });
+  // Tier tabs (doc-only, populated-only).
+  document.querySelectorAll('.tier-tab-row .state-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tier === activeTier);
+  });
+  // Tier row only meaningful in populated layout.
+  document.querySelector('.tier-tab-row').setAttribute('data-hidden', layout === 'empty' ? 'true' : 'false');
+
+  renderUpNext(layout, partner, activeTier);
+  renderPartner(partner, layout);
+  renderProgress(layout);
+  renderWry(layout);
+}
+
+document.querySelectorAll('.state-tab-row .state-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    showState(btn.dataset.layout, btn.dataset.partner, activeTier);
+  });
+});
+
+// Tier preview taps: force layout=populated (tier preview is meaningless
+// in empty), preserve current partner sub-state, swap the tier.
+document.querySelectorAll('.tier-tab-row .state-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const currentMainActive = document.querySelector('.state-tab-row .state-tab.active');
+    const partner = currentMainActive ? currentMainActive.dataset.partner : 'linked';
+    // If the active main tab is on empty, jump to the matching Populated · {partner} tab.
+    showState('populated', partner, btn.dataset.tier);
+  });
+});
+
+// Boot: match the active state-tab (Empty · linked by default).
+{
+  const active = document.querySelector('.state-tab-row .state-tab.active');
+  showState(active.dataset.layout, active.dataset.partner, activeTier);
+}
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

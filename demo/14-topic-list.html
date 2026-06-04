@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Topic List · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Dock = one white pill holding all three controls */
+  body.page-12 .screen-root .phone-screen { container-type: inline-size; }
+  body.page-12 .screen-root .dock {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    bottom: 94px; z-index: 15;
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(26,26,26,0.10);
+    border-radius: var(--radius-full);
+    padding: 2px; box-shadow: 0 6px 22px rgba(26,26,26,0.16);
+    max-width: calc(100% - 24px);
+    /* Dock chrome (pill bg, border, shadow, padding) animates when the lens
+       toggles, in lockstep with the toggle-group collapse. ~200ms ease-out,
+       same family as the accordion easing. */
+    transition:
+      background-color 200ms cubic-bezier(.33, 0, .2, 1),
+      border-color     200ms cubic-bezier(.33, 0, .2, 1),
+      box-shadow       200ms cubic-bezier(.33, 0, .2, 1),
+      padding          200ms cubic-bezier(.33, 0, .2, 1);
+  }
+  /* Toggle is no longer its own pill — just holds its buttons inside the dock.
+     Becomes a positioning context for the sliding active-fill indicator. */
+  body.page-12 .screen-root .dock .group-toggle {
+    position: relative;
+    left: auto; transform: none; bottom: auto; z-index: auto;
+    background: none; border: none; box-shadow: none; padding: 0; backdrop-filter: none;
+    display: inline-flex;
+    /* Width/opacity/margin animate when the dock collapses into lens mode.
+       min-width:0 lets the flex container actually honor max-width:0
+       (otherwise the buttons' min-width keeps it open). */
+    overflow: hidden;
+    min-width: 0;
+    /* Generous explicit max-width so the transition has a real "from" value
+       to interpolate from when collapsing to 0 in lens mode. */
+    max-width: 200px;
+    transition:
+      max-width 200ms cubic-bezier(.33, 0, .2, 1),
+      opacity   200ms cubic-bezier(.33, 0, .2, 1),
+      margin    200ms cubic-bezier(.33, 0, .2, 1);
+  }
+  /* Sliding active-fill: one purple pill behind the two buttons.
+     Width matches the active button (snaps, doesn't tween — width changes
+     are masked by the slide). Position transitions via transform only.
+     Both values come from JS-measured CSS vars so the pill hugs the
+     actual button regardless of label length. */
+  body.page-12 .screen-root .dock .group-toggle::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: var(--fill-width, 0px);
+    transform: translateX(var(--fill-x, 0px));
+    background: var(--purple-500);
+    border-radius: var(--radius-full);
+    transition: transform 200ms cubic-bezier(.33, 0, .2, 1);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body.page-12 .screen-root .dock .group-toggle button {
+    min-height: 44px; min-width: 44px; padding: 0 14px; font-size: 12px;
+    position: relative; z-index: 1;
+  }
+  /* Active-state color now comes from the sliding fill underneath; kill
+     the per-button background so the swap reads as motion, not a paint. */
+  body.page-12 .screen-root .dock .group-toggle button.active {
+    background: none; color: #fff;
+  }
+  /* Divider between the grouping segments and the lens segment */
+  body.page-12 .screen-root .dock-sep {
+    width: 1px; height: 18px; background: rgba(26,26,26,0.12); margin: 0 3px; flex: none;
+    transition:
+      max-width 200ms cubic-bezier(.33, 0, .2, 1),
+      opacity   200ms cubic-bezier(.33, 0, .2, 1),
+      margin    200ms cubic-bezier(.33, 0, .2, 1);
+    max-width: 1px;
+  }
+  /* "Needs you" = cyan-tinted segment inside the white pill (off / available);
+     solid cyan when active so the on state still feels like a step up. */
+  body.page-12 .screen-root .needs-chip {
+    font-family: 'DM Sans', sans-serif;
+    display: inline-flex; align-items: center;
+    background: rgba(127,227,247,0.22); border: none; box-shadow: none; backdrop-filter: none;
+    color: var(--cyan-text); font-size: 12px; font-weight: 700;
+    min-height: 44px; min-width: 44px; padding: 0 14px; border-radius: var(--radius-full);
+    cursor: pointer; white-space: nowrap;
+  }
+  body.page-12 .screen-root .needs-chip[hidden] { display: none; }
+  body.page-12 .screen-root .needs-chip.active { background: var(--cyan-strong); color: var(--cyan-text); }
+  /* ✕ cross-fades in alongside the dock collapse. Reserved as inline-block
+     so it doesn't reflow the chip when it appears. */
+  body.page-12 .screen-root .needs-chip .needs-x {
+    display: inline-block; font-size: 13px; line-height: 1;
+    opacity: 0; max-width: 0; margin-left: 0; overflow: hidden;
+    transition:
+      opacity     200ms cubic-bezier(.33, 0, .2, 1),
+      max-width   200ms cubic-bezier(.33, 0, .2, 1),
+      margin-left 200ms cubic-bezier(.33, 0, .2, 1);
+  }
+  body.page-12 .screen-root .needs-chip.active .needs-x { opacity: 0.8; max-width: 1em; margin-left: 6px; }
+  /* Lens on: drop the white pill + grouping; active chip stands alone, compact + centered.
+     The grouping group + divider collapse to zero width (animatable) rather
+     than display:none-ing, so the dock width transitions smoothly. */
+  body.page-12 .screen-root .dock.lens-on { background: rgba(255,255,255,0); border-color: rgba(26,26,26,0); box-shadow: 0 0 0 rgba(26,26,26,0); backdrop-filter: none; padding: 0; }
+  body.page-12 .screen-root .dock.lens-on .group-toggle {
+    max-width: 0; opacity: 0; margin: 0;
+  }
+  body.page-12 .screen-root .dock.lens-on .dock-sep {
+    max-width: 0; opacity: 0; margin: 0;
+  }
+  body.page-12 .screen-root .dock.lens-on .needs-chip { border: 1.5px solid var(--cyan-strong); box-shadow: 0 6px 22px rgba(26,26,26,0.16); }
+
+  /* Reduced-motion: both the fill slide and the dock collapse snap. Matches
+     the page's existing convention (see styles.css for accordion/dot rules). */
+  @media (prefers-reduced-motion: reduce) {
+    body.page-12 .screen-root .dock,
+    body.page-12 .screen-root .dock .group-toggle,
+    body.page-12 .screen-root .dock .group-toggle::before,
+    body.page-12 .screen-root .dock-sep,
+    body.page-12 .screen-root .needs-chip .needs-x { transition: none; }
+  }
+  /* Narrow-container fallback */
+  @container (max-width: 300px) {
+    body.page-12 .screen-root .dock { flex-direction: column; gap: 4px; }
+    body.page-12 .screen-root .dock-sep { display: none; }
+  }
+
+  /* Demo state switcher (doc page only) — toggles between
+     "has actions" (default) and "all clear" (nothing actionable) states.
+     Doesn't ship in the app; lives inside .phone-wrap so it sits flush
+     with the phone's left edge in the 375px grid column. */
+  body.page-12 .screen-root .state-tabs {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;
+  }
+  body.page-12 .screen-root .state-tab {
+    height: 28px; padding: 0 12px; border-radius: var(--radius-full);
+    border: 1.5px solid var(--border-strong); background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600;
+    color: var(--text-primary); cursor: pointer;
+    display: inline-flex; align-items: center;
+  }
+  body.page-12 .screen-root .state-tab.active {
+    background: var(--purple-500); border-color: var(--purple-500); color: #fff;
+  }
+
+  /* "All clear" state — nothing pre-reveal needs the user's attention.
+     Strips every "your move" affordance: action pills, reveal-row treatment,
+     the Needs-you chip, and the category-header dots that flag actionable
+     groups. Revealed/alignment content stays (settled outcomes, not pending
+     actions). The peek eyebrows ("Not revealed yet · N" and "Revealed · N")
+     also stay — they label the two phases regardless of urgency. */
+  body.page-12 .screen-root.clear-state .pill-reveal,
+  body.page-12 .screen-root.clear-state .pill-your-turn,
+  body.page-12 .screen-root.clear-state .needs-chip,
+  body.page-12 .screen-root.clear-state .cat-dot { display: none; }
+  /* Reveal row reverts to a plain topic row — kill the gradient, the inset
+     glow, the shine sweep, and the bolder name weight. Keeps the row's tap
+     target / padding / divider exactly as plain rows. */
+  body.page-12 .screen-root.clear-state .reveal-row {
+    background: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+  }
+  body.page-12 .screen-root.clear-state .reveal-row::before,
+  body.page-12 .screen-root.clear-state .reveal-row::after { display: none !important; }
+  body.page-12 .screen-root.clear-state .reveal-row .topic-name { font-weight: 500; }
+  /* Dock keeps just the grouping toggle — drop the divider that separated
+     it from the (now-gone) Needs-you chip. */
+  body.page-12 .screen-root.clear-state .dock-sep { display: none; }
+
+  /* "Needs you" flattened view */
+  body.page-12 .screen-root #view-needs { display: none; padding: 0 12px; }
+  body.page-12 .screen-root #view-needs .needs-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-tertiary);
+    margin: 0 0 8px 4px;
+  }
+  body.page-12 .screen-root #view-needs .needs-section { margin-bottom: 18px; }
+  /* Lens rows live in contained white cards like the normal topic list,
+     pulled in from the edges (the padding above) so they don't run
+     full-width. Reveal rows stay flush inside the card and borrow its
+     rounded shape, exactly as they do everywhere else. */
+  /* The reveal rows fill the card edge-to-edge with gradient, so the white
+     card background isn't needed — and leaving it white makes Chrome bleed a
+     ~1px white seam at the rounded corners (its border-radius + overflow:hidden
+     antialiasing, invisible under plain white rows). An all-gradient card is
+     made transparent: no white to bleed. The rounded clip and shadow still
+     come from .topic-card. */
+  body.page-12 .screen-root .topic-card.reveal-card { background: transparent; }
+</style>
+</head>
+<body class="page-12">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item active" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Topic List</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- Header -->
+        <div class="screen-header">
+          <div class="screen-header-left">
+            <div class="screen-title">Your topics</div>
+            <div class="screen-subtitle"><span data-topics-total>—</span> topics · <span data-topics-revealed>—</span> revealed</div>
+          </div>
+          <div class="manage-link">Manage topics</div>
+        </div>
+
+        <!-- Scroll area -->
+        <div class="scroll-area">
+
+          <!-- ============ BY CATEGORY ============ -->
+          <div id="view-category">
+
+            <!-- The Basics — expanded, peek -->
+            <div class="cat-group">
+              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name">The Basics</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body">
+                <div class="cat-body-inner">
+                  <div class="phase-scroller">
+                    <div class="phase-page">
+                      <div class="phase-eyebrow">Not revealed yet · 4</div>
+                      <div class="topic-card">
+                        <div class="topic-row reveal-row"><div class="topic-name">How will we budget for a baby?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                        <div class="topic-row"><div class="topic-name">Where will we raise our family?</div><span class="pill pill-your-turn">Your turn</span></div>
+                        <div class="topic-row"><div class="topic-name">What items do we need to get for the baby?</div><span class="pill pill-partner">Sam's turn</span></div>
+                        <div class="topic-row"><div class="topic-name">What will baby's last name be?</div></div>
+                      </div>
+                    </div>
+                    <div class="phase-page">
+                      <div class="phase-eyebrow">Revealed · 3</div>
+                      <div class="topic-card">
+                        <div class="group-divider fully">Fully aligned<span class="gc">1</span></div>
+                        <div class="topic-row"><div class="topic-name">What will baby's first and middle name be?</div></div>
+                        <div class="group-divider mostly">Mostly aligned<span class="gc">1</span></div>
+                        <div class="topic-row"><div class="topic-name">Do we have the right health insurance?</div></div>
+                        <div class="group-divider worth">Worth a conversation<span class="gc">1</span></div>
+                        <div class="topic-row"><div class="topic-name">Do we have life insurance, and is it enough?</div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pregnancy & Birth -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-dot your-turn"></span><span class="cat-name">Pregnancy &amp; Birth</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">What is our birth plan?</div><span class="pill pill-your-turn">Your turn</span></div>
+                <div class="topic-row"><div class="topic-name">Do we want a doctor or a midwife?</div></div>
+                <div class="topic-row"><div class="topic-name">Where do we want to give birth?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want a birth doula?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will be in the delivery room?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we want health screenings, even if they reveal something hard?</div></div>
+                <div class="topic-row"><div class="topic-name">When do we want to find out the baby's sex?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we respond if there's birth trauma?</div></div>
+              </div></div></div></div>
+            </div>
+
+            <!-- The Village -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name">The Village</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row reveal-row"><div class="topic-name">When will we tell people that we're expecting?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                <div class="topic-row"><div class="topic-name">Will we share the baby's name and/or sex before it's born?</div></div>
+                <div class="topic-row"><div class="topic-name">What kind of baby shower do we want?</div></div>
+                <div class="topic-row"><div class="topic-name">When will people meet the baby?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will we trust to watch the baby or babysit?</div></div>
+                <div class="topic-row"><div class="topic-name">What will we do about childcare?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we approach spending time with extended family?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will be the legal guardian if something happens to us?</div></div>
+              </div></div></div></div>
+            </div>
+
+            <!-- Eat, Poop, Sleep, Repeat -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Eat, Poop, Sleep, Repeat</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">Breastfeed, formula, or combo feed?</div></div>
+                <div class="topic-row"><div class="topic-name">Where will the baby sleep?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we help the baby sleep?</div></div>
+                <div class="topic-row"><div class="topic-name">When and how will we introduce solids?</div></div>
+              </div></div></div></div>
+            </div>
+
+            <!-- Education, Health & Development -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">Education, Health &amp; Development</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">How will we choose a pediatrician?</div></div>
+                <div class="topic-row"><div class="topic-name">What are our views on vaccines and preventive care?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we track baby's activity and milestones?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we babyproof?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we help our baby learn to communicate?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we play with our baby?</div></div>
+                <div class="topic-row"><div class="topic-name">Will we save for education?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we handle screen time in early childhood?</div></div>
+              </div></div></div></div>
+            </div>
+
+            <!-- The Existential -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name">The Existential</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">What activities or traditions do we want to start or continue?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we share our culture and/or religion with our child?</div></div>
+                <div class="topic-row"><div class="topic-name">What aspects of our upbringing will we replicate, and what will we avoid?</div></div>
+                <div class="topic-row"><div class="topic-name">What are the values we want to pass on?</div></div>
+              </div></div></div></div>
+            </div>
+
+            <!-- Us -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name">Us</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row reveal-row"><div class="topic-name">What is our postpartum plan?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                <div class="topic-row"><div class="topic-name">How much parental leave will we take?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we share parental and household duties?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we handle lack of sleep, hormones, and/or postpartum depression?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we make time for ourselves as a couple?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we make time for ourselves as individuals?</div></div>
+              </div></div></div></div>
+            </div>
+
+          </div>
+
+          <!-- ============ BY STAGE ============ -->
+          <div id="view-stage">
+
+            <!-- Before Pregnancy -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-name" data-stage-key="before">Before Pregnancy</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">Where will we raise our family?</div></div>
+                <div class="topic-row"><div class="topic-name">What aspects of our upbringing will we replicate, and what will we avoid?</div></div>
+                <div class="topic-row"><div class="topic-name">What are the values we want to pass on?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we share our culture and/or religion with our child?</div></div>
+                <div class="topic-row"><div class="topic-name">What activities or traditions do we want to start or continue?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we approach spending time with extended family?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we make time for ourselves as a couple?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we make time for ourselves as individuals?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we budget for a baby?</div></div>
+                <div class="topic-row"><div class="topic-name">Will we save for education?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we have the right health insurance?</div></div>
+                <div class="topic-row"><div class="topic-name">Do we have life insurance, and is it enough?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will be the legal guardian if something happens to us?</div></div>
+              </div></div></div></div>
+            </div>
+
+            <!-- First Trimester — expanded, peek -->
+            <div class="cat-group">
+              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name" data-stage-key="first">First Trimester</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body">
+                <div class="cat-body-inner">
+                  <div class="phase-scroller">
+                    <div class="phase-page">
+                      <div class="phase-eyebrow">Not revealed yet · 4</div>
+                      <div class="topic-card">
+                        <div class="topic-row reveal-row"><div class="topic-name">When will we tell people that we're expecting?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                        <div class="topic-row"><div class="topic-name">Do we want a doctor or a midwife?</div><span class="pill pill-your-turn">Your turn</span></div>
+                        <div class="topic-row"><div class="topic-name">What will we do about childcare?</div><span class="pill pill-partner">Sam's turn</span></div>
+                        <div class="topic-row"><div class="topic-name">Do we want health screenings, even if they reveal something hard?</div></div>
+                      </div>
+                    </div>
+                    <div class="phase-page">
+                      <div class="phase-eyebrow">Revealed · 4</div>
+                      <div class="topic-card">
+                        <div class="group-divider fully">Fully aligned<span class="gc">2</span></div>
+                        <div class="topic-row"><div class="topic-name">What will the baby's first and middle name be?</div></div>
+                        <div class="topic-row"><div class="topic-name">What will the baby's last name be?</div></div>
+                        <div class="group-divider mostly">Mostly aligned<span class="gc">1</span></div>
+                        <div class="topic-row"><div class="topic-name">When do we want to find out the baby's sex?</div></div>
+                        <div class="group-divider worth">Worth a conversation<span class="gc">1</span></div>
+                        <div class="topic-row"><div class="topic-name">Will we share the baby's name and/or sex before it's born?</div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Second Trimester -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-dot your-turn"></span><span class="cat-name" data-stage-key="second">Second Trimester</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row"><div class="topic-name">What items do we need to get for the baby?</div></div>
+                <div class="topic-row"><div class="topic-name">Where do we want to give birth?</div></div>
+                <div class="topic-row"><div class="topic-name">What is our birth plan?</div><span class="pill pill-your-turn">Your turn</span></div>
+                <div class="topic-row"><div class="topic-name">Do we want a birth doula?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will be in the delivery room?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we respond if there's birth trauma?</div></div>
+                <div class="topic-row"><div class="topic-name">How much parental leave will we take?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we share parental and household duties?</div></div>
+                <div class="topic-row"><div class="topic-name">What kind of baby shower do we want?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we choose a pediatrician?</div></div>
+                <div class="topic-row"><div class="topic-name">What are our views on vaccines and preventive care?</div></div>
+              </div></div></div></div>
+            </div>
+
+            <!-- Third Trimester & Early Postpartum -->
+            <div class="cat-group collapsed">
+              <div class="cat-header"><span class="cat-dot ready"></span><span class="cat-name" data-stage-key="third">Third Trimester &amp; Early Postpartum</span><span class="cat-chevron">›</span></div>
+              <div class="cat-body"><div class="cat-body-inner"><div class="single-list"><div class="topic-card">
+                <div class="topic-row reveal-row"><div class="topic-name">What is our postpartum plan?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                <div class="topic-row"><div class="topic-name">How will we handle lack of sleep, hormones, and/or postpartum depression?</div></div>
+                <div class="topic-row"><div class="topic-name">Breastfeed, formula, or combo feed?</div></div>
+                <div class="topic-row"><div class="topic-name">Where will the baby sleep?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we help the baby sleep?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we babyproof?</div></div>
+                <div class="topic-row"><div class="topic-name">Who will we trust to watch the baby or babysit?</div></div>
+                <div class="topic-row"><div class="topic-name">When will people meet the baby?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we track the baby's activity and milestones?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we help our baby learn to communicate?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we play with our baby?</div></div>
+                <div class="topic-row"><div class="topic-name">When and how will we introduce solids?</div></div>
+                <div class="topic-row"><div class="topic-name">How will we handle screen time in early childhood?</div></div>
+              </div></div></div></div>
+            </div>
+
+          </div>
+
+          <!-- ============ NEEDS YOU (lens) ============
+               Flattened, prioritized queue of pre-reveal "your move" topics.
+               Order: Ready to reveal · N first (magic row + charge pill),
+               then Your turn · N (cyan pill). Excludes Worth a conversation
+               (lives on Progress), Partner's turn, Not started, and any
+               settled/aligned state. -->
+          <div id="view-needs">
+            <div class="needs-section">
+              <div class="needs-eyebrow">Ready to reveal · 3</div>
+              <div class="topic-card reveal-card">
+                <div class="topic-row reveal-row"><div class="topic-name">How will we budget for a baby?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                <div class="topic-row reveal-row"><div class="topic-name">When will we tell people that we're expecting?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+                <div class="topic-row reveal-row"><div class="topic-name">What is our postpartum plan?</div><span class="pill pill-reveal">Ready to reveal</span></div>
+              </div>
+            </div>
+            <div class="needs-section">
+              <div class="needs-eyebrow">Your turn · 2</div>
+              <div class="topic-card">
+                <div class="topic-row"><div class="topic-name">Where will we raise our family?</div><span class="pill pill-your-turn">Your turn</span></div>
+                <div class="topic-row"><div class="topic-name">What is our birth plan?</div><span class="pill pill-your-turn">Your turn</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Floating dock above bottom nav: grouping toggle + "Needs you" lens chip.
+             Inline by default; the dock's container query stacks the children
+             to a column when the row can't fit (small viewports, large
+             Dynamic Type, longer localized labels). -->
+        <div class="dock">
+          <div class="group-toggle">
+            <button class="active">Category</button>
+            <button>Stage</button>
+          </div>
+          <span class="dock-sep" aria-hidden="true"></span>
+          <button class="needs-chip" type="button" data-needs-count="5" aria-pressed="false">
+            <span class="needs-label">Needs you</span>
+            <span class="needs-x" aria-hidden="true">✕</span>
+          </button>
+        </div>
+
+        <!-- Bottom nav -->
+        <div class="bottom-nav">
+          <a class="nav-tab" href="11-home.html">
+            <div class="nav-tab-icon"><i class="ph ph-house"></i></div>
+            <div class="nav-tab-label">Home</div>
+          </a>
+          <a class="nav-tab active" href="14-topic-list.html" aria-current="page">
+            <div class="nav-tab-icon"><i class="ph-fill ph-cards-three"></i></div>
+            <div class="nav-tab-label">Topics</div>
+          </a>
+          <a class="nav-tab" href="12-progress.html">
+            <div class="nav-tab-icon"><i class="ph ph-list-checks"></i></div>
+            <div class="nav-tab-label">Progress</div>
+          </a>
+          <a class="nav-tab" href="13-settings.html">
+            <div class="nav-tab-icon"><i class="ph ph-gear-six"></i></div>
+            <div class="nav-tab-label">Settings</div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 14 · Topic Flow</div>
+    <div class="page-title">Topic List</div>
+    <div class="page-desc">All 7 categories. Two-phase topic model: an action-phase pill per user (Not started / Your turn / Ready to reveal / Partner's turn), and after reveal a shared alignment band (Fully · Mostly · Worth a conversation). Floating dock above bottom nav: Category / Stage grouping toggle + a "Needs you" lens chip (cyan, label only) that flattens the list to the prioritized pre-reveal queue. Collapsible groups. "Manage topics" top right. Toggle above the frame previews the "all clear" state — nothing pre-reveal is actionable, so Your-turn / Ready-to-reveal treatments and the Needs-you chip all drop away.</div>
+    <div class="state-tabs" role="tablist" aria-label="Topic List state preview">
+      <button class="state-tab active" data-state="has-actions" type="button">Has actions</button>
+      <button class="state-tab" data-state="all-clear" type="button">All clear</button>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.querySelector('.screen-root') || document;
+  var sa = root.querySelector('.scroll-area');
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Life-stage segment + stage labels ──
+  // In the real app, lifeStage derives from the Screen 08 entry data
+  // (TTC / pregnant → 'pre-baby'; baby arrived or due date passed → 'baby-here').
+  // Here it's a single editable flag — flip to preview the baby-here label set.
+  // STAGE_LABELS is duplicated on Screen 12 (no shared JS module yet);
+  // consolidate when the shared layer exists.
+  var lifeStage = 'pre-baby';   // 'pre-baby' | 'baby-here'
+  var STAGE_LABELS = {
+    'pre-baby': {
+      before: 'Before Pregnancy',
+      first:  'First Trimester',
+      second: 'Second Trimester',
+      third:  'Third Trimester & Early Postpartum'
+    },
+    'baby-here': {
+      before: 'Foundation Work',
+      first:  'Early Topics',
+      second: 'Mid-Stage Topics',
+      third:  'Later Topics'
+    }
+  };
+  // Relabel the four stage headers from the map. The HTML carries the
+  // pre-baby labels as a default so the mock still reads if JS fails.
+  root.querySelectorAll('#view-stage .cat-name[data-stage-key]').forEach(function (el) {
+    el.textContent = STAGE_LABELS[lifeStage][el.dataset.stageKey];
+  });
+
+  // Data layer (mock) — Progress/Home/onboarding template off the filtered plan total.
+  // Keep this matched to Screen 12's `plan` until a real data source is wired up.
+  var topicStats = { plan: 45, revealed: 3 };
+  var totalEl = root.querySelector('[data-topics-total]');
+  var revealedEl = root.querySelector('[data-topics-revealed]');
+  if (totalEl) totalEl.textContent = topicStats.plan;
+  if (revealedEl) revealedEl.textContent = topicStats.revealed;
+
+  var REST_GAP = 12;
+  var MOVE_MS = 540;
+  function easeInOut(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2; }
+
+  // Smoothly bring a header to REST_GAP below the top of the scroll area.
+  // Re-measures every frame, so it stays smooth while a category above is
+  // collapsing and the tapped one is expanding underneath it.
+  function trackHeaderToTop(headerEl, dur){
+    function offset(){ return headerEl.getBoundingClientRect().top - sa.getBoundingClientRect().top; }
+    var startTop = offset();
+    if (prefersReduced){ sa.scrollTop += (startTop - REST_GAP); return; }
+    var start = null;
+    function step(ts){
+      if (start === null) start = ts;
+      var p = Math.min(1, (ts - start) / dur);
+      var desired = startTop + (REST_GAP - startTop) * easeInOut(p);
+      sa.scrollTop += (offset() - desired);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Accordion: one category open per view
+  root.querySelectorAll('.cat-header').forEach(function (h) {
+    h.style.cursor = 'pointer';
+    h.addEventListener('click', function () {
+      var group = h.parentElement;        // .cat-group
+      var view = group.parentElement;     // the per-view list container
+      if (!group.classList.contains('collapsed')) { group.classList.add('collapsed'); return; }
+      view.querySelectorAll(':scope > .cat-group').forEach(function (g) {
+        if (g !== group) g.classList.add('collapsed');
+      });
+      group.classList.remove('collapsed');
+      trackHeaderToTop(h, MOVE_MS);
+    });
+  });
+
+  // Grouping toggle: Category / Stage
+  var btns = root.querySelectorAll('.group-toggle button');
+  var toggleEl = root.querySelector('.group-toggle');
+  var catView = root.querySelector('#view-category');
+  var stageView = root.querySelector('#view-stage');
+  var needsView = root.querySelector('#view-needs');
+  // The sliding fill's width and x are measured from the currently-active
+  // button and written as CSS vars. Width snaps (the resize is masked by
+  // the slide); x animates via transform.
+  function syncFill(){
+    if (!toggleEl) return;
+    var active = toggleEl.querySelector('button.active');
+    if (!active) return;
+    toggleEl.style.setProperty('--fill-width', active.offsetWidth + 'px');
+    toggleEl.style.setProperty('--fill-x',     active.offsetLeft  + 'px');
+  }
+  function setView(which){
+    if (catView) catView.style.display = (which === 'category') ? 'block' : 'none';
+    if (stageView) stageView.style.display = (which === 'stage') ? 'block' : 'none';
+    if (needsView) needsView.style.display = (which === 'needs') ? 'block' : 'none';
+    btns.forEach(function (b){ b.classList.remove('active'); });
+  }
+  if (btns[0]) btns[0].addEventListener('click', function(){ setView('category'); btns[0].classList.add('active'); syncFill(); });
+  if (btns[1]) btns[1].addEventListener('click', function(){ setView('stage');    btns[1].classList.add('active'); syncFill(); });
+  setView('category');
+  if (btns[0]) btns[0].classList.add('active');
+  // Initial measurement — once now, once after fonts settle, once on resize.
+  syncFill();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncFill);
+  window.addEventListener('resize', syncFill);
+
+  // "Needs you" lens — flattens the list to a prioritized queue of pre-reveal
+  // actionable topics. Chip only rendered when N > 0; tap enters the lens
+  // (hides the grouping toggle), tap again restores the prior grouping.
+  var dock = root.querySelector('.dock');
+  var chip = root.querySelector('.needs-chip');
+  if (chip && dock) {
+    var n = parseInt(chip.getAttribute('data-needs-count') || '0', 10);
+    if (!n) {
+      chip.setAttribute('hidden', '');
+    } else {
+      var priorView = 'category';
+      chip.addEventListener('click', function(){
+        var nowOn = !chip.classList.contains('active');
+        if (nowOn) {
+          var active = root.querySelector('.group-toggle button.active');
+          priorView = (active && /stage/i.test(active.textContent)) ? 'stage' : 'category';
+          chip.classList.add('active');
+          chip.setAttribute('aria-pressed', 'true');
+          dock.classList.add('lens-on');
+          setView('needs');
+        } else {
+          chip.classList.remove('active');
+          chip.setAttribute('aria-pressed', 'false');
+          dock.classList.remove('lens-on');
+          setView(priorView);
+          var btn = (priorView === 'stage') ? btns[1] : btns[0];
+          if (btn) btn.classList.add('active');
+        }
+      });
+    }
+  }
+
+  // Demo state switcher — toggles .clear-state on .screen-root.
+  // "All clear" hides every "your move" affordance and, if the lens
+  // happens to be on when the user flips into it, exits the lens first
+  // (the chip is about to vanish; restore the prior grouping cleanly).
+  root.querySelectorAll('.state-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      root.querySelectorAll('.state-tab').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var clear = btn.getAttribute('data-state') === 'all-clear';
+      if (clear && chip && chip.classList.contains('active')) chip.click();
+      root.classList.toggle('clear-state', clear);
+    });
+  });
+})();
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

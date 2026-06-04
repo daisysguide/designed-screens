@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Alignment Reveal · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Screen 20 entrance cascade + scroll-reveal.
+     Fail-safe: hidden state only applies when JS has added .anim-ready to the
+     scroll container. Without JS (or with reduced motion) everything renders
+     fully visible — never trust a CSS-only opacity:0 here. */
+  body.page-17 .reveal-scroll.anim-ready .reveal-step,
+  body.page-17 .reveal-scroll.anim-ready .reveal-onscroll {
+    opacity: 0;
+    transform: translateY(10px);
+    will-change: opacity, transform;
+  }
+  body.page-17 .reveal-scroll .reveal-step.in,
+  body.page-17 .reveal-scroll .reveal-onscroll.in {
+    opacity: 1;
+    transform: none;
+    transition: opacity .28s ease-out, transform .28s ease-out;
+  }
+  body.page-17 .reveal-scroll .reveal-onscroll.in {
+    transition-duration: .35s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body.page-17 .reveal-scroll .reveal-step,
+    body.page-17 .reveal-scroll .reveal-onscroll {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body class="page-17">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item active" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Alignment Reveal</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- Scrollable content -->
+        <div class="reveal-scroll" id="reveal-scroll">
+
+          <!-- Top chrome: exit only -->
+          <div class="top-chrome">
+            <a class="exit-btn" href="14-topic-list.html" aria-label="Exit to topics">✕</a>
+          </div>
+
+          <!-- Daisy crown + burst -->
+          <div class="crown-wrap">
+            <div class="crown-burst" id="crown-burst" aria-hidden="true"></div>
+            <img class="crown-daisy" id="crown-daisy" src="../images/daisy.svg" alt="">
+          </div>
+
+          <!-- Eyebrow + topic title -->
+          <div class="eyebrow">The Village · Reveal</div>
+          <div class="topic-title">Who will we trust to watch the baby?</div>
+
+          <!-- Alignment pill, directly under title -->
+          <div class="alignment-row">
+            <div class="alignment-pill" id="alignment-pill"></div>
+          </div>
+
+          <!-- For You Two card -->
+          <div class="summary-card" id="summary-card"></div>
+
+          <!-- THE ANSWERS separator -->
+          <div class="section-sep"><span class="section-sep-label">The Answers</span></div>
+
+          <!-- Per-question blocks -->
+          <div id="question-sections"></div>
+
+          <!-- NOTES separator + bubbles -->
+          <div id="notes-wrap"></div>
+
+          <!-- Status block -->
+          <div class="status-block" id="status-block"></div>
+
+          <div style="height:24px;"></div>
+        </div>
+
+        <!-- Sticky CTA
+             Revisit mode also shows a secondary "Read the guide" link above
+             the primary CTA — the only way back to Screen 17 from a revealed
+             topic. Hidden in Reveal mode so it never competes with the live
+             reveal payoff. Toggled by showMode(). -->
+        <div class="reveal-cta">
+          <a class="guide-link-revisit" id="guide-link-revisit" href="17-topic-article.html?from=revisit"
+             style="display:none;align-items:center;justify-content:center;width:100%;height:44px;margin-bottom:10px;border-radius:var(--radius-full);background:transparent;color:var(--text-secondary);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;text-decoration:none;border:none;">Read the guide</a>
+          <a class="btn-primary" id="cta-btn" href="14-topic-list.html">Done</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 20 · Topic Flow</div>
+    <div class="page-title">Alignment Reveal</div>
+    <div class="page-desc">Signature product moment. Result-first layout: daisy crown + petal burst, topic title with the alignment pill directly under it, then the warm "For You Two" synthesis, then per-question answers as a small chat between Jordan and You (single-select, multi-select, and ranking), with the slider keeping its own visual track. Notes render as chat bubbles. A single editable status (settle or reopen, unilateral, instant) lives in a dedicated block at the bottom with provenance when overridden. The same screen serves the completed/revisit view.</div>
+    <div class="demo-controls">
+      <div class="state-tab-row">
+        <button class="state-tab active" id="tab-conversation" onclick="showState('conversation')">🤔 Worth</button>
+        <button class="state-tab" id="tab-mostly" onclick="showState('mostly')">😌 Mostly</button>
+        <button class="state-tab" id="tab-aligned" onclick="showState('aligned')">🎉 Fully</button>
+      </div>
+      <div class="mode-tab-row">
+        <button class="mode-tab active" id="mode-reveal" onclick="showMode('reveal')">Reveal</button>
+        <button class="mode-tab" id="mode-revisit" onclick="showMode('revisit')">Revisit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ─── Demo data ───────────────────────────────────────────────────── */
+
+const TOPIC = {
+  eyebrow: 'The Village · Reveal',
+  title:   'Who will we trust to watch the baby?',
+  partnerName: 'Jordan',
+  questions: [
+    {
+      type: 'single_select',
+      text: 'Who would you trust to babysit regularly?',
+      your:    'Family only, at least at first',
+      partner: 'Close friends we both trust'
+    },
+    {
+      type: 'multi_select',
+      text: 'What matters most to you in parenting?',
+      your:    ['Independence', 'Empathy'],
+      partner: ['Empathy', 'Free expression']
+    },
+    {
+      type: 'ranking',
+      text: 'Rank what matters most in who watches the baby',
+      options: ['Trust', 'Shared values', 'Cost', 'Flexibility'],
+      // 1 = top priority
+      your:    { 'Trust': 1, 'Shared values': 2, 'Flexibility': 3, 'Cost': 4 },
+      partner: { 'Trust': 1, 'Shared values': 2, 'Cost': 3, 'Flexibility': 4 }
+    },
+    {
+      type: 'slider',
+      text: 'How strict about screen time?',
+      min: 1, max: 10, minLabel: 'No limits', maxLabel: 'Screen-free',
+      your: 3, partner: 7
+    }
+  ],
+  notes: {
+    your: 'I think we should talk more about the extended family piece. I had some complicated feelings about being left with various relatives growing up.',
+    partner: ''
+  }
+};
+
+/* No em dashes in the warm-copy bodies below (on-screen copy). */
+const STATES = {
+  conversation: {
+    label: '🤔 Worth a conversation',
+    pillClass: 'pill-conversation',
+    tintClass: 'tint-conversation',
+    burstColor: '#ffad6c',
+    summary: "You're coming at this from different angles. You're family-first, Jordan's leaning on chosen trust, and your screen-time instincts sit a fair way apart. Empathy is real common ground to build from. Worth a proper talk before the patterns set."
+  },
+  mostly: {
+    label: '😌 Mostly aligned',
+    pillClass: 'pill-mostly',
+    tintClass: 'tint-mostly',
+    burstColor: '#96f1c6',
+    summary: "You share a real foundation, empathy showed up for both of you. The main thing to work through is screen time, where you're more relaxed than Jordan. Worth a chat before the baby's here."
+  },
+  aligned: {
+    label: '🎉 Fully aligned',
+    pillClass: 'pill-aligned',
+    tintClass: 'tint-aligned',
+    burstColor: '#77eaaf',
+    summary: "You two are on the same page here. Same trusted circle, the values line up, and your screen-time instincts are close. You've already done the thinking together."
+  }
+};
+
+/* The Venn mark used on the For You Two card */
+const VENN_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22" style="display:block;">
+  <circle cx="9" cy="12" r="6" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.6"/>
+  <circle cx="15" cy="12" r="6" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.6"/>
+</svg>`;
+
+/* ─── State ──────────────────────────────────────────────────────── */
+
+let mode = 'reveal';                 // 'reveal' or 'revisit'
+let computedState = 'conversation';  // last-selected state tab acts as the computed alignment
+let currentState  = computedState;   // currentState may diverge after settle/reopen
+let overrideDate  = null;            // when currentState !== computedState (revisit only initialises this)
+
+function fmtDate(d) {
+  return d.toLocaleString('en-US', { month: 'short', day: 'numeric' });
+}
+
+/* ─── Build per-question blocks ───────────────────────────────────── */
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function chatBubble(side, name, innerHtml, extraClass) {
+  return `<div class="chat-line from-${side}">
+    <div class="chat-name">${escapeHtml(name)}</div>
+    <div class="chat-bubble ${extraClass || ''}">${innerHtml}</div>
+  </div>`;
+}
+
+function buildSingleSelect(q, partnerName) {
+  return `<div class="chat-list">
+    ${chatBubble('jordan', partnerName, escapeHtml(q.partner))}
+    ${chatBubble('you', 'You', escapeHtml(q.your))}
+  </div>`;
+}
+
+function buildMultiSelect(q, partnerName) {
+  const sharedSet = new Set(q.your.filter(t => q.partner.includes(t)));
+  const pills = arr => arr.map(t => {
+    const cls = sharedSet.has(t) ? 'ms-pill ms-pill-shared' : 'ms-pill ms-pill-unique';
+    return `<span class="${cls}">${escapeHtml(t)}</span>`;
+  }).join('');
+  const sharedHtml = `<div class="ms-pills">${pills(q.partner)}</div>`;
+  const youHtml    = `<div class="ms-pills">${pills(q.your)}</div>`;
+  const badge = sharedSet.size > 0
+    ? `<div class="ms-shared-badge">${sharedSet.size} in common</div>` : '';
+  return `<div class="chat-list">
+    ${chatBubble('jordan', partnerName, sharedHtml)}
+    ${chatBubble('you', 'You', youHtml)}
+  </div>
+  ${badge}`;
+}
+
+function buildSlider(q, partnerName) {
+  const range    = q.max - q.min;
+  const isSame   = q.your === q.partner;
+  const yourPct  = Math.max(2, Math.min(98, (q.your    - q.min) / range * 100));
+  const partPct  = Math.max(2, Math.min(98, (q.partner - q.min) / range * 100));
+  const delta    = Math.abs(q.your - q.partner);
+
+  // Corner-number order = by value; You wins right corner on ties (You >= Jordan)
+  // Left corner = lower value; right corner = higher.
+  let leftSide, rightSide;
+  if (q.your >= q.partner) {
+    // You is on the right
+    leftSide  = { num: q.partner, name: partnerName, cls: 'srv-num-partner' };
+    rightSide = { num: q.your,    name: 'You',       cls: 'srv-num-you' };
+  } else {
+    leftSide  = { num: q.your,    name: 'You',       cls: 'srv-num-you' };
+    rightSide = { num: q.partner, name: partnerName, cls: 'srv-num-partner' };
+  }
+
+  const valuesRow = `<div class="srv-values">
+    <div class="srv-val">
+      <div class="srv-num ${leftSide.cls}">${leftSide.num}</div>
+      <div class="srv-name">${escapeHtml(leftSide.name)}</div>
+    </div>
+    <div class="srv-val">
+      <div class="srv-num ${rightSide.cls}">${rightSide.num}</div>
+      <div class="srv-name">${escapeHtml(rightSide.name)}</div>
+    </div>
+  </div>`;
+
+  let trackContent, deltaEl;
+  if (isSame) {
+    trackContent = `<div class="srv-marker srv-marker-same" style="left:${yourPct}%"></div>`;
+    deltaEl = `<div class="srv-delta srv-delta-same">Same answer</div>`;
+  } else {
+    const lo = Math.min(yourPct, partPct);
+    const hi = Math.max(yourPct, partPct);
+    trackContent = `
+      <div class="srv-range" style="left:${lo}%;width:${hi - lo}%"></div>
+      <div class="srv-marker srv-marker-partner" style="left:${partPct}%"></div>
+      <div class="srv-marker srv-marker-you" style="left:${yourPct}%"></div>`;
+    deltaEl = `<div class="srv-delta">${delta} apart</div>`;
+  }
+
+  return `<div class="slider-reveal-card">
+    ${valuesRow}
+    <div class="srv-track">${trackContent}</div>
+    <div class="srv-endlabels">
+      <span>${escapeHtml(q.minLabel)}</span><span>${escapeHtml(q.maxLabel)}</span>
+    </div>
+    ${deltaEl}
+  </div>`;
+}
+
+function buildRanking(q, partnerName) {
+  // Build per-option rows with both ranks + gap.
+  const rows = q.options.map(opt => ({
+    name: opt,
+    you:     q.your[opt],
+    partner: q.partner[opt],
+    gap:     Math.abs(q.your[opt] - q.partner[opt])
+  }));
+
+  const minGap = Math.min(...rows.map(r => r.gap));
+  const maxGap = Math.max(...rows.map(r => r.gap));
+
+  // Pre-render row HTML (with row-same / row-split tints).
+  const rowHtml = rows.map(r => {
+    const tint = r.gap === 0 && minGap === 0 ? 'row-same'
+               : r.gap === maxGap && maxGap > 0 ? 'row-split'
+               : '';
+    return `<div class="rank-row ${tint}" data-name="${escapeHtml(r.name)}">
+      <div class="rank-name">${escapeHtml(r.name)}</div>
+      <div class="rank-chips">
+        <span class="rank-chip rank-chip-you" title="Your rank">${r.you}</span>
+        <span class="rank-chip rank-chip-partner" title="${escapeHtml(partnerName)}'s rank">${r.partner}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  const sameOpt  = rows.find(r => r.gap === 0);
+  const splitOpt = rows.reduce((a, b) => (b.gap > a.gap ? b : a));
+  const noteParts = [];
+  if (sameOpt) noteParts.push(`Same call on ${sameOpt.name}`);
+  if (splitOpt.gap > 0) noteParts.push(`biggest split on ${splitOpt.name}`);
+
+  return `<div class="rank-card" data-sort="you" data-partner-name="${escapeHtml(partnerName)}">
+      ${rowHtml}
+    </div>
+    <div class="rank-cue" data-sort="you">⇄ Ordered by your ranking · tap for ${escapeHtml(partnerName)}'s</div>
+    ${noteParts.length ? `<div class="rank-note">${noteParts.join(' · ')}.</div>` : ''}`;
+}
+
+function buildQuestionBlock(q, partnerName) {
+  let body = '';
+  if (q.type === 'single_select') body = buildSingleSelect(q, partnerName);
+  else if (q.type === 'multi_select') body = buildMultiSelect(q, partnerName);
+  else if (q.type === 'slider')        body = buildSlider(q, partnerName);
+  else if (q.type === 'ranking')       body = buildRanking(q, partnerName);
+  return `<div class="q-block">
+    <div class="q-heading">${escapeHtml(q.text)}</div>
+    ${body}
+  </div>`;
+}
+
+function buildQuestions() {
+  const container = document.getElementById('question-sections');
+  container.innerHTML = TOPIC.questions
+    .map(q => buildQuestionBlock(q, TOPIC.partnerName))
+    .join('');
+
+  // Wire ranking cards (tap to reorder, FLIP).
+  container.querySelectorAll('.rank-card').forEach(card => {
+    const cueEl = card.nextElementSibling && card.nextElementSibling.classList.contains('rank-cue')
+      ? card.nextElementSibling
+      : null;
+    const partnerName = card.dataset.partnerName;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    card.addEventListener('click', () => {
+      const next = card.dataset.sort === 'you' ? 'partner' : 'you';
+      reorderRanking(card, next, reduced);
+      if (cueEl) {
+        cueEl.textContent = next === 'you'
+          ? `⇄ Ordered by your ranking · tap for ${partnerName}'s`
+          : `⇄ Ordered by ${partnerName}'s ranking · tap for yours`;
+      }
+    });
+  });
+}
+
+function reorderRanking(card, nextSort, reduced) {
+  const rows = Array.from(card.children);
+  const tops = new Map();
+  rows.forEach(r => tops.set(r, r.getBoundingClientRect().top));
+
+  // Sort children by chosen rank.
+  const chipClass = nextSort === 'you' ? '.rank-chip-you' : '.rank-chip-partner';
+  rows.sort((a, b) => {
+    const av = parseInt(a.querySelector(chipClass).textContent, 10);
+    const bv = parseInt(b.querySelector(chipClass).textContent, 10);
+    return av - bv;
+  });
+  rows.forEach(r => card.appendChild(r));
+  card.dataset.sort = nextSort;
+
+  if (reduced) return;
+
+  // FLIP: invert from old top to new top, then transition to 0.
+  rows.forEach(r => {
+    const newTop = r.getBoundingClientRect().top;
+    const dy = tops.get(r) - newTop;
+    if (!dy) return;
+    r.style.transition = 'none';
+    r.style.transform  = `translateY(${dy}px)`;
+    // force reflow
+    void r.offsetHeight;
+    r.style.transition = 'transform 0.42s cubic-bezier(.4,0,.2,1)';
+    r.style.transform  = '';
+  });
+}
+
+/* ─── Notes section ──────────────────────────────────────────────── */
+
+function buildNotes() {
+  const wrap = document.getElementById('notes-wrap');
+  const hasYour    = TOPIC.notes.your.trim().length > 0;
+  const hasPartner = TOPIC.notes.partner.trim().length > 0;
+  if (!hasYour && !hasPartner) { wrap.innerHTML = ''; return; }
+
+  const partnerBubble = hasPartner
+    ? chatBubble('jordan', TOPIC.partnerName, escapeHtml(TOPIC.notes.partner))
+    : chatBubble('jordan', TOPIC.partnerName, 'No note added', 'chat-bubble-empty');
+
+  const youBubble = hasYour
+    ? chatBubble('you', 'You', escapeHtml(TOPIC.notes.your))
+    : chatBubble('you', 'You', 'No note added', 'chat-bubble-empty');
+
+  wrap.innerHTML = `
+    <div class="section-sep" style="margin-top:22px;"><span class="section-sep-label">Notes</span></div>
+    <div class="chat-list">
+      ${partnerBubble}
+      ${youBubble}
+    </div>
+  `;
+}
+
+/* ─── For You Two ─────────────────────────────────────────────────── */
+
+function renderSummary(state) {
+  const d = STATES[state];
+  const card = document.getElementById('summary-card');
+  card.className = 'summary-card ' + d.tintClass;
+  card.innerHTML = `
+    <div class="summary-label">${VENN_SVG}<span>For You Two</span></div>
+    <div class="summary-text">${d.summary}</div>
+  `;
+}
+
+/* ─── Alignment pill ──────────────────────────────────────────────── */
+
+function renderPills() {
+  const d = STATES[currentState];
+  const pill = document.getElementById('alignment-pill');
+  pill.className = 'alignment-pill ' + d.pillClass;
+  pill.textContent = d.label;
+}
+
+/* ─── Status block (bottom) ──────────────────────────────────────── */
+
+function renderStatusBlock() {
+  const block = document.getElementById('status-block');
+  const cur   = STATES[currentState];
+  const isOverridden = currentState !== computedState;
+
+  const isWorth = currentState === 'conversation';
+  const actionLabel = isWorth
+    ? 'Talked it through? Mark settled →'
+    : 'Still more to talk about? Reopen →';
+
+  let provenance = '';
+  if (isOverridden && overrideDate) {
+    // When overridden, currentState === 'conversation' means a reopen;
+    // anything else means a settle (per the rules in toggleStatus).
+    const verb = currentState === 'conversation' ? 'reopened' : 'settled';
+    const origLabel = STATES[computedState].label;
+    provenance = `<div class="status-provenance">Based on your answers, we said: ${origLabel}. You ${verb} this on ${fmtDate(overrideDate)}.</div>`;
+  }
+
+  block.innerHTML = `
+    <div class="status-prompt">Now that you've seen where you each landed</div>
+    <div class="status-pill-echo">
+      <span class="alignment-pill ${cur.pillClass}">${cur.label}</span>
+    </div>
+    ${provenance}
+    <a class="status-action" id="status-action">${actionLabel}</a>
+  `;
+
+  document.getElementById('status-action').addEventListener('click', e => {
+    e.preventDefault();
+    toggleStatus();
+  });
+}
+
+function toggleStatus() {
+  // Per alignment-logic.md:
+  //   Reopen — anything → Worth a conversation.
+  //   Settle — restores the computed value, except a Worth-computed topic settles to Mostly.
+  let next;
+  if (currentState === 'conversation') {
+    // Settle.
+    next = (computedState === 'conversation') ? 'mostly' : computedState;
+  } else {
+    // Reopen.
+    next = 'conversation';
+  }
+
+  currentState = next;
+  overrideDate = (currentState === computedState) ? null : new Date();
+
+  renderPills();
+  renderStatusBlock();
+}
+
+/* ─── Daisy burst ────────────────────────────────────────────────── */
+
+function fireBurst(color) {
+  if (mode !== 'reveal') return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const burst = document.getElementById('crown-burst');
+  burst.innerHTML = '';
+
+  const N = 14;
+  for (let i = 0; i < N; i++) {
+    const ang = (i / N) * 360 + (Math.random() * 18 - 9);
+    const dist = -(64 + Math.random() * 32);
+    const useGold = (i % 5 === 0);
+    const petal = document.createElement('div');
+    petal.className = 'burst-petal';
+    petal.style.setProperty('--ang',  ang + 'deg');
+    petal.style.setProperty('--dist', dist + 'px');
+    petal.style.background = useGold ? '#ffd755' : color;
+    petal.style.animationDelay = (Math.random() * 0.08) + 's';
+    burst.appendChild(petal);
+  }
+  // Clean up after animation finishes.
+  setTimeout(() => { if (burst.children.length) burst.innerHTML = ''; }, 1100);
+}
+
+function bloomDaisy() {
+  const d = document.getElementById('crown-daisy');
+  if (mode !== 'reveal') { d.classList.remove('bloom'); return; }
+  d.classList.remove('bloom');
+  // restart animation
+  void d.offsetWidth;
+  d.classList.add('bloom');
+}
+
+/* ─── Demo controls ──────────────────────────────────────────────── */
+
+function showState(state) {
+  ['conversation','mostly','aligned'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+  computedState = state;
+  // Switching the state tab resets any override — this represents picking the underlying computed result.
+  currentState  = state;
+  overrideDate  = null;
+
+  // The For You Two tint follows the COMPUTED state.
+  renderSummary(computedState);
+  renderPills();
+  renderStatusBlock();
+
+  bloomDaisy();
+  fireBurst(STATES[state].burstColor);
+  runRevealCascade();
+}
+
+function showMode(next) {
+  mode = next;
+  document.getElementById('mode-reveal').classList.toggle('active', next === 'reveal');
+  document.getElementById('mode-revisit').classList.toggle('active', next === 'revisit');
+
+  document.querySelector('body.page-17 .screen-root .phone-screen').setAttribute('data-mode', next);
+
+  // CTA label per mode.
+  document.getElementById('cta-btn').textContent = next === 'revisit' ? 'Back to topics' : 'Done';
+
+  // "Read the guide" is the only path back to Screen 17 from a revealed topic.
+  // Revisit-only — must never appear during the live signature reveal.
+  const guideLink = document.getElementById('guide-link-revisit');
+  if (guideLink) guideLink.style.display = (next === 'revisit') ? 'flex' : 'none';
+
+  if (next === 'reveal') {
+    bloomDaisy();
+    fireBurst(STATES[computedState].burstColor);
+  } else {
+    document.getElementById('crown-daisy').classList.remove('bloom');
+    document.getElementById('crown-burst').innerHTML = '';
+  }
+  runRevealCascade();
+}
+
+/* ─── Entrance cascade + scroll-reveal ──────────────────────────────
+   Fail-safe model: the hidden state in CSS is gated on
+   .reveal-scroll.anim-ready. If JS bails or IO is unsupported, we never
+   add that flag and nothing is hidden. Reduced-motion users skip the
+   whole choreography (CSS overrides too, as a belt-and-braces). */
+
+let scrollObserver = null;
+
+function tagRevealTargets() {
+  const scroll = document.getElementById('reveal-scroll');
+  if (!scroll) return;
+
+  // Entrance cascade targets (in cascade order).
+  const stepEls = [
+    document.getElementById('alignment-pill'),
+    document.getElementById('summary-card'),
+    document.getElementById('question-sections')?.firstElementChild || null
+  ];
+  stepEls.forEach(el => { if (el) el.classList.add('reveal-step'); });
+
+  // Scroll-reveal targets: remaining question sections, notes wrap,
+  // status block. Notes wrap is targeted at the wrapper level — its
+  // children populate later but the wrapper itself is the unit that
+  // fades in once its contents exist.
+  const qSections = document.getElementById('question-sections');
+  if (qSections) {
+    Array.from(qSections.children).slice(1).forEach(el => {
+      el.classList.add('reveal-onscroll');
+    });
+  }
+  const notes = document.getElementById('notes-wrap');
+  if (notes && notes.children.length) notes.classList.add('reveal-onscroll');
+  const status = document.getElementById('status-block');
+  if (status) status.classList.add('reveal-onscroll');
+}
+
+function resetRevealState() {
+  document.querySelectorAll('body.page-17 .reveal-step.in, body.page-17 .reveal-onscroll.in')
+    .forEach(el => el.classList.remove('in'));
+}
+
+function runRevealCascade() {
+  const scroll = document.getElementById('reveal-scroll');
+  if (!scroll) return;
+
+  // Re-tag targets each run. renderSummary() / renderPills() overwrite
+  // className on #summary-card and #alignment-pill, so .reveal-step gets
+  // stripped on every showState(); add it back here. classList.add is
+  // idempotent, so calling this repeatedly is safe.
+  tagRevealTargets();
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isReveal = (mode === 'reveal');
+
+  // Tear down any prior observer before re-running.
+  if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
+
+  // Revisit mode OR reduced motion: skip the ceremony. Don't set
+  // anim-ready — the from-state never applies, so everything is visible.
+  if (!isReveal || reduced) {
+    scroll.classList.remove('anim-ready');
+    resetRevealState();
+    return;
+  }
+
+  // Reveal + full motion: arm the from-state, then schedule each step.
+  scroll.classList.add('anim-ready');
+  resetRevealState();
+
+  const steps = Array.from(scroll.querySelectorAll('.reveal-step'));
+  const delays = [350, 500, 650];
+  steps.forEach((el, i) => {
+    const d = delays[i] != null ? delays[i] : 650 + (i - 2) * 150;
+    setTimeout(() => el.classList.add('in'), d);
+  });
+
+  // IntersectionObserver for everything below the cascade.
+  if (!('IntersectionObserver' in window)) {
+    // No IO support — reveal everything immediately so nothing stays hidden.
+    scroll.querySelectorAll('.reveal-onscroll').forEach(el => el.classList.add('in'));
+    return;
+  }
+  scrollObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: scroll, rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+  scroll.querySelectorAll('.reveal-onscroll').forEach(el => scrollObserver.observe(el));
+}
+
+/* ─── Init ───────────────────────────────────────────────────────── */
+
+buildQuestions();
+buildNotes();
+tagRevealTargets();
+showState('conversation');
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

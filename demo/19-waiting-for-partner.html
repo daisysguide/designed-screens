@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Waiting for Partner · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-16">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item active" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Waiting for Partner</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+    <!-- Demo-only state switcher (designed-screens doc page; not part of product UI) -->
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" id="phone-screen" data-state="waiting">
+
+        <!-- Main — status + nudge as one centered cluster (one gap, not two) -->
+        <div class="waiting-main">
+          <!-- Status: logo, heading, one body line -->
+          <div class="waiting-status">
+            <div class="waiting-anim" id="anim-slot">
+              <div class="waiting-ring"></div>
+              <img class="waiting-logo" src="../images/daisy.svg" alt="" aria-hidden="true">
+            </div>
+            <div class="waiting-heading" id="waiting-heading">Your part's done.</div>
+            <div class="waiting-body" id="waiting-body">Waiting on Jordan to finish their side.</div>
+          </div>
+
+          <!-- Nudge: one lead line + Poke (linked); single Invite button (unlinked) -->
+          <div class="waiting-nudge">
+            <!-- Linked-waiting cluster -->
+            <div class="poke-cluster" id="poke-cluster" style="width:100%;">
+              <div class="poke-lead" id="poke-lead">Jordan's been notified.</div>
+              <button class="btn-poke" id="poke-btn" onclick="handlePoke()">Poke Jordan 👉</button>
+              <div class="poke-confirm" id="poke-confirm"></div>
+            </div>
+            <!-- Unlinked cluster (just the invite button — body copy already carries the rationale) -->
+            <div class="invite-cluster" id="invite-cluster" style="display:none;width:100%;">
+              <button class="btn-poke" id="invite-btn" onclick="location.href='10-partner-linking.html'">Invite your partner →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exits — anchors at the bottom as the next sibling of .waiting-main: Change my answers (link) above Back to home (button) -->
+        <div class="waiting-exits">
+          <span class="edit-link" id="edit-link">Change my answers</span>
+          <button class="btn-secondary" onclick="location.href='11-home.html'">Back to home</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 19 · Topic Flow</div>
+    <div class="page-title">Waiting for Partner</div>
+    <div class="page-desc">Three states, same daisy. <strong>Waiting</strong> (linked, partner not done yet): humor is essential — this is a potential drop-off point. The waiting feeling is carried by the brand logo breathing on the cream screen (no spinner, no lock); the Poke and exits live here. <strong>Preparing</strong> (both answered, the "for you two" synthesis is being generated): the daisy keeps breathing, copy switches to "Bringing your answers together…", and the nudge and exits disappear — it's a short, non-interactive bridge. The person who answers second lands directly here; the first answerer transitions in from waiting. A restrained <em>wind-up</em> (small logo pop + soft ring gather, no petals) plays and navigates to the reveal when the reveal is <em>ready</em> (synthesis generated or fallen back), not on partner submit — the full bloom and petal burst land on Screen 20. <strong>Unlinked</strong>: user has answered but hasn't linked — the daisy still breathes, an Invite CTA replaces the Poke, and there's no resolve until a partner links and finishes.</div>
+    <div style="margin-bottom:12px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(26,26,26,0.4);">Demo · doc page only</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+        <button id="demo-waiting"   onclick="setDemoState('waiting')"   style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Waiting</button>
+        <button id="demo-unlinked"  onclick="setDemoState('unlinked')"  style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Unlinked</button>
+        <button id="demo-preparing" onclick="setDemoState('preparing')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Preparing</button>
+        <button id="demo-resolve"   onclick="playResolve()"             style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Simulate ready ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+
+    </div>
+  </div>
+</div>
+<script>
+/* Demo-screen prototype — partner name is dynamic in production, hardcoded for demo. */
+const PARTNER_NAME = 'Jordan';
+
+/* ── Poke ── Punchline lands on tap, not before. Exact wording preserved. */
+let poked = false;
+function handlePoke() {
+  if (poked) return;
+  poked = true;
+  const btn     = document.getElementById('poke-btn');
+  const confirm = document.getElementById('poke-confirm');
+  btn.textContent = 'Poke sent ✓';
+  btn.classList.add('sent');
+  confirm.innerHTML = 'Sent. <em>"No pressure. (Pressure.)"</em>';
+}
+
+/* ── Demo state switcher ──
+   Three states: 'waiting' (linked, partner not done yet) · 'preparing' (both
+   answered, "for you two" generating) · 'unlinked' (user answered, no partner). */
+function setDemoState(state) {
+  const screen       = document.getElementById('phone-screen');
+  const heading      = document.getElementById('waiting-heading');
+  const body         = document.getElementById('waiting-body');
+  const pokeCluster  = document.getElementById('poke-cluster');
+  const inviteCluster= document.getElementById('invite-cluster');
+
+  screen.setAttribute('data-state', state);
+
+  /* Reset the bloom whenever we change states, so Preparing keeps breathing
+     until "Simulate ready" is fired. */
+  const slot = document.getElementById('anim-slot');
+  slot.classList.remove('done');
+
+  if (state === 'unlinked') {
+    heading.textContent = 'Your answers are saved.';
+    body.textContent    = "Invite your partner so they can answer their side, then you'll reveal together.";
+    pokeCluster.style.display   = 'none';
+    inviteCluster.style.display = '';
+  } else if (state === 'preparing') {
+    heading.textContent = "That's both of you.";
+    body.textContent    = 'Bringing your answers together…';
+    /* Nudge and exits are hidden via CSS while data-state="preparing". */
+    pokeCluster.style.display   = '';
+    inviteCluster.style.display = 'none';
+  } else {
+    /* 'waiting' (or anything that falls back) */
+    heading.textContent = "Your part's done.";
+    body.textContent    = 'Waiting on ' + PARTNER_NAME + ' to finish their side.';
+    pokeCluster.style.display   = '';
+    inviteCluster.style.display = 'none';
+  }
+
+  /* Demo tab pill state */
+  [['demo-waiting','waiting'], ['demo-preparing','preparing'], ['demo-unlinked','unlinked']].forEach(([id, s]) => {
+    const btn    = document.getElementById(id);
+    const active = s === state;
+    btn.style.background  = active ? '#5f45f2' : 'white';
+    btn.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    btn.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+}
+
+/* ── Simulate ready — plays the bloom, then navigates to Screen 20. "Ready" is
+   not a resting state in the product: the bloom is the exit. Replay by
+   returning to this screen. */
+function playResolve() {
+  /* If we're not in a state the bloom makes sense from, drop into preparing first. */
+  const screen = document.getElementById('phone-screen');
+  const cur    = screen.getAttribute('data-state');
+  if (cur !== 'waiting' && cur !== 'preparing') setDemoState('preparing');
+
+  const slot = document.getElementById('anim-slot');
+  /* Strip and re-add .done to force the bloom to play even on rapid replays. */
+  slot.classList.remove('done');
+  void slot.offsetWidth;
+  slot.classList.add('done');
+
+  /* Ready = the bloom is the exit. Let it play, then navigate to the reveal —
+     the same outcome as a real reveal-ready resolve. */
+  setTimeout(() => { location.href = '20-alignment-reveal.html'; }, 800);
+}
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

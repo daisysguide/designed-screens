@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Paywall · Daisy's Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-10">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item active" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Paywall</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- ── Paywall mockup (scoped under .s09 so its classes can't leak) ── -->
+        <div class="s09">
+          <h2 class="sr-only">Daisy's Guide paywall: launch price drops from $60 a year to $49 lifetime. Sample reveal and trust block follow on scroll. 7-day money-back guarantee.</h2>
+
+          <div class="pad" style="padding-top:28px">
+            <h1>Start parenthood in sync</h1>
+          </div>
+
+          <!-- Price / Purchase Card -->
+          <div class="pad" style="padding-top:18px">
+            <div class="card" style="padding:20px 18px;box-shadow:0 6px 20px -8px rgba(40,30,10,0.22)">
+              <div class="price-eyebrow">Launch price</div>
+              <div style="text-align:center;margin-bottom:2px"><span class="anchor"><span class="anchor-text">$60 / year</span><span class="anchor-line"></span></span></div>
+              <div class="price">$49</div>
+              <div class="price-sub">Pay once. Yours forever.</div>
+              <div class="divider"></div>
+              <div class="feat"><span class="chk">✓</span><span><span class="b">Full access</span> for <span class="b">both partners</span></span></div>
+              <div class="feat"><span class="chk">✓</span><span>Your <span class="b">personalized plan</span> with side-by-side reveals and a guide for every discussion</span></div>
+              <div class="feat"><span class="chk">✓</span><span>Every guide written by <span class="b">Dr. Daisy, MD</span>, a Mother-Baby Unit Medical Director and mom</span></div>
+            </div>
+          </div>
+
+          <!-- Sample reveal -->
+          <div class="pad fade-in" style="padding-top:20px;animation-delay:2s">
+            <div class="card" style="padding:14px;background:rgba(95,69,242,0.05);border-color:rgba(95,69,242,0.18)">
+              <div class="minilabel" style="text-align:center;margin-bottom:6px;color:var(--purple)">Sample reveal</div>
+              <div style="text-align:center;font-family:var(--display);font-weight:600;font-size:15px;line-height:1.3;color:var(--ink);margin-bottom:12px">Where will the baby sleep?</div>
+              <div style="display:flex;gap:8px">
+                <div class="reveal-box"><div class="who">Mia said</div><div class="said an-said" style="animation-delay:2.5s">In a bassinet next to our bed</div></div>
+                <div class="reveal-box"><div class="who">Jordan said</div><div class="said an-said" style="animation-delay:2.75s">In the crib in the nursery</div></div>
+              </div>
+              <div style="text-align:center;margin:11px 0">
+                <span class="pill an-pop" style="animation-delay:3.15s">
+                  🤔 Worth a conversation
+                </span>
+              </div>
+              <div class="fyt-card an-rise" style="animation-delay:3.55s">
+                <div class="fyt-label">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" style="display:block;color:#995611;">
+                    <circle cx="9" cy="12" r="6" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.6"/>
+                    <circle cx="15" cy="12" r="6" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.6"/>
+                  </svg>
+                  <span>For you two</span>
+                </div>
+                <div style="font-size:12.5px;line-height:1.5;color:#3F3D38">You both want the baby close and safe, but you've just pictured "close" differently. Worth deciding before night one, when nobody's in the mood to negotiate.</div>
+                <div style="display:flex;align-items:center;gap:5px;margin-top:9px;padding-top:9px;border-top:0.5px solid rgba(255,173,108,0.45);font-size:11.5px;font-weight:500;color:var(--ink)">
+                  <svg class="i" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                  Read the full guide
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust block -->
+          <div class="pad fade-in" style="padding-top:20px;animation-delay:4.3s">
+            <div class="tcard">
+              <div class="minilabel" style="text-align:center;margin-bottom:11px;color:var(--purple)">Trusted by thousands of parents-to-be</div>
+              <div class="tstars" aria-label="5 out of 5 stars">★★★★★</div>
+              <div class="tbody" id="tbody" aria-live="polite">
+                <div class="tquote" id="tq"></div>
+                <div class="tattr"><span class="tname" id="tn"></span><span class="chip" id="tc"></span></div>
+              </div>
+              <div class="dots" id="dots"></div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="pad fade-in" style="padding-top:24px;text-align:center;animation-delay:4.9s">
+            <div style="display:flex;justify-content:center;align-items:center;gap:14px;font-size:12.5px">
+              <a href="#">Have a promo code?</a>
+              <span style="color:var(--hint)">·</span>
+              <a href="#">Restore purchase</a>
+            </div>
+            <div class="legal">By purchasing you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></div>
+          </div>
+
+          <!-- Sticky CTA bar -->
+          <div class="actionbar">
+            <button class="cta">Get lifetime access for $49</button>
+            <div class="guarantee">
+              <svg class="i" viewBox="0 0 24 24" style="color:var(--green)"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span>7-day money-back guarantee. Full refund, no questions.</span>
+            </div>
+          </div>
+        </div>
+        <!-- ── /Paywall mockup ── -->
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 09 · Onboarding</div>
+    <div class="page-title">Paywall</div>
+    <div class="page-desc">Price first, CTA always visible. User arrives warm off Screen 08's emotional peak. Their worries reframed as conversations.</div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── Paywall mockup styles (scoped under .s09) ── -->
+<style>
+  /* The shared .phone-screen wrapper applies padding: 20px 24px 36px, which
+     compounded with the mockup's own .pad (0 20px) and padding-top values
+     (cards too narrow, top crowded, bottom dead space). For screen 09 the
+     wrapper owns the 20px side gutter and zeroes top/bottom; the mockup's
+     .pad contributes the top padding-top only (its side padding is dropped
+     below so it can't compound), and .actionbar breaks out to the phone
+     edges. Scoped via :has(> .s09) so only this screen is affected. */
+  body.page-10 .screen-root .phone-screen:has(> .s09){padding:0 20px}
+  body.page-10 .screen-root .phone-screen:has(> .s09) .s09 .pad{padding-left:0;padding-right:0}
+  body.page-10 .screen-root .phone-screen:has(> .s09) .s09 .actionbar{margin-left:-20px;margin-right:-20px}
+  .s09{
+    --cream:#F6F0E6; --ink:#1A1A1A; --muted:#6B6962; --hint:#9A968C;
+    --purple:#5F45F2; --green:#157A46; --border:#E8E3D8; --gold:#E0A800;
+    --display:'Grandstander',sans-serif; --body:'DM Sans',sans-serif;
+    font-family:var(--body); color:var(--ink);
+  }
+  body.page-10 .screen-root .s09*{box-sizing:border-box}
+  body.page-10 .screen-root .s09 a{color:var(--purple);text-decoration:none}
+  body.page-10 .screen-root .s09 .pad{padding:0 20px}
+  body.page-10 .screen-root .s09 h1{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.08;letter-spacing:-0.02em;margin:0 0 18px}
+  body.page-10 .screen-root .s09 .card{background:#fff;border:0.5px solid var(--border);border-radius:16px}
+  body.page-10 .screen-root .s09 .minilabel{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--hint);font-weight:500}
+  body.page-10 .screen-root .s09 .reveal-box{flex:1;background:#fff;border:0.5px solid var(--border);border-radius:10px;padding:11px}
+  body.page-10 .screen-root .s09 .reveal-box .who{font-size:9px;letter-spacing:0.05em;text-transform:uppercase;color:var(--hint);margin-bottom:5px}
+  body.page-10 .screen-root .s09 .reveal-box .said{font-size:13px;line-height:1.4;color:var(--ink)}
+  body.page-10 .screen-root .s09 .pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,173,108,0.34);color:#995611;
+    font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px}
+  body.page-10 .screen-root .s09 .fyt-card{border:1.5px solid rgba(255,173,108,0.55);background:rgba(255,173,108,0.15);border-radius:11px;padding:12px 13px}
+  body.page-10 .screen-root .s09 .fyt-label{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:0.06em;text-transform:uppercase;color:#995611;font-weight:700;margin-bottom:5px}
+  body.page-10 .screen-root .s09 .price-eyebrow{font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--purple);font-weight:500;text-align:center;margin-bottom:6px}
+  body.page-10 .screen-root .s09 .price{font-family:var(--display);font-weight:600;font-size:48px;line-height:1;text-align:center;letter-spacing:-0.02em;animation:s09-buildIn .55s cubic-bezier(.2,.7,.3,1) 1s both}
+  body.page-10 .screen-root .s09 .price-sub{font-size:12.5px;color:var(--muted);text-align:center;margin-top:6px}
+  body.page-10 .screen-root .s09 .divider{border-top:0.5px solid var(--border);margin:15px 0 11px}
+  body.page-10 .screen-root .s09 .feat{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:13.5px;line-height:1.4}
+  body.page-10 .screen-root .s09 .feat .chk{color:var(--green);font-weight:500}
+  body.page-10 .screen-root .s09 .b{font-weight:500}
+  body.page-10 .screen-root .s09 .tcard{position:relative;background:#fff;border:none;border-radius:16px;padding:16px 16px 14px;overflow:hidden;box-shadow:0 4px 14px -6px rgba(40,30,10,0.12)}
+  body.page-10 .screen-root .s09 .tstars{color:var(--gold);font-size:13px;letter-spacing:2px;margin:0 0 9px;text-align:center}
+  body.page-10 .screen-root .s09 .tbody{transition:opacity .32s ease;min-height:72px;display:flex;flex-direction:column;justify-content:center}
+  body.page-10 .screen-root .s09 .tquote{font-size:16px;line-height:1.5;color:#2E2C28;font-style:italic;text-align:center}
+  body.page-10 .screen-root .s09 .tattr{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:11px}
+  body.page-10 .screen-root .s09 .tname{font-size:12px;font-weight:500;color:var(--ink)}
+  body.page-10 .screen-root .s09 .chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px}
+  body.page-10 .screen-root .s09 .chip-amz{background:rgba(21,122,70,0.1);color:#0F5A33}
+  body.page-10 .screen-root .s09 .chip-rdt{background:rgba(255,69,0,0.13);color:#B23300}
+  body.page-10 .screen-root .s09 .dots{display:flex;gap:6px;justify-content:center;margin-top:14px}
+  body.page-10 .screen-root .s09 .dot{width:6px;height:6px;border-radius:50%;background:#D8D2C4;border:none;padding:0;cursor:pointer;transition:background .2s,width .2s}
+  body.page-10 .screen-root .s09 .dot.on{background:var(--purple);width:16px;border-radius:3px}
+  body.page-10 .screen-root .s09 .legal{font-size:11px;color:var(--hint);line-height:1.5;margin-top:18px}
+  body.page-10 .screen-root .s09 .legal a{color:var(--hint);text-decoration:underline dashed;text-decoration-thickness:1px;text-underline-offset:2px}
+  body.page-10 .screen-root .s09 .actionbar{position:sticky;bottom:0;z-index:5;margin-top:18px;padding:14px 20px 20px;background:#fff;border-top:0.5px solid var(--border);box-shadow:0 -6px 16px -8px rgba(40,30,10,0.18)}
+  body.page-10 .screen-root .s09 .cta{width:100%;background:var(--purple);color:#fff;border:none;border-radius:14px;padding:16px;
+    font-family:var(--body);font-weight:500;font-size:16px;cursor:pointer;transition:transform .12s ease,filter .12s ease}
+  body.page-10 .screen-root .s09 .cta:hover{filter:brightness(1.06)} .s09 .cta:active{transform:scale(.985)}
+  body.page-10 .screen-root .s09 .guarantee{display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;color:var(--muted);margin-top:10px}
+  body.page-10 .screen-root .s09 .i{display:inline-block;width:1em;height:1em;vertical-align:-0.14em;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  body.page-10 .screen-root .s09 .fade-in{opacity:0;animation:s09-fade .4s ease forwards}
+  @keyframes s09-fade{to{opacity:1}}
+  body.page-10 .screen-root .s09 .an-said{animation:s09-focusIn .55s ease both}
+  body.page-10 .screen-root .s09 .an-pop{animation:s09-popIn .5s ease both}
+  body.page-10 .screen-root .s09 .an-rise{animation:s09-riseIn .5s ease both}
+  body.page-10 .screen-root .s09 .anchor{position:relative;display:inline-block;font-size:14px;line-height:1}
+  body.page-10 .screen-root .s09 .anchor-text{display:inline-block;color:#9A968C;transform-origin:top center;animation:s09-priceDrop .5s cubic-bezier(.2,.7,.3,1) .5s both}
+  body.page-10 .screen-root .s09 .anchor-line{position:absolute;left:0;right:0;top:48%;height:1.5px;background:#9A968C;transform-origin:left center;animation:s09-strikeIn .5s ease .5s both}
+  @keyframes s09-focusIn{from{filter:blur(7px);opacity:.2;transform:translateY(4px)}to{filter:blur(0);opacity:1;transform:none}}
+  @keyframes s09-popIn{0%{opacity:0;transform:scale(.8)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+  @keyframes s09-riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes s09-priceDrop{from{transform:scale(3);color:#1A1A1A}to{transform:none;color:#9A968C}}
+  @keyframes s09-strikeIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes s09-buildIn{from{opacity:0;transform:translateY(8px) scale(.92)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){.s09 .fade-in,.s09 .an-said,.s09 .an-pop,.s09 .an-rise,.s09 .anchor-text,.s09 .anchor-line,.s09 .price{animation:none;opacity:1}}
+  body.page-10 .screen-root .s09 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+
+<script src="nav.js"></script>
+<script>
+(function () {
+  var T=[
+    {q:"My husband enjoyed this book, and he was fairly anti-baby talk.", n:"r/waiting_to_try", s:"reddit"},
+    {q:"…things we hadn't even thought to discuss before the baby arrived.", n:"Elisabeth F", s:"amazon"},
+    {q:"It made us feel like a team rather than guessing separately.", n:"CLP", s:"amazon"},
+    {q:"It walks you through real conversations that couples need to have.", n:"CountingStarz", s:"amazon"}
+  ];
+  var i=0, timer=null;
+  var tbody=document.getElementById('tbody'), tq=document.getElementById('tq'),
+      tn=document.getElementById('tn'), tc=document.getElementById('tc'), dots=document.getElementById('dots');
+  if(!tbody) return;
+  T.forEach(function(_,k){
+    var b=document.createElement('button');
+    b.className='dot'+(k===0?' on':''); b.setAttribute('aria-label','Review '+(k+1));
+    b.onclick=function(){show(k); reset();};
+    dots.appendChild(b);
+  });
+  function paint(){
+    var t=T[i];
+    tq.textContent='“'+t.q+'”';
+    tn.textContent=t.n;
+    if(t.s==='amazon'){ tc.className='chip chip-amz'; tc.innerHTML='<svg class="i" viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Verified'; }
+    else { tc.className='chip chip-rdt'; tc.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" style="display:inline-block;vertical-align:-2px"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" fill="currentColor"/></svg> Reddit'; }
+    Array.prototype.forEach.call(dots.children,function(d,k){ d.className='dot'+(k===i?' on':''); });
+  }
+  function show(k){ i=k; tbody.style.opacity=0; setTimeout(function(){ paint(); tbody.style.opacity=1; },180); }
+  function next(){ show((i+1)%T.length); }
+  function reset(){ clearInterval(timer); timer=setInterval(next,5500); }
+  paint();
+  timer=setInterval(next,5500);
+  var card=document.querySelector('.s09 .tcard');
+  card.addEventListener('mouseenter',function(){ clearInterval(timer); });
+  card.addEventListener('mouseleave',reset);
+})();
+</script>
+</body>
+</html>

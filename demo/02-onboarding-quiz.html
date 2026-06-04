@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Onboarding Quiz · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-06">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item active" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Onboarding Quiz</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- Screen header (back chevron only) -->
+        <div class="screen-header" style="height:56px;display:flex;align-items:center;flex-shrink:0;background:var(--cream);">
+          <button class="back-btn" aria-label="Back" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--text-primary);font-size:26px;line-height:1;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-left:-10px;">‹</button>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-row">
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill" style="width:14%;"></div>
+          </div>
+          <div class="progress-label" id="progress-label">1 of ?</div>
+        </div>
+
+        <!-- Question card -->
+        <div class="question-card">
+          <div class="question-text" id="q-text" style="margin-bottom:22px;">Where are you in your journey?</div>
+          <div class="question-subtext" id="q-subtext" style="display:none;"></div>
+          <div class="answer-options" id="answer-options"></div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <!-- Actions -->
+        <div class="action-region">
+          <button class="btn-continue disabled" id="continue-btn">Continue</button>
+          <button class="btn-skip" id="skip-btn">Skip this question</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 02 · Intro</div>
+    <div class="page-title">Onboarding Quiz</div>
+    <div class="page-desc">6–8 questions depending on Q1. Drives personalization. Progress bar and count are dynamic.</div>
+    <div class="state-tab-row" id="q-tabs"></div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+    </div>
+  </div>
+</div>
+<script>
+// --- Question definitions ---
+const QUESTIONS = {
+  q1: {
+    id: 'q1', label: 'Q1',
+    text: 'Where are you in your journey?',
+    options: ['💭 Trying (or thinking about trying)', '🤰 Currently pregnant', '👶 Baby is already here', '🔄 Expecting again'],
+    required: true
+  },
+  q2: {
+    id: 'q2', label: 'Q2',
+    text: 'When is your due date?',
+    datePicker: true, pickerLabel: 'Due date', minToday: true,
+    required: true
+  },
+  q2b: {
+    id: 'q2b', label: 'Q2b',
+    text: 'When was baby born?',
+    datePicker: true, pickerLabel: "Baby's birthday", maxToday: true,
+    required: true
+  },
+  q3: {
+    id: 'q3', label: 'Q3',
+    text: 'Will this be your first?',
+    options: ['Yes, first time', "No, we've done this before"],
+    required: true
+  },
+  q4: {
+    id: 'q4', label: 'Q4',
+    text: "Have you found out the baby's sex yet?",
+    options: ["Yes, it's a girl", "Yes, it's a boy", 'Not yet', "We're not finding out"],
+    required: false, skipLabel: 'Skip this question', skipDefault: 3 // index of "We're not finding out"
+  },
+  q5: {
+    id: 'q5', label: 'Q5',
+    text: "Do you know what last name you'll give your baby?",
+    options: ['Yes', 'No', 'Still deciding'],
+    required: false, skipLabel: 'Skip this question', skipDefault: 2 // index of "Still deciding"
+  },
+  q6: {
+    id: 'q6', label: 'Q6',
+    text: 'On a scale of 1 to 5, how aligned do you feel with your partner?',
+    slider: true, sliderMin: 1, sliderMax: 5, sliderLeft: 'Not at all', sliderRight: 'Completely aligned',
+    required: false, skipLabel: 'Skip this question', skipDefault: 3
+  },
+  q7: {
+    id: 'q7', label: 'Q7',
+    text: 'What are you nervous about?',
+    sub: 'Select all that apply',
+    multiSelect: true,
+    options: [
+      'Who will handle what',
+      "How we'll get enough sleep",
+      'Deciding the "right way" to parent',
+      'Making time for ourselves',
+      'All of the above'
+    ],
+    // Custom toggle logic for Q7 — see toggleMulti() in showQuestion
+    multiKind: 'q7',
+    required: false, skipLabel: 'Skip this question', skipDefault: []
+  },
+  q8: {
+    id: 'q8', label: 'Q8',
+    text: 'What have you done to prepare so far?',
+    sub: 'Select all that apply',
+    multiSelect: true,
+    options: [
+      'Nothing / just getting started',
+      'Talked to my OB',
+      'Talked to friends/family',
+      'Listened to podcasts',
+      'Read books'
+    ],
+    multiKind: 'q8',
+    required: false, skipLabel: 'Skip this question', skipDefault: []
+  }
+};
+
+// Build question sequence based on Q1 answer index
+// 0=Trying (or thinking about trying), 1=Currently pregnant, 2=Baby is already here, 3=Expecting again
+function buildSequence(q1Idx) {
+  const { q1, q2, q2b, q3, q4, q5, q6, q7, q8 } = QUESTIONS;
+  switch (q1Idx) {
+    case 0: return [q1, q3, q5, q6, q7, q8];               // Trying (or thinking about trying) — Q2 (no due date) and Q4 (no baby sex) skipped
+    case 1: return [q1, q2, q3, q4, q5, q6, q7, q8];       // Currently pregnant
+    case 2: return [q1, q2b, q3, q4, q5, q6, q7, q8];      // Baby is already here
+    case 3: return [q1, q2, q4, q5, q6, q7, q8];           // Expecting again — Q3 auto-set to "No"
+    default: return [q1, q3, q5, q6, q7, q8];              // Unknown — conservative default
+  }
+}
+
+// State
+const STORAGE_KEY = 'dg_onboarding_quiz_v4';
+let answers = {};
+let sequence = [QUESTIONS.q1, QUESTIONS.q3, QUESTIONS.q5, QUESTIONS.q6, QUESTIONS.q7, QUESTIONS.q8];
+let currentIdx = 0;
+let selectedOpt = null;
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const state = JSON.parse(saved);
+    answers = state.answers || {};
+    if (answers.q1 !== undefined) sequence = buildSequence(answers.q1);
+    currentIdx = Math.min(state.currentIdx || 0, sequence.length - 1);
+  } catch (e) {}
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ answers, currentIdx })); } catch (e) {}
+}
+
+function clearState() {
+  try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+}
+
+function rebuildTabs() {
+  const tabRow = document.getElementById('q-tabs');
+  tabRow.innerHTML = '';
+  sequence.forEach((q, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'state-tab' + (i === currentIdx ? ' active' : '');
+    btn.textContent = q.label;
+    btn.addEventListener('click', () => showQuestion(i));
+    tabRow.appendChild(btn);
+  });
+}
+
+// Selection-logic helpers for multi-select questions
+function applyMultiToggle(kind, currentSet, tappedIdx) {
+  const sel = new Set(currentSet);
+  if (kind === 'q7') {
+    // Indices: 0–3 independent · 4 = "All of the above"
+    if (tappedIdx <= 3) {
+      sel.has(tappedIdx) ? sel.delete(tappedIdx) : sel.add(tappedIdx);
+      // Symmetric rule: all four of 1–4 selected ⇒ 5 lights up; any deselected ⇒ 5 clears
+      const allFourSet = sel.has(0) && sel.has(1) && sel.has(2) && sel.has(3);
+      if (allFourSet) { sel.add(4); } else { sel.delete(4); }
+    } else if (tappedIdx === 4) {
+      if (sel.has(4)) { sel.delete(4); }
+      else { sel.add(0); sel.add(1); sel.add(2); sel.add(3); sel.add(4); }
+    }
+  } else if (kind === 'q8') {
+    // Indices: 0 = "Nothing / just getting started" (mutex with 1–4) · 1–4 independent
+    if (tappedIdx === 0) {
+      if (sel.has(0)) { sel.delete(0); }
+      else { sel.clear(); sel.add(0); }
+    } else {
+      sel.has(tappedIdx) ? sel.delete(tappedIdx) : sel.add(tappedIdx);
+      sel.delete(0);
+    }
+  }
+  return Array.from(sel).sort((a, b) => a - b);
+}
+
+function isAnswered(q) {
+  const a = answers[q.id];
+  if (q.datePicker) return true; // mockup: date assumed set
+  if (q.multiSelect) return Array.isArray(a) && a.length > 0;
+  if (q.slider) return typeof a === 'number';
+  return a !== undefined;
+}
+
+function setContinueState(q) {
+  const btn = document.getElementById('continue-btn');
+  if (isAnswered(q)) btn.classList.remove('disabled');
+  else btn.classList.add('disabled');
+}
+
+function showQuestion(idx) {
+  currentIdx = idx;
+  const q = sequence[idx];
+  const total = sequence.length;
+  selectedOpt = null;
+
+  // Tabs
+  document.querySelectorAll('.state-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+
+  // Progress — show "1 of ?" until Q1 answered
+  const pct = Math.round(((idx + 1) / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  const knownTotal = answers.q1 !== undefined ? total : '?';
+  document.getElementById('progress-label').textContent = `${idx + 1} of ${knownTotal}`;
+
+  // Question text + optional subtext (e.g., multi-select hint "Select all that apply")
+  const titleEl = document.getElementById('q-text');
+  const subEl = document.getElementById('q-subtext');
+  titleEl.textContent = q.text;
+  if (q.sub) {
+    subEl.textContent = q.sub;
+    subEl.style.display = '';
+    titleEl.style.marginBottom = '6px';
+  } else {
+    subEl.textContent = '';
+    subEl.style.display = 'none';
+    titleEl.style.marginBottom = '22px';
+  }
+
+  // Skip button visibility and label
+  const skipBtn = document.getElementById('skip-btn');
+  if (q.required) {
+    skipBtn.style.display = 'none';
+  } else {
+    skipBtn.style.display = '';
+    skipBtn.textContent = q.skipLabel || 'Skip this question';
+  }
+
+  // Answer region
+  const container = document.getElementById('answer-options');
+  container.innerHTML = '';
+
+  if (q.datePicker) {
+    const label = q.pickerLabel || 'Date';
+    const hint = q.maxToday ? 'Max date: today' : (q.minToday ? 'Min date: today' : '');
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+    wrap.innerHTML = `
+      <div style="font-size:13px;font-weight:600;color:rgba(26,26,26,0.6);margin-bottom:4px;">${label}</div>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:1;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Month</div>
+        <div style="width:72px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Day</div>
+        <div style="width:80px;height:48px;background:white;border:1.5px solid rgba(26,26,26,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(26,26,26,0.4);">Year</div>
+      </div>
+      <div style="font-size:12px;color:rgba(26,26,26,0.4);margin-top:4px;">Opens native date picker on device${hint ? ' · ' + hint : ''}</div>
+    `;
+    container.appendChild(wrap);
+    setContinueState(q);
+    return;
+  }
+
+  if (q.slider) {
+    const min = q.sliderMin, max = q.sliderMax;
+    const saved = answers[q.id];
+    let confirmed = typeof saved === 'number';
+    let value = confirmed ? saved : Math.round((min + max) / 2);
+
+    const positionPct = (v) => ((v - min) / (max - min)) * 100;
+
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'display:flex;flex-direction:column;padding:18px 4px 8px;user-select:none;';
+    wrap.innerHTML = `
+      <div class="slider-value" style="text-align:center;height:22px;font-size:15px;font-weight:600;color:var(--text-primary);font-family:'DM Sans',sans-serif;visibility:${confirmed ? 'visible' : 'hidden'};">${value}</div>
+      <div class="slider-row" style="position:relative;height:44px;display:flex;align-items:center;cursor:pointer;margin-top:6px;">
+        <div class="slider-track" style="position:relative;width:100%;height:6px;background:rgba(26,26,26,0.10);border-radius:9999px;">
+          <div class="slider-fill" style="position:absolute;left:0;top:0;height:100%;background:var(--purple-500);border-radius:9999px;width:${confirmed ? positionPct(value) + '%' : '0%'};transition:width 0.15s ease;"></div>
+          ${[1,2,3,4,5].map(i => `<div class="slider-tick" style="position:absolute;left:${positionPct(i)}%;top:-1px;transform:translateX(-1px);width:2px;height:8px;background:rgba(26,26,26,0.15);border-radius:1px;"></div>`).join('')}
+          <div class="slider-thumb" style="position:absolute;left:${positionPct(value)}%;top:50%;width:28px;height:28px;border-radius:50%;background:var(--white);border:2px solid ${confirmed ? 'var(--purple-500)' : 'var(--border-default)'};box-shadow:0 1px 2px rgba(26,26,26,0.10);transform:translate(-50%,-50%);transition:left 0.15s ease,border-color 0.15s ease;"></div>
+        </div>
+      </div>
+      <div class="slider-end-labels" style="display:flex;justify-content:space-between;margin-top:14px;font-size:12px;color:var(--text-secondary);font-family:'DM Sans',sans-serif;">
+        <span>${q.sliderLeft}</span>
+        <span>${q.sliderRight}</span>
+      </div>
+    `;
+    container.appendChild(wrap);
+
+    const row = wrap.querySelector('.slider-row');
+    const fill = wrap.querySelector('.slider-fill');
+    const thumb = wrap.querySelector('.slider-thumb');
+    const valueLabel = wrap.querySelector('.slider-value');
+
+    const setValue = (v) => {
+      value = Math.max(min, Math.min(max, v));
+      confirmed = true;
+      fill.style.width = positionPct(value) + '%';
+      thumb.style.left = positionPct(value) + '%';
+      thumb.style.borderColor = 'var(--purple-500)';
+      valueLabel.textContent = value;
+      valueLabel.style.visibility = 'visible';
+      answers[q.id] = value;
+      setContinueState(q);
+      saveState();
+    };
+
+    const pickFromEvent = (e) => {
+      const rect = row.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      const newVal = Math.round(min + ratio * (max - min));
+      setValue(newVal);
+    };
+
+    row.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      pickFromEvent(e);
+      const onMove = (ev) => pickFromEvent(ev);
+      const onUp = () => {
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+      };
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+    });
+
+    setContinueState(q);
+    return;
+  }
+
+  if (q.multiSelect) {
+    const renderButtons = () => {
+      container.innerHTML = '';
+      const selArr = answers[q.id] || [];
+      const selSet = new Set(selArr);
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-opt' + (selSet.has(i) ? ' selected' : '');
+        btn.textContent = opt;
+        btn.addEventListener('click', () => {
+          const next = applyMultiToggle(q.multiKind, selSet, i);
+          answers[q.id] = next;
+          saveState();
+          renderButtons();
+          setContinueState(q);
+        });
+        container.appendChild(btn);
+      });
+    };
+    renderButtons();
+    setContinueState(q);
+    return;
+  }
+
+  // Single-select
+  const savedAnswer = answers[q.id];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'answer-opt' + (savedAnswer === i ? ' selected' : '');
+    btn.textContent = opt;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.answer-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedOpt = i;
+      answers[q.id] = i;
+
+      // Q1 special: rebuild sequence immediately and update tabs + progress total
+      if (q.id === 'q1') {
+        sequence = buildSequence(i);
+        if (i === 3) answers.q3 = 1; // Expecting again → auto-set Q3="No"
+        rebuildTabs();
+        const newTotal = sequence.length;
+        document.getElementById('progress-fill').style.width = Math.round((1 / newTotal) * 100) + '%';
+        document.getElementById('progress-label').textContent = `1 of ${newTotal}`;
+      }
+
+      setContinueState(q);
+      saveState();
+    });
+    container.appendChild(btn);
+  });
+
+  if (savedAnswer !== undefined) selectedOpt = savedAnswer;
+  setContinueState(q);
+}
+
+// Continue
+document.getElementById('continue-btn').addEventListener('click', () => {
+  if (document.getElementById('continue-btn').classList.contains('disabled')) return;
+  saveState();
+  if (currentIdx < sequence.length - 1) {
+    showQuestion(currentIdx + 1);
+  } else {
+    clearState();
+    window.location.href = '03-building-your-plan.html';
+  }
+});
+
+// Skip
+document.getElementById('skip-btn').addEventListener('click', () => {
+  const q = sequence[currentIdx];
+  if (q.skipDefault !== undefined) answers[q.id] = q.skipDefault;
+  saveState();
+  if (currentIdx < sequence.length - 1) {
+    showQuestion(currentIdx + 1);
+  } else {
+    clearState();
+    window.location.href = '03-building-your-plan.html';
+  }
+});
+
+// Init
+loadState();
+rebuildTabs();
+showQuestion(currentIdx);
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
