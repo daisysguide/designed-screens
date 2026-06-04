@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body class="page-09">
+<body class="page-15">
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="sidebar-brand-title">daisy's guide</div>
@@ -72,7 +72,7 @@
   </div>
 </div>
 
-<div class="page-desc page-desc-full">Full topic list grouped by category. Three toggle states. Sticky header + CTA. Also reachable from Topic List and Settings.</div>
+<div class="page-desc page-desc-full">Post-purchase plan editor, summoned from Topic List or Settings. Adopts the flow-nav modal shell from Screen 16: presents as a slide-up full-screen modal over the bottom nav; ✕ top-right and swipe-down-from-top both exit back to the originating screen. No top-left back-a-step; no bottom CTA. Every toggle applies instantly and persists — there is nothing to save and nothing to discard.</div>
 
 <div class="main-layout">
 
@@ -82,56 +82,64 @@
       <div class="phone-notch"></div>
       <div class="phone-screen">
 
-        <!-- Sticky header -->
-        <div class="screen-header">
-          <div class="screen-header-title">Customize your plan</div>
-          <div class="screen-header-sub"><strong>45 topics in your plan</strong> · 6 hidden — tap any topic to add or remove it.</div>
+        <!-- Exit row: ✕ top-right. Top-left empty (this is a summoned editor,
+             not a sequential step in the flow). -->
+        <div class="exit-row">
+          <a class="exit-btn" href="14-topic-list.html" aria-label="Exit">✕</a>
         </div>
 
-        <!-- Scrollable list -->
-        <div class="scroll-area">
+        <!-- Sticky title + live-count subhead -->
+        <div class="screen-header">
+          <div class="screen-header-title">Customize your plan</div>
+          <div class="screen-header-sub"><strong id="count-included">45 topics in your plan</strong> · <span id="count-hidden">6</span> hidden. Tap any topic to add or remove it.</div>
+        </div>
+
+        <!-- Scrollable list. All 7 categories are always expanded; the user
+             scrolls one continuous grouped list. Category headers stick to the
+             top of the scroll area for orientation. -->
+        <div class="scroll-area" id="scroll-area">
 
           <!-- The Basics -->
           <div class="cat-group">
             <div class="cat-header">
               <div class="cat-name">The Basics</div>
-              <div class="cat-badge">5 of 7</div>
+              <div class="cat-badge" data-cat-badge>5 of 7</div>
             </div>
 
-            <div class="topic-row">
+            <div class="topic-row" data-state="included">
               <div class="checkbox included"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label">What will baby's first and middle name be?</div>
               </div>
             </div>
 
-            <div class="topic-row">
+            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you have the same last name. Tap to add back.">
               <div class="checkbox we-hid"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label dimmed">What will baby's last name be?</div>
-                <div class="topic-reason">We hid this because you have the same last name · <span>Tap to add back</span></div>
+                <div class="topic-reason">We hid this because you have the same last name. Tap to add back.</div>
               </div>
             </div>
 
-            <div class="topic-row">
+            <div class="topic-row" data-state="included">
               <div class="checkbox included"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label">Where will we raise our family?</div>
               </div>
             </div>
 
-            <div class="topic-row">
+            <div class="topic-row" data-state="included">
               <div class="checkbox included"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label">How will we budget for a baby?</div>
               </div>
             </div>
 
-            <div class="topic-row">
+            <div class="topic-row" data-state="you-hid">
               <div class="checkbox you-hid"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label dimmed">Do we have life insurance?</div>
-                <div class="topic-reason">You hid this · <span>Tap to add back</span></div>
+                <div class="topic-reason">You hid this. Tap to add back.</div>
               </div>
             </div>
           </div>
@@ -139,26 +147,26 @@
           <!-- Pregnancy & Birth -->
           <div class="cat-group">
             <div class="cat-header">
-              <div class="cat-name">Pregnancy & Birth</div>
-              <div class="cat-badge">8 of 9</div>
+              <div class="cat-name">Pregnancy &amp; Birth</div>
+              <div class="cat-badge" data-cat-badge>8 of 9</div>
             </div>
 
-            <div class="topic-row">
+            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you said you're having a girl. Tap to add back.">
               <div class="checkbox we-hid"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label dimmed">If it's a boy, will we circumcise?</div>
-                <div class="topic-reason">We hid this because you said you're having a girl · <span>Tap to add back</span></div>
+                <div class="topic-reason">We hid this because you said you're having a girl. Tap to add back.</div>
               </div>
             </div>
 
-            <div class="topic-row">
+            <div class="topic-row" data-state="included">
               <div class="checkbox included"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label">What is our birth plan?</div>
               </div>
             </div>
 
-            <div class="topic-row">
+            <div class="topic-row" data-state="included">
               <div class="checkbox included"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label">Doctor or midwife?</div>
@@ -171,12 +179,6 @@
 
         </div>
 
-        <!-- Sticky CTA -->
-        <div class="sticky-cta">
-          <button class="btn-primary">Unlock my plan →</button>
-          <!-- isOnboarding=true → "Unlock my plan →" · isOnboarding=false → "Save changes" -->
-        </div>
-
       </div>
     </div>
   </div>
@@ -187,15 +189,6 @@
     <div class="spec-card">
       <div class="spec-card-title">Navigation flow</div>
       <div class="flow-map" style="flex-direction:column;align-items:flex-start;gap:12px;">
-        <div style="font-size:12px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;">During onboarding (isOnboarding = true)</div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <div class="flow-node from">08 Personalized Results</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-node current">15 Manage Topics</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-node dest">09 Paywall</div>
-        </div>
-        <div style="font-size:12px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;margin-top:8px;">Post-purchase (isOnboarding = false)</div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <div class="flow-node from">Topic List / Settings</div>
           <div class="flow-arrow">→</div>
@@ -205,8 +198,7 @@
         </div>
       </div>
       <div class="info-box" style="margin-top:12px;">
-        During onboarding: reached from Screen 08 via "Review and unlock your plan →" · CTA "Unlock my plan →" → Screen 09 Paywall · Back → Screen 08.<br>
-        Post-purchase: reached from Topic List "Manage topics" link or Settings → "Manage topics" · CTA "Save changes" → returns to originating screen · Back → originating screen.
+        <strong>Flow-nav model (reused from Screen 16):</strong> presents as a slide-up full-screen modal to 100% coverage, covering the bottom nav. Exits via <strong>✕ top-right</strong> or <strong>swipe-down-from-top</strong> back to the originating screen. The swipe-down gesture is gated: only fires when the content is scrolled to the top and the gesture didn't start on an interactive control (every topic row is interactive here, so this gating matters). <strong>No top-left back-a-step</strong> — 15 is a summoned editor, not a sequential step in the 16→20 chain. <strong>Non-destructive exit; no confirm dialog.</strong> In this mock, the ✕ wires to <code>14-topic-list.html</code> as the demo default; real routing returns to whichever screen summoned it.
       </div>
     </div>
 
@@ -226,28 +218,29 @@
           <div class="legend-box we-hid"></div>
           <div>
             <div class="legend-label">We hid this</div>
-            <div class="legend-sub">Dashed border · <code>opacity: ~0.55</code> · reason shown below label in <code>text-tertiary</code> · "Tap to add back" in <code>purple-500</code></div>
+            <div class="legend-sub">Dashed border · dimmed label · the warm <em>'we'</em> voice explains why ("We hid this because [reason]. Tap to add back.") · only the initial quiz-filtered state — overwritten by any user action (see provenance flip below)</div>
           </div>
         </div>
         <div class="legend-row">
           <div class="legend-box you-hid"></div>
           <div>
             <div class="legend-label">You hid this</div>
-            <div class="legend-sub">Empty solid border · <code>opacity: ~0.4</code> · "You hid this · Tap to add back" below label</div>
+            <div class="legend-sub">Empty solid border · dimmed label · "You hid this. Tap to add back."</div>
           </div>
         </div>
       </div>
-      <div class="info-box">Nothing is ever truly gone — every hidden topic has a visible "Tap to add back" affordance. Users are always in control.</div>
+      <div class="info-box">Nothing is ever truly gone — every hidden topic has visible "Tap to add back" text inside its row. Users are always in control.</div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Checkbox spec</div>
       <table class="spec-table">
-        <tr><td>Size</td><td>22×22px · <code>border-radius: 6px</code></td></tr>
+        <tr><td>Size</td><td>22×22px · <code>border-radius: 6px</code> · <strong>visual affordance only</strong> (<code>pointer-events: none</code>) — the entire row is the tap target</td></tr>
         <tr><td>Included</td><td><code>purple-500</code> fill · white ✓ checkmark · 13px bold</td></tr>
         <tr><td>We hid</td><td>White bg · <code>2px dashed border-strong</code></td></tr>
         <tr><td>You hid</td><td>White bg · <code>2px solid border-default</code></td></tr>
         <tr><td>Tap behavior</td><td>Included → You hid. We hid → Included (add back). You hid → Included (add back).</td></tr>
+        <tr><td>Provenance flip</td><td>Once a user adds back a "We hid" (quiz-filtered) topic and later hides it themselves, the row reads <strong>"You hid this. Tap to add back."</strong> — not the original "We hid this because [reason]." Most-recent actor owns the label. The quiz reason is only the initial state and is overwritten by any user action. (Underlying provenance can persist server-side; the UI label reflects the current actor.)</td></tr>
         <tr><td>Transition</td><td><code>all 0.15s ease</code> on state change</td></tr>
       </table>
     </div>
@@ -255,25 +248,26 @@
     <div class="spec-card">
       <div class="spec-card-title">Layout</div>
       <table class="spec-table">
-        <tr><td>Header</td><td>Sticky · cream bg · screen title + live count subhead · <code>border-bottom: 1px solid border-default</code></td></tr>
-        <tr><td>Live count</td><td>"45 topics in your plan · 6 hidden" · updates in real time as user toggles topics</td></tr>
-        <tr><td>Scroll area</td><td>Flex 1 · overflows vertically · groups scroll together</td></tr>
+        <tr><td>Header</td><td>Sheet top is the <strong>exit-row</strong> (✕ top-right; top-left empty) sitting above the <strong>sticky title + live-count subhead</strong>. Cream bg · <code>border-bottom: 1px solid border-default</code>.</td></tr>
+        <tr><td>Live count</td><td>"X topics in your plan · Y hidden" · updates in real time as user toggles topics</td></tr>
+        <tr><td>Scroll area</td><td>Flex 1 · scrolls vertically · all 7 categories continuously stacked</td></tr>
+        <tr><td>Categories</td><td><strong>Flat — never collapsible.</strong> All 7 are always expanded. Headers are <strong>sticky-on-scroll</strong> inside the scroll area, so the category the user is currently inside stays labeled.</td></tr>
         <tr><td>Category headers</td><td>11px DM Sans bold · ALL CAPS · <code>text-secondary</code> · count badge right</td></tr>
         <tr><td>Count badge</td><td>"X of Y" · neutral gray pill · updates live</td></tr>
-        <tr><td>Topic rows</td><td>10px padding · <code>1px solid rgba(26,26,26,0.06)</code> bottom border · last child no border</td></tr>
-        <tr><td>Sticky CTA</td><td>Pinned to bottom · cream bg · <code>border-top: 1px solid border-default</code> · 12px 20px 24px padding · label is context-aware (see <code>isOnboarding</code> below)</td></tr>
-        <tr><td>Label</td><td>Context-dependent: <strong>"Unlock my plan →"</strong> when <code>isOnboarding = true</code> (pre-purchase) · <strong>"Save changes"</strong> when <code>isOnboarding = false</code> (post-purchase)</td></tr>
-        <tr><td><code>isOnboarding</code> prop</td><td>Passed from routing layer based on purchase state · <code>true</code> = pre-purchase onboarding → CTA label "Unlock my plan →" · <code>false</code> = post-purchase → CTA label "Save changes"</td></tr>
+        <tr><td>Topic rows</td><td><strong>Entire row is the tap target</strong>, <code>min-height: 44px</code> · 11px padding · <code>1px solid rgba(26,26,26,0.06)</code> bottom border · last child no border. The 22×22 checkbox is visual only.</td></tr>
+        <tr><td>Bottom</td><td>No sticky CTA. The screen content flows to the bottom edge — exit is owned by the ✕ and the swipe-down gesture (see Navigation flow).</td></tr>
       </table>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Copy rules</div>
       <table class="spec-table">
-        <tr><td>We hid reason</td><td>"We hid this because [plain-language reason]" · warm 'we' voice · never "AI hid this"</td></tr>
-        <tr><td>You hid label</td><td>"You hid this · Tap to add back"</td></tr>
-        <tr><td>Add back CTA</td><td>"Tap to add back" · <code>purple-500</code> · inline in reason text · not a separate button</td></tr>
-        <tr><td>Category names</td><td>All 7 book category names in Title Case verbatim</td></tr>
+        <tr><td>Subhead</td><td>"X topics in your plan · Y hidden. Tap any topic to add or remove it." · counts dynamic · period after "hidden" (no em dash)</td></tr>
+        <tr><td>"We hid" reason</td><td>"We hid this because [plain-language reason]. Tap to add back." · warm 'we' voice · never "AI hid this"</td></tr>
+        <tr><td>"You hid" label</td><td>"You hid this. Tap to add back."</td></tr>
+        <tr><td>"Tap to add back"</td><td>Plain descriptive text inside the row — <strong>not a separate tap target</strong>. The whole row taps.</td></tr>
+        <tr><td>No em dashes</td><td>House rule. Use periods or restructure.</td></tr>
+        <tr><td>No info-button</td><td>No (?) explainer. The subhead plus the per-row reasons are the explanation.</td></tr>
       </table>
     </div>
 
@@ -281,24 +275,25 @@
       <div class="spec-card-title">Components on this screen</div>
       <div class="component-tags">
         <span class="component-tag">Topic toggle row ×3 states</span>
-        <span class="component-tag">Category group header</span>
+        <span class="component-tag">Category group header (sticky)</span>
         <span class="component-tag">Badge / Count pill</span>
-        <span class="component-tag">Button — Primary (lg, sticky)</span>
-        <span class="component-tag">Screen Header (sticky)</span>
+        <span class="component-tag">Screen Header (exit-row + sticky title + live-count)</span>
+        <span class="component-tag">Exit ✕ (top-right)</span>
       </div>
     </div>
 
     <div class="spec-card">
       <div class="spec-card-title">Behavior notes</div>
       <div class="note-list">
-        <div class="note-item"><div class="note-bullet"></div><span>Header count updates live as user toggles topics — "45 topics in your plan" increments/decrements immediately.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Categories are collapsible — tapping the category header collapses/expands the topic rows.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>All categories shown — user scrolls through all 7. "5 more below" hint prompts scrolling.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Tapping a "we hid" topic adds it back as included. Tapping an included topic moves it to "you hid".</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>Sticky bottom CTA label is context-dependent — 'Unlock my plan →' during onboarding, 'Save changes' post-purchase.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>When <code>isOnboarding=true</code>: CTA is "Unlock my plan →" → Screen 09 Paywall. User has just invested effort reviewing their plan — highest conversion moment.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>When <code>isOnboarding=false</code>: CTA is "Save changes" → returns to the calling screen (Topic List or Settings). <code>isOnboarding</code> is set by the routing layer based on purchase completion state.</span></div>
-        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav in onboarding context. Present in post-onboarding context (accessed from Topic List or Settings).</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Instant-apply.</strong> Every toggle applies immediately and persists; the live count subhead updates in real time. There is nothing to save and nothing to discard — that's why there is no CTA and exit is non-destructive.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Flow-nav modal.</strong> 15 presents as a slide-up full-screen modal over the bottom nav. There is no bottom nav inside this screen. ✕ top-right and swipe-down-from-top both exit; the swipe-down is gated (top-of-scroll + non-interactive start) — every topic row is interactive, so the gating actually matters here.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>No top-left control.</strong> 15 is a summoned editor, not a sequential step in the topic flow, so there is no "back a step" affordance. The ✕ owns exit.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Tap behavior.</strong> Tapping a "We hid" topic adds it back as Included. Tapping an Included topic moves it to "You hid". Tapping a "You hid" topic adds it back as Included.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Provenance flip.</strong> Once a user touches a quiz-filtered ("We hid") topic and then re-hides it, the row reads "You hid this. Tap to add back." — the warmer "We hid this because [reason]" is gone. Most-recent actor owns the label; the quiz reason is only the initial state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Flat categories.</strong> All 7 categories are always fully expanded. Category headers are static section labels (kept sticky-on-scroll for orientation). There is no collapse / expand. There is no "By category / By stage" grouping toggle — category is the only grouping, by design.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Full-row tap target.</strong> The 22×22 checkbox is a visual affordance only (<code>pointer-events: none</code>). The entire row is the hit area, min 44px tall. "Tap to add back" is plain text inside the row, not a separate control.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span><strong>Exit is non-destructive and resumable.</strong> Closing 15 returns the user to whichever screen summoned it (Topic List or Settings). No confirm dialog.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No em dashes in any on-screen copy.</span></div>
       </div>
     </div>
 
@@ -315,6 +310,84 @@
     </div>
   </div>
 </div>
+
+<script>
+/* Instant-apply toggle, live count, and provenance flip.
+   data-state on each .topic-row drives the visual + the row's label.
+   data-we-hid-reason holds the original "We hid this because …" line,
+   shown only while the row's state is "we-hid". Once flipped, the row
+   reads "You hid this. Tap to add back." and the quiz reason is gone. */
+
+const YOU_HID_LINE = 'You hid this. Tap to add back.';
+
+function updateCounts() {
+  const rows = document.querySelectorAll('.topic-row');
+  let included = 0;
+  let hidden   = 0;
+  rows.forEach(r => {
+    if (r.dataset.state === 'included') included += 1;
+    else                                  hidden += 1;
+  });
+  document.getElementById('count-included').textContent = included + ' topics in your plan';
+  document.getElementById('count-hidden').textContent   = hidden;
+
+  // Category badges
+  document.querySelectorAll('.cat-group').forEach(group => {
+    const total = group.querySelectorAll('.topic-row').length;
+    const inc   = group.querySelectorAll('.topic-row[data-state="included"]').length;
+    const badge = group.querySelector('[data-cat-badge]');
+    if (badge) badge.textContent = inc + ' of ' + total;
+  });
+}
+
+function renderRow(row) {
+  const state = row.dataset.state;
+  const checkbox = row.querySelector('.checkbox');
+  const label    = row.querySelector('.topic-label');
+  const wrap     = row.querySelector('.topic-text-wrap');
+
+  checkbox.className = 'checkbox ' + state;
+  label.classList.toggle('dimmed', state !== 'included');
+
+  // Manage the reason line.
+  let reason = wrap.querySelector('.topic-reason');
+  if (state === 'included') {
+    if (reason) reason.remove();
+  } else {
+    if (!reason) {
+      reason = document.createElement('div');
+      reason.className = 'topic-reason';
+      wrap.appendChild(reason);
+    }
+    if (state === 'we-hid') {
+      reason.textContent = row.dataset.weHidReason || YOU_HID_LINE;
+    } else {
+      reason.textContent = YOU_HID_LINE;
+    }
+  }
+}
+
+function toggleRow(row) {
+  // Included → You hid. Anything else → Included (add back).
+  // Any transition out of "we-hid" then back to "hidden" flips to "you-hid"
+  // (provenance flip — most-recent actor owns the label).
+  const cur = row.dataset.state;
+  row.dataset.state = (cur === 'included') ? 'you-hid' : 'included';
+
+  // Drop the quiz reason as soon as the user has acted on this row — the
+  // next time it's hidden, it's "You hid this," not "We hid this because …".
+  delete row.dataset.weHidReason;
+
+  renderRow(row);
+  updateCounts();
+}
+
+document.querySelectorAll('.topic-row').forEach(row => {
+  row.addEventListener('click', () => toggleRow(row));
+});
+
+updateCounts();
+</script>
 <script src="nav.js"></script>
 </body>
 </html>
