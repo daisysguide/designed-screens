@@ -7609,14 +7609,16 @@ body[class*="page-"] .topbar .key-hint,
 body[class*="page-"] .topbar .topbar-nav { display: none !important; }
 
 /* Two-column layout: column 1 = phone preview (sticky), column 2
-   = pill + title + description + state-tab buttons. The phone-wrap
-   width matches v4's 375px column. Override every per-page
-   .main-layout rule by being more specific (.demo-layout class). */
+   = pill + title + description + state-tab buttons. The phone is
+   scaled to 80% (300×650) so the full device fits visibly on a
+   standard MacBook viewport without the user having to scroll
+   inside the cream area. Internal content keeps its 375-design
+   coordinates — only the .phone box is transformed. */
 body[class*="page-"] .screen-root .demo-layout {
   max-width: 900px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 375px 1fr;
+  grid-template-columns: 300px 1fr;
   gap: 32px;
   align-items: start;
   padding-top: 32px;
@@ -7625,6 +7627,17 @@ body[class*="page-"] .screen-root .demo-layout {
 body[class*="page-"] .screen-root .demo-layout .phone-wrap {
   position: sticky;
   top: 32px;
+  width: 300px;
+  height: 650px;
+}
+
+/* Scale the phone itself to 80%. transform-origin: top left so the
+   shrunk phone hugs the column's top-left corner; the wrap above
+   reserves the reduced footprint so layout doesn't over-allocate
+   vertical space. */
+body[class*="page-"] .screen-root .demo-layout .phone-wrap .phone {
+  transform: scale(0.8);
+  transform-origin: top left;
 }
 
 /* Column 2 — meta panel: pill, title, description, state-tab row.
