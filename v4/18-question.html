@@ -477,7 +477,7 @@ body.page-15 .screen-root .code-val    { color: #c75000; }
         <tr><td>Sub-line — unlinked</td><td>"Your partner sees this after you both complete this topic."</td></tr>
         <tr><td>Sharing</td><td>The note is <strong>shared with the partner</strong> and surfaced at the reveal (Screens 20 / 21). It is not private to the author.</td></tr>
         <tr><td>Textarea</td><td>Full width · min-height 96px · <strong>auto-grows with content</strong> (height tracks <code>scrollHeight</code> on input; no max) · white bg · <code>1.5px border-default</code> · <code>radius-md</code> · DM Sans 15px · <code>border-focus</code> + ring on focus</td></tr>
-        <tr><td>Placeholder</td><td>"Your thoughts, context, or questions for later."</td></tr>
+        <tr><td>Placeholder</td><td>"Your thoughts or questions for later."</td></tr>
         <tr><td>Character count</td><td>"N characters remaining" · 12px <code>text-tertiary</code> · right-aligned below textarea · turns <code>status-error-text</code> (#c0392b) below 50 chars remaining</td></tr>
         <tr><td>Max length</td><td>280 chars · enforced server-side and by <code>maxlength</code> attribute</td></tr>
         <tr><td>Submit button</td><td><strong>"Done →"</strong> — final-step language, not "Continue →" (no more steps) or "Submit →" (form-y). Always active (note may be empty).</td></tr>
@@ -935,7 +935,7 @@ function shuffle(arr) {
 /* ── Note step ── */
 function renderNote(area) {
   area.innerHTML = `
-    <textarea class="note-textarea" id="note-input" placeholder="Your thoughts, context, or questions for later." oninput="onNoteInput(this.value); autoGrowNote(this);" maxlength="280">${escapeHtml(DEMO_STATE.noteText)}</textarea>
+    <textarea class="note-textarea" id="note-input" placeholder="Your thoughts or questions for later." oninput="onNoteInput(this.value); autoGrowNote(this);" maxlength="280">${escapeHtml(DEMO_STATE.noteText)}</textarea>
     <div class="note-char-count" id="char-count">${280 - DEMO_STATE.noteText.length} characters remaining</div>`;
   // Re-flag dirtiness: only "dirty" if user has typed something since last save.
   autoGrowNote(document.getElementById('note-input'));
