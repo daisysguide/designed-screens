@@ -2505,330 +2505,6 @@ body.page-08 .screen-root .page-footer {
 
 body.page-08 .screen-root .footer-label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
 
-/* ── Screen 15-manage-topics.html ── */
-body.page-15 {
-    --cream: #fbefe1;
-    --black: #1a1a1a;
-    --white: #ffffff;
-    --purple-500: #5f45f2;
-    --purple-600: #4f37d4;
-    --green-400: #77eaaf;
-    --text-primary: #1a1a1a;
-    --text-secondary: rgba(26,26,26,0.6);
-    --text-tertiary: rgba(26,26,26,0.4);
-    --text-on-brand: #ffffff;
-    --border-default: rgba(26,26,26,0.15);
-    --border-strong: rgba(26,26,26,0.3);
-    --shadow-sm: 0 1px 2px rgba(26,26,26,0.05);
-    --shadow-md: 0 2px 8px rgba(26,26,26,0.06), 0 1px 2px rgba(26,26,26,0.04);
-    --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
-    --radius-xl: 16px; --radius-full: 9999px;
-  }
-
-body.page-15 .screen-root, body.page-15 .screen-root * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body.page-15 .screen-root {
-    font-family: 'DM Sans', -apple-system, sans-serif;
-    background: #f0ece6; color: var(--text-primary);
-    min-height: 100vh; padding: 40px 24px 60px;
-  }
-
-body.page-15 .screen-root .page-header {
-    max-width: 900px; margin: 0 auto 32px;
-    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
-  }
-
-body.page-15 .screen-root .screen-tag {
-    display: inline-block; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple-500);
-    background: rgba(95,69,242,0.08); padding: 4px 10px;
-    border-radius: var(--radius-full); margin-bottom: 8px;
-  }
-
-body.page-15 .screen-root .page-title {
-    font-family: 'Grandstander', cursive; font-size: 28px; font-weight: 700;
-    color: var(--black); letter-spacing: -0.02em; line-height: 1.1;
-  }
-
-body.page-15 .screen-root .page-desc { font-size: 14px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
-
-body.page-15 .screen-root .nav-pills { display: flex; gap: 8px; flex-shrink: 0; }
-
-body.page-15 .screen-root .nav-pill {
-    height: 36px; padding: 0 16px; border-radius: var(--radius-full);
-    border: 1.5px solid var(--border-strong); background: var(--white);
-    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-    color: var(--text-primary); cursor: pointer; display: flex; align-items: center;
-    gap: 6px; text-decoration: none; transition: background 0.15s;
-  }
-
-body.page-15 .screen-root .nav-pill:hover { background: var(--cream); }
-
-body.page-15 .screen-root .nav-pill.next { background: var(--purple-500); border-color: var(--purple-500); color: white; }
-
-body.page-15 .screen-root .nav-pill.next:hover { background: var(--purple-600); }
-
-body.page-15 .screen-root .main-layout {
-    max-width: 900px; margin: 0 auto;
-    display: grid; grid-template-columns: 375px 1fr;
-    gap: 32px; align-items: start;
-  }
-
-body.page-15 .screen-root .phone-wrap { position: sticky; top: 32px; }
-
-body.page-15 .screen-root .phone {
-    width: 375px; height: 812px; border-radius: 48px; overflow: hidden;
-    position: relative; background: var(--cream);
-    box-shadow: 0 0 0 2px var(--black), 0 32px 64px rgba(26,26,26,0.22), 0 8px 16px rgba(26,26,26,0.1);
-  }
-
-body.page-15 .screen-root .phone-notch {
-    width: 126px; height: 30px; background: var(--black);
-    border-radius: 0 0 20px 20px; margin: 0 auto; position: relative; z-index: 10;
-  }
-
-body.page-15 .screen-root .phone-screen {
-    padding: 0;
-    height: calc(812px - 30px);
-    display: flex; flex-direction: column; overflow: hidden;
-  }
-
-/* Exit row — ported from page-13 (Screen 16 Topic Intro). The flow-nav model:
-   ✕ top-right, top-left empty (15 is a summoned editor, not a sequential
-   step). Tappable; the rest of the model (slide-up present, swipe-down) is
-   documented in the spec but not wired here. */
-body.page-15 .screen-root .exit-row {
-    display: flex; align-items: center; justify-content: flex-end;
-    height: 44px; padding: 4px 14px 0; flex-shrink: 0;
-  }
-
-body.page-15 .screen-root .exit-btn {
-    width: 36px; height: 36px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(26,26,26,0.05); color: var(--text-primary);
-    border: none; cursor: pointer; font-size: 18px; line-height: 1;
-    font-family: 'DM Sans', sans-serif; text-decoration: none;
-  }
-
-body.page-15 .screen-root .exit-btn:hover { background: rgba(26,26,26,0.10); }
-
-/* Sticky title + live count subhead. Sits beneath the exit-row. */
-body.page-15 .screen-root .screen-header {
-    padding: 8px 20px 12px;
-    background: var(--cream);
-    border-bottom: 1px solid var(--border-default);
-    flex-shrink: 0;
-  }
-
-body.page-15 .screen-root .screen-header-title {
-    font-family: 'Grandstander', cursive; font-size: 20px; font-weight: 700;
-    color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: 4px;
-  }
-
-body.page-15 .screen-root .screen-header-sub {
-    font-size: 13px; color: var(--text-secondary); line-height: 1.4;
-  }
-
-body.page-15 .screen-root .screen-header-sub strong { color: var(--text-primary); }
-
-/* Scrollable content. The .scroll-area sits inside .scroll-wrap so the
-   bottom-fade overlay can layer on top of the scrolling content without
-   stealing pointer events. */
-body.page-15 .screen-root .scroll-wrap {
-    position: relative;
-    flex: 1; min-height: 0;
-  }
-
-body.page-15 .screen-root .scroll-area {
-    position: absolute; inset: 0;
-    overflow-y: auto; padding: 0 20px 20px;
-    scrollbar-width: none;
-  }
-
-body.page-15 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
-
-/* Soft bottom fade — subtle "more below" affordance. Never text. */
-body.page-15 .screen-root .scroll-wrap::after {
-    content: '';
-    position: absolute; left: 0; right: 0; bottom: 0;
-    height: 28px;
-    background: linear-gradient(to bottom, rgba(251,239,225,0), var(--cream));
-    pointer-events: none;
-  }
-
-/* Category groups — flat (always expanded). The header is sticky inside the
-   scroll area for orientation. */
-body.page-15 .screen-root .cat-group { margin-bottom: 18px; }
-
-body.page-15 .screen-root .cat-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 0 8px;
-    position: sticky; top: 0; z-index: 2;
-    background: var(--cream);
-  }
-
-body.page-15 .screen-root .cat-name {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--text-secondary);
-  }
-
-body.page-15 .screen-root .cat-badge {
-    font-size: 11px; font-weight: 600; padding: 2px 8px;
-    border-radius: var(--radius-full);
-    background: rgba(26,26,26,0.07); color: var(--text-secondary);
-  }
-
-/* Topic row — entire row is the tap target, min 44px tall. The checkbox is a
-   visual affordance only, not the hit area. */
-body.page-15 .screen-root .topic-row {
-    display: flex; align-items: flex-start; gap: 12px;
-    min-height: 44px;
-    padding: 11px 0; border-bottom: 1px solid rgba(26,26,26,0.06);
-    cursor: pointer;
-  }
-
-body.page-15 .screen-root .topic-row:last-child { border-bottom: none; }
-
-body.page-15 .screen-root .topic-row:active { background: rgba(26,26,26,0.03); }
-
-/* Checkbox states — visual only. */
-body.page-15 .screen-root .checkbox {
-    width: 22px; height: 22px; border-radius: 6px;
-    flex-shrink: 0; margin-top: 1px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s;
-    pointer-events: none;
-  }
-
-body.page-15 .screen-root .checkbox.included {
-    background: var(--purple-500);
-    border: none;
-  }
-
-body.page-15 .screen-root .checkbox.included::after {
-    content: '✓'; color: white; font-size: 13px; font-weight: 700;
-  }
-
-body.page-15 .screen-root .checkbox.we-hid {
-    background: var(--white);
-    border: 2px dashed var(--border-strong);
-  }
-
-body.page-15 .screen-root .checkbox.you-hid {
-    background: var(--white);
-    border: 2px solid var(--border-default);
-  }
-
-body.page-15 .screen-root .topic-text-wrap { flex: 1; }
-
-body.page-15 .screen-root .topic-label {
-    font-size: 14px; font-weight: 500; color: var(--text-primary);
-    line-height: 1.4;
-  }
-
-body.page-15 .screen-root .topic-label.dimmed { color: var(--text-secondary); }
-
-body.page-15 .screen-root .topic-reason {
-    font-size: 12px; color: var(--text-tertiary); margin-top: 3px;
-    line-height: 1.4;
-  }
-
-/* Bottom-of-list scroll hint */
-body.page-15 .screen-root .scroll-hint {
-    text-align: center; font-size: 12px; color: var(--text-tertiary);
-    padding: 12px 0 4px;
-  }
-
-/* SPEC */
-body.page-15 .screen-root .spec-panel { display: flex; flex-direction: column; gap: 20px; }
-
-body.page-15 .screen-root .spec-card {
-    background: var(--white); border-radius: var(--radius-xl);
-    padding: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-default);
-  }
-
-body.page-15 .screen-root .spec-card-title {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 14px;
-  }
-
-body.page-15 .screen-root .flow-map { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
-body.page-15 .screen-root .flow-node { padding: 6px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; }
-
-body.page-15 .screen-root .flow-node.from { background: rgba(26,26,26,0.07); color: var(--text-secondary); }
-
-body.page-15 .screen-root .flow-node.current { background: var(--purple-500); color: white; }
-
-body.page-15 .screen-root .flow-node.dest { background: rgba(95,69,242,0.1); color: var(--purple-500); }
-
-body.page-15 .screen-root .flow-arrow { color: var(--text-tertiary); font-size: 14px; }
-
-body.page-15 .screen-root .info-box {
-    background: rgba(95,69,242,0.06); border: 1px solid rgba(95,69,242,0.15);
-    border-radius: var(--radius-lg); padding: 12px 14px;
-    font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-top: 12px;
-  }
-
-body.page-15 .screen-root .info-box strong { color: var(--purple-500); }
-
-body.page-15 .screen-root .note-list { display: flex; flex-direction: column; gap: 10px; }
-
-body.page-15 .screen-root .note-item { display: flex; gap: 10px; font-size: 13px; line-height: 1.5; }
-
-body.page-15 .screen-root .note-bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--purple-500); flex-shrink: 0; margin-top: 7px; }
-
-body.page-15 .screen-root .spec-table { width: 100%; border-collapse: collapse; }
-
-body.page-15 .screen-root .spec-table tr { border-bottom: 1px solid rgba(26,26,26,0.07); }
-
-body.page-15 .screen-root .spec-table tr:last-child { border-bottom: none; }
-
-body.page-15 .screen-root .spec-table td { padding: 8px 0; font-size: 13px; line-height: 1.4; vertical-align: top; }
-
-body.page-15 .screen-root .spec-table td:first-child { width: 42%; color: var(--text-secondary); font-weight: 500; padding-right: 12px; }
-
-body.page-15 .screen-root code {
-    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px;
-    background: rgba(95,69,242,0.08); color: var(--purple-500);
-    padding: 2px 6px; border-radius: 4px;
-  }
-
-/* Checkbox legend (spec panel) */
-body.page-15 .screen-root .checkbox-legend { display: flex; flex-direction: column; gap: 12px; }
-
-body.page-15 .screen-root .legend-row { display: flex; align-items: flex-start; gap: 12px; }
-
-body.page-15 .screen-root .legend-box {
-    width: 22px; height: 22px; border-radius: 6px;
-    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-  }
-
-body.page-15 .screen-root .legend-box.included { background: var(--purple-500); }
-
-body.page-15 .screen-root .legend-box.we-hid { background: var(--white); border: 2px dashed var(--border-strong); }
-
-body.page-15 .screen-root .legend-box.you-hid { background: var(--white); border: 2px solid var(--border-default); }
-
-body.page-15 .screen-root .legend-label { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
-
-body.page-15 .screen-root .legend-sub { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
-
-body.page-15 .screen-root .component-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-
-body.page-15 .screen-root .component-tag {
-    font-size: 11px; font-weight: 600; padding: 4px 10px;
-    border-radius: var(--radius-full); background: rgba(26,26,26,0.06); color: var(--text-secondary);
-  }
-
-body.page-15 .screen-root .page-footer {
-    max-width: 900px; margin: 40px auto 0;
-    display: flex; justify-content: space-between; align-items: center;
-    padding-top: 24px; border-top: 1px solid var(--border-default);
-  }
-
-body.page-15 .screen-root .footer-label { font-size: 12px; color: var(--text-tertiary); font-weight: 500; }
-
 /* ── Screen 10-customize-your-plan.html ── */
 body.page-09 {
     --cream: #fbefe1;
@@ -2917,9 +2593,27 @@ body.page-09 .screen-root .phone-screen {
     display: flex; flex-direction: column; overflow: hidden;
   }
 
-body.page-09 .screen-root /* Sticky header */
+/* Exit row — flow-nav model (✕ top-right). Top-left empty (15 is a summoned
+   editor, not a sequential step). The model's slide-up present + swipe-down
+   exit are documented in the spec; here the ✕ is wired as a plain anchor. */
+body.page-09 .screen-root .exit-row {
+    display: flex; align-items: center; justify-content: flex-end;
+    height: 44px; padding: 4px 14px 0; flex-shrink: 0;
+  }
+
+body.page-09 .screen-root .exit-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(26,26,26,0.05); color: var(--text-primary);
+    border: none; cursor: pointer; font-size: 18px; line-height: 1;
+    font-family: 'DM Sans', sans-serif; text-decoration: none;
+  }
+
+body.page-09 .screen-root .exit-btn:hover { background: rgba(26,26,26,0.10); }
+
+body.page-09 .screen-root /* Sticky title + live count subhead, beneath the exit-row */
   .screen-header {
-    padding: 16px 20px 12px;
+    padding: 8px 20px 12px;
     background: var(--cream);
     border-bottom: 1px solid var(--border-default);
     flex-shrink: 0;
@@ -2936,20 +2630,41 @@ body.page-09 .screen-root .screen-header-sub {
 
 body.page-09 .screen-root .screen-header-sub strong { color: var(--text-primary); }
 
-body.page-09 .screen-root /* Scrollable content */
-  .scroll-area {
-    flex: 1; overflow-y: auto; padding: 16px 20px 0;
+/* Scrollable content. The .scroll-area sits inside .scroll-wrap so the
+   bottom-fade overlay can layer over scrolling content without stealing
+   pointer events. */
+body.page-09 .screen-root .scroll-wrap {
+    position: relative;
+    flex: 1; min-height: 0;
+  }
+
+body.page-09 .screen-root .scroll-area {
+    position: absolute; inset: 0;
+    overflow-y: auto; padding: 0 20px 20px;
     scrollbar-width: none;
   }
 
 body.page-09 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
 
-body.page-09 .screen-root /* Category group */
-  .cat-group { margin-bottom: 20px; }
+/* Soft bottom fade — subtle "more below" affordance. Never text. */
+body.page-09 .screen-root .scroll-wrap::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 28px;
+    background: linear-gradient(to bottom, rgba(251,239,225,0), var(--cream));
+    pointer-events: none;
+  }
 
+body.page-09 .screen-root /* Category group */
+  .cat-group { margin-bottom: 18px; }
+
+/* Category header — sticky-on-scroll for orientation in the flat list. */
 body.page-09 .screen-root .cat-header {
     display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 8px; cursor: pointer;
+    padding: 10px 0 8px;
+    position: sticky; top: 0; z-index: 2;
+    background: var(--cream);
+    cursor: default;
   }
 
 body.page-09 .screen-root .cat-name {
@@ -2963,21 +2678,26 @@ body.page-09 .screen-root .cat-badge {
     background: rgba(26,26,26,0.07); color: var(--text-secondary);
   }
 
-body.page-09 .screen-root /* Topic row */
-  .topic-row {
+/* Topic row — entire row is the tap target, min 44px tall. The 22×22
+   checkbox is a visual affordance only (pointer-events: none below). */
+body.page-09 .screen-root .topic-row {
     display: flex; align-items: flex-start; gap: 12px;
-    padding: 10px 0; border-bottom: 1px solid rgba(26,26,26,0.06);
+    min-height: 44px;
+    padding: 11px 0; border-bottom: 1px solid rgba(26,26,26,0.06);
     cursor: pointer;
   }
 
 body.page-09 .screen-root .topic-row:last-child { border-bottom: none; }
 
-body.page-09 .screen-root /* Checkbox states */
+body.page-09 .screen-root .topic-row:active { background: rgba(26,26,26,0.03); }
+
+body.page-09 .screen-root /* Checkbox states — visual only */
   .checkbox {
     width: 22px; height: 22px; border-radius: 6px;
     flex-shrink: 0; margin-top: 1px;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.15s;
+    pointer-events: none;
   }
 
 body.page-09 .screen-root .checkbox.included {
