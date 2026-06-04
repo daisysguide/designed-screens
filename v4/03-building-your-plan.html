@@ -159,8 +159,8 @@
         </div>
         </div>
 
-        <div class="screen-heading" id="screen-heading" aria-live="polite">Building your plan...</div>
-        <div class="screen-body" id="screen-body" aria-live="polite">Tailoring this to where you are right now.</div>
+        <div class="screen-heading" id="screen-heading" aria-live="polite">Customizing your plan...</div>
+        <div class="screen-body" id="screen-body" aria-live="polite"></div>
 
         <div class="step-list" id="step-list" aria-live="polite" aria-atomic="false">
 
@@ -207,8 +207,7 @@
     <div class="spec-card">
       <div class="spec-card-title">Screen copy</div>
       <table class="spec-table">
-        <tr><td>Heading (during)</td><td>"Building your plan..." · Grandstander 24px bold · centered</td></tr>
-        <tr><td>Body (during)</td><td>"Tailoring this to where you are right now." · DM Sans 15px · <code>text-secondary</code> · centered · max-width 280px</td></tr>
+        <tr><td>Heading (during)</td><td>"Customizing your plan..." · Grandstander 24px bold · centered</td></tr>
         <tr><td>Heading (done)</td><td>"Your plan is ready." · <code>display-md</code> (Grandstander 24px bold) · centered · 8px gap to body</td></tr>
         <tr><td>Body (done)</td><td>"We found 45 conversations worth having together." · personalized with actual count</td></tr>
         <tr><td>CTA (done)</td><td>"Claim my plan →" · Button (Primary, Large) · full width · taps to advance to Screen 04 Sign Up</td></tr>
@@ -360,24 +359,24 @@ function showState(state) {
     s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
     spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     slotWrap.classList.remove('done');
-    heading.textContent = 'Building your plan...';
-    body.textContent = "Tailoring this to where you are right now.";
+    heading.textContent = 'Customizing your plan...';
+    body.textContent = "";
   } else if (state === 'step2') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item active'; i2.innerHTML = spinnerHtml;
     s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
     spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     slotWrap.classList.remove('done');
-    heading.textContent = 'Building your plan...';
-    body.textContent = "Tailoring this to where you are right now.";
+    heading.textContent = 'Customizing your plan...';
+    body.textContent = "";
   } else if (state === 'step3') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item done'; i2.innerHTML = doneHtml;
     s3.className = 'step-item active'; i3.innerHTML = spinnerHtml;
     spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     slotWrap.classList.remove('done');
-    heading.textContent = 'Building your plan...';
-    body.textContent = "Tailoring this to where you are right now.";
+    heading.textContent = 'Customizing your plan...';
+    body.textContent = "";
   } else if (state === 'done') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item done'; i2.innerHTML = doneHtml;
@@ -425,24 +424,24 @@ function showState(state) {
     s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
     spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     slotWrap.classList.remove('done');
-    heading.textContent = 'Building your plan...';
-    body.textContent = "Tailoring this to where you are right now.";
+    heading.textContent = 'Customizing your plan...';
+    body.textContent = "";
   } else if (state === 'step2') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item active'; i2.innerHTML = spinnerHtml;
     s3.className = 'step-item pending'; i3.innerHTML = pendingHtml;
     spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     slotWrap.classList.remove('done');
-    heading.textContent = 'Building your plan...';
-    body.textContent = "Tailoring this to where you are right now.";
+    heading.textContent = 'Customizing your plan...';
+    body.textContent = "";
   } else if (state === 'step3') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item done'; i2.innerHTML = doneHtml;
     s3.className = 'step-item active'; i3.innerHTML = spinnerHtml;
     spinner.style.display = 'block'; done.style.display = 'none'; stepList.style.display = ''; cta.style.display = 'none';
     slotWrap.classList.remove('done');
-    heading.textContent = 'Building your plan...';
-    body.textContent = "Tailoring this to where you are right now.";
+    heading.textContent = 'Customizing your plan...';
+    body.textContent = "";
   } else if (state === 'done') {
     s1.className = 'step-item done'; i1.innerHTML = doneHtml;
     s2.className = 'step-item done'; i2.innerHTML = doneHtml;
