@@ -296,7 +296,7 @@
         <tr><td>Who can act</td><td>Either partner, unilaterally, anytime. Instant.</td></tr>
         <tr><td>Top pill</td><td>The current state, label only.</td></tr>
         <tr><td>Bottom block</td><td>Centered prompt + echoed pill + provenance + action link. Returning to the computed value clears provenance.</td></tr>
-        <tr><td>Provenance string</td><td>"Computed: {original}. You {settled\|reopened} this on {date}."</td></tr>
+        <tr><td>Provenance string</td><td>"Based on your answers, we said: {original}. You {settled\|reopened} this on {date}."</td></tr>
       </table>
     </div>
 
@@ -716,7 +716,7 @@ function renderStatusBlock() {
     // anything else means a settle (per the rules in toggleStatus).
     const verb = currentState === 'conversation' ? 'reopened' : 'settled';
     const origLabel = STATES[computedState].label;
-    provenance = `<div class="status-provenance">Computed: ${origLabel}. You ${verb} this on ${fmtDate(overrideDate)}.</div>`;
+    provenance = `<div class="status-provenance">Based on your answers, we said: ${origLabel}. You ${verb} this on ${fmtDate(overrideDate)}.</div>`;
   }
 
   block.innerHTML = `
