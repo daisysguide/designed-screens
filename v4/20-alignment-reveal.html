@@ -6,6 +6,35 @@
 <title>Alignment Reveal — Daisy's Guide Designed Screens v4</title>
 <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* Screen 20 entrance cascade + scroll-reveal.
+     Fail-safe: hidden state only applies when JS has added .anim-ready to the
+     scroll container. Without JS (or with reduced motion) everything renders
+     fully visible — never trust a CSS-only opacity:0 here. */
+  body.page-17 .reveal-scroll.anim-ready .reveal-step,
+  body.page-17 .reveal-scroll.anim-ready .reveal-onscroll {
+    opacity: 0;
+    transform: translateY(10px);
+    will-change: opacity, transform;
+  }
+  body.page-17 .reveal-scroll .reveal-step.in,
+  body.page-17 .reveal-scroll .reveal-onscroll.in {
+    opacity: 1;
+    transform: none;
+    transition: opacity .28s ease-out, transform .28s ease-out;
+  }
+  body.page-17 .reveal-scroll .reveal-onscroll.in {
+    transition-duration: .35s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body.page-17 .reveal-scroll .reveal-step,
+    body.page-17 .reveal-scroll .reveal-onscroll {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+</style>
 </head>
 <body class="page-17">
 <div class="sidebar">
@@ -778,6 +807,7 @@ function showState(state) {
 
   bloomDaisy();
   fireBurst(STATES[state].burstColor);
+  runRevealCascade();
 }
 
 function showMode(next) {
@@ -802,12 +832,107 @@ function showMode(next) {
     document.getElementById('crown-daisy').classList.remove('bloom');
     document.getElementById('crown-burst').innerHTML = '';
   }
+  runRevealCascade();
+}
+
+/* ─── Entrance cascade + scroll-reveal ──────────────────────────────
+   Fail-safe model: the hidden state in CSS is gated on
+   .reveal-scroll.anim-ready. If JS bails or IO is unsupported, we never
+   add that flag and nothing is hidden. Reduced-motion users skip the
+   whole choreography (CSS overrides too, as a belt-and-braces). */
+
+let scrollObserver = null;
+
+function tagRevealTargets() {
+  const scroll = document.getElementById('reveal-scroll');
+  if (!scroll) return;
+
+  // Entrance cascade targets (in cascade order).
+  const stepEls = [
+    document.getElementById('alignment-pill'),
+    document.getElementById('summary-card'),
+    document.getElementById('question-sections')?.firstElementChild || null
+  ];
+  stepEls.forEach(el => { if (el) el.classList.add('reveal-step'); });
+
+  // Scroll-reveal targets: remaining question sections, notes wrap,
+  // status block. Notes wrap is targeted at the wrapper level — its
+  // children populate later but the wrapper itself is the unit that
+  // fades in once its contents exist.
+  const qSections = document.getElementById('question-sections');
+  if (qSections) {
+    Array.from(qSections.children).slice(1).forEach(el => {
+      el.classList.add('reveal-onscroll');
+    });
+  }
+  const notes = document.getElementById('notes-wrap');
+  if (notes && notes.children.length) notes.classList.add('reveal-onscroll');
+  const status = document.getElementById('status-block');
+  if (status) status.classList.add('reveal-onscroll');
+}
+
+function resetRevealState() {
+  document.querySelectorAll('body.page-17 .reveal-step.in, body.page-17 .reveal-onscroll.in')
+    .forEach(el => el.classList.remove('in'));
+}
+
+function runRevealCascade() {
+  const scroll = document.getElementById('reveal-scroll');
+  if (!scroll) return;
+
+  // Re-tag targets each run. renderSummary() / renderPills() overwrite
+  // className on #summary-card and #alignment-pill, so .reveal-step gets
+  // stripped on every showState(); add it back here. classList.add is
+  // idempotent, so calling this repeatedly is safe.
+  tagRevealTargets();
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isReveal = (mode === 'reveal');
+
+  // Tear down any prior observer before re-running.
+  if (scrollObserver) { scrollObserver.disconnect(); scrollObserver = null; }
+
+  // Revisit mode OR reduced motion: skip the ceremony. Don't set
+  // anim-ready — the from-state never applies, so everything is visible.
+  if (!isReveal || reduced) {
+    scroll.classList.remove('anim-ready');
+    resetRevealState();
+    return;
+  }
+
+  // Reveal + full motion: arm the from-state, then schedule each step.
+  scroll.classList.add('anim-ready');
+  resetRevealState();
+
+  const steps = Array.from(scroll.querySelectorAll('.reveal-step'));
+  const delays = [350, 500, 650];
+  steps.forEach((el, i) => {
+    const d = delays[i] != null ? delays[i] : 650 + (i - 2) * 150;
+    setTimeout(() => el.classList.add('in'), d);
+  });
+
+  // IntersectionObserver for everything below the cascade.
+  if (!('IntersectionObserver' in window)) {
+    // No IO support — reveal everything immediately so nothing stays hidden.
+    scroll.querySelectorAll('.reveal-onscroll').forEach(el => el.classList.add('in'));
+    return;
+  }
+  scrollObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { root: scroll, rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+  scroll.querySelectorAll('.reveal-onscroll').forEach(el => scrollObserver.observe(el));
 }
 
 /* ─── Init ───────────────────────────────────────────────────────── */
 
 buildQuestions();
 buildNotes();
+tagRevealTargets();
 showState('conversation');
 </script>
 <script src="nav.js"></script>
