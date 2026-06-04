@@ -2631,13 +2631,30 @@ body.page-15 .screen-root .screen-header-sub {
 
 body.page-15 .screen-root .screen-header-sub strong { color: var(--text-primary); }
 
-/* Scrollable content */
+/* Scrollable content. The .scroll-area sits inside .scroll-wrap so the
+   bottom-fade overlay can layer on top of the scrolling content without
+   stealing pointer events. */
+body.page-15 .screen-root .scroll-wrap {
+    position: relative;
+    flex: 1; min-height: 0;
+  }
+
 body.page-15 .screen-root .scroll-area {
-    flex: 1; overflow-y: auto; padding: 0 20px 20px;
+    position: absolute; inset: 0;
+    overflow-y: auto; padding: 0 20px 20px;
     scrollbar-width: none;
   }
 
 body.page-15 .screen-root .scroll-area::-webkit-scrollbar { display: none; }
+
+/* Soft bottom fade — subtle "more below" affordance. Never text. */
+body.page-15 .screen-root .scroll-wrap::after {
+    content: '';
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 28px;
+    background: linear-gradient(to bottom, rgba(251,239,225,0), var(--cream));
+    pointer-events: none;
+  }
 
 /* Category groups — flat (always expanded). The header is sticky inside the
    scroll area for orientation. */

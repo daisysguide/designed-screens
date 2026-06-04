@@ -96,87 +96,300 @@
 
         <!-- Scrollable list. All 7 categories are always expanded; the user
              scrolls one continuous grouped list. Category headers stick to the
-             top of the scroll area for orientation. -->
-        <div class="scroll-area" id="scroll-area">
+             top of the scroll area for orientation. Topic content (the 45
+             canonical items) is sourced verbatim from 14-topic-list.html's
+             category view so 14 and 15 stay in lockstep. The six quiz-filtered
+             additions are net-new (they only ever appear here, because hiding
+             them is exactly what 15 is for). -->
+        <div class="scroll-wrap">
+          <div class="scroll-area" id="scroll-area">
 
-          <!-- The Basics -->
+          <!-- 1. The Basics -->
           <div class="cat-group">
             <div class="cat-header">
               <div class="cat-name">The Basics</div>
-              <div class="cat-badge" data-cat-badge>5 of 7</div>
+              <div class="cat-badge" data-cat-badge></div>
             </div>
 
             <div class="topic-row" data-state="included">
               <div class="checkbox included"></div>
-              <div class="topic-text-wrap">
-                <div class="topic-label">What will baby's first and middle name be?</div>
-              </div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we budget for a baby?</div></div>
             </div>
-
-            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you have the same last name. Tap to add back.">
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Where will we raise our family?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What items do we need to get for the baby?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What will baby's last name be?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What will baby's first and middle name be?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Do we have the right health insurance?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Do we have life insurance, and is it enough?</div></div>
+            </div>
+            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you and your partner share a surname. Tap to add back.">
               <div class="checkbox we-hid"></div>
               <div class="topic-text-wrap">
-                <div class="topic-label dimmed">What will baby's last name be?</div>
-                <div class="topic-reason">We hid this because you have the same last name. Tap to add back.</div>
-              </div>
-            </div>
-
-            <div class="topic-row" data-state="included">
-              <div class="checkbox included"></div>
-              <div class="topic-text-wrap">
-                <div class="topic-label">Where will we raise our family?</div>
-              </div>
-            </div>
-
-            <div class="topic-row" data-state="included">
-              <div class="checkbox included"></div>
-              <div class="topic-text-wrap">
-                <div class="topic-label">How will we budget for a baby?</div>
-              </div>
-            </div>
-
-            <div class="topic-row" data-state="you-hid">
-              <div class="checkbox you-hid"></div>
-              <div class="topic-text-wrap">
-                <div class="topic-label dimmed">Do we have life insurance?</div>
-                <div class="topic-reason">You hid this. Tap to add back.</div>
+                <div class="topic-label dimmed">What will the baby's surname be?</div>
+                <div class="topic-reason">We hid this because you and your partner share a surname. Tap to add back.</div>
               </div>
             </div>
           </div>
 
-          <!-- Pregnancy & Birth -->
+          <!-- 2. Pregnancy & Birth -->
           <div class="cat-group">
             <div class="cat-header">
               <div class="cat-name">Pregnancy &amp; Birth</div>
-              <div class="cat-badge" data-cat-badge>8 of 9</div>
+              <div class="cat-badge" data-cat-badge></div>
             </div>
 
-            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you said you're having a girl. Tap to add back.">
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What is our birth plan?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Do we want a doctor or a midwife?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Where do we want to give birth?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Do we want a birth doula?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Who will be in the delivery room?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Do we want health screenings, even if they reveal something hard?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">When do we want to find out the baby's sex?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we respond if there's birth trauma?</div></div>
+            </div>
+            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you said you're expecting a girl. Tap to add back.">
               <div class="checkbox we-hid"></div>
               <div class="topic-text-wrap">
                 <div class="topic-label dimmed">If it's a boy, will we circumcise?</div>
-                <div class="topic-reason">We hid this because you said you're having a girl. Tap to add back.</div>
-              </div>
-            </div>
-
-            <div class="topic-row" data-state="included">
-              <div class="checkbox included"></div>
-              <div class="topic-text-wrap">
-                <div class="topic-label">What is our birth plan?</div>
-              </div>
-            </div>
-
-            <div class="topic-row" data-state="included">
-              <div class="checkbox included"></div>
-              <div class="topic-text-wrap">
-                <div class="topic-label">Doctor or midwife?</div>
+                <div class="topic-reason">We hid this because you said you're expecting a girl. Tap to add back.</div>
               </div>
             </div>
           </div>
 
-          <div class="scroll-hint">+ 5 more categories below · scroll to see all</div>
-          <div style="height:16px;"></div>
+          <!-- 3. The Village -->
+          <div class="cat-group">
+            <div class="cat-header">
+              <div class="cat-name">The Village</div>
+              <div class="cat-badge" data-cat-badge></div>
+            </div>
 
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">When will we tell people that we're expecting?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Will we share the baby's name and/or sex before it's born?</div></div>
+            </div>
+            <div class="topic-row" data-state="you-hid">
+              <div class="checkbox you-hid"></div>
+              <div class="topic-text-wrap">
+                <div class="topic-label dimmed">What kind of baby shower do we want?</div>
+                <div class="topic-reason">You hid this. Tap to add back.</div>
+              </div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">When will people meet the baby?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Who will we trust to watch the baby or babysit?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What will we do about childcare?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we approach spending time with extended family?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Who will be the legal guardian if something happens to us?</div></div>
+            </div>
+          </div>
+
+          <!-- 4. Eat, Poop, Sleep, Repeat -->
+          <div class="cat-group">
+            <div class="cat-header">
+              <div class="cat-name">Eat, Poop, Sleep, Repeat</div>
+              <div class="cat-badge" data-cat-badge></div>
+            </div>
+
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Breastfeed, formula, or combo feed?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Where will the baby sleep?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we help the baby sleep?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">When and how will we introduce solids?</div></div>
+            </div>
+          </div>
+
+          <!-- 5. Education, Health & Development -->
+          <div class="cat-group">
+            <div class="cat-header">
+              <div class="cat-name">Education, Health &amp; Development</div>
+              <div class="cat-badge" data-cat-badge></div>
+            </div>
+
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we choose a pediatrician?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What are our views on vaccines and preventive care?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we track baby's activity and milestones?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we babyproof?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we help our baby learn to communicate?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we play with our baby?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">Will we save for education?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we handle screen time in early childhood?</div></div>
+            </div>
+            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you said religion isn't part of your family's life. Tap to add back.">
+              <div class="checkbox we-hid"></div>
+              <div class="topic-text-wrap">
+                <div class="topic-label dimmed">Will the baby attend a religious school?</div>
+                <div class="topic-reason">We hid this because you said religion isn't part of your family's life. Tap to add back.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. The Existential -->
+          <div class="cat-group">
+            <div class="cat-header">
+              <div class="cat-name">The Existential</div>
+              <div class="cat-badge" data-cat-badge></div>
+            </div>
+
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What activities or traditions do we want to start or continue?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we share our culture and/or religion with our child?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What aspects of our upbringing will we replicate, and what will we avoid?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What are the values we want to pass on?</div></div>
+            </div>
+            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you said religion isn't part of your family's life. Tap to add back.">
+              <div class="checkbox we-hid"></div>
+              <div class="topic-text-wrap">
+                <div class="topic-label dimmed">How will we approach religious holidays as a family?</div>
+                <div class="topic-reason">We hid this because you said religion isn't part of your family's life. Tap to add back.</div>
+              </div>
+            </div>
+            <div class="topic-row" data-state="we-hid" data-we-hid-reason="We hid this because you said religion isn't part of your family's life. Tap to add back.">
+              <div class="checkbox we-hid"></div>
+              <div class="topic-text-wrap">
+                <div class="topic-label dimmed">Who will be the baby's godparents?</div>
+                <div class="topic-reason">We hid this because you said religion isn't part of your family's life. Tap to add back.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Us -->
+          <div class="cat-group">
+            <div class="cat-header">
+              <div class="cat-name">Us</div>
+              <div class="cat-badge" data-cat-badge></div>
+            </div>
+
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">What is our postpartum plan?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How much parental leave will we take?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we share parental and household duties?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we handle lack of sleep, hormones, and/or postpartum depression?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we make time for ourselves as a couple?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we make time for ourselves as individuals?</div></div>
+            </div>
+            <div class="topic-row" data-state="included">
+              <div class="checkbox included"></div>
+              <div class="topic-text-wrap"><div class="topic-label">How will we co-parent across two households?</div></div>
+            </div>
+          </div>
+
+          </div>
         </div>
 
       </div>
@@ -255,6 +468,7 @@
         <tr><td>Category headers</td><td>11px DM Sans bold · ALL CAPS · <code>text-secondary</code> · count badge right</td></tr>
         <tr><td>Count badge</td><td>"X of Y" · neutral gray pill · updates live</td></tr>
         <tr><td>Topic rows</td><td><strong>Entire row is the tap target</strong>, <code>min-height: 44px</code> · 11px padding · <code>1px solid rgba(26,26,26,0.06)</code> bottom border · last child no border. The 22×22 checkbox is visual only.</td></tr>
+        <tr><td>Bottom fade</td><td>A soft cream-to-transparent gradient overlay sits across the bottom 28px of the scroll area as a "more below" affordance. <strong>Never</strong> a hardcoded "+N more categories" string — pagination cues don't belong on a continuous scrolling list.</td></tr>
         <tr><td>Bottom</td><td>No sticky CTA. The screen content flows to the bottom edge — exit is owned by the ✕ and the swipe-down gesture (see Navigation flow).</td></tr>
       </table>
     </div>
@@ -268,6 +482,7 @@
         <tr><td>"Tap to add back"</td><td>Plain descriptive text inside the row — <strong>not a separate tap target</strong>. The whole row taps.</td></tr>
         <tr><td>No em dashes</td><td>House rule. Use periods or restructure.</td></tr>
         <tr><td>No info-button</td><td>No (?) explainer. The subhead plus the per-row reasons are the explanation.</td></tr>
+        <tr><td>Topic source of truth</td><td>The canonical 45 topics in the user's plan are sourced <strong>verbatim from 14-topic-list.html</strong>'s category view so 14 and 15 stay in lockstep. The 6 quiz-filtered additions (e.g. circumcision when expecting a girl, religious-school topics when the family isn't religious) only appear here — adding hidden topics back is what this screen is for.</td></tr>
       </table>
     </div>
 
