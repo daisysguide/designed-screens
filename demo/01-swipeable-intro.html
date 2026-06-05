@@ -55,12 +55,13 @@
       <div class="phone-notch"></div>
 
       <div class="illus-zone">
-        <div class="illus-placeholder">
+        <div class="illus-placeholder" id="illus-placeholder">
           <div class="slot-corner tl"></div>
           <div class="slot-corner br"></div>
           <div class="illus-label">Illustration asset</div>
           <div class="illus-desc" id="illus-desc">Couple side-by-side at home, each absorbed in their own thoughts.</div>
         </div>
+        <img class="illus-image" id="illus-image" alt="" style="display:none;">
       </div>
 
       <div class="bottom-card">
@@ -96,59 +97,58 @@
       <button class="card-tab" id="tab2" onclick="showCard(2)">Card 2</button>
       <button class="card-tab" id="tab3" onclick="showCard(3)">Card 3</button>
     </div>
-  </div>
-
-</div>
-
-
-<script>
-let currentCard = 1;
-const cards = [
-  { heading: "You don't know what you don't know.", body: "Neither does your partner.", illus: "Couple side-by-side at home, each absorbed in their own thoughts.", last: false },
-  { heading: "Answer independently.<br>Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (we'll walk you through that part too).", illus: "Two phones side by side, screens facing out, each showing the same question prompt with a different answer in progress (different option selected on each). A soft thread or arc connects the two screens, hinting they'll come together.", last: false },
-  { heading: "You'll have these conversations either way.", body: "With experts in your corner now, or at 3am while soothing a screaming newborn?", illus: "Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).", last: true }
-];
-function showCard(n) {
-  if (n < 1 || n > 3) return;
-  currentCard = n;
-  const c = cards[n-1];
-  document.getElementById('card-heading').innerHTML = c.heading;
-  document.getElementById('card-body').innerHTML = c.body;
-  document.getElementById('illus-desc').textContent = c.illus;
-  document.getElementById('cta-next').style.display = c.last ? 'none' : 'flex';
-  document.getElementById('cta-live').style.display = c.last ? 'flex' : 'none';
-  [1,2,3].forEach(i => {
-    document.getElementById('d'+i).className = 'dot ' + (i===n ? 'active' : 'inactive');
-    document.getElementById('tab'+i).classList.toggle('active', i===n);
-  });
-}
-</script>
+    <div class="card-tab-row variant-row" id="variant-row-1">
+      <button class="card-tab" id="tab1A" onclick="showVariant('1A')">Card 1-A</button>
     </div>
   </div>
+
+</div>
+
+
+</div>
+  </div>
 </div>
 <script>
-
 let currentCard = 1;
+let currentVariant = null;
 const cards = [
   { heading: "You don't know what you don't know.", body: "Neither does your partner.", illus: "Couple side-by-side at home, each absorbed in their own thoughts.", last: false },
   { heading: "Answer independently.<br>Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (we'll walk you through that part too).", illus: "Two phones side by side, screens facing out, each showing the same question prompt with a different answer in progress (different option selected on each). A soft thread or arc connects the two screens, hinting they'll come together.", last: false },
   { heading: "You'll have these conversations either way.", body: "With experts in your corner now, or at 3am while soothing a screaming newborn?", illus: "Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).", last: true }
 ];
+const variants = {
+  '1A': { card: 1, src: 'illus/card1-A.png' }
+};
 function showCard(n) {
   if (n < 1 || n > 3) return;
   currentCard = n;
+  currentVariant = null;
   const c = cards[n-1];
   document.getElementById('card-heading').innerHTML = c.heading;
   document.getElementById('card-body').innerHTML = c.body;
   document.getElementById('illus-desc').textContent = c.illus;
   document.getElementById('cta-next').style.display = c.last ? 'none' : 'flex';
   document.getElementById('cta-live').style.display = c.last ? 'flex' : 'none';
+  document.getElementById('illus-placeholder').style.display = 'flex';
+  document.getElementById('illus-image').style.display = 'none';
   [1,2,3].forEach(i => {
     document.getElementById('d'+i).className = 'dot ' + (i===n ? 'active' : 'inactive');
     document.getElementById('tab'+i).classList.toggle('active', i===n);
   });
+  document.getElementById('variant-row-1').style.display = (n === 1) ? 'flex' : 'none';
+  document.getElementById('tab1A').classList.remove('active');
 }
-
+function showVariant(key) {
+  const v = variants[key];
+  if (!v) return;
+  showCard(v.card);
+  currentVariant = key;
+  const img = document.getElementById('illus-image');
+  img.src = v.src;
+  img.style.display = 'block';
+  document.getElementById('illus-placeholder').style.display = 'none';
+  document.getElementById('tab' + key).classList.add('active');
+}
 </script>
 <script src="nav.js"></script>
 </body>
