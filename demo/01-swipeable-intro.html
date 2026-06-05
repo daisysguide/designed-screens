@@ -100,6 +100,9 @@
     <div class="card-tab-row variant-row" id="variant-row-1">
       <button class="card-tab" id="tab1A" onclick="showVariant('1A')">Card 1-A</button>
     </div>
+    <div class="card-tab-row variant-row" id="variant-row-2" style="display:none;">
+      <button class="card-tab" id="tab2A" onclick="showVariant('2A')">Card 2-A</button>
+    </div>
   </div>
 
 </div>
@@ -117,7 +120,8 @@ const cards = [
   { heading: "You'll have these conversations either way.", body: "With experts in your corner now, or at 3am while soothing a screaming newborn?", illus: "Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).", last: true }
 ];
 const variants = {
-  '1A': { card: 1, src: 'illus/card1-A.png' }
+  '1A': { card: 1, src: 'illus/card1-A.png' },
+  '2A': { card: 2, src: 'illus/card2-A.png' }
 };
 function showCard(n) {
   if (n < 1 || n > 3) return;
@@ -136,7 +140,9 @@ function showCard(n) {
     document.getElementById('tab'+i).classList.toggle('active', i===n);
   });
   document.getElementById('variant-row-1').style.display = (n === 1) ? 'flex' : 'none';
+  document.getElementById('variant-row-2').style.display = (n === 2) ? 'flex' : 'none';
   document.getElementById('tab1A').classList.remove('active');
+  document.getElementById('tab2A').classList.remove('active');
 }
 function showVariant(key) {
   const v = variants[key];
