@@ -97,13 +97,9 @@
       <button class="card-tab" id="tab2" onclick="showCard(2)">Card 2</button>
       <button class="card-tab" id="tab3" onclick="showCard(3)">Card 3</button>
     </div>
-    <div class="card-tab-row variant-row" id="variant-row-1">
+    <div class="card-tab-row variant-row">
       <button class="card-tab" id="tab1A" onclick="showVariant('1A')">Card 1-A</button>
-    </div>
-    <div class="card-tab-row variant-row" id="variant-row-2" style="display:none;">
       <button class="card-tab" id="tab2A" onclick="showVariant('2A')">Card 2-A</button>
-    </div>
-    <div class="card-tab-row variant-row" id="variant-row-3" style="display:none;">
       <button class="card-tab" id="tab3A" onclick="showVariant('3A')">Card 3-A</button>
     </div>
   </div>
@@ -143,9 +139,6 @@ function showCard(n) {
     document.getElementById('d'+i).className = 'dot ' + (i===n ? 'active' : 'inactive');
     document.getElementById('tab'+i).classList.toggle('active', i===n);
   });
-  document.getElementById('variant-row-1').style.display = (n === 1) ? 'flex' : 'none';
-  document.getElementById('variant-row-2').style.display = (n === 2) ? 'flex' : 'none';
-  document.getElementById('variant-row-3').style.display = (n === 3) ? 'flex' : 'none';
   document.getElementById('tab1A').classList.remove('active');
   document.getElementById('tab2A').classList.remove('active');
   document.getElementById('tab3A').classList.remove('active');
