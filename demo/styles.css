@@ -143,6 +143,7 @@ body.page-00 .screen-root .illus-zone {
     background: var(--cream);
     display: flex; align-items: flex-end; justify-content: center;
     padding: 44px 16px 0;
+    overflow: hidden;
   }
 
 body.page-00 .screen-root .illus-placeholder {
@@ -177,7 +178,7 @@ body.page-00 .screen-root .illus-desc {
 body.page-00 .screen-root .illus-image {
     position: absolute; top: 44px; left: 0; right: 0; bottom: 0;
     width: 100%; height: calc(100% - 44px);
-    object-fit: contain; object-position: center center;
+    object-fit: cover; object-position: center center;
   }
 
 body.page-00 .screen-root .variant-row { margin-top: -4px; }
