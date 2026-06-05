@@ -103,6 +103,9 @@
     <div class="card-tab-row variant-row" id="variant-row-2" style="display:none;">
       <button class="card-tab" id="tab2A" onclick="showVariant('2A')">Card 2-A</button>
     </div>
+    <div class="card-tab-row variant-row" id="variant-row-3" style="display:none;">
+      <button class="card-tab" id="tab3A" onclick="showVariant('3A')">Card 3-A</button>
+    </div>
   </div>
 
 </div>
@@ -121,7 +124,8 @@ const cards = [
 ];
 const variants = {
   '1A': { card: 1, src: 'illus/card1-A.png' },
-  '2A': { card: 2, src: 'illus/card2-A.png' }
+  '2A': { card: 2, src: 'illus/card2-A.png' },
+  '3A': { card: 3, src: 'illus/card3-A.png' }
 };
 function showCard(n) {
   if (n < 1 || n > 3) return;
@@ -141,8 +145,10 @@ function showCard(n) {
   });
   document.getElementById('variant-row-1').style.display = (n === 1) ? 'flex' : 'none';
   document.getElementById('variant-row-2').style.display = (n === 2) ? 'flex' : 'none';
+  document.getElementById('variant-row-3').style.display = (n === 3) ? 'flex' : 'none';
   document.getElementById('tab1A').classList.remove('active');
   document.getElementById('tab2A').classList.remove('active');
+  document.getElementById('tab3A').classList.remove('active');
 }
 function showVariant(key) {
   const v = variants[key];
