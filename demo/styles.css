@@ -177,7 +177,7 @@ body.page-00 .screen-root .illus-desc {
 body.page-00 .screen-root .illus-image {
     width: 100%; height: calc(100% - 44px);
     border-radius: var(--radius-xl);
-    object-fit: cover; object-position: center top;
+    object-fit: contain; object-position: center center;
   }
 
 body.page-00 .screen-root .variant-row { margin-top: -4px; }
