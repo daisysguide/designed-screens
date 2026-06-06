@@ -1,0 +1,78 @@
+/* demo-fit.css — loaded only by demo/mobile/screens/*.html (body.demo-mode).
+   Hides the documentation shell and makes the 375x812 phone fill the iframe.
+   Uses !important to beat the per-page `body.page-NN .screen-root` scoping. */
+
+html, body.demo-mode {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;         /* beat any scoped body min-height */
+  overflow: hidden !important;      /* the in-screen .scroll-area handles scrolling */
+  background: var(--cream, #fbefe1);
+}
+/* body is the positioned full-viewport box the phone pins to (see .phone below).
+   Inside an iframe, html/body at height:100% reliably equal the iframe viewport,
+   unlike 100dvh on a descendant — so anchoring to body avoids the bottom gap. */
+body.demo-mode { position: relative !important; }
+
+/* --- strip every piece of documentation chrome --- */
+body.demo-mode .sidebar,
+body.demo-mode .topbar,
+body.demo-mode .demo-meta,        /* spec panel: screen-tag, page-title, page-desc */
+body.demo-mode .page-header,
+body.demo-mode .page-desc,
+body.demo-mode [class*="page-desc"],
+body.demo-mode .nav-pills,
+body.demo-mode .state-tab-row,
+body.demo-mode .tier-tab-row,
+body.demo-mode .card-tab-row,
+body.demo-mode .phone-notch {
+  display: none !important;
+}
+
+/* anything in the layout grid that isn't the phone (e.g. the spec panel) */
+body.demo-mode .demo-layout > *:not(.phone-wrap) { display: none !important; }
+
+/* --- collapse the shell containers so the phone can fill the frame.
+   Every ancestor is forced position:static so .phone (position:absolute below)
+   pins all the way up to body.demo-mode, NOT to an intermediate. styles.css
+   sets .frame-wrap{position:relative}, .phone-wrap/.demo-layout{position:sticky};
+   any of those would otherwise capture the absolute .phone. --- */
+body.demo-mode .main        { margin: 0 !important; padding: 0 !important; position: static !important; }
+body.demo-mode .frame-wrap  { padding: 0 !important; display: block !important; position: static !important; }
+body.demo-mode .screen-root { padding: 0 !important; margin: 0 !important; max-width: none !important; position: static !important; }
+
+/* THE key overrides. demo/styles.css has a GLOBAL doc-preview layout at
+   `body[class*="page-"] .screen-root .demo-layout ...` (specificity 0-5-0 for
+   the .phone rule) that puts the phone in a 300px grid column, fixes the wrap
+   at 300x650, and applies transform:scale(0.8). Lower-specificity overrides are
+   silently ignored — that was the real bug behind every "doesn't fit" render.
+   These selectors carry the full ancestor path (>= 0-6-0 with the body.demo-mode
+   prefix) so they actually win: kill the grid, the fixed wrap, and the scale. */
+body.demo-mode .screen-root .demo-layout {
+  display: block !important;
+  grid-template-columns: none !important;
+  gap: 0 !important; margin: 0 !important; max-width: none !important;
+  padding: 0 !important; position: static !important;
+}
+body.demo-mode .screen-root .demo-layout .phone-wrap {
+  position: static !important;
+  top: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+body.demo-mode .screen-root .demo-layout .phone-wrap .phone {
+  transform: none !important;       /* remove the 0.8 doc-preview scale */
+  position: absolute !important;    /* pins to body.demo-mode (the only relative
+                                       ancestor; all others forced static above) */
+  inset: 0 !important;              /* fill the full-viewport body on all sides */
+  width: auto  !important;
+  height: auto !important;          /* inset:0 drives both dimensions */
+  max-width: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body.demo-mode .screen-root .phone-screen {
+  height: 100% !important;          /* fill the now full-size .phone */
+}

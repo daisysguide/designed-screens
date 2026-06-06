@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Question · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../demo-fit.css">
+<style>
+/* ── Screen 18: Question additions (page-15) ── */
+
+/* Step indicator row */
+body.page-15 .screen-root .q-toprow {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+body.page-15 .screen-root .q-back-btn,
+body.page-15 .screen-root .q-exit-btn {
+  font-size: 22px; color: #5f45f2; cursor: pointer;
+  line-height: 1; width: 24px; flex-shrink: 0;
+  user-select: none;
+}
+body.page-15 .screen-root .q-exit-btn {
+  font-size: 18px; color: rgba(26,26,26,0.55); text-align: right;
+}
+body.page-15 .screen-root .q-step-label {
+  font-size: 12px; font-weight: 600; color: rgba(26,26,26,0.38);
+  text-align: center; flex: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+/* Optional indicator on the note step — quiet eyebrow above the heading,
+   left-aligned on the content axis. (Replaces the bordered inline pill,
+   which orphaned after the wrapped heading and added chrome.) */
+body.page-15 .screen-root .note-optional {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  color: rgba(26,26,26,0.45);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+
+/* Question sub-text (below question text). Matches .partner-note's
+   margin-bottom so the gap before answer-opts is consistent whether the
+   privacy line is shown (Q1) or only the subtext is (later questions). */
+body.page-15 .screen-root .question-subtext {
+  font-size: 14px; color: rgba(26,26,26,0.55);
+  line-height: 1.5; margin-top: 6px; margin-bottom: 18px;
+}
+
+/* Slider — shared with onboarding quiz (see 02-onboarding-quiz.html).
+   Same DOM and visual treatment so the component is one thing in two places. */
+body.page-15 .screen-root .slider-wrap {
+  display: flex; flex-direction: column; padding: 18px 4px 8px; user-select: none;
+}
+body.page-15 .screen-root .slider-value {
+  text-align: center; height: 22px;
+  font-size: 15px; font-weight: 600; color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  /* visibility (not display) so layout doesn't jump when value appears */
+}
+body.page-15 .screen-root .slider-row {
+  position: relative; height: 44px; display: flex; align-items: center;
+  cursor: pointer; margin-top: 6px;
+}
+body.page-15 .screen-root .slider-track {
+  position: relative; width: 100%; height: 6px;
+  background: rgba(26,26,26,0.10); border-radius: 9999px;
+}
+body.page-15 .screen-root .slider-fill {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: var(--purple-500); border-radius: 9999px;
+  transition: width 0.15s ease;
+}
+body.page-15 .screen-root .slider-tick {
+  position: absolute; top: -1px; transform: translateX(-1px);
+  width: 2px; height: 8px; background: rgba(26,26,26,0.15); border-radius: 1px;
+}
+body.page-15 .screen-root .slider-thumb {
+  position: absolute; top: 50%;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--border-default);
+  box-shadow: 0 1px 2px rgba(26,26,26,0.10);
+  transform: translate(-50%, -50%);
+  transition: left 0.15s ease, border-color 0.15s ease;
+}
+body.page-15 .screen-root .slider-thumb.is-confirmed { border-color: var(--purple-500); }
+body.page-15 .screen-root .slider-end-labels {
+  display: flex; justify-content: space-between; margin-top: 14px;
+  font-size: 12px; color: var(--text-secondary); font-family: 'DM Sans', sans-serif;
+}
+
+/* Ranked-choice list (drag-to-reorder) */
+body.page-15 .screen-root .ranked-list {
+  display: flex; flex-direction: column; gap: 8px;
+  padding-top: 4px;
+}
+body.page-15 .screen-root .ranked-item {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface-nested, #fbefe1);
+  border: 1px solid rgba(26,26,26,0.08);
+  border-radius: 12px;
+  padding: 14px 16px; min-height: 56px;
+  cursor: grab; user-select: none;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.2s ease, background 0.15s ease;
+}
+body.page-15 .screen-root .ranked-item.is-dragging {
+  cursor: grabbing; background: white;
+  box-shadow: 0 8px 24px rgba(26,26,26,0.10), 0 2px 4px rgba(26,26,26,0.06);
+  transform: scale(1.02);
+  z-index: 2;
+}
+body.page-15 .screen-root .ranked-rank {
+  font-family: 'Grandstander', cursive; font-size: 20px; font-weight: 700;
+  color: #5f45f2; line-height: 1; width: 24px; text-align: center; flex-shrink: 0;
+}
+body.page-15 .screen-root .ranked-text {
+  flex: 1; font-size: 15px; color: rgba(26,26,26,1); line-height: 1.4;
+}
+body.page-15 .screen-root .ranked-handle {
+  color: rgba(26,26,26,0.38); font-size: 18px; line-height: 1; flex-shrink: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  body.page-15 .screen-root .ranked-item { transition: none; }
+  body.page-15 .screen-root .ranked-item.is-dragging { transform: none; }
+}
+
+/* Note-step "save or discard" mini-sheet */
+body.page-15 .screen-root .leave-overlay {
+  display: none; position: absolute; inset: 0;
+  background: rgba(26,26,26,0.40); z-index: 20; border-radius: inherit;
+}
+body.page-15 .screen-root .leave-sheet {
+  display: none; position: absolute; bottom: 0; left: 0; right: 0;
+  background: #fff; border-radius: 24px 24px 0 0;
+  padding: 24px; z-index: 21;
+  box-shadow: 0 8px 24px rgba(26,26,26,0.10), 0 2px 4px rgba(26,26,26,0.06);
+  transform: translateY(100%); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+body.page-15 .screen-root .leave-handle {
+  width: 36px; height: 4px; background: rgba(26,26,26,0.15);
+  border-radius: 100px; margin: 0 auto 20px;
+}
+
+/* Note step */
+body.page-15 .screen-root .note-heading {
+  font-family: 'Grandstander', cursive; font-size: 20px; font-weight: 700;
+  color: rgba(26,26,26,1); letter-spacing: -0.02em; margin-bottom: 6px;
+}
+body.page-15 .screen-root .note-textarea {
+  width: 100%; min-height: 96px;
+  border-radius: 8px; border: 1.5px solid rgba(26,26,26,0.15);
+  background: white; padding: 12px 14px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px;
+  color: rgba(26,26,26,1); resize: none; outline: none; line-height: 1.5;
+  margin-top: 16px; box-sizing: border-box;
+  /* Height is auto-grown by autoGrowNote() in JS (oninput + after render);
+     overflow:hidden prevents a flash of scrollbar before the height update. */
+  overflow: hidden;
+}
+body.page-15 .screen-root .note-textarea:focus {
+  border-color: #5f45f2; box-shadow: 0 0 0 3px rgba(95,69,242,0.12);
+}
+body.page-15 .screen-root .note-char-count {
+  text-align: right; font-size: 12px; color: rgba(26,26,26,0.38); margin-top: 6px;
+}
+
+/* Schema code blocks in spec panel */
+body.page-15 .screen-root .code-block {
+  background: rgba(26,26,26,0.04); border: 1px solid rgba(26,26,26,0.08);
+  border-radius: 8px; padding: 12px 14px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11.5px; color: rgba(26,26,26,0.72);
+  line-height: 1.75; white-space: pre; overflow-x: auto;
+  margin-bottom: 14px;
+}
+body.page-15 .screen-root .code-comment { color: rgba(26,26,26,0.38); }
+body.page-15 .screen-root .code-key    { color: #5f45f2; }
+body.page-15 .screen-root .code-type   { color: #157a46; }
+body.page-15 .screen-root .code-val    { color: #c75000; }
+</style>
+</head>
+<body class="page-15 demo-mode">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item active" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Question</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+    <!-- Demo: question type -->
+
+    <!-- Demo: partner link state (drives partner-name fallback) -->
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- Top row: ‹ back-a-step · centered step label · ✕ exit to Topic List -->
+        <div class="q-toprow">
+          <div class="q-back-btn" id="q-back-btn" onclick="handleBack()" role="button" aria-label="Back">‹</div>
+          <div class="q-step-label" id="q-step-label">Q1 of 3</div>
+          <div class="q-exit-btn" id="q-exit-btn" onclick="handleExit()" role="button" aria-label="Exit to Topic List">✕</div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-track" style="margin-bottom:12px;">
+          <div class="progress-fill" id="progress-fill" style="width:33%;"></div>
+        </div>
+
+        <!-- Question / Note card -->
+        <div class="question-card">
+          <div id="note-optional" class="note-optional" style="display:none;">Optional</div>
+          <div id="q-text" class="question-text">Who would you trust to babysit regularly?</div>
+          <div id="q-subtext" class="question-subtext" style="display:none;"></div>
+          <div id="partner-note" class="partner-note" data-partner-template="{Name} won't see your answer until they've finished too.">Jordan won't see your answer until they've finished too.</div>
+          <div id="answer-area"></div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-next" id="next-btn">Continue →</button>
+
+        <!-- Leave-with-unsaved-note confirmation (note step only) -->
+        <div class="leave-overlay" id="leave-overlay" onclick="closeLeaveSheet()"></div>
+        <div class="leave-sheet" id="leave-sheet">
+          <div class="leave-handle"></div>
+          <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:8px;">Save your note?</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;margin-bottom:20px;">You have unsaved text. Saving keeps it on this topic for now; discarding drops it.</div>
+          <button onclick="saveNoteAndExit()" style="width:100%;height:56px;background:#5f45f2;color:#fff;border:none;border-radius:100px;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;">Save and exit</button>
+          <div style="height:10px;"></div>
+          <button onclick="discardNoteAndExit()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Discard and exit</button>
+          <div style="height:6px;"></div>
+          <button onclick="closeLeaveSheet()" style="width:100%;height:44px;background:transparent;border:none;font-size:14px;font-family:inherit;color:rgba(26,26,26,0.55);cursor:pointer;">Cancel</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 18 · Topic Flow</div>
+    <div class="page-title">Question</div>
+    <div class="page-desc">Four answer types: single-select, multi-select, range-driven slider (shared with onboarding), and ranked-choice. Topics carry <strong>3–5 questions</strong> (dynamic N); the step indicator and progress bar template off <code>topic.questions.length</code>. An optional note step follows the last question and submits to Screen 19. Flow chrome: ‹ back-a-step + ✕ exit to Topic List + swipe-down (gated). Demo tabs let you preview each answer type and the linked / unlinked partner state.</div>
+    <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Type</span>
+      <button id="tab-single_select" onclick="showType('single_select')" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Single select</button>
+      <button id="tab-multi_select"  onclick="showType('multi_select')"  style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Multi select</button>
+      <button id="tab-slider"        onclick="showType('slider')"        style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Slider</button>
+      <button id="tab-ranked_choice" onclick="showType('ranked_choice')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Ranked</button>
+      <button id="tab-note"          onclick="showType('note')"          style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Note step</button>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Partner</span>
+      <button id="pstate-linked" onclick="setPartnerState('linked')" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Linked (Jordan)</button>
+      <button id="pstate-none"   onclick="setPartnerState('none')"   style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Not linked</button>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Partner-name fallback ──
+   The first-name appears when linked; "your partner" otherwise.
+   Drives partner-templated copy across the screen via data-partner-template. */
+let PARTNER_STATE = 'linked';      // 'linked' | 'none'
+const PARTNER_NAME = 'Jordan';
+function partnerName()    { return PARTNER_STATE === 'linked' ? PARTNER_NAME : 'your partner'; }
+function partnerNameCap() { return PARTNER_STATE === 'linked' ? PARTNER_NAME : 'Your partner'; }
+
+/* ── Sample topic — dynamic N (3–5). Demo runs N=4 to make the dynamic part visible. ── */
+const DEMO_TOPIC = {
+  id: 'village',
+  title: 'Building your village',
+  questions: [
+    {
+      id: 'q1', type: 'single_select',
+      text: 'Who would you trust to babysit regularly?',
+      options: [
+        { id: 'a', text: 'Family only, at least at first' },
+        { id: 'b', text: 'Close friends we both trust' },
+        { id: 'c', text: 'A professional nanny or sitter' },
+        { id: 'd', text: 'Honestly, no one for a while' }
+      ]
+    },
+    {
+      id: 'q2', type: 'multi_select',
+      text: 'What values matter most to you in parenting?',
+      subText: 'Select all that apply.',
+      options: [
+        { id: 'a', text: 'Independence and self-reliance' },
+        { id: 'b', text: 'Empathy and emotional intelligence' },
+        { id: 'c', text: 'Consistent routines and discipline' },
+        { id: 'd', text: 'Creative and free expression' },
+        { id: 'e', text: 'Academic and career preparation' }
+      ]
+    },
+    {
+      id: 'q3', type: 'slider',
+      text: 'How strict do you want to be about screen time?',
+      subText: 'There are no wrong answers here.',
+      sliderMin: 1, sliderMax: 10,
+      sliderLeft: 'No restrictions', sliderRight: 'Screen-free'
+    },
+    {
+      id: 'q4', type: 'ranked_choice',
+      text: 'Rank these from most to least important for your first year.',
+      options: [
+        { id: 'a', text: 'Time with extended family' },
+        { id: 'b', text: 'Sleep for both of you' },
+        { id: 'c', text: 'Time alone together as a couple' },
+        { id: 'd', text: 'Time alone for each of you' }
+      ]
+    }
+  ]
+};
+
+/* Which DEMO_TOPIC question to render for each type tab. Single source of truth
+   for "what's the example for this type" — keeps step-label + progress dynamic. */
+const TYPE_TO_QUESTION_INDEX = {
+  single_select: 0,
+  multi_select:  1,
+  slider:        2,
+  ranked_choice: 3,
+  note:          'note'
+};
+
+/* In-flight demo state — mutated by the answer renderers. */
+const DEMO_STATE = {
+  currentType: 'single_select',
+  selectedSingle: 'b',                       // pre-seeded so single-select example reads as answered
+  selectedMulti:  ['a', 'b'],
+  sliderValue:    null,
+  rankedOrder:    null,                      // populated by ranked-choice render
+  noteText:       '',
+  noteDirty:      false
+};
+
+let sliderDrag = { active: false, lastInt: null };
+
+/* ── Partner state demo strip ── */
+function setPartnerState(state) {
+  PARTNER_STATE = state;
+  ['linked', 'none'].forEach(s => {
+    const btn = document.getElementById('pstate-' + s);
+    const active = s === state;
+    btn.style.background  = active ? '#5f45f2' : 'white';
+    btn.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    btn.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+  // Re-render the current type so partner-templated copy updates.
+  showType(DEMO_STATE.currentType);
+}
+
+function renderPartnerTemplates(scope) {
+  const root = scope || document;
+  root.querySelectorAll('[data-partner-template]').forEach(el => {
+    const tpl = el.getAttribute('data-partner-template');
+    el.textContent = tpl
+      .replace('{name}', partnerName())
+      .replace('{Name}', partnerNameCap());
+  });
+}
+
+/* ── Type tab + sub-screen rendering ── */
+function showType(key) {
+  DEMO_STATE.currentType = key;
+  ['single_select','multi_select','slider','ranked_choice','note'].forEach(k => {
+    const tab = document.getElementById('tab-' + k);
+    if (!tab) return;
+    const active = k === key;
+    tab.style.background  = active ? '#5f45f2' : 'white';
+    tab.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    tab.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+
+  const total = DEMO_TOPIC.questions.length;       // dynamic N
+  const isNote = key === 'note';
+  const idx    = isNote ? null : TYPE_TO_QUESTION_INDEX[key];
+  const q      = isNote ? null : DEMO_TOPIC.questions[idx];
+
+  /* Step label + progress */
+  const stepLabelEl = document.getElementById('q-step-label');
+  if (isNote) {
+    // Note step: "Note" + an inline Optional pill, set in markup.
+    stepLabelEl.innerHTML = 'Note';
+  } else {
+    stepLabelEl.textContent = `Q${idx + 1} of ${total}`;
+  }
+  const pct = isNote ? 100 : Math.round(((idx + 1) / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  /* Question / note text */
+  const textEl = document.getElementById('q-text');
+  if (isNote) {
+    textEl.innerHTML  = `Anything else <span data-partner-template="{name}">${partnerName()}</span> should know?`;
+    textEl.className  = 'note-heading';
+  } else {
+    textEl.textContent = q.text;
+    textEl.className   = 'question-text';
+  }
+
+  /* "Optional" eyebrow — note step only */
+  const optEl = document.getElementById('note-optional');
+  if (optEl) optEl.style.display = isNote ? 'block' : 'none';
+
+  /* Sub-text under heading */
+  const subEl = document.getElementById('q-subtext');
+  if (isNote) {
+    subEl.innerHTML     = `<span data-partner-template="{Name}">${partnerNameCap()}</span> sees this after you both complete this topic.`;
+    subEl.style.display = 'block';
+  } else if (q.subText) {
+    subEl.textContent   = q.subText;
+    subEl.style.display = 'block';
+  } else {
+    subEl.style.display = 'none';
+  }
+
+  /* Per-question privacy line: shown ONCE, on the first question only. */
+  const partnerNoteEl = document.getElementById('partner-note');
+  const showPrivacyLine = !isNote && idx === 0;
+  if (showPrivacyLine) {
+    partnerNoteEl.setAttribute('data-partner-template', "{Name} won't see your answer until they've finished too.");
+    partnerNoteEl.textContent = `${partnerNameCap()} won't see your answer until they've finished too.`;
+    partnerNoteEl.style.display = 'block';
+  } else {
+    partnerNoteEl.removeAttribute('data-partner-template');
+    partnerNoteEl.style.display = 'none';
+  }
+
+  /* Answer area */
+  const area = document.getElementById('answer-area');
+  const btn  = document.getElementById('next-btn');
+
+  if (key === 'single_select') {
+    renderSingleSelect(area, q);
+    btn.textContent = 'Continue →';
+    btn.classList.toggle('disabled', DEMO_STATE.selectedSingle == null);
+
+  } else if (key === 'multi_select') {
+    renderMultiSelect(area, q);
+    btn.textContent = 'Continue →';
+    btn.classList.toggle('disabled', DEMO_STATE.selectedMulti.length === 0);
+
+  } else if (key === 'slider') {
+    renderSlider(area, q);
+    btn.textContent = 'Continue →';
+    btn.classList.toggle('disabled', DEMO_STATE.sliderValue == null);
+
+  } else if (key === 'ranked_choice') {
+    renderRankedChoice(area, q);
+    btn.textContent = 'Continue →';
+    // Continue is enabled on the presented order — no drag required.
+    btn.classList.remove('disabled');
+
+  } else {
+    renderNote(area);
+    btn.textContent = 'Done →';     // final-step submit
+    btn.classList.remove('disabled');
+  }
+
+  renderPartnerTemplates(document);
+}
+
+/* ── Single-select ── */
+function renderSingleSelect(area, q) {
+  area.innerHTML = '<div class="answer-opts">' +
+    q.options.map(o =>
+      `<button class="answer-opt${o.id === DEMO_STATE.selectedSingle ? ' selected' : ''}" data-id="${o.id}" onclick="selectSingle('${o.id}')">${o.text}</button>`
+    ).join('') + '</div>';
+}
+function selectSingle(id) {
+  DEMO_STATE.selectedSingle = (DEMO_STATE.selectedSingle === id) ? null : id;
+  document.querySelectorAll('.answer-opt').forEach(o => {
+    o.classList.toggle('selected', o.getAttribute('data-id') === DEMO_STATE.selectedSingle);
+  });
+  document.getElementById('next-btn').classList.toggle('disabled', DEMO_STATE.selectedSingle == null);
+}
+
+/* ── Multi-select ── */
+function renderMultiSelect(area, q) {
+  area.innerHTML = '<div class="answer-opts">' +
+    q.options.map(o => {
+      const sel = DEMO_STATE.selectedMulti.includes(o.id) ? ' selected' : '';
+      return `<button class="answer-opt${sel}" data-id="${o.id}" onclick="toggleMulti('${o.id}')">${o.text}</button>`;
+    }).join('') + '</div>';
+}
+function toggleMulti(id) {
+  const i = DEMO_STATE.selectedMulti.indexOf(id);
+  if (i >= 0) DEMO_STATE.selectedMulti.splice(i, 1);
+  else        DEMO_STATE.selectedMulti.push(id);
+  document.querySelectorAll('.answer-opt').forEach(o => {
+    o.classList.toggle('selected', DEMO_STATE.selectedMulti.includes(o.getAttribute('data-id')));
+  });
+  document.getElementById('next-btn').classList.toggle('disabled', DEMO_STATE.selectedMulti.length === 0);
+}
+
+/* ── Slider — reuses the onboarding component (02-onboarding-quiz.html).
+   Range-driven by q.sliderMin/sliderMax. Ghosted until first interaction:
+   no fill, value hidden via visibility, thumb border-default. ── */
+function renderSlider(area, q) {
+  const min = q.sliderMin, max = q.sliderMax;
+  const ticks = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  const pos = v => ((v - min) / (max - min)) * 100;
+
+  // Ghosted thumb sits at the midpoint as an affordance, not a value.
+  const initial = Math.round((min + max) / 2);
+
+  area.innerHTML = `
+    <div class="slider-wrap">
+      <div class="slider-value" id="slider-value" style="visibility:hidden;">${initial}</div>
+      <div class="slider-row" id="slider-row">
+        <div class="slider-track">
+          <div class="slider-fill" id="slider-fill" style="width:0%;"></div>
+          ${ticks.map(t => `<div class="slider-tick" style="left:${pos(t)}%;"></div>`).join('')}
+          <div class="slider-thumb" id="slider-thumb" style="left:${pos(initial)}%;"></div>
+        </div>
+      </div>
+      <div class="slider-end-labels">
+        <span>${q.sliderLeft}</span>
+        <span>${q.sliderRight}</span>
+      </div>
+    </div>`;
+
+  initSlider(min, max);
+}
+function initSlider(min, max) {
+  const row = document.getElementById('slider-row');
+  if (!row) return;
+  const pickFromEvent = (e) => {
+    const rect = row.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    const v = Math.round(min + ratio * (max - min));
+    if (v !== sliderDrag.lastInt) { sliderDrag.lastInt = v; triggerHaptic(); }
+    setSlider(v, min, max);
+  };
+  row.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    sliderDrag = { active: true, lastInt: null };
+    pickFromEvent(e);
+    const onMove = (ev) => pickFromEvent(ev);
+    const onUp   = () => {
+      sliderDrag.active = false;
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup',   onUp);
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup',   onUp);
+  });
+}
+function setSlider(value, min, max) {
+  const pct = ((value - min) / (max - min)) * 100;
+  const valEl   = document.getElementById('slider-value');
+  const fillEl  = document.getElementById('slider-fill');
+  const thumbEl = document.getElementById('slider-thumb');
+  if (valEl)   { valEl.textContent = value; valEl.style.visibility = 'visible'; }
+  if (fillEl)  { fillEl.style.width = pct + '%'; }
+  if (thumbEl) { thumbEl.style.left = pct + '%'; thumbEl.classList.add('is-confirmed'); }
+  DEMO_STATE.sliderValue = value;
+  document.getElementById('next-btn').classList.remove('disabled');
+}
+function triggerHaptic() { if (navigator.vibrate) navigator.vibrate(10); }
+
+/* ── Ranked choice — drag to reorder, rank numbers update live.
+   Initial order randomized so there's no implied "right" anchor. ── */
+function renderRankedChoice(area, q) {
+  if (!DEMO_STATE.rankedOrder || DEMO_STATE.rankedOrder.length !== q.options.length) {
+    DEMO_STATE.rankedOrder = shuffle(q.options.map(o => o.id));
+  }
+  const byId = Object.fromEntries(q.options.map(o => [o.id, o.text]));
+  area.innerHTML = `
+    <div class="ranked-list" id="ranked-list">
+      ${DEMO_STATE.rankedOrder.map((id, i) => `
+        <div class="ranked-item" draggable="true" data-id="${id}">
+          <div class="ranked-rank">${i + 1}</div>
+          <div class="ranked-text">${byId[id]}</div>
+          <div class="ranked-handle" aria-hidden="true">⋮⋮</div>
+        </div>
+      `).join('')}
+    </div>`;
+  initRanked();
+}
+function initRanked() {
+  const list = document.getElementById('ranked-list');
+  if (!list) return;
+  let dragging = null;
+  list.querySelectorAll('.ranked-item').forEach(item => {
+    item.addEventListener('dragstart', (e) => {
+      dragging = item;
+      item.classList.add('is-dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      // Firefox needs setData to start drag.
+      try { e.dataTransfer.setData('text/plain', item.getAttribute('data-id')); } catch (_) {}
+    });
+    item.addEventListener('dragend', () => {
+      if (dragging) dragging.classList.remove('is-dragging');
+      dragging = null;
+      syncRankedOrder();
+    });
+    item.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      if (!dragging || dragging === item) return;
+      const rect = item.getBoundingClientRect();
+      const before = (e.clientY - rect.top) < rect.height / 2;
+      list.insertBefore(dragging, before ? item : item.nextSibling);
+      updateRankNumbers();
+    });
+  });
+}
+function updateRankNumbers() {
+  document.querySelectorAll('#ranked-list .ranked-item').forEach((el, i) => {
+    el.querySelector('.ranked-rank').textContent = i + 1;
+  });
+}
+function syncRankedOrder() {
+  DEMO_STATE.rankedOrder = Array.from(document.querySelectorAll('#ranked-list .ranked-item'))
+    .map(el => el.getAttribute('data-id'));
+}
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ── Note step ── */
+function renderNote(area) {
+  area.innerHTML = `
+    <textarea class="note-textarea" id="note-input" placeholder="Your thoughts or questions for later." oninput="onNoteInput(this.value); autoGrowNote(this);" maxlength="280">${escapeHtml(DEMO_STATE.noteText)}</textarea>
+    <div class="note-char-count" id="char-count">${280 - DEMO_STATE.noteText.length} characters remaining</div>`;
+  // Re-flag dirtiness: only "dirty" if user has typed something since last save.
+  autoGrowNote(document.getElementById('note-input'));
+}
+/* Grow the textarea to fit its content. CSS keeps min-height (96px) as the
+   floor; height beyond that follows scrollHeight so the box expands with
+   what's typed and shrinks when content is deleted. No max — the note step
+   sits above a scrollable container, so a tall note scrolls naturally. */
+function autoGrowNote(ta) {
+  if (!ta) return;
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
+}
+function onNoteInput(text) {
+  DEMO_STATE.noteText = text;
+  DEMO_STATE.noteDirty = text.length > 0;
+  const remaining = 280 - text.length;
+  const el = document.getElementById('char-count');
+  if (!el) return;
+  el.textContent = remaining + ' character' + (remaining === 1 ? '' : 's') + ' remaining';
+  el.style.color = remaining < 50 ? '#c0392b' : '';
+}
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* ── Chrome: back / exit / swipe-down ── */
+function handleBack() {
+  // Demo: cycle the type tab backwards within the topic flow.
+  const order = ['single_select', 'multi_select', 'slider', 'ranked_choice', 'note'];
+  const i = order.indexOf(DEMO_STATE.currentType);
+  if (i <= 0) return;     // Q0 → Topic Intro (Screen 16) in production
+  showType(order[i - 1]);
+}
+function handleExit() {
+  if (DEMO_STATE.currentType === 'note' && DEMO_STATE.noteDirty) {
+    openLeaveSheet();
+    return;
+  }
+  // Production: navigate to Topic List (Screen 14).
+  // Demo: do nothing destructive — show a console hint instead.
+  console.log('[demo] exit → Screen 14 (Topic List)');
+}
+
+/* ── Leave-with-unsaved-note mini sheet ── */
+function openLeaveSheet() {
+  document.getElementById('leave-overlay').style.display = 'block';
+  const s = document.getElementById('leave-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeLeaveSheet() {
+  const s = document.getElementById('leave-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('leave-overlay').style.display = 'none';
+  }, 280);
+}
+function saveNoteAndExit() {
+  // Demo: clear dirtiness and pretend to navigate.
+  DEMO_STATE.noteDirty = false;
+  closeLeaveSheet();
+  console.log('[demo] note saved → exit to Screen 14');
+}
+function discardNoteAndExit() {
+  DEMO_STATE.noteText = '';
+  DEMO_STATE.noteDirty = false;
+  const ta = document.getElementById('note-input');
+  if (ta) ta.value = '';
+  closeLeaveSheet();
+  console.log('[demo] note discarded → exit to Screen 14');
+}
+
+/* ── Swipe-down to exit (gated: at scroll top + gesture not on interactive control) ── */
+(function attachSwipeDown() {
+  const phoneScreen = document.querySelector('body.page-15 .phone-screen');
+  if (!phoneScreen) return;
+  let startY = 0, startX = 0, startedOnInteractive = false, scrollAtStart = 0;
+  const interactiveSelector = 'button, input, textarea, [role="button"], .answer-opt, .ranked-item, .slider-row, .slider-track, .q-back-btn, .q-exit-btn';
+  phoneScreen.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    startY = t.clientY; startX = t.clientX;
+    startedOnInteractive = !!(e.target.closest && e.target.closest(interactiveSelector));
+    // The scroll-area is what actually scrolls inside the phone.
+    const scroller = phoneScreen.querySelector('.scroll-area, .phone-screen') || phoneScreen;
+    scrollAtStart = scroller.scrollTop || 0;
+  }, { passive: true });
+  phoneScreen.addEventListener('touchend', (e) => {
+    if (startedOnInteractive) return;
+    if (scrollAtStart > 0) return;
+    const t = e.changedTouches[0];
+    const dy = t.clientY - startY;
+    const dx = Math.abs(t.clientX - startX);
+    // Mostly-vertical downward gesture, > 80px.
+    if (dy > 80 && dx < 60) handleExit();
+  });
+})();
+
+/* ── Boot ── */
+showType('single_select');
+</script>
+
+</body>
+</html>

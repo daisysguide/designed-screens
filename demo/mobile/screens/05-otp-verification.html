@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — OTP Verification · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../demo-fit.css">
+</head>
+<body class="page-02 demo-mode">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item active" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">OTP Verification</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="back-btn">
+          <span class="back-chevron">‹</span> Back
+        </div>
+
+        <div class="heading-block">
+          <div class="screen-heading" id="screen-heading">Check your phone</div>
+          <div class="screen-subhead">We sent a 6-digit code to<br><strong>+1 (972) 555-0182</strong></div>
+        </div>
+
+        <!-- OTP boxes -->
+        <div class="otp-row" id="otp-row">
+          <!-- populated by JS -->
+        </div>
+
+        <!-- Error message (error state only) -->
+        <div class="error-message" id="error-msg" style="display:none;">That code doesn't match. Try again.</div>
+
+        <!-- Links -->
+        <div class="links-row">
+          <div class="resend-row">
+            <span class="link-text">Didn't get it?</span>
+            <span class="link-action disabled" id="resend-link">Resend code</span>
+            <span class="countdown" id="countdown" style="display:none;">30s</span>
+          </div>
+          <div>
+            <span class="link-text">Wrong number? </span>
+            <span class="link-action">Go back</span>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-primary disabled" id="verify-btn">Verify</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 05 · Auth</div>
+    <div class="page-title">OTP Verification</div>
+    <div class="page-desc">6-digit code entry. Auto-advance. iOS SMS autofill. Resend after 30s.</div>
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-empty" onclick="showState('empty')">Empty</button>
+      <button class="state-tab" id="tab-partial" onclick="showState('partial')">Partial</button>
+      <button class="state-tab" id="tab-complete" onclick="showState('complete')">Complete</button>
+      <button class="state-tab" id="tab-error" onclick="showState('error')">Error</button>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+
+<script>
+const states = {
+  empty:    [null, null, null, null, null, null],
+  partial:  ['3', '7', '4', null, null, null],   // box 3 is active (cursor)
+  complete: ['3', '7', '4', '8', '1', '2'],
+  error:    ['3', '7', '4', '8', '1', '9'],
+};
+
+function showState(state) {
+  ['empty','partial','complete','error'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const digits = states[state];
+  const row = document.getElementById('otp-row');
+  const verifyBtn = document.getElementById('verify-btn');
+  const errorMsg = document.getElementById('error-msg');
+  const resendLink = document.getElementById('resend-link');
+  const countdown = document.getElementById('countdown');
+
+  // Build boxes
+  row.innerHTML = '';
+  digits.forEach((d, i) => {
+    const box = document.createElement('div');
+    box.className = 'otp-box';
+
+    if (state === 'error') {
+      box.classList.add('error');
+      box.textContent = d;
+    } else if (d !== null) {
+      box.classList.add('filled');
+      box.textContent = d;
+    } else if (state === 'partial' && i === 3) {
+      // active box with cursor
+      box.classList.add('active');
+      const cursor = document.createElement('div');
+      cursor.className = 'otp-cursor';
+      box.appendChild(cursor);
+    } else {
+      box.classList.add('empty');
+    }
+    row.appendChild(box);
+  });
+
+  // Verify button
+  const allFilled = digits.every(d => d !== null);
+  verifyBtn.classList.toggle('disabled', !allFilled || state === 'error');
+
+  // Error message
+  errorMsg.style.display = state === 'error' ? 'block' : 'none';
+
+  // Resend
+  if (state === 'empty') {
+    resendLink.classList.add('disabled');
+    countdown.style.display = 'inline';
+    countdown.textContent = '30s';
+  } else {
+    resendLink.classList.remove('disabled');
+    countdown.style.display = 'none';
+  }
+
+  // Heading
+  document.getElementById('screen-heading').textContent = 'Check your phone';
+}
+
+showState('empty');
+</script>
+    </div>
+  </div>
+</div>
+<script>
+
+const states = {
+  empty:    [null, null, null, null, null, null],
+  partial:  ['3', '7', '4', null, null, null],   // box 3 is active (cursor)
+  complete: ['3', '7', '4', '8', '1', '2'],
+  error:    ['3', '7', '4', '8', '1', '9'],
+};
+
+function showState(state) {
+  ['empty','partial','complete','error'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const digits = states[state];
+  const row = document.getElementById('otp-row');
+  const verifyBtn = document.getElementById('verify-btn');
+  const errorMsg = document.getElementById('error-msg');
+  const resendLink = document.getElementById('resend-link');
+  const countdown = document.getElementById('countdown');
+
+  // Build boxes
+  row.innerHTML = '';
+  digits.forEach((d, i) => {
+    const box = document.createElement('div');
+    box.className = 'otp-box';
+
+    if (state === 'error') {
+      box.classList.add('error');
+      box.textContent = d;
+    } else if (d !== null) {
+      box.classList.add('filled');
+      box.textContent = d;
+    } else if (state === 'partial' && i === 3) {
+      // active box with cursor
+      box.classList.add('active');
+      const cursor = document.createElement('div');
+      cursor.className = 'otp-cursor';
+      box.appendChild(cursor);
+    } else {
+      box.classList.add('empty');
+    }
+    row.appendChild(box);
+  });
+
+  // Verify button
+  const allFilled = digits.every(d => d !== null);
+  verifyBtn.classList.toggle('disabled', !allFilled || state === 'error');
+
+  // Error message
+  errorMsg.style.display = state === 'error' ? 'block' : 'none';
+
+  // Resend
+  if (state === 'empty') {
+    resendLink.classList.add('disabled');
+    countdown.style.display = 'inline';
+    countdown.textContent = '30s';
+  } else {
+    resendLink.classList.remove('disabled');
+    countdown.style.display = 'none';
+  }
+
+  // Heading
+  document.getElementById('screen-heading').textContent = 'Check your phone';
+}
+
+showState('empty');
+
+</script>
+
+</body>
+</html>

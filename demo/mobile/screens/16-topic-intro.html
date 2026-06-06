@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Topic Intro · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../demo-fit.css">
+<style>
+  /* Cyan tokens local to this screen — match the Topic List "your move" palette
+     so the partner-pill state colors converge with 14's pill language. */
+  body.page-13 .screen-root {
+    --cyan-soft: #9decfa;
+    --cyan-strong: #7fe3f7;
+    --cyan-text: #0b5263;
+  }
+
+  /* Six state tabs don't fit on one row at 375px. Let them wrap, and stop
+     stretching each pill to fill an equal share of the row — at 6 across,
+     equal-share makes each ~46px wide and crops the labels. Sizing pills
+     to their content lets them flow naturally onto a second row. */
+  body.page-13 .screen-root .state-tab-row { flex-wrap: wrap; }
+  body.page-13 .screen-root .state-tab {
+    flex: 0 0 auto;
+    padding: 0 12px;
+  }
+
+  /* Top-right exit ✕. Top-left stays empty (this is the flow's entry screen,
+     so there is no "back a step" affordance — the ✕ owns the exit). */
+  body.page-13 .screen-root .exit-row {
+    display: flex; align-items: center; justify-content: flex-end;
+    height: 44px; flex-shrink: 0;
+  }
+  body.page-13 .screen-root .exit-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(26,26,26,0.05); color: var(--text-primary);
+    border: none; cursor: pointer; font-size: 18px; line-height: 1;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Taller illustration slot — 230px (was 160px in styles.css). Removes
+     the mid-screen void left after the stats card came out. Card chrome
+     unchanged (white card, dashed corner marks, no shadow, label). */
+  body.page-13 .screen-root .illus-slot { height: 230px; }
+
+  /* Avatar-free Partner Status Block (pill variant).
+     Same component family as Home / Empty Home's Partner Status Block, but
+     stripped of the avatar so it can sit inline as the closing element of
+     the content group, directly under the blurb. The
+     pre-join (purple) variants are tappable and route to Screen 10; the
+     joined turn-state variants are informational and reuse 14's color
+     language.
+
+     Width hugs its contents and the pill is centered in the column, so
+     it reads as a status chip — not a third button stacked above the two
+     CTAs. inline-flex + align-self center does both jobs (intrinsic
+     width + horizontal centering inside the phone-screen flex column).
+     Small top margin attaches the pill to the content group (it caps
+     eyebrow → title → blurb → pill); the spacer below pushes the CTAs
+     to the bottom, so the leftover slack reads as breathing room above
+     the buttons. */
+  body.page-13 .screen-root .partner-pill {
+    display: inline-flex; align-self: center;
+    align-items: center; gap: 8px;
+    padding: 10px 14px; border-radius: var(--radius-full);
+    font-size: 13px; font-weight: 600; line-height: 1.3;
+    margin-top: 12px; flex-shrink: 0;
+    border: 1px solid transparent;
+    font-family: 'DM Sans', sans-serif;
+    max-width: 100%;
+  }
+  body.page-13 .screen-root .partner-pill .pill-icon {
+    width: 16px; height: 16px; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  body.page-13 .screen-root .partner-pill .pill-icon svg { width: 16px; height: 16px; }
+  body.page-13 .screen-root .partner-pill .pill-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  /* Copy is intrinsically-sized so the pill hugs its contents — no flex:1,
+     which would stretch the copy and push the pill back to full width. */
+  body.page-13 .screen-root .partner-pill .pill-copy { flex: 0 1 auto; }
+  body.page-13 .screen-root .partner-pill .pill-chevron {
+    color: var(--purple-500); font-size: 16px; line-height: 1; flex-shrink: 0;
+  }
+
+  /* Pre-join: tappable, purple, routes to Screen 10 (Partner Linking). */
+  body.page-13 .screen-root .partner-pill.pre-join {
+    background: rgba(95,69,242,0.08);
+    border-color: rgba(95,69,242,0.18);
+    color: var(--purple-500);
+    cursor: pointer;
+  }
+  body.page-13 .screen-root .partner-pill.pre-join.pending {
+    background: rgba(95,69,242,0.05);
+    border-color: rgba(95,69,242,0.12);
+    color: rgba(95,69,242,0.85);
+  }
+  body.page-13 .screen-root .partner-pill.pre-join .pill-icon { color: var(--purple-500); }
+
+  /* Joined turn-states: informational, reuse 14's color tokens. */
+  body.page-13 .screen-root .partner-pill.not-started {
+    background: rgba(26,26,26,0.05);
+    color: var(--text-secondary);
+  }
+  body.page-13 .screen-root .partner-pill.not-started .pill-dot {
+    background: rgba(26,26,26,0.25);
+  }
+  body.page-13 .screen-root .partner-pill.your-turn {
+    background: var(--cyan-soft);
+    color: var(--cyan-text);
+  }
+  body.page-13 .screen-root .partner-pill.your-turn .pill-dot {
+    background: var(--cyan-strong);
+  }
+  body.page-13 .screen-root .partner-pill.waiting {
+    background: rgba(26,26,26,0.07);
+    color: rgba(26,26,26,0.6);
+  }
+  body.page-13 .screen-root .partner-pill.waiting .pill-dot {
+    background: rgba(26,26,26,0.35);
+  }
+
+  /* Ready to reveal — ported verbatim from Topic List (page-12).
+     Breathing purple glow on the pill + always-on baseline halo. The
+     baseline halo is the static box-shadow; the breathing glow is the
+     animation. Under prefers-reduced-motion we keep the baseline halo
+     only and drop the animation. */
+  body.page-13 .screen-root .partner-pill.ready-reveal {
+    background: var(--cyan-strong);
+    color: var(--cyan-text);
+    box-shadow: 0 0 8px 1px rgba(95,69,242,0.34);
+  }
+  body.page-13 .screen-root .partner-pill.ready-reveal .pill-dot {
+    background: var(--cyan-text);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    body.page-13 .screen-root .partner-pill.ready-reveal {
+      animation: page13RevealCharge 2.4s ease-in-out infinite;
+    }
+  }
+  @keyframes page13RevealCharge {
+    0%, 100% { box-shadow: 0 0 6px 1px  rgba(95,69,242,0.30); }
+    50%      { box-shadow: 0 0 12px 2px rgba(95,69,242,0.55); }
+  }
+</style>
+</head>
+<body class="page-13 demo-mode">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item active" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Topic Intro</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <!-- Exit row: top-left empty (this is the entry screen of the flow,
+             so there's no "back a step" affordance). ✕ top-right exits to
+             Topic List; swipe-down-from-top does the same. -->
+        <div class="exit-row">
+          <button class="exit-btn" aria-label="Exit to topic list">✕</button>
+        </div>
+
+        <!-- Illustration slot -->
+        <div class="illus-slot">
+          <div class="slot-corner tl"></div>
+          <div class="slot-corner br"></div>
+          <div class="illus-label">Illustration asset</div>
+          <div class="illus-desc">Topic illustration · 230px · white card · no shadow</div>
+        </div>
+
+        <!-- Topic meta -->
+        <div class="topic-eyebrow">The Village · Topic 3 of 6</div>
+        <div class="topic-title">Who will we trust to watch the baby?</div>
+        <div class="topic-blurb">Childcare is one of those topics where couples often discover mid-conversation that they have completely different people in mind. Sometimes those people are each other's mothers.</div>
+
+        <!-- Partner Status Block (avatar-free pill variant).
+             Caps the content group (eyebrow → title → blurb → pill).
+             Renders one of six states. Pre-join variants are tappable and
+             route to Screen 10 Partner Linking. Joined turn-states are
+             informational. -->
+        <div class="partner-pill not-started" id="partner-pill">
+          <span class="pill-dot" aria-hidden="true"></span>
+          <span class="pill-copy">Neither of you has started this one yet.</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <!-- CTAs -->
+        <div class="cta-block" id="cta-block">
+          <button class="btn-primary">Start answering →</button>
+          <button class="btn-secondary">Read the guide first</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 16 · Topic Flow</div>
+    <div class="page-title">Topic Intro</div>
+    <div class="page-desc">Entry screen of the topic flow. Answering leads; the guide is supporting and offered once here (no persistent mid-question link in v1). ✕ top right exits to Topic List.</div>
+    <div class="state-tab-row">
+      <button class="state-tab" id="tab-nopartner" onclick="showState('nopartner')">No partner</button>
+      <button class="state-tab" id="tab-pending" onclick="showState('pending')">Invite pending</button>
+      <button class="state-tab active" id="tab-fresh" onclick="showState('fresh')">Not started</button>
+      <button class="state-tab" id="tab-yourturn" onclick="showState('yourturn')">Your turn</button>
+      <button class="state-tab" id="tab-waiting" onclick="showState('waiting')">Waiting</button>
+      <button class="state-tab" id="tab-reveal" onclick="showState('reveal')">Ready to reveal</button>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+
+<script>
+// Inline SVGs for pre-join icons (Phosphor-style: paper-plane-tilt for
+// "invite", clock for "pending"). Inline so this screen doesn't need to
+// pull the Phosphor font CSS just for two glyphs.
+const ICON_INVITE = '<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M227.32 28.68a16 16 0 0 0-15.66-4.08l-.15.05L19.5 79.51a16 16 0 0 0-2.85 29.94l85.27 41.16 41.17 85.27a16 16 0 0 0 14.4 9.13c.41 0 .82 0 1.23-.05a16 16 0 0 0 14.31-11.83l54.86-192a16 16 0 0 0-.57-12.45M157.83 212l-.05.14-40.06-83 47.59-47.59a8 8 0 0 0-11.31-11.32l-47.6 47.6L23.36 78l-.14-.06L216 23.31Z"/></svg>';
+const ICON_CLOCK  = '<svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24m0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88m64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8"/></svg>';
+
+const STATES = ['nopartner','pending','fresh','yourturn','waiting','reveal'];
+
+function showState(state) {
+  STATES.forEach(s => {
+    const el = document.getElementById('tab-' + s);
+    if (el) el.classList.toggle('active', s === state);
+  });
+
+  const pill = document.getElementById('partner-pill');
+  const ctaBlock = document.getElementById('cta-block');
+
+  // Reset pill classes; one variant gets added per branch below.
+  pill.className = 'partner-pill';
+
+  if (state === 'nopartner') {
+    pill.classList.add('pre-join');
+    pill.innerHTML = `
+      <span class="pill-icon">${ICON_INVITE}</span>
+      <span class="pill-copy">Invite your partner to unlock the reveal.</span>
+      <span class="pill-chevron" aria-hidden="true">›</span>`;
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">Start answering →</button>
+      <button class="btn-secondary">Read the guide first</button>`;
+  } else if (state === 'pending') {
+    pill.classList.add('pre-join', 'pending');
+    pill.innerHTML = `
+      <span class="pill-icon">${ICON_CLOCK}</span>
+      <span class="pill-copy">Invite sent. They haven't joined yet.</span>
+      <span class="pill-chevron" aria-hidden="true">›</span>`;
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">Start answering →</button>
+      <button class="btn-secondary">Read the guide first</button>`;
+  } else if (state === 'fresh') {
+    pill.classList.add('not-started');
+    pill.innerHTML = `
+      <span class="pill-dot" aria-hidden="true"></span>
+      <span class="pill-copy">Neither of you has started this one yet.</span>`;
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">Start answering →</button>
+      <button class="btn-secondary">Read the guide first</button>`;
+  } else if (state === 'yourturn') {
+    pill.classList.add('your-turn');
+    pill.innerHTML = `
+      <span class="pill-dot" aria-hidden="true"></span>
+      <span class="pill-copy">Jordan went first. Your turn.</span>`;
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">Start answering →</button>
+      <button class="btn-secondary">Read the guide</button>`;
+  } else if (state === 'waiting') {
+    pill.classList.add('waiting');
+    pill.innerHTML = `
+      <span class="pill-dot" aria-hidden="true"></span>
+      <span class="pill-copy">You've answered. Jordan's turn now.</span>`;
+    ctaBlock.innerHTML = `
+      <button class="btn-secondary">Read the guide</button>
+      <button class="btn-secondary">Change my answers</button>`;
+  } else if (state === 'reveal') {
+    pill.classList.add('ready-reveal');
+    pill.innerHTML = `
+      <span class="pill-dot" aria-hidden="true"></span>
+      <span class="pill-copy">You've both answered. The reveal's ready.</span>`;
+    ctaBlock.innerHTML = `
+      <button class="btn-primary">See your results →</button>
+      <button class="btn-secondary">Read the guide</button>`;
+  }
+}
+</script>
+    </div>
+  </div>
+</div>
+<script>
+// showState defined above
+</script>
+
+</body>
+</html>

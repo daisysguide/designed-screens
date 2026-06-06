@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Progress · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../demo-fit.css">
+</head>
+<body class="page-22 demo-mode">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item active" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Progress</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="scroll-area">
+
+          <div class="screen-title">Your progress</div>
+
+          <!-- ── Populated / in-between body ── -->
+          <div id="progress-body">
+
+            <!-- Completion -->
+            <div id="completion-block">
+              <div class="completion-lede" id="completion-lede">
+                You've worked through <b>10 of 45</b> conversations together.<br>
+                <span class="underway-line">5 more are underway.</span>
+              </div>
+              <div class="completion-bar">
+                <i class="done" id="completion-done" style="width:22%;"></i>
+                <i class="prog" id="completion-prog" style="width:11%;"></i>
+              </div>
+            </div>
+
+            <div class="progress-rule"></div>
+
+            <!-- Alignment distribution card -->
+            <div class="align-card" id="align-card">
+              <div class="align-eyebrow">Where you've landed so far</div>
+              <div class="align-note" id="align-note"></div>
+
+              <!-- Populated bar -->
+              <div class="align-bar" id="align-bar">
+                <i class="seg-fully"  id="seg-fully"  style="width:0%;"></i>
+                <i class="seg-mostly" id="seg-mostly" style="width:0%;"></i>
+                <i class="seg-worth"  id="seg-worth"  style="width:0%;"></i>
+              </div>
+              <!-- Empty (dashed) bar — shown when nothing revealed -->
+              <div class="align-bar-empty" id="align-bar-empty" style="display:none;"></div>
+
+              <div id="align-rows">
+                <div class="align-row fully">
+                  <span class="align-dot fully"></span>
+                  <div><div class="align-name">Fully aligned</div></div>
+                  <span class="align-count" id="cnt-fully">0</span>
+                </div>
+                <div class="align-row mostly">
+                  <span class="align-dot mostly"></span>
+                  <div><div class="align-name">Mostly aligned</div></div>
+                  <span class="align-count" id="cnt-mostly">0</span>
+                </div>
+                <div class="align-row worth" id="worth-row" role="button" tabindex="0">
+                  <span class="align-dot worth"></span>
+                  <div>
+                    <div class="align-name">Worth a conversation</div>
+                    <div class="align-sub" id="worth-sub">A few conversations to come back to.</div>
+                  </div>
+                  <span class="align-count" id="cnt-worth">0</span>
+                  <span class="chev" aria-hidden="true">›</span>
+                </div>
+                <div class="revisit" id="revisit">
+                  <div class="revisit-inner" id="revisit-inner"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Breakdown — grouping toggle IS the section header -->
+            <div class="group-toggle" id="grouping-toggle" role="tablist" aria-label="Breakdown grouping">
+              <button class="on" data-mode="category" type="button">By category</button>
+              <button data-mode="stage" type="button">By stage</button>
+            </div>
+            <div class="breakdown-rows" id="breakdown-rows"></div>
+
+            <!-- Badges -->
+            <div class="badges-label" id="badges-label">Badges you've earned</div>
+            <div class="badges-row" id="badges-row">
+              <div class="badge"><span class="emo">🫠</span><div class="bname">"Officially panicking together"</div></div>
+              <div class="badge"><span class="emo">🌙</span><div class="bname">"Survived the night-feeds talk"</div></div>
+              <div class="badge"><span class="emo">💸</span><div class="bname">"Looked at the actual numbers"</div></div>
+              <div class="badge locked"><span class="emo">🔒</span><div class="bname">2 more brewing</div></div>
+            </div>
+
+          </div>
+
+          <!-- ── Empty state body ── -->
+          <div class="empty-state" id="empty-state" style="display:none;">
+            <div class="empty-ic"><i class="ph ph-plant"></i></div>
+            <div class="empty-h">Nothing to look back on yet</div>
+            <div class="empty-b">Once you two start working through topics, your progress, alignment, and badges will gather here.</div>
+            <button class="empty-cta" type="button">Start with your first topic <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i></button>
+          </div>
+
+        </div>
+
+        <!-- Bottom nav (Home Base only) -->
+        <div class="bottom-nav">
+          <a class="nav-tab" href="11-home.html">
+            <div class="nav-tab-icon"><i class="ph ph-house"></i></div>
+            <div class="nav-tab-label">Home</div>
+          </a>
+          <a class="nav-tab" href="14-topic-list.html">
+            <div class="nav-tab-icon"><i class="ph ph-cards-three"></i></div>
+            <div class="nav-tab-label">Topics</div>
+          </a>
+          <a class="nav-tab active" href="12-progress.html" aria-current="page">
+            <div class="nav-tab-icon"><i class="ph-fill ph-list-checks"></i></div>
+            <div class="nav-tab-label">Progress</div>
+          </a>
+          <a class="nav-tab" href="13-settings.html">
+            <div class="nav-tab-icon"><i class="ph ph-gear-six"></i></div>
+            <div class="nav-tab-label">Settings</div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 12 · Home Base</div>
+    <div class="page-title">Progress</div>
+    <div class="page-desc">The reflection view: completion, the alignment distribution, and badges. By category / By stage breakdown. Destination, not a hub.</div>
+    <div class="state-tabs" role="tablist" aria-label="Progress screen state preview">
+      <button class="state-tab active" data-state="balanced" type="button">Balanced</button>
+      <button class="state-tab" data-state="settled" type="button">Mostly settled</button>
+      <button class="state-tab" data-state="heavy" type="button">Orange-heavy</button>
+      <button class="state-tab" data-state="many" type="button">Many open (30)</button>
+      <button class="state-tab" data-state="early" type="button">All orange</button>
+      <button class="state-tab" data-state="allgreen" type="button">All aligned</button>
+      <button class="state-tab" data-state="in-between" type="button">In-between</button>
+      <button class="state-tab" data-state="empty" type="button">Nothing answered</button>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+<script>
+(function(){
+  const root = document.querySelector('body.page-22 .screen-root');
+  if(!root) return;
+
+  // ── Life-stage segment + stage labels ──
+  // In the real app, lifeStage derives from the Screen 08 entry data
+  // (TTC / pregnant → 'pre-baby'; baby arrived or due date passed → 'baby-here').
+  // Here it's a single editable flag — flip to preview the baby-here label set.
+  // STAGE_LABELS is duplicated on Screen 14 (no shared JS module yet);
+  // consolidate when the shared layer exists.
+  const lifeStage = 'pre-baby';   // 'pre-baby' | 'baby-here'
+  const STAGE_LABELS = {
+    'pre-baby': {
+      before: 'Before Pregnancy',
+      first:  'First Trimester',
+      second: 'Second Trimester',
+      third:  'Third Trimester & Early Postpartum'
+    },
+    'baby-here': {
+      before: 'Foundation Work',
+      first:  'Early Topics',
+      second: 'Mid-Stage Topics',
+      third:  'Later Topics'
+    }
+  };
+
+  // ── Breakdown data ──
+  // Stage rows are keyed; display name is resolved from STAGE_LABELS at
+  // render time so the same data drives both label sets. Category rows
+  // keep `name` — those don't vary by segment.
+  const breakdown = {
+    category: [
+      {name:"The Basics",                       total:7, done:4, prog:1},
+      {name:"Pregnancy & Birth",                total:9, done:3, prog:2},
+      {name:"The Village",                      total:6, done:2, prog:1},
+      {name:"Eat, Poop, Sleep, Repeat",         total:8, done:1, prog:1},
+      {name:"Education, Health & Development",  total:6, done:0, prog:0},
+      {name:"The Existential",                  total:5, done:0, prog:0},
+      {name:"Us",                               total:4, done:0, prog:0}
+    ],
+    stage: [
+      {key:"before", total:8,  done:3, prog:1},
+      {key:"first",  total:12, done:4, prog:2},
+      {key:"second", total:13, done:2, prog:1},
+      {key:"third",  total:12, done:1, prog:1}
+    ]
+  };
+
+  // ── Worth-a-conversation topics (for the revisit list) ──
+  // Canonical topic titles, phrased as questions — display verbatim.
+  const worthTopics = [
+    "Do we have life insurance, and is it enough?",
+    "Do we want health screenings - even if they reveal something hard?",
+    "How will we share our culture and/or religion with our child?",
+    "How will we make time for ourselves as a couple?",
+    "What aspects of our upbringing will we replicate and what will we avoid as parents?"
+  ];
+
+  // Peek size — beyond this, a "Show all {N}" row expands the rest inline.
+  // Self-contained on Progress: no navigation off-screen (see spec §3).
+  const REVISIT_CAP = 4;
+  let revisitExpanded = false;
+
+  // ── State presets ──
+  // Each defines: align counts, completion (done/prog/plan), in-between flag,
+  // empty-state flag, breakdown override (optional), badges variant.
+  const states = {
+    balanced:   { align:{fully:4, mostly:2, worth:4},  done:10, prog:5, plan:45, badges:"earned" },
+    settled:    { align:{fully:7, mostly:2, worth:1},  done:10, prog:5, plan:45, badges:"earned" },
+    heavy:      { align:{fully:1, mostly:1, worth:4},  done:6,  prog:5, plan:45, badges:"earned" },
+    many:       { align:{fully:3, mostly:4, worth:30}, done:37, prog:5, plan:45, badges:"earned" },
+    early:      { align:{fully:0, mostly:0, worth:4},  done:4,  prog:5, plan:45, badges:"earned" },
+    allgreen:   { align:{fully:7, mostly:2, worth:0},  done:9,  prog:5, plan:45, badges:"earned" },
+    "in-between": {
+      align:{fully:0, mostly:0, worth:0},
+      done:0, prog:6, plan:45,
+      mode:"in-between",
+      badges:"teaser"
+    },
+    empty:      { mode:"empty" }
+  };
+
+  function alignNote(F, M, W){
+    const rev = F + M + W;
+    if(rev === 0)        return "Once you've each answered a topic, you'll see how your answers compare.";
+    if(W === 0)          return "You're landing in the same place on just about everything.";
+    if(F + M === 0)      return "These are the conversations worth having.";
+    if(W / rev >= 0.5)   return "Lots to talk through (which is the whole point, right?).";
+    if(W / rev >= 0.2)   return "A good mix! Plenty settled, a few worth coming back to.";
+    return "Mostly settled, with a few worth a closer look.";
+  }
+
+  function renderBreakdown(mode, plan, isInBetween){
+    const rows = breakdown[mode];
+    return rows.map(g => {
+      const name = g.key ? STAGE_LABELS[lifeStage][g.key] : g.name;
+      const donePct = (g.done / g.total) * 100;
+      const progPct = (g.prog / g.total) * 100;
+      const untouched = (g.done === 0 && g.prog === 0) ? ' untouched' : '';
+      return `<div class="brow${untouched}" role="button" tabindex="0">
+        <div class="brow-main">
+          <div class="brow-top"><span class="brow-name">${name}</span><span class="brow-count">${g.done} of ${g.total}</span></div>
+          <div class="brow-bar">
+            <i class="done" style="width:${donePct}%"></i>
+            <i class="prog" style="width:${progPct}%"></i>
+          </div>
+        </div>
+        <span class="brow-chev" aria-hidden="true">›</span>
+      </div>`;
+    }).join('');
+  }
+
+  // Track the worth count for the current state so the rv-all toggle
+  // can re-render the revisit list without going through applyState.
+  let currentWorthCount = 0;
+
+  function renderRevisit(){
+    const inner   = root.querySelector('#revisit-inner');
+    const revisit = root.querySelector('#revisit');
+    const W = currentWorthCount;
+    const sampleCount = worthTopics.length;
+    const showN = revisitExpanded ? W : Math.min(W, REVISIT_CAP);
+    let html = '';
+    for(let i = 0; i < showN; i++){
+      // Cycle through the sample titles when the demo count exceeds the
+      // mock's curated list; production has 1:1 real titles.
+      const t = worthTopics[i % sampleCount];
+      html += '<div class="rv-item"><span class="rv-topic">' + t + '</span><i class="ph ph-arrow-right rv-arrow" aria-hidden="true"></i></div>';
+    }
+    if(W > REVISIT_CAP){
+      html += revisitExpanded
+        ? '<div class="rv-all" data-act="collapse" role="button" tabindex="0"><i class="ph-bold ph-caret-up" style="font-size:13px;"></i> Show fewer</div>'
+        : '<div class="rv-all" data-act="expand" role="button" tabindex="0">Show all ' + W + ' <i class="ph-bold ph-caret-down" style="font-size:13px;"></i></div>';
+    }
+    inner.innerHTML = html;
+    revisit.classList.toggle('expanded', revisitExpanded);
+  }
+
+  function renderBadges(variant){
+    const row = root.querySelector('#badges-row');
+    const label = root.querySelector('#badges-label');
+    if(variant === 'teaser'){
+      label.textContent = 'Badges';
+      row.innerHTML = '<div class="badge locked teaser-wide"><span class="emo">🔒</span><div class="bname">Your first is one finished topic away</div></div>';
+    } else {
+      label.textContent = "Badges you've earned";
+      row.innerHTML =
+        '<div class="badge"><span class="emo">🫠</span><div class="bname">"Officially panicking together"</div></div>' +
+        '<div class="badge"><span class="emo">🌙</span><div class="bname">"Survived the night-feeds talk"</div></div>' +
+        '<div class="badge"><span class="emo">💸</span><div class="bname">"Looked at the actual numbers"</div></div>' +
+        '<div class="badge locked"><span class="emo">🔒</span><div class="bname">2 more brewing</div></div>';
+    }
+  }
+
+  // ── State application ──
+  let currentMode = 'category';
+
+  function applyState(key){
+    const s = states[key];
+    const progressBody = root.querySelector('#progress-body');
+    const emptyEl      = root.querySelector('#empty-state');
+
+    if(s.mode === 'empty'){
+      progressBody.style.display = 'none';
+      emptyEl.style.display = 'flex';
+      return;
+    }
+    progressBody.style.display = '';
+    emptyEl.style.display = 'none';
+
+    // ── Completion ──
+    const lede = root.querySelector('#completion-lede');
+    const done = s.done, prog = s.prog, plan = s.plan;
+    if(s.mode === 'in-between'){
+      lede.innerHTML = 'Nothing revealed yet, but <b>' + prog + ' conversations</b> are already underway.';
+    } else {
+      lede.innerHTML = "You've worked through <b>" + done + " of " + plan + "</b> conversations together.<br>" +
+        '<span class="underway-line">' + prog + ' more are underway.</span>';
+    }
+    root.querySelector('#completion-done').style.width = (done / plan * 100) + '%';
+    root.querySelector('#completion-prog').style.width = (prog / plan * 100) + '%';
+
+    // ── Alignment ──
+    const F = s.align.fully, M = s.align.mostly, W = s.align.worth;
+    const rev = F + M + W;
+    const noteEl       = root.querySelector('#align-note');
+    const barEl        = root.querySelector('#align-bar');
+    const barEmpty     = root.querySelector('#align-bar-empty');
+    const rowsWrap     = root.querySelector('#align-rows');
+    const worthRow     = root.querySelector('#worth-row');
+    const revisit      = root.querySelector('#revisit');
+    const revisitInner = root.querySelector('#revisit-inner');
+
+    noteEl.textContent = alignNote(F, M, W);
+
+    if(rev === 0){
+      // Empty form: dashed track, no rows
+      barEl.style.display = 'none';
+      barEmpty.style.display = '';
+      rowsWrap.style.display = 'none';
+      worthRow.classList.remove('open');
+      revisit.classList.remove('open');
+    } else {
+      barEl.style.display = '';
+      barEmpty.style.display = 'none';
+      rowsWrap.style.display = '';
+
+      const denom = rev || 1;
+      root.querySelector('#seg-fully').style.width  = (F / denom * 100) + '%';
+      root.querySelector('#seg-mostly').style.width = (M / denom * 100) + '%';
+      root.querySelector('#seg-worth').style.width  = (W / denom * 100) + '%';
+      root.querySelector('#cnt-fully').textContent  = F;
+      root.querySelector('#cnt-mostly').textContent = M;
+      root.querySelector('#cnt-worth').textContent  = W;
+
+      root.querySelector('.align-row.fully').classList.toggle('is-dim',  F === 0);
+      root.querySelector('.align-row.mostly').classList.toggle('is-dim', M === 0);
+      worthRow.classList.toggle('is-dim', W === 0);
+      worthRow.style.cursor = W > 0 ? 'pointer' : 'default';
+
+      const sub = root.querySelector('#worth-sub');
+      sub.textContent =
+        W === 0 ? "Nothing to come back to right now." :
+        W === 1 ? "1 conversation to come back to." :
+                  W + " conversations to come back to.";
+
+      // Capped peek with inline expansion. Render via renderRevisit() so
+      // the rv-all click handler can re-render without re-running the
+      // whole applyState pipeline.
+      currentWorthCount = W;
+      revisitExpanded = false;
+      renderRevisit();
+
+      // Collapse revisit list on state change
+      worthRow.classList.remove('open');
+      revisit.classList.remove('open');
+    }
+
+    // ── Breakdown ──
+    root.querySelector('#breakdown-rows').innerHTML = renderBreakdown(currentMode, plan, s.mode === 'in-between');
+
+    // ── Badges ──
+    renderBadges(s.badges || 'earned');
+  }
+
+  // ── Wiring ──
+
+  // Doc-page state switcher
+  root.querySelectorAll('.state-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      root.querySelectorAll('.state-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyState(btn.dataset.state);
+    });
+  });
+
+  // Grouping toggle (live, in-screen)
+  root.querySelector('#grouping-toggle').addEventListener('click', e => {
+    const btn = e.target.closest('button'); if(!btn) return;
+    [...e.currentTarget.children].forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    currentMode = btn.dataset.mode;
+    const activeStateBtn = root.querySelector('.state-tab.active');
+    const stateKey = activeStateBtn ? activeStateBtn.dataset.state : 'balanced';
+    const s = states[stateKey];
+    if(s && s.mode !== 'empty'){
+      root.querySelector('#breakdown-rows').innerHTML = renderBreakdown(currentMode, s.plan, s.mode === 'in-between');
+    }
+  });
+
+  // Worth row → revisit list
+  root.querySelector('#worth-row').addEventListener('click', () => {
+    const worth = root.querySelector('#worth-row');
+    const revisit = root.querySelector('#revisit');
+    if(worth.classList.contains('is-dim')) return;
+    const opening = !revisit.classList.contains('open');
+    worth.classList.toggle('open');
+    revisit.classList.toggle('open');
+    // Collapsing the card resets the inline "Show all" expansion so the
+    // next open starts at the capped peek again.
+    if(!opening && revisitExpanded){
+      revisitExpanded = false;
+      renderRevisit();
+    }
+  });
+
+  // "Show all {N}" / "Show fewer" — grows the list in place, no navigation
+  // off Progress. Individual rows still navigate to their topic.
+  root.querySelector('#revisit-inner').addEventListener('click', e => {
+    const all = e.target.closest('.rv-all');
+    if(!all) return;
+    e.stopPropagation();
+    revisitExpanded = !revisitExpanded;
+    renderRevisit();
+  });
+
+  // Init
+  applyState('balanced');
+})();
+</script>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

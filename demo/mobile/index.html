@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Daisy's Guide — Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --purple:#5f45f2; --hud:rgba(26,26,26,.62); }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;}
+  body{
+    font-family:'DM Sans',sans-serif;background:#0e0e10;color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    height:100dvh;overflow:hidden;
+  }
+
+  /* device frame: bezel on desktop, full-bleed on mobile */
+  .device{ position:relative;width:100vw;height:100dvh;background:#000;overflow:hidden; }
+  @media (min-width:560px){
+    .device{
+      width:min(420px, calc(100dvh * 0.462));
+      height:min(92dvh, calc(420px / 0.462));
+      border-radius:46px;
+      box-shadow:0 0 0 3px #000, 0 0 0 5px #2a2a2e, 0 40px 80px rgba(0,0,0,.55);
+    }
+  }
+  iframe{ border:0;display:block;width:100%;height:100%;background:#fbefe1; }
+  @media (min-width:560px){ iframe{border-radius:43px;} }
+
+  /* prev / next arrows */
+  .arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:42px;height:42px;border-radius:50%;border:0;background:var(--hud);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;
+    cursor:pointer;z-index:30;opacity:.5;transition:opacity .18s, transform .12s;backdrop-filter:blur(6px);
+  }
+  .arrow:hover{opacity:.95;}
+  .arrow:active{transform:translateY(-50%) scale(.92);}
+  .arrow.prev{left:8px;} .arrow.next{right:8px;}
+  .arrow[disabled]{opacity:.12;pointer-events:none;}
+
+  /* top HUD: counter + name, tap to open the jump menu */
+  .hud{
+    position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);left:50%;transform:translateX(-50%);
+    z-index:30;display:flex;align-items:center;gap:8px;height:30px;padding:0 14px;border-radius:999px;
+    background:var(--hud);backdrop-filter:blur(6px);color:#fff;font-size:12px;font-weight:600;
+    cursor:pointer;white-space:nowrap;max-width:78%;opacity:.62;transition:opacity .18s;
+  }
+  .hud:hover{opacity:.95;}
+  .hud .count{opacity:.7;font-variant-numeric:tabular-nums;}
+  .hud .name{overflow:hidden;text-overflow:ellipsis;}
+
+  /* jump menu */
+  .menu{position:absolute;inset:0;z-index:40;display:none;background:rgba(10,10,12,.78);backdrop-filter:blur(4px);padding:54px 16px 24px;overflow-y:auto;}
+  .menu.open{display:block;}
+  .menu h4{margin:18px 4px 8px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+  .menu h4:first-child{margin-top:0;}
+  .menu button{display:flex;width:100%;align-items:center;gap:10px;text-align:left;background:rgba(255,255,255,.06);border:0;color:#fff;font-family:inherit;font-size:14px;font-weight:600;padding:11px 14px;border-radius:12px;margin-bottom:7px;cursor:pointer;}
+  .menu button:hover{background:rgba(255,255,255,.13);}
+  .menu button.here{background:var(--purple);}
+  .menu button .idx{font-size:11px;opacity:.55;font-variant-numeric:tabular-nums;min-width:22px;}
+  .menu .close{position:absolute;top:12px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);font-size:18px;justify-content:center;padding:0;margin:0;}
+</style>
+</head>
+<body>
+  <div class="device">
+    <iframe id="screen" title="Daisy's Guide screen"></iframe>
+    <div class="hud" id="hud"><span class="count" id="count"></span><span class="name" id="name"></span></div>
+    <button class="arrow prev" id="prev" aria-label="Previous screen">‹</button>
+    <button class="arrow next" id="next" aria-label="Next screen">›</button>
+  </div>
+  <div class="menu" id="menu">
+    <button class="close" id="close" aria-label="Close">✕</button>
+    <div id="menu-body"></div>
+  </div>
+
+<script>
+/* TOUR = the linear walk-through (← → step through). Edit to reorder / cut.
+   GROUPS = everything, for the tap-to-jump menu. (demo/ covers screens 01–20.) */
+const TOUR = [
+  '01-swipeable-intro.html','02-onboarding-quiz.html','03-building-your-plan.html',
+  '04-sign-up.html','05-otp-verification.html','06-name-entry.html',
+  '08-personalized-results.html','09-paywall.html','10-partner-linking.html',
+  '11-home.html','14-topic-list.html','16-topic-intro.html','17-topic-article.html',
+  '18-question.html','19-waiting-for-partner.html','20-alignment-reveal.html',
+  '12-progress.html','13-settings.html'
+];
+const GROUPS = [
+  ['Onboarding & auth', ['01-swipeable-intro.html','02-onboarding-quiz.html','03-building-your-plan.html',
+    '04-sign-up.html','05-otp-verification.html','06-name-entry.html','07-log-in.html',
+    '08-personalized-results.html','09-paywall.html','10-partner-linking.html']],
+  ['Home base', ['11-home.html','12-progress.html','13-settings.html']],
+  ['Topic flow', ['14-topic-list.html','15-manage-topics.html','16-topic-intro.html',
+    '17-topic-article.html','18-question.html','19-waiting-for-partner.html','20-alignment-reveal.html']],
+];
+
+const frame=document.getElementById('screen'), hud=document.getElementById('hud'), menu=document.getElementById('menu');
+let i=0;
+const pretty=f=>f.replace(/^\d+-/,'').replace(/\.html$/,'').replace(/-/g,' ').replace(/^\w/,c=>c.toUpperCase());
+function go(idx){ i=Math.max(0,Math.min(TOUR.length-1,idx)); frame.src='screens/'+TOUR[i]; }
+function sync(){
+  let file=TOUR[i];
+  try{ file=frame.contentWindow.location.pathname.split('/').pop()||file; }catch(e){}
+  const t=TOUR.indexOf(file); if(t>=0) i=t;
+  document.getElementById('count').textContent = t>=0 ? `${t+1}/${TOUR.length}` : '•';
+  document.getElementById('name').textContent  = pretty(file);
+  document.getElementById('prev').disabled = (t===0);
+  document.getElementById('next').disabled = (t===TOUR.length-1);
+}
+frame.addEventListener('load',sync);
+document.getElementById('prev').onclick=()=>go(i-1);
+document.getElementById('next').onclick=()=>go(i+1);
+document.addEventListener('keydown',e=>{
+  if(menu.classList.contains('open')){ if(e.key==='Escape') closeMenu(); return; }
+  if(e.key==='ArrowRight') go(i+1);
+  if(e.key==='ArrowLeft')  go(i-1);
+});
+function buildMenu(){
+  const body=document.getElementById('menu-body'); body.innerHTML='';
+  GROUPS.forEach(([label,files])=>{
+    const h=document.createElement('h4'); h.textContent=label; body.appendChild(h);
+    files.forEach(file=>{
+      const b=document.createElement('button'); const t=TOUR.indexOf(file);
+      b.innerHTML=`<span class="idx">${t>=0?t+1:'·'}</span>${pretty(file)}`;
+      b.onclick=()=>{ closeMenu(); if(t>=0) go(t); else frame.src='screens/'+file; };
+      body.appendChild(b);
+    });
+  });
+}
+function openMenu(){
+  buildMenu();
+  let cur=TOUR[i]; try{ cur=frame.contentWindow.location.pathname.split('/').pop()||cur; }catch(e){}
+  menu.classList.add('open');
+  [...menu.querySelectorAll('button')].forEach(b=>b.classList.toggle('here',b.textContent.includes(pretty(cur))));
+}
+function closeMenu(){ menu.classList.remove('open'); }
+hud.onclick=openMenu;
+document.getElementById('close').onclick=closeMenu;
+menu.addEventListener('click',e=>{ if(e.target===menu) closeMenu(); });
+go(0);
+</script>
+</body>
+</html>

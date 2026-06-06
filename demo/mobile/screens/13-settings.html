@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Settings · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.2/src/fill/style.css">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../demo-fit.css">
+</head>
+<body class="page-23 demo-mode">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item active" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Settings</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <div class="phone-wrap">
+
+    <!-- Q1 state tabs — controls the "Where you are" Stage row value + date row label/visibility -->
+
+    <!-- Demo tabs — OS notification permission state + Partner activity toggle preview -->
+
+    <!-- Demo tabs — Partner link state (drives Partner row variant + Jordan→fallback strings) -->
+
+    <div class="phone" style="position:relative;">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="scroll-area">
+          <div class="screen-title">Settings</div>
+
+          <!-- Account -->
+          <div class="section-header">Account</div>
+          <div class="list-group">
+            <!-- 1. Name -->
+            <div class="list-row" onclick="openEditName()" style="cursor:pointer;">
+              <div class="row-label">Name</div>
+              <div class="row-value" id="name-row-value">Alex</div>
+              <div class="row-chevron">›</div>
+            </div>
+            <!-- 2. Signed in with (read-only — identity / recovery reference, no edit) -->
+            <div class="list-row" style="cursor:default;">
+              <div class="row-label">Signed in with</div>
+              <div class="row-value">Phone · +1 (972) 555-0182</div>
+            </div>
+            <!-- 3. Lifetime access -->
+            <div class="list-row" onclick="openLifetime()" style="cursor:pointer;">
+              <div class="row-label">Lifetime access</div>
+              <div class="row-value">
+                <span style="display:inline-block;padding:3px 10px;border-radius:100px;background:rgba(95,69,242,0.12);color:#5f45f2;font-size:12px;font-weight:600;line-height:1.3;">Founding member</span>
+              </div>
+              <div class="row-chevron">›</div>
+            </div>
+          </div>
+
+          <!-- Partner -->
+          <div class="section-header">Partner</div>
+          <div class="list-group">
+            <!-- Linked: tap → Partner detail push (with Unlink) -->
+            <div class="list-row partner-row-variant" data-pstate="linked" onclick="openPartnerDetail()" style="cursor:pointer;">
+              <div class="row-label">Jordan · Linked ✓</div>
+              <div class="row-chevron">›</div>
+            </div>
+            <!-- Invite pending: tap → Partner Linking (Screen 10) for resend/cancel -->
+            <div class="list-row partner-row-variant" data-pstate="pending" onclick="location.href='10-partner-linking.html'" style="display:none;cursor:pointer;align-items:flex-start;padding-top:14px;padding-bottom:14px;">
+              <div class="row-label-block">
+                <div class="row-label-main">Invite sent</div>
+                <div class="row-label-sub">Tap to resend or cancel.</div>
+              </div>
+              <div class="row-chevron" style="margin-top:2px;">›</div>
+            </div>
+            <!-- Not linked: gentle CTA → Partner Linking (Screen 10) -->
+            <div class="list-row partner-row-variant" data-pstate="none" onclick="location.href='10-partner-linking.html'" style="display:none;cursor:pointer;">
+              <div class="row-label" style="color:#5f45f2;">Invite your partner</div>
+              <div class="row-chevron" style="color:#5f45f2;">›</div>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="section-header">Notifications</div>
+
+          <!-- OS-permission-denied banner (conditional, gates the section) -->
+          <div id="os-denied-banner" style="display:none;background:rgba(255,173,108,0.34);border-radius:16px;padding:14px 16px;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <i class="ph ph-bell-slash" style="color:#995611;font-size:18px;line-height:1;flex-shrink:0;"></i>
+              <div style="flex:1;min-width:0;font-size:13px;color:#995611;line-height:1.4;">Notifications are turned off in your phone settings.</div>
+              <button onclick="openOsSettings()" style="flex-shrink:0;background:#995611;color:#fff;border:none;border-radius:100px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">Open Settings</button>
+            </div>
+          </div>
+
+          <div class="list-group">
+            <!-- Partner activity (transactional · on by default · ignores Nudge frequency) -->
+            <div class="list-row" id="partner-activity-row" style="align-items:flex-start;padding-top:14px;padding-bottom:14px;">
+              <div class="row-label-block">
+                <div class="row-label-main">Partner activity</div>
+                <div class="row-label-sub" data-partner-template="When {name} answers or a reveal is ready.">When Jordan answers or a reveal is ready.</div>
+              </div>
+              <div id="partner-activity-toggle" class="toggle" style="margin-top:2px;" onclick="togglePartnerActivity()">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+
+            <!-- Off-warning (inline, attached under the row, inside the card) -->
+            <div id="partner-activity-warning" style="display:none;background:rgba(255,173,108,0.34);padding:12px 16px;border-bottom:1px solid rgba(26,26,26,0.06);">
+              <div style="display:flex;align-items:flex-start;gap:8px;">
+                <i class="ph ph-bell-slash" style="color:#995611;font-size:15px;line-height:1.2;flex-shrink:0;margin-top:1px;"></i>
+                <div style="font-size:12px;color:#995611;line-height:1.45;" data-partner-template="With this off, we won't let you know when {name} answers or a reveal is ready. You'll have to remember to check back yourself.">With this off, we won't let you know when Jordan answers or a reveal is ready. You'll have to remember to check back yourself.</div>
+              </div>
+            </div>
+
+            <!-- Nudge frequency — engagement reminders (no subtext: label + adjacent Partner activity toggle carry the meaning) -->
+            <div class="list-row" onclick="openNudgeSheet()" style="cursor:pointer;">
+              <div class="row-label">Nudge frequency</div>
+              <div class="row-value" id="nudge-value">A few times a week</div>
+              <div class="row-chevron">›</div>
+            </div>
+
+            <!-- Funny push notifications — tone layer (brand-voice subtext) -->
+            <div class="list-row" style="align-items:flex-start;padding-top:14px;padding-bottom:14px;">
+              <div class="row-label-block">
+                <div class="row-label-main">Funny push notifications</div>
+                <div class="row-label-sub">I mean, <em>we</em> think we're funny, but it's okay if you don't.</div>
+              </div>
+              <div class="toggle" style="margin-top:2px;" onclick="this.classList.toggle('off')">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Where you are -->
+          <div class="section-header">Where you are</div>
+          <div class="list-group">
+            <!-- Stage row — opens stage picker -->
+            <div class="list-row" onclick="openStageSheet()" style="cursor:pointer;">
+              <div class="row-label">Stage</div>
+              <div class="row-value" id="stage-value">Pregnant</div>
+              <div class="row-chevron">›</div>
+            </div>
+
+            <!-- Stage-change inline note (purple band, attached inside the card; fires only when Stage actually changes) -->
+            <div id="stage-change-note" style="display:none;background:rgba(95,69,242,0.08);padding:12px 16px;border-bottom:1px solid rgba(26,26,26,0.06);">
+              <div style="display:flex;align-items:flex-start;gap:8px;">
+                <i class="ph ph-arrows-clockwise" style="color:#5f45f2;font-size:15px;line-height:1.2;flex-shrink:0;margin-top:1px;"></i>
+                <div style="font-size:12px;color:#5f45f2;line-height:1.45;">Your topics will re-sort to match.</div>
+              </div>
+            </div>
+
+            <!-- Date row — Q1-conditional, hidden for "Trying"; opens date picker -->
+            <div class="list-row" id="date-row" onclick="openDateSheet()" style="cursor:pointer;">
+              <div class="row-label" id="date-label">Due date</div>
+              <div class="row-value" id="date-value">Aug 14, 2026</div>
+              <div class="row-chevron">›</div>
+            </div>
+          </div>
+
+          <!-- Your plan -->
+          <div class="section-header">Your plan</div>
+          <div class="list-group">
+            <div class="list-row" onclick="location.href='15-manage-topics.html'" style="cursor:pointer;">
+              <div class="row-label">Manage topics</div>
+              <div class="row-value">45 active</div>
+              <div class="row-chevron">›</div>
+            </div>
+          </div>
+
+          <!-- Support -->
+          <div class="section-header">Support</div>
+          <div class="list-group">
+            <div class="list-row">
+              <div class="row-label">Get help</div>
+              <div class="row-chevron">›</div>
+            </div>
+            <div class="list-row">
+              <div class="row-label">Give feedback</div>
+              <div class="row-chevron">›</div>
+            </div>
+          </div>
+
+          <!-- Legal -->
+          <div class="section-header">Legal</div>
+          <div class="list-group">
+            <div class="list-row">
+              <div class="row-label">You &amp; your data</div>
+              <div class="row-chevron">›</div>
+            </div>
+            <div class="list-row">
+              <div class="row-label">Terms of Service</div>
+              <div class="row-chevron">›</div>
+            </div>
+          </div>
+
+          <!-- App version — below Legal card, not tappable -->
+          <div style="text-align:center;margin-top:16px;margin-bottom:8px;font-size:11px;font-family:'DM Sans',sans-serif;color:rgba(26,26,26,0.38);line-height:1.4;">Version 1.0.0 (42)</div>
+
+          <!-- Destructive actions — headerless group, bottom of list -->
+          <div class="list-group">
+            <div class="list-row" onclick="openDeleteSheet()" style="cursor:pointer;">
+              <div class="row-label-destructive">Delete account</div>
+            </div>
+            <div class="list-row">
+              <div class="row-label-destructive">Log out</div>
+            </div>
+          </div>
+
+          <div style="height:32px;"></div>
+
+        </div>
+
+        <!-- Bottom nav -->
+        <div class="bottom-nav">
+          <a class="nav-tab" href="11-home.html">
+            <div class="nav-tab-icon"><i class="ph ph-house"></i></div>
+            <div class="nav-tab-label">Home</div>
+          </a>
+          <a class="nav-tab" href="14-topic-list.html">
+            <div class="nav-tab-icon"><i class="ph ph-cards-three"></i></div>
+            <div class="nav-tab-label">Topics</div>
+          </a>
+          <a class="nav-tab" href="12-progress.html">
+            <div class="nav-tab-icon"><i class="ph ph-list-checks"></i></div>
+            <div class="nav-tab-label">Progress</div>
+          </a>
+          <a class="nav-tab active" href="13-settings.html" aria-current="page">
+            <div class="nav-tab-icon"><i class="ph-fill ph-gear-six"></i></div>
+            <div class="nav-tab-label">Settings</div>
+          </a>
+        </div>
+
+      </div><!-- /.phone-screen -->
+
+      <!-- Edit name overlay (full-screen push) -->
+      <div id="edit-name-overlay" style="display:none;position:absolute;inset:0;background:#fbefe1;z-index:15;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);border-radius:inherit;overflow:hidden;">
+        <!-- Nav bar -->
+        <div style="height:54px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(26,26,26,0.08);background:#fbefe1;position:relative;">
+          <button onclick="closeEditName()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
+            <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
+          </button>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;">Edit name</span>
+        </div>
+        <!-- Content -->
+        <div style="padding:32px 24px;">
+          <input id="edit-name-input" type="text" value="Alex"
+            autocomplete="given-name" autocorrect="off" autocapitalize="words" spellcheck="false"
+            style="width:100%;height:48px;border-radius:8px;border:1.5px solid #5f45f2;box-shadow:0 0 0 3px rgba(95,69,242,0.12);background:white;padding:0 14px;font-family:'DM Sans',sans-serif;font-size:15px;color:#1a1a1a;outline:none;box-sizing:border-box;">
+          <div style="height:24px;"></div>
+          <button onclick="saveEditName()" style="width:100%;height:56px;border-radius:100px;background:#5f45f2;color:white;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;">Save</button>
+        </div>
+      </div>
+
+      <!-- Partner detail overlay (full-screen push) -->
+      <div id="partner-overlay" style="display:none;position:absolute;inset:0;background:#fbefe1;z-index:15;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);border-radius:inherit;overflow:hidden;">
+        <!-- Nav bar -->
+        <div style="height:54px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(26,26,26,0.08);background:#fbefe1;position:relative;">
+          <button onclick="closePartnerDetail()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
+            <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
+          </button>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;">Partner</span>
+        </div>
+        <!-- Content -->
+        <div class="push-scroll" style="padding:20px 16px;overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;">
+          <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">Linked partner</div>
+          <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;margin-bottom:24px;">
+            <div style="display:flex;align-items:center;padding:13px 16px;min-height:52px;">
+              <div style="flex:1;font-size:15px;color:#1a1a1a;">Jordan</div>
+              <div style="font-size:13px;color:rgba(26,26,26,0.6);">Linked ✓</div>
+            </div>
+          </div>
+
+          <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">Connection</div>
+          <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;">
+            <div onclick="openUnlinkSheet()" style="display:flex;align-items:center;padding:13px 16px;min-height:52px;cursor:pointer;">
+              <div style="flex:1;font-size:15px;color:#c0392b;">Unlink partner</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unlink confirmation overlay -->
+      <div id="unlink-overlay" onclick="closeUnlinkSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:20;"></div>
+
+      <!-- Unlink confirmation bottom sheet -->
+      <div id="unlink-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:21;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:16px;">Unlink from Jordan?</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your answers and past reveals stay.</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">The connection is removed, and Jordan's slot will show as Disconnected.</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">You won't be able to reveal new topics until you link with a partner again.</div>
+        </div>
+        <button onclick="handleUnlink()" style="width:100%;height:56px;background:#ff9191;color:#c0392b;border:none;border-radius:100px;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;">Unlink</button>
+        <div style="height:10px;"></div>
+        <button onclick="closeUnlinkSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
+      <!-- Nudge frequency picker overlay -->
+      <div id="nudge-overlay" onclick="closeNudgeSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:20;"></div>
+
+      <!-- Nudge frequency picker bottom sheet -->
+      <div id="nudge-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:21;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:16px;">Nudge frequency</div>
+        <div id="nudge-options" style="display:flex;flex-direction:column;margin-bottom:16px;">
+          <div class="nudge-option" data-value="Daily" onclick="selectNudge('Daily')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="nudge-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Daily</span>
+          </div>
+          <div class="nudge-option" data-value="A few times a week" onclick="selectNudge('A few times a week')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="nudge-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">A few times a week</span>
+          </div>
+          <div class="nudge-option" data-value="Weekly" onclick="selectNudge('Weekly')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="nudge-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Weekly</span>
+          </div>
+          <div class="nudge-option" data-value="Don't nudge me" onclick="selectNudge(&quot;Don't nudge me&quot;)" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;">
+            <span class="nudge-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Don't nudge me</span>
+          </div>
+        </div>
+        <button onclick="closeNudgeSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
+      <!-- Stage picker overlay -->
+      <div id="stage-overlay" onclick="closeStageSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:20;"></div>
+
+      <!-- Stage picker bottom sheet -->
+      <div id="stage-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:21;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:16px;">Stage</div>
+        <div id="stage-options" style="display:flex;flex-direction:column;margin-bottom:16px;">
+          <div class="stage-option" data-value="Trying" onclick="selectStage('Trying')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="stage-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Trying</span>
+          </div>
+          <div class="stage-option" data-value="Pregnant" onclick="selectStage('Pregnant')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="stage-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Pregnant</span>
+          </div>
+          <div class="stage-option" data-value="Baby is here" onclick="selectStage('Baby is here')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;border-bottom:1px solid rgba(26,26,26,0.06);">
+            <span class="stage-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Baby is here</span>
+          </div>
+          <div class="stage-option" data-value="Expecting again" onclick="selectStage('Expecting again')" style="display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;">
+            <span class="stage-radio" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(26,26,26,0.20);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></span>
+            <span style="flex:1;font-size:15px;color:#1a1a1a;">Expecting again</span>
+          </div>
+        </div>
+        <button onclick="closeStageSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
+      <!-- Date picker overlay -->
+      <div id="date-overlay" onclick="closeDateSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:20;"></div>
+
+      <!-- Date picker bottom sheet (preview surrogate for the native iOS/Android date picker; constraints honor onboarding: Due date future-bounded, Birth date past-bounded with max today) -->
+      <div id="date-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:21;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div id="date-sheet-title" style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">Due date</div>
+        <div id="date-sheet-sub" style="font-size:12px;color:rgba(26,26,26,0.55);line-height:1.45;margin-bottom:16px;">Native date picker on device. Demo presets below honor the launch constraints.</div>
+        <div id="date-options" style="display:flex;flex-direction:column;margin-bottom:16px;"></div>
+        <button onclick="closeDateSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
+      <!-- Lifetime access / Founding member overlay (full-screen push) -->
+      <div id="lifetime-overlay" style="display:none;position:absolute;inset:0;background:#fbefe1;z-index:15;transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);border-radius:inherit;overflow:hidden;">
+        <!-- Nav bar -->
+        <div style="height:54px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid rgba(26,26,26,0.08);background:#fbefe1;position:relative;flex-shrink:0;">
+          <button onclick="closeLifetime()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:2px;color:#5f45f2;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:0;">
+            <span style="font-size:22px;line-height:1;margin-right:2px;">‹</span> Back
+          </button>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;">Lifetime access</span>
+        </div>
+        <!-- Scrollable content -->
+        <div class="push-scroll" style="overflow-y:auto;height:calc(100% - 54px);box-sizing:border-box;padding:20px 16px 32px;">
+
+          <!-- Proud card -->
+          <div style="background:rgba(95,69,242,0.08);border-radius:16px;padding:24px 20px;text-align:center;margin-bottom:24px;">
+            <div style="display:inline-block;background:#5f45f2;color:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:5px 12px;border-radius:100px;margin-bottom:14px;">Founding member</div>
+            <div style="font-family:'Grandstander',cursive;font-size:24px;font-weight:700;color:#1a1a1a;line-height:1.25;margin-bottom:8px;">You're in for good.</div>
+            <div style="font-size:14px;color:rgba(26,26,26,0.65);line-height:1.45;" data-partner-template="One purchase, lifetime access for {bothYouAnd}.">One purchase, lifetime access for both you and Jordan.</div>
+          </div>
+
+          <!-- What that covers -->
+          <div style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.4);text-transform:uppercase;letter-spacing:0.06em;padding:0 4px;margin-bottom:6px;">What that covers</div>
+          <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;margin-bottom:24px;">
+            <div style="display:flex;align-items:flex-start;padding:13px 16px;min-height:52px;border-bottom:1px solid rgba(26,26,26,0.06);gap:12px;">
+              <i class="ph ph-check" style="color:#5f45f2;font-size:18px;line-height:1.4;flex-shrink:0;"></i>
+              <div style="font-size:14px;color:#1a1a1a;line-height:1.45;">Every topic in the library, plus everything we add down the line.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;padding:13px 16px;min-height:52px;border-bottom:1px solid rgba(26,26,26,0.06);gap:12px;">
+              <i class="ph ph-check" style="color:#5f45f2;font-size:18px;line-height:1.4;flex-shrink:0;"></i>
+              <div style="font-size:14px;color:#1a1a1a;line-height:1.45;">Both partners, one purchase. No second account to buy.</div>
+            </div>
+            <div style="display:flex;align-items:flex-start;padding:13px 16px;min-height:52px;gap:12px;">
+              <i class="ph ph-check" style="color:#5f45f2;font-size:18px;line-height:1.4;flex-shrink:0;"></i>
+              <div style="font-size:14px;color:#1a1a1a;line-height:1.45;">Nothing to renew or cancel.</div>
+            </div>
+          </div>
+
+          <!-- Thank-you note (editorial, on cream, no card) -->
+          <div style="padding:4px 8px 4px;margin-bottom:28px;">
+            <div style="font-size:14px;color:#1a1a1a;line-height:1.6;margin-bottom:14px;" data-partner-template="We're a small team who think the conversations before a baby arrives matter more than almost anything. You backed us early, which means you're locked in for life: no renewals, no fine print, nothing to think about again. And we'll never sell a word of what you and {nameOrYourPartner} tell each other.">We're a small team who think the conversations before a baby arrives matter more than almost anything. You backed us early, which means you're locked in for life: no renewals, no fine print, nothing to think about again. And we'll never sell a word of what you and Jordan tell each other.</div>
+            <div style="font-size:14px;color:#1a1a1a;line-height:1.6;margin-bottom:14px;">Your support helps us keep building. Thank you for that.</div>
+            <div style="font-size:13px;color:rgba(26,26,26,0.5);line-height:1.5;">The Daisy's Guide team</div>
+          </div>
+
+          <!-- Restore purchase — standalone row (Terms + privacy live in the main Legal section) -->
+          <div style="background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(26,26,26,0.06),0 1px 2px rgba(26,26,26,0.04);overflow:hidden;">
+            <div class="list-row" id="restore-row" onclick="handleRestore(event)" style="cursor:pointer;">
+              <div class="row-label" data-restore-label style="color:#5f45f2;">Restore purchase</div>
+              <span id="restore-spinner" style="display:none;margin-left:auto;"><svg width="16" height="16" viewBox="0 0 16 16" style="animation:spin 0.8s linear infinite;display:block;"><circle cx="8" cy="8" r="6" fill="none" stroke="#5f45f2" stroke-width="2.5" stroke-dasharray="20 12"/></svg></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Delete account overlay -->
+      <div id="delete-overlay" onclick="closeDeleteSheet()" style="display:none;position:absolute;inset:0;background:rgba(26,26,26,0.40);border-radius:inherit;z-index:10;"></div>
+
+      <!-- Delete account bottom sheet -->
+      <div id="delete-sheet" style="display:none;position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:24px 24px 0 0;padding:24px;box-shadow:0 8px 24px rgba(26,26,26,0.10),0 2px 4px rgba(26,26,26,0.06);z-index:11;transform:translateY(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);">
+        <div style="width:36px;height:4px;background:rgba(26,26,26,0.15);border-radius:100px;margin:0 auto 20px;"></div>
+        <div style="font-family:'Grandstander',cursive;font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:16px;">Delete your account?</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your answers and reveals are permanently deleted.</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your partner keeps their account, but the connection between you is removed. Their slot will show as Disconnected.</div>
+          <div style="font-size:13px;color:rgba(26,26,26,0.65);line-height:1.5;">Your $49 purchase is non-refundable. If you reinstall, use 'Restore purchase' in Settings to recover access.</div>
+        </div>
+        <button id="delete-confirm-btn" onclick="handleDeleteAccount()" style="width:100%;height:56px;background:#ff9191;color:#c0392b;border:none;border-radius:100px;font-size:15px;font-family:inherit;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+          Yes, delete my account
+          <span id="delete-spinner" style="display:none;"><svg width="16" height="16" viewBox="0 0 16 16" style="animation:spin 0.8s linear infinite;"><circle cx="8" cy="8" r="6" fill="none" stroke="#c0392b" stroke-width="2.5" stroke-dasharray="20 12"/></svg></span>
+        </button>
+        <div style="height:10px;"></div>
+        <button onclick="closeDeleteSheet()" style="width:100%;height:56px;background:transparent;border:1.5px solid rgba(26,26,26,0.20);border-radius:100px;font-size:15px;font-family:inherit;color:#1a1a1a;cursor:pointer;">Cancel</button>
+      </div>
+
+      <!-- Restore purchase: success toast (green) -->
+      <div id="restore-success-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#157a46;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">Purchase restored. You're all set.</div>
+
+      <!-- Restore purchase: error toast -->
+      <div id="restore-error-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#1a1a1a;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">No previous purchase found. Contact support at guarantee@daisysguide.com</div>
+
+      <!-- Delete account: error toast -->
+      <div id="delete-toast" style="display:none;position:absolute;bottom:90px;left:12px;right:12px;background:#1a1a1a;color:#fff;font-size:13px;padding:12px 16px;border-radius:12px;text-align:center;z-index:20;line-height:1.4;">Something went wrong. Try again or contact support.</div>
+
+    </div><!-- /.phone -->
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 13 · Home Base</div>
+    <div class="page-title">Settings</div>
+    <div class="page-desc">Account (Name · Signed in with read-only · Lifetime access push with founding-member chip), Partner (three link states: Linked → detail/unlink push · Invite pending → Screen 10 · Not linked → Screen 10), Notifications (OS-denied banner · Partner activity with partner-name fallback · Nudge frequency, no subtext · Funny push, "I mean, <em>we</em> think we're funny, but it's okay if you don't."), Where you are (Stage + Q1-conditional date row), Your plan (Manage topics → Screen 15), Support, Legal, headerless destructive group (Delete · Log out). Demo tabs: Q1 answer, Push permission, Partner status.</div>
+    <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Q1 answer</span>
+      <button id="q1tab-0" onclick="setQ1(0)" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Pregnant / Again</button>
+      <button id="q1tab-1" onclick="setQ1(1)" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Baby is here</button>
+      <button id="q1tab-2" onclick="setQ1(2)" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Trying (or thinking about trying)</button>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Push permission</span>
+      <button id="osperm-0" onclick="setOsPerm(false)" style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Granted</button>
+      <button id="osperm-1" onclick="setOsPerm(true)" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Denied (show banner)</button>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:11px;font-weight:700;color:rgba(26,26,26,0.38);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;margin-right:2px;">Partner status</span>
+      <button id="pstate-linked"  onclick="setPartnerState('linked')"  style="padding:5px 12px;border-radius:100px;border:1.5px solid #5f45f2;background:#5f45f2;color:white;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Linked</button>
+      <button id="pstate-pending" onclick="setPartnerState('pending')" style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Invite pending</button>
+      <button id="pstate-none"    onclick="setPartnerState('none')"    style="padding:5px 12px;border-radius:100px;border:1.5px solid rgba(26,26,26,0.15);background:white;color:rgba(26,26,26,0.55);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;">Not linked</button>
+    </div>
+  </div><!-- /.phone-wrap -->
+
+  <!-- SPEC PANEL -->
+</div>
+
+    </div>
+  </div>
+</div>
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+/* Push sub-screens: scrollable but no visible scrollbar (matches native iOS feel). */
+body.page-23 .screen-root .push-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+body.page-23 .screen-root .push-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+</style>
+<script>
+/* ── "Where you are": Stage row + date row interactions ──
+ * applyStage(stage, opts) is the single source of truth for the section's state.
+ * opts.notify: show the "Your topics will re-sort to match." inline note when
+ *              Stage actually changed (Stage picker uses true; Q1 demo tabs use
+ *              false because tab clicks are a demo-state reset, not a user edit).
+ * opts.silentDateReset: when true, replace the date with the stage's default
+ *              demo value (used by the Q1 demo tabs); when false, keep whatever
+ *              date is showing on a same-shape transition (Pregnant <-> Expecting
+ *              again both use a Due date row, so the date carries over).
+ */
+const STAGE_DEFAULT_DATE = {
+  'Pregnant':        { label: 'Due date',   value: 'Aug 14, 2026' },
+  'Expecting again': { label: 'Due date',   value: 'Aug 14, 2026' },
+  'Baby is here':    { label: 'Birth date', value: 'Mar 3, 2025'  },
+  'Trying':          { label: null,         value: null            }
+};
+
+function applyStage(stage, opts) {
+  opts = opts || {};
+  const stageEl = document.getElementById('stage-value');
+  const prev    = stageEl.textContent.trim();
+  const changed = prev !== stage;
+  stageEl.textContent = stage;
+
+  const row    = document.getElementById('date-row');
+  const labelEl = document.getElementById('date-label');
+  const valueEl = document.getElementById('date-value');
+  const cfg    = STAGE_DEFAULT_DATE[stage];
+
+  if (!cfg.label) {
+    row.style.display = 'none';
+  } else {
+    row.style.display = '';
+    // If the previous stage shared the same date label and we're not on a hard
+    // demo reset, keep the current date so the user doesn't lose what they set.
+    const prevCfg     = STAGE_DEFAULT_DATE[prev] || { label: null };
+    const sameShape   = prevCfg.label === cfg.label;
+    if (opts.silentDateReset || !sameShape) {
+      labelEl.textContent = cfg.label;
+      valueEl.textContent = cfg.value;
+    } else {
+      labelEl.textContent = cfg.label;
+    }
+  }
+
+  if (opts.notify && changed) showStageChangeNote();
+}
+
+let stageNoteTimer = null;
+function showStageChangeNote() {
+  const note = document.getElementById('stage-change-note');
+  note.style.display = 'block';
+  clearTimeout(stageNoteTimer);
+  stageNoteTimer = setTimeout(() => { note.style.display = 'none'; }, 4000);
+}
+
+/* Q1 demo tab strip — reset section state for previewing variations.
+ * Idx 0 = Pregnant, 1 = Baby is here, 2 = Trying.
+ * Demo trigger, so { notify: false, silentDateReset: true }. */
+function setQ1(idx) {
+  [0, 1, 2].forEach(i => {
+    const btn = document.getElementById('q1tab-' + i);
+    const active = i === idx;
+    btn.style.background    = active ? '#5f45f2' : 'white';
+    btn.style.color         = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    btn.style.borderColor   = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+  const stages = ['Pregnant', 'Baby is here', 'Trying'];
+  // Hide any lingering change note from a previous user edit.
+  document.getElementById('stage-change-note').style.display = 'none';
+  applyStage(stages[idx], { notify: false, silentDateReset: true });
+}
+
+/* Stage picker bottom sheet */
+function openStageSheet() {
+  const current = document.getElementById('stage-value').textContent.trim();
+  document.querySelectorAll('#stage-options .stage-option').forEach(opt => {
+    const selected = opt.getAttribute('data-value') === current;
+    const radio    = opt.querySelector('.stage-radio');
+    radio.style.borderColor = selected ? '#5f45f2' : 'rgba(26,26,26,0.20)';
+    radio.innerHTML         = selected ? '<span style="width:10px;height:10px;border-radius:50%;background:#5f45f2;display:block;"></span>' : '';
+  });
+  document.getElementById('stage-overlay').style.display = 'block';
+  const s = document.getElementById('stage-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeStageSheet() {
+  const s = document.getElementById('stage-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('stage-overlay').style.display = 'none';
+  }, 280);
+}
+function selectStage(value) {
+  applyStage(value, { notify: true, silentDateReset: false });
+  closeStageSheet();
+}
+
+/* Date picker bottom sheet — preview surrogate for the native date picker.
+ * Constraints: Due date must be in the future; Birth date must be on or before
+ * today. Presets below are the prototype's stand-in for the wheel. */
+function buildDateOptions() {
+  const isDue = document.getElementById('date-label').textContent.trim() === 'Due date';
+  const opts  = isDue
+    ? ['Jul 10, 2026', 'Aug 14, 2026', 'Oct 2, 2026']
+    : ['Jan 18, 2025', 'Mar 3, 2025', 'May 22, 2025'];
+  const container = document.getElementById('date-options');
+  container.innerHTML = '';
+  const current = document.getElementById('date-value').textContent.trim();
+  opts.forEach((d, i) => {
+    const isLast = i === opts.length - 1;
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:14px 4px;min-height:52px;cursor:pointer;' +
+      (isLast ? '' : 'border-bottom:1px solid rgba(26,26,26,0.06);');
+    row.onclick = () => selectDate(d);
+    const selected = d === current;
+    row.innerHTML =
+      '<span style="width:20px;height:20px;border-radius:50%;border:1.5px solid ' + (selected ? '#5f45f2' : 'rgba(26,26,26,0.20)') + ';flex-shrink:0;display:flex;align-items:center;justify-content:center;">' +
+        (selected ? '<span style="width:10px;height:10px;border-radius:50%;background:#5f45f2;display:block;"></span>' : '') +
+      '</span>' +
+      '<span style="flex:1;font-size:15px;color:#1a1a1a;">' + d + '</span>';
+    container.appendChild(row);
+  });
+  document.getElementById('date-sheet-title').textContent = isDue ? 'Due date' : 'Birth date';
+  document.getElementById('date-sheet-sub').textContent =
+    'Native ' + (isDue ? 'future-bounded' : 'past-bounded (max today)') +
+    ' date picker on device. Demo presets below honor the launch constraints.';
+}
+function openDateSheet() {
+  buildDateOptions();
+  document.getElementById('date-overlay').style.display = 'block';
+  const s = document.getElementById('date-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeDateSheet() {
+  const s = document.getElementById('date-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('date-overlay').style.display = 'none';
+  }, 280);
+}
+function selectDate(value) {
+  document.getElementById('date-value').textContent = value;
+  closeDateSheet();
+}
+
+/* ── Partner link state ── */
+let PARTNER_STATE = 'linked';      // 'linked' · 'pending' · 'none'
+const PARTNER_NAME = 'Jordan';     // when linked
+
+function partnerName()        { return PARTNER_STATE === 'linked' ? PARTNER_NAME : 'your partner'; }
+function partnerBothYouAnd()  { return PARTNER_STATE === 'linked' ? ('both you and ' + PARTNER_NAME) : 'both of you'; }
+
+function renderPartnerStrings() {
+  const name = partnerName();
+  const bothYouAnd = partnerBothYouAnd();
+  document.querySelectorAll('[data-partner-template]').forEach(el => {
+    const tpl = el.getAttribute('data-partner-template');
+    el.textContent = tpl
+      .replace('{name}', name)
+      .replace('{nameOrYourPartner}', name)
+      .replace('{bothYouAnd}', bothYouAnd);
+  });
+}
+
+function setPartnerState(state) {
+  PARTNER_STATE = state;
+  // Demo tab strip pill state.
+  [['pstate-linked', 'linked'], ['pstate-pending', 'pending'], ['pstate-none', 'none']].forEach(([id, s]) => {
+    const btn = document.getElementById(id);
+    const active = s === state;
+    btn.style.background  = active ? '#5f45f2' : 'white';
+    btn.style.color       = active ? 'white'   : 'rgba(26,26,26,0.55)';
+    btn.style.borderColor = active ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  });
+  // Partner row variant swap (only one visible).
+  document.querySelectorAll('.partner-row-variant').forEach(row => {
+    row.style.display = row.getAttribute('data-pstate') === state ? '' : 'none';
+  });
+  // Re-render all partner-name strings.
+  renderPartnerStrings();
+}
+
+/* ── OS notification permission demo tabs ── */
+function setOsPerm(denied) {
+  document.getElementById('osperm-0').style.background  = denied ? 'white' : '#5f45f2';
+  document.getElementById('osperm-0').style.color       = denied ? 'rgba(26,26,26,0.55)' : 'white';
+  document.getElementById('osperm-0').style.borderColor = denied ? 'rgba(26,26,26,0.15)' : '#5f45f2';
+  document.getElementById('osperm-1').style.background  = denied ? '#5f45f2' : 'white';
+  document.getElementById('osperm-1').style.color       = denied ? 'white' : 'rgba(26,26,26,0.55)';
+  document.getElementById('osperm-1').style.borderColor = denied ? '#5f45f2' : 'rgba(26,26,26,0.15)';
+  document.getElementById('os-denied-banner').style.display = denied ? 'block' : 'none';
+}
+function openOsSettings() { /* deep-link stub: UIApplication.openSettingsURLString on iOS, app-details intent on Android */ }
+
+/* ── Partner activity toggle + off-warning ── */
+function togglePartnerActivity() {
+  const t = document.getElementById('partner-activity-toggle');
+  t.classList.toggle('off');
+  const off = t.classList.contains('off');
+  document.getElementById('partner-activity-warning').style.display = off ? 'block' : 'none';
+}
+
+/* ── Partner detail push ── */
+function openPartnerDetail() {
+  const o = document.getElementById('partner-overlay');
+  o.style.display = 'block';
+  requestAnimationFrame(() => { o.style.transform = 'translateX(0)'; });
+}
+function closePartnerDetail() {
+  const o = document.getElementById('partner-overlay');
+  o.style.transform = 'translateX(100%)';
+  setTimeout(() => { o.style.display = 'none'; }, 280);
+}
+
+/* ── Unlink confirmation sheet ── */
+function openUnlinkSheet() {
+  document.getElementById('unlink-overlay').style.display = 'block';
+  const s = document.getElementById('unlink-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeUnlinkSheet() {
+  const s = document.getElementById('unlink-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('unlink-overlay').style.display = 'none';
+  }, 280);
+}
+function handleUnlink() {
+  // Demo: close sheet + pop the Partner detail push, then swap the Partner row
+  // to the Not linked variant so the user lands back in Settings ready to re-link
+  // via Screen 10. In production: deactivate pairing (never delete), mark the
+  // partner slot Disconnected, return to the same Settings invite-state UI.
+  closeUnlinkSheet();
+  setTimeout(() => {
+    closePartnerDetail();
+    setPartnerState('none');
+  }, 200);
+}
+
+/* ── Nudge frequency picker ── */
+function openNudgeSheet() {
+  const current = document.getElementById('nudge-value').textContent.trim();
+  document.querySelectorAll('#nudge-options .nudge-option').forEach(opt => {
+    const selected = opt.getAttribute('data-value') === current;
+    const radio    = opt.querySelector('.nudge-radio');
+    radio.style.borderColor = selected ? '#5f45f2' : 'rgba(26,26,26,0.20)';
+    radio.innerHTML         = selected ? '<span style="width:10px;height:10px;border-radius:50%;background:#5f45f2;display:block;"></span>' : '';
+  });
+  document.getElementById('nudge-overlay').style.display = 'block';
+  const s = document.getElementById('nudge-sheet');
+  s.style.display = 'block';
+  requestAnimationFrame(() => { s.style.transform = 'translateY(0)'; });
+}
+function closeNudgeSheet() {
+  const s = document.getElementById('nudge-sheet');
+  s.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    s.style.display = 'none';
+    document.getElementById('nudge-overlay').style.display = 'none';
+  }, 280);
+}
+function selectNudge(value) {
+  document.getElementById('nudge-value').textContent = value;
+  closeNudgeSheet();
+}
+
+/* ── Lifetime access push ── */
+function openLifetime() {
+  const o = document.getElementById('lifetime-overlay');
+  o.style.display = 'block';
+  requestAnimationFrame(() => { o.style.transform = 'translateX(0)'; });
+}
+function closeLifetime() {
+  const o = document.getElementById('lifetime-overlay');
+  o.style.transform = 'translateX(100%)';
+  setTimeout(() => { o.style.display = 'none'; }, 280);
+}
+
+/* ── Edit Name overlay ── */
+function openEditName() {
+  const overlay = document.getElementById('edit-name-overlay');
+  overlay.style.display = 'block';
+  requestAnimationFrame(() => { overlay.style.transform = 'translateX(0)'; });
+  setTimeout(() => { document.getElementById('edit-name-input').focus(); }, 300);
+}
+function closeEditName() {
+  const overlay = document.getElementById('edit-name-overlay');
+  overlay.style.transform = 'translateX(100%)';
+  setTimeout(() => { overlay.style.display = 'none'; }, 280);
+}
+function saveEditName() {
+  const val = document.getElementById('edit-name-input').value.trim() || 'Alex';
+  document.getElementById('name-row-value').textContent = val;
+  closeEditName();
+}
+
+/* ── Restore Purchase ── */
+function restorePurchase() {
+  return new Promise(resolve => setTimeout(resolve, 1500));
+}
+function handleRestore(e) {
+  const row     = document.getElementById('restore-row');
+  const label   = row.querySelector('[data-restore-label]');
+  const spinner = document.getElementById('restore-spinner');
+  row.style.pointerEvents = 'none';
+  spinner.style.display   = 'inline';
+  label.style.opacity     = '0.5';
+  restorePurchase()
+    .then(() => {
+      spinner.style.display   = 'none';
+      label.style.opacity     = '1';
+      row.style.pointerEvents = '';
+      const t = document.getElementById('restore-success-toast');
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3000);
+    })
+    .catch(() => {
+      spinner.style.display   = 'none';
+      label.style.opacity     = '1';
+      row.style.pointerEvents = '';
+      const t = document.getElementById('restore-error-toast');
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 4000);
+    });
+}
+
+/* ── Delete Account ── */
+function openDeleteSheet() {
+  document.getElementById('delete-overlay').style.display = 'block';
+  const sheet = document.getElementById('delete-sheet');
+  sheet.style.display = 'block';
+  requestAnimationFrame(() => { sheet.style.transform = 'translateY(0)'; });
+}
+function closeDeleteSheet() {
+  const sheet = document.getElementById('delete-sheet');
+  sheet.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    sheet.style.display = 'none';
+    document.getElementById('delete-overlay').style.display = 'none';
+  }, 280);
+}
+function deleteAccount() {
+  return new Promise((_resolve, _reject) => {});
+}
+function handleDeleteAccount() {
+  const btn     = document.getElementById('delete-confirm-btn');
+  const spinner = document.getElementById('delete-spinner');
+  btn.disabled           = true;
+  spinner.style.display  = 'inline';
+  deleteAccount()
+    .then(() => {
+      closeDeleteSheet();
+      window.location.href = '04-sign-up.html';
+    })
+    .catch(() => {
+      spinner.style.display = 'none';
+      btn.disabled          = false;
+      const toast = document.getElementById('delete-toast');
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 4000);
+    });
+}
+
+/* ── Swipe down to dismiss bottom sheets ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const wire = (sheetId, closer) => {
+    const sheet = document.getElementById(sheetId);
+    if (!sheet) return;
+    let startY = 0;
+    sheet.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+    sheet.addEventListener('touchend',   e => { if (e.changedTouches[0].clientY - startY > 60) closer(); });
+  };
+  wire('delete-sheet', closeDeleteSheet);
+  wire('nudge-sheet',  closeNudgeSheet);
+  wire('stage-sheet',  closeStageSheet);
+  wire('date-sheet',   closeDateSheet);
+  wire('unlink-sheet', closeUnlinkSheet);
+});
+</script>
+
+</body>
+</html>

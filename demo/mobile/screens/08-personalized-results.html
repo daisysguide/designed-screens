@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Personalized Results · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../demo-fit.css">
+</head>
+<body class="page-08 demo-mode">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item active" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Personalized Results</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="eyebrow anim d1">Your plan is ready</div>
+        <div class="screen-heading anim d2">You two have a lot<br>to talk about.</div>
+        <div class="screen-body anim d2">Most couples don't see these conversations coming. You will, and you'll go in on the same page.</div>
+
+        <!-- Conversation Preview — display-only. Default (personalized) markup lives here;
+             showState() swaps only this card's contents between personalized and fallback. -->
+        <div class="preview anim d3" id="preview">
+          <div class="pv-group-label mine">Starting with what you told us</div>
+          <div class="pv-row">
+            <span class="pv-dot mine"></span>
+            <span class="pv-q">How will we share parental and household duties?</span>
+          </div>
+          <div class="pv-row">
+            <span class="pv-dot mine"></span>
+            <span class="pv-q">How will we make time for ourselves as a couple?</span>
+          </div>
+          <div class="pv-group-label more">...And a few couples don't see coming</div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">Who will be in the delivery room?</span>
+          </div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">What aspects of our upbringing will we replicate, and what will we avoid?</span>
+          </div>
+        </div>
+
+        <div class="scope anim d4"><b>Plus 41 more</b>, with expert guidance for everything ahead.</div>
+
+        <div class="spacer"></div>
+
+        <div class="due anim d5">
+          <span class="due-pill"><b>~18 weeks</b> until baby's here</span>
+        </div>
+        <button class="btn-primary anim d6">Let's begin →</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 08 · Onboarding</div>
+    <div class="page-title">Personalized Results</div>
+    <div class="page-desc">Plan summary and emotional peak of onboarding. Leads with the conversations the couple needs to have, not a topic count.</div>
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-personalized" onclick="showState('personalized')">Personalized</button>
+      <button class="state-tab" id="tab-fallback" onclick="showState('fallback')">Fallback</button>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+</div>
+
+    </div>
+  </div>
+</div>
+<script>
+// Mirror Screen 07's state-tab pattern. Personalized markup is authored once in the
+// static HTML above (captured here); only the Conversation Preview card swaps on toggle.
+(function () {
+  const preview = document.getElementById('preview');
+  const PV_PERSONALIZED = preview.innerHTML;
+  const PV_FALLBACK = `
+          <div class="pv-label-fixed">A few you'll want to sit down for</div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">How will we share parental and household duties?</span>
+          </div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">Who will be in the delivery room?</span>
+          </div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">What aspects of our upbringing will we replicate, and what will we avoid?</span>
+          </div>
+          <div class="pv-row">
+            <span class="pv-dot"></span>
+            <span class="pv-q">How will we make time for ourselves as a couple?</span>
+          </div>`;
+
+  window.showState = function (state) {
+    ['personalized', 'fallback'].forEach(s => {
+      document.getElementById('tab-' + s).classList.toggle('active', s === state);
+    });
+    preview.innerHTML = state === 'fallback' ? PV_FALLBACK : PV_PERSONALIZED;
+  };
+
+  showState('personalized');
+})();
+</script>
+
+</body>
+</html>

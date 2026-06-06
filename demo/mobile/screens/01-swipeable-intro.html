@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — Swipeable Intro · Daisy's Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../demo-fit.css">
+</head>
+<body class="page-00 demo-mode">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Demo · 20 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item active" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Swipeable Intro</span>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+
+
+<div class="demo-layout">
+
+  <div class="phone-wrap">
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+
+      <div class="illus-zone">
+        <div class="illus-placeholder" id="illus-placeholder">
+          <div class="slot-corner tl"></div>
+          <div class="slot-corner br"></div>
+          <div class="illus-label">Illustration asset</div>
+          <div class="illus-desc" id="illus-desc">Couple side-by-side at home, each absorbed in their own thoughts.</div>
+        </div>
+        <img class="illus-image" id="illus-image" alt="" style="display:none;">
+      </div>
+
+      <div class="bottom-card">
+        <div class="swipe-dots">
+          <div class="dot active" id="d1"></div>
+          <div class="dot inactive" id="d2"></div>
+          <div class="dot inactive" id="d3"></div>
+        </div>
+        <div class="card-heading" id="card-heading">You don't know what you don't know.</div>
+        <div class="card-body" id="card-body">Neither does your partner.</div>
+        <div class="spacer"></div>
+
+        <!-- Cards 1–2: Next → text link -->
+        <div class="cta-block" id="cta-next" style="align-items:center;">
+          <button onclick="advance()" style="background:none;border:none;padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--text-secondary);cursor:pointer;">Next →</button>
+        </div>
+        <!-- Card 3: live CTAs -->
+        <div class="cta-block" id="cta-live" style="display:none;">
+          <button class="btn btn-primary">Build my plan →</button>
+          <button class="btn btn-ghost">Log in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2 — pill, title, description, state toggles -->
+  <div class="demo-meta">
+    <div class="screen-tag">Screen 01 · Intro</div>
+    <div class="page-title">Swipeable Intro</div>
+    <div class="page-desc">3 cards · swipe or tap Next → to advance · CTAs only on Card 3 · first launch only.</div>
+    <div class="card-tab-row">
+      <button class="card-tab active" id="tab1" onclick="showCard(1)">Card 1</button>
+      <button class="card-tab" id="tab2" onclick="showCard(2)">Card 2</button>
+      <button class="card-tab" id="tab3" onclick="showCard(3)">Card 3</button>
+    </div>
+    <div class="card-tab-row variant-row">
+      <button class="card-tab" id="tab1A" onclick="showVariant('1A')">Card 1-A</button>
+      <button class="card-tab" id="tab2A" onclick="showVariant('2A')">Card 2-A</button>
+      <button class="card-tab" id="tab3A" onclick="showVariant('3A')">Card 3-A</button>
+    </div>
+  </div>
+
+</div>
+
+
+</div>
+  </div>
+</div>
+<script>
+let currentCard = 1;
+let currentVariant = null;
+const cards = [
+  { heading: "You don't know what you don't know.", body: "Neither does your partner.", illus: "Couple side-by-side at home, each absorbed in their own thoughts.", last: false },
+  { heading: "Answer independently.<br>Reveal together.", body: "You'll find what you agree on, and what's worth a real conversation (we'll walk you through that part too).", illus: "Two phones side by side, screens facing out, each showing the same question prompt with a different answer in progress (different option selected on each). A soft thread or arc connects the two screens, hinting they'll come together.", last: false },
+  { heading: "You'll have these conversations either way.", body: "With experts in your corner now, or at 3am while soothing a screaming newborn?", illus: "Split-screen: top-left calm morning conversation, bottom-right same couple at 3am with a crying baby. Soft diagonal transition, unified by a continuous element (lamp light, same couch, clock motif).", last: true }
+];
+const variants = {
+  '1A': { card: 1, src: '../../illus/card1-A.png' },
+  '2A': { card: 2, src: '../../illus/card2-A.png' },
+  '3A': { card: 3, src: '../../illus/card3-A.png' }
+};
+function showCard(n) {
+  if (n < 1 || n > 3) return;
+  currentCard = n;
+  currentVariant = null;
+  const c = cards[n-1];
+  document.getElementById('card-heading').innerHTML = c.heading;
+  document.getElementById('card-body').innerHTML = c.body;
+  document.getElementById('illus-desc').textContent = c.illus;
+  document.getElementById('cta-next').style.display = c.last ? 'none' : 'flex';
+  document.getElementById('cta-live').style.display = c.last ? 'flex' : 'none';
+  document.getElementById('illus-placeholder').style.display = 'flex';
+  document.getElementById('illus-image').style.display = 'none';
+  [1,2,3].forEach(i => {
+    document.getElementById('d'+i).className = 'dot ' + (i===n ? 'active' : 'inactive');
+    document.getElementById('tab'+i).classList.toggle('active', i===n);
+  });
+  document.getElementById('tab1A').classList.remove('active');
+  document.getElementById('tab2A').classList.remove('active');
+  document.getElementById('tab3A').classList.remove('active');
+}
+function showVariant(key) {
+  const v = variants[key];
+  if (!v) return;
+  showCard(v.card);
+  currentVariant = key;
+  const img = document.getElementById('illus-image');
+  img.src = v.src;
+  img.style.display = 'block';
+  document.getElementById('illus-placeholder').style.display = 'none';
+  document.getElementById('tab' + key).classList.add('active');
+}
+function advance() {
+  if (currentVariant) {
+    const letter = currentVariant.slice(-1);
+    const nextKey = (currentCard + 1) + letter;
+    if (variants[nextKey]) { showVariant(nextKey); return; }
+  }
+  showCard(currentCard + 1);
+}
+  if (typeof showVariant === 'function') showVariant('1A');
+</script>
+
+</body>
+</html>
