@@ -263,6 +263,43 @@ Mobile shadows are subtle by design. Heavy shadows feel dated and clunky on smal
 | `z-modal` | 500 | Modals, bottom sheets, drawers |
 | `z-toast` | 600 | Toasts and snackbars (above everything) |
 
+### Motion
+
+Motion is a foundation like the others: a small set of named durations and a single standard easing, referenced rather than re-typed. Most motion in the app is short and functional — a state change, a press, a snap, a fill. The few expressive, one-off animations (the reveal bloom, the petal burst, the waiting-screen breathing loop) are deliberately *not* tokenized; they are documented per-component choreography, carved out below. This section consolidates values that already exist in component cards; it is normalization, not new design.
+
+#### Duration
+
+| Token | Value | Where it's already used |
+|---|---|---|
+| `duration-fast` | 150ms | State change (`all 0.15s ease`), answer-pill press (`scale(0.98)`, 150ms), slider snap (`left 0.15s ease`) |
+| `duration-base` | 200ms | Switch (`background 0.2s ease`), slider track color + thumb position (`0.2s ease`) |
+| `duration-slow` | 400ms | Progress-bar fill (`width 0.4s ease` on mount and value change) |
+
+#### Easing
+
+| Token | Value | Usage |
+|---|---|---|
+| `ease-standard` | `cubic-bezier(.4, 0, .2, 1)` | The canonical ease for functional transitions. The CSS `ease` keyword currently stands in as a near-equivalent shorthand in several component cards (switch, slider, state change); treat it as the same intent and standardize new work on `ease-standard`. The ranking FLIP reflow already uses this curve explicitly. |
+
+#### Reduced motion (global policy)
+
+`prefers-reduced-motion: reduce` is honored app-wide; this is the one place the rule is stated. Under reduced motion, decorative and expressive animation does not play and instead resolves to its final, static state — the reveal daisy is static (no bloom, no petal burst), looping treatments hold still (the waiting-screen breathing loop, the topic "charge" glow), and staggered or sweeping entrances snap straight to their resolved layout (`opacity: 1`, `transform: none`). Functional, near-instant state-change transitions (focus, press, toggle, progress fill) may remain. The per-component `prefers-reduced-motion` blocks that recur across `paywall`, `home`, `topic-list`, `topic-intro`, `question`, `waiting-for-partner`, and `alignment-reveal` are all instances of this single rule and must not diverge from it.
+
+#### Bespoke choreography — documented exceptions, NOT shared tokens
+
+These animations are genuinely one-off. Like the `personalized-results` eyebrow exception, they are documented where they live and a motion-token audit should leave them alone — do not fold them onto the duration or easing scale. The canonical value for each stays in its component card; the table below is an index, not a second source of truth:
+
+| Animation | Spec home | Value (per its card) |
+|---|---|---|
+| Daisy **bloom** | Daisy Mark — Reveal entrance | scale 1 → 1.16 → 1 with a slight rotate, ~0.85s, spring `cubic-bezier(.34, 1.56, .64, 1)` |
+| Petal **burst** | Daisy Mark — Reveal entrance | ~14 petals scatter radially and fade, ~0.9s ease-out |
+| Ranking **FLIP reflow** | Question Card — ranking reveal | `transform 0.42s cubic-bezier(.4, 0, .2, 1)` (the `ease-standard` curve at a bespoke duration) |
+| Overlay / sheet entry | Bottom Sheet | slide up · 280ms ease-out |
+| Shimmer (skeleton loader) | Loading / Processing — Pattern 2 | gradient sweep · 1.6s ease-in-out · infinite |
+| "Breathing" loop | `waiting-for-partner` | `daisyBreathe 2.6s ease-in-out infinite` |
+
+> **Other platforms mirror this set.** The named durations plus `ease-standard` are the canonical motion vocabulary for any consumer to port — iOS today, web and others later. The iOS design system deferred motion *tokens* specifically because there was no consolidated set here to mirror (Colors, Spacing, etc. all have one); this section is that set.
+
 ---
 
 ## Navigation patterns
@@ -1843,6 +1880,8 @@ The drift between v1.0 and v4 happened because the design system, screen files, 
 
 Each screen's spec table should cite tokens (`padding: space-4`), not raw values (`padding: 16px`). When a token changes, the screen automatically reflects it. When a screen specifies a raw value that doesn't match the token, that's a drift signal worth catching in review.
 
+This applies to motion too: cite `duration-fast` / `duration-base` / `duration-slow` and `ease-standard` (see Foundations → Motion) rather than re-typing `0.15s` / `0.2s` / `ease`. A stray `0.18s` or `250ms` that maps to no token is the same drift signal as an off-scale padding. The bespoke choreography carved out in that section (bloom, burst, FLIP reflow, breathing loop) is the explicit exception — those keep their per-component values on purpose.
+
 ### 2. CHANGELOG section in this file
 
 See bottom of this document. Every decision recorded inline. No external decisions log to fall out of sync.
@@ -1874,6 +1913,15 @@ This document does not have a version number. It is at HEAD. Changes are dated i
 ## CHANGELOG
 
 Date-stamped record of design system decisions. Add new entries at the top.
+
+### 2026-06-17 — Add a Motion foundation
+
+Motion was the only foundation specified inline, per-component — Color, Type, Spacing, Radius, Shadow, and Opacity all had canonical named values while motion lived as raw CSS scattered across component cards (`0.15s` recurring ~3×, `0.2s` ~2×). Added a `### Motion` subsection under Foundations to close that gap. This is a consolidation of values already in the spec, not new design.
+
+- **Named set seeded from current usage:** `duration-fast` (150ms), `duration-base` (200ms), `duration-slow` (400ms), and `ease-standard` (`cubic-bezier(.4, 0, .2, 1)`, with the bare CSS `ease` keyword treated as its near-equivalent shorthand pending standardization).
+- **Reduced-motion policy stated once.** The global `prefers-reduced-motion` rule (expressive animation resolves to its static final state; functional transitions may remain) now has a single home, instead of being re-derived in the seven screens that each ship a `prefers-reduced-motion` block.
+- **Bespoke choreography explicitly carved out** as documented per-component exceptions — daisy bloom, petal burst, ranking FLIP reflow, sheet/toast entry, skeleton shimmer, and the `waiting-for-partner` breathing loop keep their per-component values and are *not* tokenized. Same pattern as the `personalized-results` eyebrow exception.
+- **Drift prevention** gained a motion clause (cite the tokens, not raw seconds); a stray `0.18s`/`250ms` is now a catchable drift signal. This also turns iOS motion *tokens* from speculative into spec-backed — there is finally a consolidated set for other platforms to mirror.
 
 ### 2026-06-03 — Home rework: fold `empty-home` (Screen 25) into `home`; avatar-less greeting + partner; category-only progress
 
