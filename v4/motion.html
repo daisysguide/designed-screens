@@ -358,7 +358,7 @@
               <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(26,26,26,0.06)" stroke-width="0.6"/>
               <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(26,26,26,0.06)" stroke-width="0.6"/>
               <!-- the curve: P0(0,100) C(40,100) (20,0) P3(100,0) in svg coords (y flipped) -->
-              <path d="M0,100 C40,100 80,0 100,0" fill="none" stroke="#5f45f2" stroke-width="2" stroke-linecap="round"/>
+              <path d="M0,100 C40,100 20,0 100,0" fill="none" stroke="#5f45f2" stroke-width="2" stroke-linecap="round"/>
               <circle cx="0" cy="100" r="2.4" fill="#5f45f2"/>
               <circle cx="100" cy="0" r="2.4" fill="#5f45f2"/>
             </svg>
@@ -496,7 +496,6 @@
 
     // ---- Bloom + petal burst ----
     var BURST = document.getElementById('burst-layer');
-    var bloomCard = document.getElementById('daisy-bloom').closest('.daisy-stage').parentElement;
     var bloomStage = document.getElementById('daisy-bloom').closest('.daisy-stage');
     function playBloom() {
       restart(bloomStage, 'bloom'); // bloom class also carries playing-once via combined below
@@ -536,9 +535,7 @@
       var items = Array.prototype.slice.call(RANK.children);
       var firsts = items.map(function (el) { return el.getBoundingClientRect().top; });
       reverseDom(items);
-      // re-read in new visual order
-      var lasts = {};
-      items.forEach(function (el) { lasts[el.dataset._k] = el.getBoundingClientRect().top; });
+      // re-read each item's new top to compute its inverted offset (FLIP "last" → "invert")
       items.forEach(function (el, idx) {
         var dy = firsts[idx] - el.getBoundingClientRect().top;
         el.classList.remove('flipping');
@@ -552,8 +549,7 @@
       renumber();
     }
     function reverseDom(items) {
-      // tag, then append in reverse to flip order
-      items.forEach(function (el, i) { el.dataset._k = i; });
+      // append in reverse to flip the visual order
       items.slice().reverse().forEach(function (el) { RANK.appendChild(el); });
     }
     function reorderInstant() {
