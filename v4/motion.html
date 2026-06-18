@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daisy's Guide — Motion foundation</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ----------------------------------------------------------------------
+     Motion visualizer — a live companion to "Foundations → Motion" in
+     `design system.md`. Every value below is read straight from the spec;
+     the page eats its own dog food (its transitions use the duration and
+     easing tokens it documents). Not a screen mockup — a reference surface.
+     --------------------------------------------------------------------- */
+  :root {
+    /* Color tokens (subset, from Foundations → Colors) */
+    --page-bg: #f0ece6;
+    --cream: #fbefe1;
+    --white: #ffffff;
+    --black: #1a1a1a;
+    --purple-500: #5f45f2;
+    --purple-600: #4f37d4;
+    --purple-700: #3f2bb3;
+    --green-400: #77eaaf;
+    --green-200: #96f1c6;
+    --green-text: #157a46;
+    --orange-400: #ffad6c;
+    --yellow-400: #ffd755;
+    --cyan-300: #7fe3f7;
+    --text-primary: var(--black);
+    --text-secondary: rgba(26, 26, 26, 0.6);
+    --text-tertiary: rgba(26, 26, 26, 0.4);
+    --border-default: rgba(26, 26, 26, 0.15);
+    --shadow-sm: 0 1px 2px rgba(26, 26, 26, 0.05);
+    --shadow-md: 0 2px 8px rgba(26, 26, 26, 0.06), 0 1px 2px rgba(26, 26, 26, 0.04);
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+    /* Motion tokens (Foundations → Motion) — the subject of this page */
+    --duration-fast: 150ms;
+    --duration-base: 200ms;
+    --duration-slow: 400ms;
+    --ease-standard: cubic-bezier(.4, 0, .2, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: var(--page-bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px 96px; }
+
+  /* ---- Toolbar ---- */
+  .toolbar {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(240, 236, 230, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-default);
+  }
+  .toolbar-inner {
+    max-width: 960px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .toolbar .brand {
+    font-family: 'Grandstander', cursive; font-weight: 700;
+    font-size: 18px; color: var(--purple-500); letter-spacing: -0.02em;
+    margin-right: auto;
+  }
+  .btn {
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    border: 1px solid var(--border-default); background: var(--white);
+    color: var(--text-primary); border-radius: var(--radius-full);
+    padding: 8px 16px; cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-standard),
+                border-color var(--duration-fast) var(--ease-standard),
+                color var(--duration-fast) var(--ease-standard);
+  }
+  .btn:hover { background: var(--cream); }
+  .btn[aria-pressed="true"] {
+    background: var(--purple-500); color: var(--white); border-color: var(--purple-500);
+  }
+  .btn .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--text-tertiary); margin-right: 7px; vertical-align: middle;
+    transition: background var(--duration-fast) var(--ease-standard);
+  }
+  .btn[aria-pressed="true"] .dot { background: var(--white); }
+
+  /* ---- Header ---- */
+  header.page-head { padding: 56px 0 8px; }
+  .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-secondary); margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Grandstander', cursive; font-weight: 700; font-size: 32px;
+    letter-spacing: -0.02em; line-height: 1.19;
+  }
+  .lede { font-size: 17px; color: var(--text-secondary); margin-top: 12px; max-width: 60ch; }
+  .reduce-note {
+    margin-top: 20px; padding: 12px 16px;
+    background: rgba(95, 69, 242, 0.08); border-radius: var(--radius-lg);
+    font-size: 13px; color: var(--purple-700); display: none;
+  }
+  html.reduce .reduce-note { display: block; }
+
+  /* ---- Sections ---- */
+  section { margin-top: 56px; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+  h2 {
+    font-family: 'Grandstander', cursive; font-weight: 700; font-size: 24px;
+    letter-spacing: -0.02em; line-height: 1.25;
+  }
+  .sec-sub { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+
+  .grid { display: grid; gap: 16px; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 720px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--white); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md); padding: 20px;
+    display: flex; flex-direction: column;
+  }
+  .card .token {
+    font-family: 'DM Sans', monospace; font-size: 13px; font-weight: 600;
+    color: var(--purple-500);
+    background: rgba(95, 69, 242, 0.08); border-radius: var(--radius-full);
+    padding: 3px 10px; align-self: flex-start;
+  }
+  .card .val { font-size: 22px; font-weight: 700; margin-top: 12px; }
+  .card .use { font-size: 13px; color: var(--text-secondary); margin-top: 6px; flex: 1; }
+  .card .stage { margin-top: 16px; }
+  .card .replay {
+    margin-top: 16px; align-self: flex-start;
+    font-size: 12px; font-weight: 600; color: var(--purple-500);
+    background: none; border: none; cursor: pointer; padding: 0;
+  }
+  .card .replay:hover { color: var(--purple-700); }
+  .card .replay::before { content: "\21BB  "; }
+
+  /* ---- Duration demo: a thumb that travels a track ---- */
+  .track {
+    position: relative; height: 40px; border-radius: var(--radius-full);
+    background: var(--cream); border: 1px solid var(--border-default);
+    overflow: hidden;
+  }
+  .thumb {
+    position: absolute; top: 50%; left: 6px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--purple-500);
+    transform: translate(0, -50%);
+  }
+  .playing .thumb { animation: travel var(--dur) var(--ease-standard) infinite alternate; }
+  @keyframes travel {
+    from { left: 6px; }
+    to   { left: calc(100% - 34px); }
+  }
+
+  /* ---- Easing: progress fill + the curve ---- */
+  .ease-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: center; }
+  @media (max-width: 720px) { .ease-row { grid-template-columns: 1fr; } }
+  .curve { background: var(--cream); border-radius: var(--radius-lg); padding: 10px; }
+  .curve svg { display: block; width: 100%; height: auto; }
+  .fill-track { height: 12px; border-radius: var(--radius-full); background: var(--cream); border: 1px solid var(--border-default); overflow: hidden; }
+  .fill { height: 100%; width: 0; background: var(--purple-500); border-radius: var(--radius-full); }
+  .playing .fill { animation: fill var(--duration-slow) var(--ease-standard) infinite alternate; }
+  @keyframes fill { from { width: 4%; } to { width: 100%; } }
+  .ease-keyword { font-size: 13px; color: var(--text-secondary); margin-top: 14px; }
+  .ease-keyword code { background: rgba(26,26,26,0.05); padding: 1px 6px; border-radius: 5px; font-size: 12px; }
+
+  /* ---- Bespoke: daisy bloom + breathing ---- */
+  .daisy-stage { height: 120px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .daisy {
+    width: 64px; height: 64px; will-change: transform;
+    filter: drop-shadow(0 2px 6px rgba(95,69,242,0.18));
+  }
+  .bloom.playing-once .daisy { animation: bloom 0.85s cubic-bezier(.34, 1.56, .64, 1); }
+  @keyframes bloom {
+    0%   { transform: scale(1) rotate(0); }
+    60%  { transform: scale(1.16) rotate(3deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+  .breathe .daisy { animation: daisyBreathe 2.6s ease-in-out infinite; }
+  @keyframes daisyBreathe {
+    0%   { transform: scale(1) rotate(0); }
+    50%  { transform: scale(1.05) rotate(-1deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+
+  /* ---- Bespoke: petal burst ---- */
+  .burst-layer { position: absolute; inset: 0; pointer-events: none; }
+  .petal {
+    position: absolute; top: 50%; left: 50%;
+    width: 10px; height: 14px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.4);
+    opacity: 0;
+  }
+  .burst.playing-once .petal {
+    animation: petal 0.9s ease-out forwards;
+  }
+  @keyframes petal {
+    0%   { transform: translate(-50%, -50%) translate(0,0) scale(0.4); opacity: 1; }
+    100% { transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(1) rotate(var(--rot)); opacity: 0; }
+  }
+
+  /* ---- Bespoke: FLIP reflow ---- */
+  .rank-list { display: flex; flex-direction: column; gap: 8px; }
+  .rank {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--cream); border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg); padding: 12px 14px;
+    will-change: transform;
+  }
+  .rank .n {
+    font-family: 'Grandstander', cursive; font-weight: 700; font-size: 18px;
+    color: var(--purple-500); width: 22px; text-align: center;
+  }
+  .rank.flipping { transition: transform 0.42s cubic-bezier(.4, 0, .2, 1); }
+
+  /* ---- Bespoke: sheet entry ---- */
+  .sheet-frame {
+    position: relative; height: 180px; overflow: hidden;
+    background: rgba(26,26,26,0.06); border-radius: var(--radius-lg);
+  }
+  .sheet {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--white); border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    padding: 18px; box-shadow: 0 -8px 24px rgba(26,26,26,0.10);
+    transform: translateY(100%);
+  }
+  .sheet .grip { width: 36px; height: 4px; border-radius: var(--radius-full); background: var(--border-default); margin: 0 auto 12px; }
+  .sheet-frame.playing-once .sheet { animation: sheetUp 0.28s ease-out forwards; }
+  @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+  /* ---- Bespoke: shimmer ---- */
+  .skeleton { display: flex; flex-direction: column; gap: 10px; }
+  .sk-line { height: 14px; border-radius: var(--radius-full); background: rgba(26,26,26,0.06); position: relative; overflow: hidden; }
+  .sk-line.w70 { width: 70%; }
+  .sk-line.w90 { width: 90%; }
+  .sk-line::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(26,26,26,0.06), transparent);
+    transform: translateX(-100%);
+  }
+  .shimmer .sk-line::after { animation: shimmer 1.6s ease-in-out infinite; }
+  @keyframes shimmer { to { transform: translateX(100%); } }
+
+  /* ---- Reduced-motion policy ---------------------------------------------
+     The single global rule, made interactive. The toggle adds `html.reduce`;
+     the page also auto-detects the OS setting on load. Under reduce, looping
+     and decorative animation is suspended and one-shots resolve to rest. */
+  html.reduce .playing .thumb,
+  html.reduce .playing .fill,
+  html.reduce .breathe .daisy,
+  html.reduce .shimmer .sk-line::after { animation: none !important; }
+  html.reduce .bloom.playing-once .daisy,
+  html.reduce .burst.playing-once .petal,
+  html.reduce .sheet-frame.playing-once .sheet,
+  html.reduce .rank.flipping { animation: none !important; transition: none !important; }
+  html.reduce .petal { opacity: 0 !important; }
+  html.reduce .thumb { left: calc(100% - 34px); }
+  html.reduce .fill { width: 100%; }
+  html.reduce .sheet { transform: translateY(0); }
+
+  /* Honor the real OS preference even before the toggle is touched. */
+  @media (prefers-reduced-motion: reduce) {
+    .playing .thumb, .playing .fill, .breathe .daisy, .shimmer .sk-line::after,
+    .bloom.playing-once .daisy, .burst.playing-once .petal,
+    .sheet-frame.playing-once .sheet, .rank.flipping { animation: none !important; transition: none !important; }
+  }
+
+  footer {
+    margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border-default);
+    font-size: 13px; color: var(--text-tertiary);
+  }
+  footer a { color: var(--purple-500); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .exception {
+    font-size: 12px; color: var(--text-tertiary); margin-top: 8px;
+    border-left: 2px solid var(--border-default); padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <span class="brand">daisy's guide · motion</span>
+      <button class="btn" id="reduce-toggle" aria-pressed="false">
+        <span class="dot"></span>Reduce motion
+      </button>
+      <button class="btn" id="replay-all">Replay all</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <header class="page-head">
+      <div class="eyebrow">Foundations · Motion</div>
+      <h1>Motion</h1>
+      <p class="lede">A small set of named durations and one standard easing — the same two-layer discipline as the other foundations. Most motion is short and functional; the expressive one-offs are documented per-component choreography, not tokens.</p>
+      <div class="reduce-note"><strong>Reduce motion is on.</strong> Decorative and looping animation is suspended and one-shots resolve to their final, static state — the same behavior <code>prefers-reduced-motion: reduce</code> produces app-wide.</div>
+    </header>
+
+    <!-- DURATIONS -->
+    <section id="durations">
+      <div class="sec-head">
+        <div>
+          <h2>Duration</h2>
+          <div class="sec-sub">Watch the relative speeds. Each thumb travels its track using <code>ease-standard</code>.</div>
+        </div>
+      </div>
+      <div class="grid grid-3">
+        <div class="card">
+          <span class="token">duration-fast</span>
+          <div class="val">150ms</div>
+          <div class="use">State change, answer-pill press, slider snap.</div>
+          <div class="stage"><div class="track playing" style="--dur: var(--duration-fast)"><span class="thumb"></span></div></div>
+        </div>
+        <div class="card">
+          <span class="token">duration-base</span>
+          <div class="val">200ms</div>
+          <div class="use">Switch toggle, slider track color + thumb position.</div>
+          <div class="stage"><div class="track playing" style="--dur: var(--duration-base)"><span class="thumb"></span></div></div>
+        </div>
+        <div class="card">
+          <span class="token">duration-slow</span>
+          <div class="val">400ms</div>
+          <div class="use">Progress-bar fill on mount and value change.</div>
+          <div class="stage"><div class="track playing" style="--dur: var(--duration-slow)"><span class="thumb"></span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EASING -->
+    <section id="easing">
+      <div class="sec-head">
+        <div>
+          <h2>Easing</h2>
+          <div class="sec-sub">One standard curve for functional transitions.</div>
+        </div>
+      </div>
+      <div class="card">
+        <span class="token">ease-standard</span>
+        <div class="val">cubic-bezier(.4, 0, .2, 1)</div>
+        <div class="ease-row" style="margin-top:16px">
+          <div class="curve" aria-hidden="true">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+              <!-- grid -->
+              <rect x="0" y="0" width="100" height="100" fill="none" stroke="rgba(26,26,26,0.10)" stroke-width="0.6"/>
+              <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(26,26,26,0.06)" stroke-width="0.6"/>
+              <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(26,26,26,0.06)" stroke-width="0.6"/>
+              <!-- the curve: P0(0,100) C(40,100) (20,0) P3(100,0) in svg coords (y flipped) -->
+              <path d="M0,100 C40,100 80,0 100,0" fill="none" stroke="#5f45f2" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="0" cy="100" r="2.4" fill="#5f45f2"/>
+              <circle cx="100" cy="0" r="2.4" fill="#5f45f2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="fill-track playing"><div class="fill"></div></div>
+            <div class="ease-keyword">The CSS <code>ease</code> keyword currently stands in as a near-equivalent shorthand across several component cards (switch, slider, state change). Treat it as the same intent and standardize new work on <code>ease-standard</code>; the ranking FLIP reflow already uses this curve explicitly.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BESPOKE -->
+    <section id="bespoke">
+      <div class="sec-head">
+        <div>
+          <h2>Bespoke choreography</h2>
+          <div class="sec-sub">Documented per-component exceptions — deliberately <em>not</em> tokenized. The canonical value for each lives in its component card.</div>
+        </div>
+      </div>
+      <div class="grid grid-2">
+
+        <div class="card">
+          <span class="token">Daisy bloom + petal burst</span>
+          <div class="use" style="margin-top:12px">Alignment Reveal entrance. Bloom: scale 1 &rarr; 1.16 &rarr; 1, ~0.85s, spring <code>cubic-bezier(.34, 1.56, .64, 1)</code>. Burst: ~14 petals scatter and fade, ~0.9s ease-out.</div>
+          <div class="daisy-stage">
+            <div class="burst-layer" id="burst-layer"></div>
+            <svg class="daisy" id="daisy-bloom" viewBox="0 0 64 64" aria-hidden="true">
+              <g fill="#77eaaf">
+                <ellipse cx="32" cy="14" rx="7" ry="12"/>
+                <ellipse cx="32" cy="50" rx="7" ry="12"/>
+                <ellipse cx="14" cy="32" rx="12" ry="7"/>
+                <ellipse cx="50" cy="32" rx="12" ry="7"/>
+                <ellipse cx="19" cy="19" rx="7" ry="12" transform="rotate(45 19 19)"/>
+                <ellipse cx="45" cy="19" rx="7" ry="12" transform="rotate(-45 45 19)"/>
+                <ellipse cx="19" cy="45" rx="7" ry="12" transform="rotate(-45 19 45)"/>
+                <ellipse cx="45" cy="45" rx="7" ry="12" transform="rotate(45 45 45)"/>
+              </g>
+              <circle cx="32" cy="32" r="9" fill="#ffd755"/>
+            </svg>
+          </div>
+          <button class="replay" data-action="bloom">Replay bloom + burst</button>
+        </div>
+
+        <div class="card">
+          <span class="token">Breathing loop</span>
+          <div class="use" style="margin-top:12px">Waiting-for-Partner holding state. <code>daisyBreathe 2.6s ease-in-out infinite</code> — a calm 2-frame inhale. Loops until the reveal is ready.</div>
+          <div class="daisy-stage breathe">
+            <svg class="daisy" viewBox="0 0 64 64" aria-hidden="true">
+              <g fill="#5f45f2">
+                <ellipse cx="32" cy="14" rx="7" ry="12"/>
+                <ellipse cx="32" cy="50" rx="7" ry="12"/>
+                <ellipse cx="14" cy="32" rx="12" ry="7"/>
+                <ellipse cx="50" cy="32" rx="12" ry="7"/>
+                <ellipse cx="19" cy="19" rx="7" ry="12" transform="rotate(45 19 19)"/>
+                <ellipse cx="45" cy="19" rx="7" ry="12" transform="rotate(-45 45 19)"/>
+                <ellipse cx="19" cy="45" rx="7" ry="12" transform="rotate(-45 19 45)"/>
+                <ellipse cx="45" cy="45" rx="7" ry="12" transform="rotate(45 45 45)"/>
+              </g>
+              <circle cx="32" cy="32" r="9" fill="#ffd755"/>
+            </svg>
+          </div>
+          <div class="exception">Loops continuously — no replay needed. Suspended under reduce-motion.</div>
+        </div>
+
+        <div class="card">
+          <span class="token">Ranking FLIP reflow</span>
+          <div class="use" style="margin-top:12px">Question Card ranking reveal. <code>transform 0.42s cubic-bezier(.4, 0, .2, 1)</code> — the <code>ease-standard</code> curve at a bespoke duration.</div>
+          <div class="stage rank-list" id="rank-list">
+            <div class="rank"><span class="n">1</span><span>Independence</span></div>
+            <div class="rank"><span class="n">2</span><span>Closeness</span></div>
+            <div class="rank"><span class="n">3</span><span>Routine</span></div>
+          </div>
+          <button class="replay" data-action="flip">Replay reorder</button>
+        </div>
+
+        <div class="card">
+          <span class="token">Overlay / sheet entry</span>
+          <div class="use" style="margin-top:12px">Bottom Sheet. Slide up · <strong>280ms ease-out</strong>.</div>
+          <div class="stage">
+            <div class="sheet-frame" id="sheet-frame">
+              <div class="sheet">
+                <div class="grip"></div>
+                <div style="font-family:'Grandstander',cursive;font-weight:700;font-size:18px;letter-spacing:-0.02em">Nudge frequency</div>
+                <div style="font-size:13px;color:var(--text-secondary);margin-top:6px">Daily · A few times a week · Weekly</div>
+              </div>
+            </div>
+          </div>
+          <button class="replay" data-action="sheet">Replay slide-up</button>
+        </div>
+
+        <div class="card" style="grid-column: 1 / -1">
+          <span class="token">Shimmer (skeleton loader)</span>
+          <div class="use" style="margin-top:12px">Loading / Processing — Pattern 2. Gradient sweep · <strong>1.6s ease-in-out · infinite</strong>.</div>
+          <div class="stage skeleton shimmer">
+            <div class="sk-line w90"></div>
+            <div class="sk-line"></div>
+            <div class="sk-line w70"></div>
+          </div>
+          <div class="exception">Loops continuously — no replay needed. Suspended under reduce-motion.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      Live companion to <strong>Foundations &rarr; Motion</strong> in <a href="design system.md">design system.md</a>. Values are read from the spec; this page is a reference surface, not a screen mockup. Petal tint shown is the Fully-aligned state (green + gold); other reveal states tint the burst differently.
+    </footer>
+  </div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var toggle = document.getElementById('reduce-toggle');
+
+    // Sync the toggle to the real OS preference on load.
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function applyReduce(on) {
+      root.classList.toggle('reduce', on);
+      toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    applyReduce(mq.matches);
+    if (mq.addEventListener) { mq.addEventListener('change', function (e) { applyReduce(e.matches); }); }
+
+    toggle.addEventListener('click', function () {
+      applyReduce(toggle.getAttribute('aria-pressed') !== 'true');
+    });
+
+    // Re-trigger a one-shot CSS animation by toggling a class with a reflow between.
+    function restart(el, cls) {
+      el.classList.remove(cls);
+      void el.offsetWidth; // force reflow
+      el.classList.add(cls);
+    }
+
+    // ---- Bloom + petal burst ----
+    var BURST = document.getElementById('burst-layer');
+    var bloomCard = document.getElementById('daisy-bloom').closest('.daisy-stage').parentElement;
+    var bloomStage = document.getElementById('daisy-bloom').closest('.daisy-stage');
+    function playBloom() {
+      restart(bloomStage, 'bloom'); // bloom class also carries playing-once via combined below
+      bloomStage.classList.add('bloom');
+      restart(bloomStage, 'playing-once');
+      makePetals();
+      restart(BURST.parentElement, 'burst');
+      BURST.parentElement.classList.add('burst');
+      restart(BURST.parentElement, 'playing-once');
+    }
+    function makePetals() {
+      BURST.innerHTML = '';
+      var palette = ['#77eaaf', '#96f1c6'];
+      var gold = '#ffd755';
+      var n = 14;
+      for (var i = 0; i < n; i++) {
+        var p = document.createElement('span');
+        p.className = 'petal';
+        var ang = (i / n) * Math.PI * 2 + (i % 2 ? 0.22 : -0.18);
+        var dist = 52 + (i % 3) * 12;
+        p.style.setProperty('--tx', (Math.cos(ang) * dist).toFixed(1) + 'px');
+        p.style.setProperty('--ty', (Math.sin(ang) * dist).toFixed(1) + 'px');
+        p.style.setProperty('--rot', (ang * 40).toFixed(0) + 'deg');
+        p.style.background = (i % 5 === 0) ? gold : palette[i % palette.length];
+        BURST.appendChild(p);
+      }
+    }
+
+    // ---- FLIP reflow ----
+    var RANK = document.getElementById('rank-list');
+    function playFlip() {
+      if (root.classList.contains('reduce') || mq.matches) {
+        // Reduce motion: reorder instantly, no transition.
+        reorderInstant();
+        return;
+      }
+      var items = Array.prototype.slice.call(RANK.children);
+      var firsts = items.map(function (el) { return el.getBoundingClientRect().top; });
+      reverseDom(items);
+      // re-read in new visual order
+      var lasts = {};
+      items.forEach(function (el) { lasts[el.dataset._k] = el.getBoundingClientRect().top; });
+      items.forEach(function (el, idx) {
+        var dy = firsts[idx] - el.getBoundingClientRect().top;
+        el.classList.remove('flipping');
+        el.style.transform = 'translateY(' + dy + 'px)';
+      });
+      void RANK.offsetWidth;
+      items.forEach(function (el) {
+        el.classList.add('flipping');
+        el.style.transform = '';
+      });
+      renumber();
+    }
+    function reverseDom(items) {
+      // tag, then append in reverse to flip order
+      items.forEach(function (el, i) { el.dataset._k = i; });
+      items.slice().reverse().forEach(function (el) { RANK.appendChild(el); });
+    }
+    function reorderInstant() {
+      var items = Array.prototype.slice.call(RANK.children);
+      items.slice().reverse().forEach(function (el) { RANK.appendChild(el); });
+      renumber();
+    }
+    function renumber() {
+      Array.prototype.slice.call(RANK.children).forEach(function (el, i) {
+        el.querySelector('.n').textContent = i + 1;
+      });
+    }
+
+    // ---- Sheet ----
+    var SHEET = document.getElementById('sheet-frame');
+    function playSheet() { restart(SHEET, 'playing-once'); }
+
+    // ---- Wire replay buttons ----
+    document.querySelectorAll('.replay').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var a = b.dataset.action;
+        if (a === 'bloom') playBloom();
+        else if (a === 'flip') playFlip();
+        else if (a === 'sheet') playSheet();
+      });
+    });
+
+    document.getElementById('replay-all').addEventListener('click', function () {
+      playBloom(); playSheet();
+      setTimeout(playFlip, 120);
+    });
+
+    // Auto-play the one-shots once shortly after load (skipped under reduce).
+    if (!root.classList.contains('reduce') && !mq.matches) {
+      setTimeout(function () { playBloom(); playSheet(); }, 450);
+    }
+  })();
+</script>
+</body>
+</html>

@@ -267,6 +267,8 @@ Mobile shadows are subtle by design. Heavy shadows feel dated and clunky on smal
 
 Motion is a foundation like the others: a small set of named durations and a single standard easing, referenced rather than re-typed. Most motion in the app is short and functional — a state change, a press, a snap, a fill. The few expressive, one-off animations (the reveal bloom, the petal burst, the waiting-screen breathing loop) are deliberately *not* tokenized; they are documented per-component choreography, carved out below. This section consolidates values that already exist in component cards; it is normalization, not new design.
 
+A live visualizer of every value below — durations and easing side by side, the bespoke choreography, and a reduced-motion toggle that mirrors the global policy — lives at [`motion.html`](motion.html). Open it in a browser; it reads from this spec.
+
 #### Duration
 
 | Token | Value | Where it's already used |
@@ -1922,6 +1924,7 @@ Motion was the only foundation specified inline, per-component — Color, Type, 
 - **Reduced-motion policy stated once.** The global `prefers-reduced-motion` rule (expressive animation resolves to its static final state; functional transitions may remain) now has a single home, instead of being re-derived in the seven screens that each ship a `prefers-reduced-motion` block.
 - **Bespoke choreography explicitly carved out** as documented per-component exceptions — daisy bloom, petal burst, ranking FLIP reflow, sheet/toast entry, skeleton shimmer, and the `waiting-for-partner` breathing loop keep their per-component values and are *not* tokenized. Same pattern as the `personalized-results` eyebrow exception.
 - **Drift prevention** gained a motion clause (cite the tokens, not raw seconds); a stray `0.18s`/`250ms` is now a catchable drift signal. This also turns iOS motion *tokens* from speculative into spec-backed — there is finally a consolidated set for other platforms to mirror.
+- **Live visualizer added at `v4/motion.html`** — durations and easing animating side by side, the bespoke choreography (bloom, burst, FLIP reflow, sheet entry, shimmer, breathing) replayable, and a reduced-motion toggle that mirrors the global policy (it also auto-detects the OS setting). The page reads from this spec; the Motion section links to it. It is a reference surface, not a screen mockup.
 
 ### 2026-06-03 — Home rework: fold `empty-home` (Screen 25) into `home`; avatar-less greeting + partner; category-only progress
 
