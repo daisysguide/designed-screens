@@ -65,3 +65,94 @@ After both partners submit, we generate one short, brand-voice paragraph describ
 - **Content** — writes the questions, options, spine flags, item weights (`{w:N}`), and deferral tags (`{defer}`) in the template.
 - **Engineering** — implements the five scoring rules, the deferral and weakest-link logic, partner-name substitution for perspectival questions, and the cached summary generation.
 - **Design / brand** — the reveal language, the three-state framing, and the voice of the summary prompt.
+
+---
+
+## Appendix — worked examples & engine constants (revised 2026-07-21, from the reference implementation)
+
+*This appendix pins the spec above to the exact algorithm, a single table of constants, and worked numeric cases that double as the scoring engine's (backend#413) table-driven test vectors. It is derived from the **reference implementation** — the embedded JS in `daisys-guide-alignment-preview-full.html` (`scoreSlider` / `scoreOrdered` / `scoreUnordered` / `scoreMulti` / `scoreRanking` / the rollup + weakest-link) — reconciled against this spec and the live Notion content (367 questions across 94 topics, pulled 2026-07-21). It supersedes the earlier "proposed constants" draft, which guessed several values wrong. Constants are **engine config** (Supabase/code), tunable, deliberately not stored in Notion; the preview exposes the thresholds and the weakest-link toggle as live controls.*
+
+### The engine, exactly (from the reference impl)
+
+```
+band(s):      s ≥ 0.80 → Fully;  s ≥ 0.50 → Mostly;  else Worth       (levels: Worth=0, Mostly=1, Fully=2)
+
+slider:       d = |a − b|;  if d ≤ tol → 1;  else 1 − (d − tol)/(range − tol)   (tol is per-question, raw units; range = max − min)
+ordered SS:   1 − |i − j| / (n − 1)                                   (NO tolerance)
+unordered SS: a == b → 1;  declared partial-credit pair → its score;  else → 0
+multi:        Σ w(shared picks) / Σ w(union of picks)                 (per-item weight, default 1)
+ranking:      1 − Σ|posA − posB| / floor(n² / 2)                      (identical → 1.0, reversed → 0.0)
+deferral:     single-select only — if either pick is a deferral option, s = min(s, 0.25)
+
+rollup:       avg = Σ(sᵢ · weightᵢ) / Σ(weightᵢ)                       (weight-0 questions contribute nothing → excluded from the average)
+weakest-link: worst = min band-level over the veto-eligible questions;
+              if band(avg) − worst ≥ 2  →  lower the topic one band
+```
+
+Because band-levels are only {0, 1, 2}, `band(avg) − worst ≥ 2` can hold in exactly one situation: **the average is Fully (2) and some veto-eligible question is Worth (0)**. So the weakest-link only ever demotes **Fully → Mostly** — it never turns Mostly into Worth. "A single Worth-band question" means a question scoring **below 0.50** (the Mostly threshold), deferrals (capped at 0.25) included.
+
+### Constants (engine config — tunable, not in Notion)
+
+| Constant | Value | Notes |
+| --- | --- | --- |
+| Fully threshold | **≥ 0.80** | Preview default; live-adjustable 0.50–0.95. |
+| Mostly threshold | **≥ 0.50** | Preview default; live-adjustable 0.20–0.79. |
+| Deferral cap | **0.25** | `s = min(s, 0.25)` when a deferral option is picked (single-select). Lands the question in Worth. |
+| Weakest-link | **band-distance ≥ 2 → drop one band** | Toggleable; net effect Fully→Mostly only. |
+| Weights | **spine 2 · standard 1 · pure-disclosure 0** | From the Notion `Weight` column. In the live content: `{1: 270, 2: 94, 0: 3}`, and `is_spine` ⟺ `weight = 2` exactly. |
+
+Values **read from Notion content**, not config: per-question `Tolerance` (raw units — currently always `1`, i.e. 0.10 of range on the 0–10 sliders and 0.167 on the 1–7 sliders), `is_spine`, `Weight`, `self_report`, `Question Type`, `Is Ordered`, options + `Item Weight` (default 1; a few 2/3), per-pair partial scores (live values in use: `0.5` ×69, `0.3` ×9, `0.0` ×1), and deferral tags (rare — 1 option across 1,019).
+
+### The `self_report` veto — NOT implemented by the reference preview
+
+The preview's rollup computes `worst` over **every** question, so it does **not** model the information-sharing rule from §"Two kinds of question." The production engine (backend#413) must, and this spec is authoritative where they disagree:
+
+- A `self_report` question is **excluded from the `worst` scan** (the weakest-link veto). It still feeds the weighted average (unless it is weight-0, in which case it is excluded from the average too).
+- When the **spine is `self_report`**, the spine gives up the veto and a designated **alignment** question in that topic carries it — so `worst` is taken over the topic's alignment questions.
+- Consequence to expect while testing against the preview: on the **20 `self_report` questions** — including the 3 `self_report` spines `t47-q2`, `t49-q1`, `t51-q1` — the preview's bands read conservative and will not match production. That is the known gap, not a bug in either.
+
+### Worked examples — per-type unit scores (test vectors)
+
+| Type | Inputs | Computation | `s` |
+| --- | --- | --- | --- |
+| Slider (0–10, tol 1) | a=5, b=5 | d=0 ≤ tol | **1.000** |
+| Slider (0–10, tol 1) | a=5, b=6 | d=1 ≤ tol | **1.000** |
+| Slider (0–10, tol 1) | a=5, b=7 | 1 − (2−1)/(10−1) | **0.889** |
+| Slider (0–10, tol 1) | a=2, b=8 | 1 − (6−1)/9 | **0.444** |
+| Slider (0–10, tol 1) | a=0, b=10 | 1 − (10−1)/9 | **0.000** |
+| Slider (1–7, tol 1) | a=1, b=4 | 1 − (3−1)/(6−1) | **0.600** |
+| Slider (1–7, tol 1) | a=1, b=7 | 1 − (6−1)/5 | **0.000** |
+| Ordered SS (n=4) | i=2, j=2 | 1 − 0/3 | **1.000** |
+| Ordered SS (n=4) | i=2, j=1 | 1 − 1/3 | **0.667** |
+| Ordered SS (n=4) | i=3, j=0 | 1 − 3/3 | **0.000** |
+| Unordered SS | Hospital / Hospital | exact match | **1.000** |
+| Unordered SS | Hospital / Birth center (pair 0.5) | partial-credit pair | **0.500** |
+| Unordered SS | pair scored 0.3 | partial-credit pair | **0.300** |
+| Unordered SS | Hospital / Home (no pair) | no match | **0.000** |
+| Unordered SS | either pick = "Decide later" | min(s, 0.25) | **0.250** |
+| Multi | {x,y} / {x,y} | 2/2 | **1.000** |
+| Multi | {x,y} / {x} | union 2, shared 1 | **0.500** |
+| Multi | {x,y} / {x,z} | union 3, shared 1 | **0.333** |
+| Multi (y has `{w:3}`) | {x,y} / {x} | shared w 1 / union w 4 | **0.250** |
+| Ranking (n=4) | [0,1,2,3] / [0,1,2,3] | d=0 | **1.000** |
+| Ranking (n=4) | [0,1,2,3] / [1,0,2,3] | 1 − 2/8 | **0.750** |
+| Ranking (n=4) | [0,1,2,3] / [3,2,1,0] | 1 − 8/8 | **0.000** |
+
+### Worked examples — topic rollup
+
+Each row: per-question `(s, weight)` → weighted average `A` → band-by-average → weakest-link? → **final computed band**.
+
+1. **Identical → Fully.** spine slider (5,5)=`(1.0, 2)`; std unordered match=`(1.0, 1)`; std multi identical=`(1.0, 1)`. `A = 4/4 = 1.000` → Fully. `worst = Fully(2)`; `2 − 2 = 0` → no drop. **Fully aligned.**
+2. **Reversed spine ranking → Worth.** spine ranking reversed=`(0.0, 2)`; std slider (5,5)=`(1.0, 1)`. `A = (0 + 1)/3 = 0.333` → Worth. (Already Worth; band-distance moot.) **Worth a conversation.**
+3. **Partial-credit → Mostly.** spine unordered, pair scored 0.5=`(0.5, 2)`; std slider (4,4)=`(1.0, 1)`; std ordered (2,2)=`(1.0, 1)`. `A = (1.0 + 1.0 + 1.0)/4 = 0.750` → Mostly. `worst = Mostly(1)` (the 0.5); `1 − 1 = 0` → no drop. **Mostly aligned.**
+4. **Deferral → demotes Fully to Mostly.** spine slider (5,5)=`(1.0, 2)`; std slider (5,6)=`(1.0, 1)`; std single-select where a partner picked *Decide later* → capped=`(0.25, 1)`. `A = (2.0 + 1.0 + 0.25)/4 = 0.8125` → Fully by average, **but** the deferred question is Worth(0), so `2 − 0 = 2` → drop one band → **Mostly aligned.** (The deferred question itself bands Worth.)
+5. **One big gap → demotes Fully to Mostly (weakest-link).** spine slider (5,5)=`(1.0, 2)`; three standards all `(1.0, 1)`; one standard slider (1–7 scale, 1 vs 7)=`(0.0, 1)`. `A = (2.0 + 3.0 + 0.0)/6 = 0.833` → Fully by average, **but** `worst = Worth(0)`, `2 − 0 = 2` → **Mostly aligned.**
+6. **`self_report` excluded from the veto → stays Fully.** spine slider (5,5)=`(1.0, 2)`; three std `(1.0, 1)`; one **`self_report`** slider with a wide gap=`(0.0, 1)`. `A = (2.0 + 3.0 + 0.0)/6 = 0.833` → Fully. `worst` is taken over veto-eligible questions **only**, so the `self_report` 0.0 is skipped → `worst = Fully(2)`, `2 − 2 = 0` → **Fully aligned.** (Were it counted — as the preview wrongly does — `worst` would be 0 and the topic would drop to Mostly. This is the difference the veto-exclusion makes.)
+7. **`self_report` spine → veto handed off.** spine is `self_report`, well-aligned=`(1.0, 2)` (excluded from the veto); the designated **alignment** coordination question=`(0.0, 1)`; three std alignment questions `(1.0, 1)`. `A = (2.0 + 0.0 + 3.0)/6 = 0.833` → Fully. The self_report spine is skipped in `worst`, but the alignment carrier is Worth(0) → `worst = 0`, `2 − 0 = 2` → **Mostly aligned.** The veto still fires — carried by the alignment question, not the spine.
+
+### What is locked vs. config vs. content
+
+- **Locked** (shape): the five rule formulas, the weighted-average rollup, the weakest-link **band-distance** override, the `self_report` exclusion + spine-veto handoff, the deferral cap, and the three-state output.
+- **Config** (this appendix's numbers, in `_shared/alignment.ts`, tunable without a migration): the `0.80` / `0.50` thresholds, `DEFER_SCORE = 0.25`, and the weakest-link `≥ 2` / one-band rule.
+- **Content** (authored in Notion, authoritative): per-question `Tolerance`, `is_spine`, `Weight`, `self_report`, type, ordering, options, per-pair partial scores, item weights, deferral tags.
+- **No mockup impact:** engineering math, no `v4/*.html` mockup renders these numbers.
