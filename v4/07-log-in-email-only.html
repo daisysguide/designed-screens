@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log In (email-only) — Daisy's Guide Designed Screens v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+body.page-03 .screen-root .label-sm {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;
+  }
+  body.page-03 .screen-root .variant-banner {
+    background: rgba(95,69,242,0.07);
+    border: 1px solid rgba(95,69,242,0.22);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0 0 18px;
+  }
+  body.page-03 .screen-root .variant-banner strong { color: var(--text-primary); }
+</style>
+</head>
+<body class="page-03">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v4 · 23 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item active" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="28-connection-error.html"><span class="screen-num">28</span>Connection Error</a>
+  <div class="sidebar-section-label">Future Retention Tests</div>
+  <a class="sidebar-item" href="24-prediction-card.html"><span class="screen-num">24</span>Prediction Card</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="29-onboarding-intro.html"><span class="screen-num">29</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Log In — email-only variant</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="05-otp-verification-email-only.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">07 / 23</span>
+        <a class="topbar-btn" href="08-personalized-results.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 07 · Auth · variant</div>
+    <div class="page-title">Log In — email-only</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="07-log-in.html">← Current Screen 07</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="08-personalized-results.html">Screen 08: Personalized Results →</a>
+  </div>
+</div>
+
+<div class="variant-banner">
+  <strong>Proposed variant, pending ios#497.</strong> Replaces Screen 07 if phone OTP is cut from V1. Same change set as the Screen 04 variant — segment toggle removed, email-only field. Also fixes the broken "Sign up" footer link and raises one open question about provider mismatch on log in (see spec).
+</div>
+
+<div class="page-desc page-desc-full">Returning user. Same passwordless flow as Sign Up — different copy only.</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-default" onclick="showState('default')">Default</button>
+      <button class="state-tab" id="tab-focused" onclick="showState('focused')">Input focused</button>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="label-sm">Log in</div>
+        <div class="screen-heading">Welcome back</div>
+        <div class="screen-subhead">Good to see you again.</div>
+
+
+        <button class="btn-social">
+          <svg class="social-icon" viewBox="0 0 16 16" fill="#1a1a1a" xmlns="http://www.w3.org/2000/svg"><path d="M11.182.008C11.148-.03 9.923.023 8.857 1.18c-1.066 1.156-.902 2.482-.878 2.516.024.034 1.52.087 2.475-1.258.955-1.345.762-2.391.728-2.43zm3.314 11.733c-.048-.096-2.325-1.234-2.113-3.422.212-2.189 1.675-2.789 1.698-2.854.023-.065-.597-.79-1.254-1.157a3.692 3.692 0 0 0-1.563-.434c-.108-.003-.483-.095-1.254.116-.508.139-1.653.589-1.968.607-.316.018-1.256-.522-2.267-.665-.647-.125-1.333.131-1.824.328-.49.196-1.422.754-2.074 2.237-.652 1.482-.311 3.83-.067 4.56.244.729.625 1.924 1.273 2.796.576.984 1.34 1.667 1.659 1.899.319.232 1.219.386 1.843.067.502-.308 1.408-.485 1.766-.472.357.013 1.061.154 1.782.539.571.197 1.111.115 1.652-.105.541-.221 1.324-1.059 2.238-2.758.347-.79.505-1.217.473-1.282z"/></svg>
+          Continue with Apple
+        </button>
+        <button class="btn-social">
+          <svg class="social-icon" viewBox="0 0 20 20" fill="none">
+            <path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v4.79h5.4a4.6 4.6 0 01-2 3.02v2.5h3.24c1.9-1.75 3-4.33 3-7.31z" fill="#4285F4"/>
+            <path d="M10 20c2.7 0 4.97-.9 6.63-2.46l-3.24-2.5c-.9.6-2.04.96-3.39.96-2.6 0-4.8-1.76-5.59-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/>
+            <path d="M4.41 11.88A6.01 6.01 0 014.1 10c0-.65.11-1.28.31-1.88V5.54H1.08A9.99 9.99 0 000 10c0 1.61.38 3.13 1.08 4.46l3.33-2.58z" fill="#FBBC05"/>
+            <path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.54l3.33 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <div class="divider-label">or</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Input field — email only, no segment toggle -->
+        <div>
+          <label class="field-label" id="field-label">Email address</label>
+          <div class="field" id="input-field">
+            <span id="field-content" class="field-placeholder">you@example.com</span>
+          </div>
+          <div class="helper-text">We'll send you a 6-digit code. No password needed.</div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-primary disabled" id="send-btn">Send code</button>
+        <div class="footer-link">Don't have an account? <a href="04-sign-up-email-only.html">Sign up</a></div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Diff from current Screen 07</div>
+      <table class="spec-table">
+        <tr><td>Removed</td><td>Phone/Email <code>Segment Toggle</code> — removed outright, not reduced to a one-item control</td></tr>
+        <tr><td>Removed</td><td>Phone label, <code>+1 (___) ___-____</code> placeholder, <code>type="tel"</code> keyboard</td></tr>
+        <tr><td>Changed</td><td>Field is email-only on load — no toggle state, no field-clearing behaviour</td></tr>
+        <tr><td>Fixed</td><td>Footer "Sign up" link pointed at <code>href="#"</code> in the current file — now routes to Screen 04</td></tr>
+        <tr><td>Unchanged</td><td>All copy, Apple/Google buttons and order, divider, "Send code", both field states, routing</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Open — provider mismatch on log in</div>
+      <table class="spec-table">
+        <tr><td>The problem</td><td>A returning user who signed up with Apple or Google can land here and type their email into the field instead of tapping the provider button. Nothing on the screen tells them which method they used last time.</td></tr>
+        <tr><td>Why it matters more now</td><td>With phone cut, email is the only typed option, so it is the obvious thing to reach for — including for users whose account has no email/password identity at all. Apple Hide My Email makes it worse: the address on their account is a relay they have never seen and would never type.</td></tr>
+        <tr><td>Not caused by this change</td><td>The mismatch exists in the current Screen 07 too. Cutting phone narrows the typed options to one, which makes it more likely to be hit, not newly possible.</td></tr>
+        <tr><td>Needs a decision</td><td>Options: send the OTP and let it silently create a second account (current implied behaviour — bad); look up the address first and, on an unrecognised address, tell the user which provider that account uses; or remember the last-used method on the device and pre-emphasise it. This is <code>ios#495</code> territory (two-accounts problem) and should be decided with it, not here.</td></tr>
+        <tr><td>Out of scope for this file</td><td>No screen state has been drawn for it. Flagged rather than designed.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Navigation flow</div>
+      <div class="flow-map">
+        <div class="flow-node from">01 Swipeable Intro</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">07 Log In</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">05 OTP</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">11 Home</div>
+      </div>
+      <div class="info-box">
+        Reached from "Log in" on the Intro screen (Screen 01), or the footer link on Sign Up (Screen 04). Successful OTP → Screen 11 Home (not Partner Linking — returning users already have an account set up).
+      </div>
+    </div>
+
+    <!-- Diff vs Sign Up -->
+    <div class="spec-card">
+      <div class="spec-card-title">Differences from Screen 04 — Sign Up</div>
+      <table class="diff-table">
+        <tr>
+          <td class="diff-col-head"></td>
+          <td class="diff-col-head">Screen 04 — Sign Up</td>
+          <td class="diff-col-head">Screen 07 — Log In</td>
+        </tr>
+        <tr>
+          <td>Eyebrow</td>
+          <td>"Create your account"</td>
+          <td>"Log in"</td>
+        </tr>
+        <tr>
+          <td>Heading</td>
+          <td>"Save your personalized plan"</td>
+          <td>"Welcome back"</td>
+        </tr>
+        <tr>
+          <td>Subheading</td>
+          <td>"You'll invite your partner after setting up your account."</td>
+          <td>"Good to see you again."</td>
+        </tr>
+        <tr>
+          <td>Consent line</td>
+          <td>Present — account is being created</td>
+          <td>Absent — already agreed at signup</td>
+        </tr>
+        <tr>
+          <td>Footer link</td>
+          <td>"Already have an account? Log in"</td>
+          <td>"Don't have an account? Sign up"</td>
+        </tr>
+        <tr>
+          <td>On success</td>
+          <td>→ Screen 08 Personalized Results</td>
+          <td>→ Screen 11 Home</td>
+        </tr>
+      </table>
+      <div class="info-box">Everything else — social auth buttons, divider, email input, "Send code" button — is <strong>identical</strong> to the Screen 04 variant. Reuse the same components. The segment toggle is gone from both.</div>
+      <div class="info-box" style="margin-top:14px;">
+        <strong>Returning users with completed purchase:</strong> OTP success → Screen 11 Home.<br><br>
+        <strong>Returning users without completed purchase:</strong> OTP success → Screen 08 Personalized Results → Paywall (skip the "Building your plan" animation since their plan already exists). This re-creates the emotional pre-paywall sequence before the conversion ask. Manage Topics is no longer in this path — it is now post-purchase.
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Screen copy</div>
+      <table class="spec-table">
+        <tr><td>Eyebrow label</td><td>"Log in" · <code>label-sm</code> uppercase · <code>text-secondary</code></td></tr>
+        <tr><td>Heading</td><td>"Welcome back" · <code>display-md</code> (Grandstander 24px bold)</td></tr>
+        <tr><td>Subheading</td><td>"Good to see you again." · DM Sans 15px · <code>text-secondary</code></td></tr>
+        <tr><td>Field label</td><td>"Email address" · 13px DM Sans semibold · <code>text-primary</code> · never uppercase</td></tr>
+        <tr><td>Helper text</td><td>"We'll send you a 6-digit code. No password needed." · 12px · <code>text-secondary</code> · sits below the input field, not the social buttons</td></tr>
+        <tr><td>Footer link</td><td>"Don't have an account? Sign up" · "Sign up" in <code>text-link</code> → Screen 04 Sign Up</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Input field spec</div>
+      <table class="spec-table">
+        <tr><td>Height</td><td>48px</td></tr>
+        <tr><td>Border radius</td><td><code>radius-md</code> (8px)</td></tr>
+        <tr><td>Font</td><td>DM Sans 15px regular</td></tr>
+        <tr><td>Placeholder</td><td>"you@example.com" · <code>text-tertiary</code></td></tr>
+        <tr><td>Keyboard</td><td><code>type="email"</code> · <code>textContentType = .emailAddress</code> · autocapitalisation off, autocorrect off</td></tr>
+      </table>
+    </div>
+
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>Identical passwordless mechanic to Sign Up — email, then OTP. No password, ever.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No contact-method toggle. The field is email on load and has no other state.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Apple/Google sign-in bypasses OTP and goes directly to Screen 11 Home.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Send code" disabled until field has a non-empty value.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>OTP screen for this path is the email-only Screen 05 variant — heading reads "Check your email", and entered digits survive backgrounding.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Provider mismatch on a typed address is unresolved — see the open card above. Do not ship the silent second-account behaviour.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">Button — Social Auth</span>
+        <span class="component-tag">Button — Primary (lg)</span>
+        <span class="component-tag">Divider — "or" variant</span>
+        <span class="component-tag">Text Input</span>
+      </div>
+      <div class="info-box" style="margin-top:12px;">All components identical to the Screen 04 variant. No new components introduced. <code>Segment Toggle</code> no longer appears on either auth screen — with 04 and 07 both updated, it has no remaining consumer in the v4 set and should be reviewed for removal from the design system.</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 07 variant (email-only)</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="07-log-in.html">← Current Screen 07</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="08-personalized-results.html">Screen 08: Personalized Results →</a>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+<script>
+function showState(state) {
+  ['default','focused'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+  const field = document.getElementById('input-field');
+  const content = document.getElementById('field-content');
+  const btn = document.getElementById('send-btn');
+  field.className = 'field';
+  if (state === 'default') {
+    content.className = 'field-placeholder';
+    content.textContent = 'you@example.com';
+    btn.classList.add('disabled');
+  } else {
+    field.classList.add('focused');
+    content.className = 'field-value';
+    content.textContent = 'alex@gmail.co';
+    btn.classList.remove('disabled');
+  }
+}
+
+showState('default');
+</script>
+<script src="nav.js"></script>
+</body>
+</html>

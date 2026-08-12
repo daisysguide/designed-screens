@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OTP Verification (email-only) — Daisy's Guide Designed Screens v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body.page-02 .screen-root .variant-banner {
+    background: rgba(95,69,242,0.07);
+    border: 1px solid rgba(95,69,242,0.22);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0 0 18px;
+  }
+  body.page-02 .screen-root .variant-banner strong { color: var(--text-primary); }
+</style>
+</head>
+<body class="page-02">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-title">daisy's guide</div>
+    <div class="sidebar-brand-sub">Designed Screens v4 · 23 screens</div>
+  </div>
+  <div class="sidebar-section-label">Intro</div>
+  <a class="sidebar-item" href="01-swipeable-intro.html"><span class="screen-num">01</span>Swipeable Intro</a>
+  <a class="sidebar-item" href="02-onboarding-quiz.html"><span class="screen-num">02</span>Onboarding Quiz</a>
+  <a class="sidebar-item" href="03-building-your-plan.html"><span class="screen-num">03</span>Building Your Plan</a>
+  <div class="sidebar-section-label">Auth</div>
+  <a class="sidebar-item" href="04-sign-up.html"><span class="screen-num">04</span>Sign Up</a>
+  <a class="sidebar-item active" href="05-otp-verification.html"><span class="screen-num">05</span>OTP Verification</a>
+  <a class="sidebar-item" href="06-name-entry.html"><span class="screen-num">06</span>Name Entry</a>
+  <a class="sidebar-item" href="07-log-in.html"><span class="screen-num">07</span>Log In</a>
+  <div class="sidebar-section-label">Onboarding</div>
+  <a class="sidebar-item" href="08-personalized-results.html"><span class="screen-num">08</span>Personalized Results</a>
+  <a class="sidebar-item" href="09-paywall.html"><span class="screen-num">09</span>Paywall</a>
+  <a class="sidebar-item" href="10-partner-linking.html"><span class="screen-num">10</span>Partner Linking</a>
+  <div class="sidebar-section-label">Home Base</div>
+  <a class="sidebar-item" href="11-home.html"><span class="screen-num">11</span>Home</a>
+  <a class="sidebar-item" href="12-progress.html"><span class="screen-num">12</span>Progress</a>
+  <a class="sidebar-item" href="13-settings.html"><span class="screen-num">13</span>Settings</a>
+  <div class="sidebar-section-label">Topic Flow</div>
+  <a class="sidebar-item" href="14-topic-list.html"><span class="screen-num">14</span>Topic List</a>
+  <a class="sidebar-item" href="15-manage-topics.html"><span class="screen-num">15</span>Manage Topics</a>
+  <a class="sidebar-item" href="16-topic-intro.html"><span class="screen-num">16</span>Topic Intro</a>
+  <a class="sidebar-item" href="17-topic-article.html"><span class="screen-num">17</span>Topic Article</a>
+  <a class="sidebar-item" href="18-question.html"><span class="screen-num">18</span>Question</a>
+  <a class="sidebar-item" href="19-waiting-for-partner.html"><span class="screen-num">19</span>Waiting for Partner</a>
+  <a class="sidebar-item" href="20-alignment-reveal.html"><span class="screen-num">20</span>Alignment Reveal</a>
+  <div class="sidebar-section-label">Error States</div>
+  <a class="sidebar-item" href="28-connection-error.html"><span class="screen-num">28</span>Connection Error</a>
+  <div class="sidebar-section-label">Future Retention Tests</div>
+  <a class="sidebar-item" href="24-prediction-card.html"><span class="screen-num">24</span>Prediction Card</a>
+  <div class="sidebar-section-label">Future A/B Tests</div>
+  <a class="sidebar-item" href="29-onboarding-intro.html"><span class="screen-num">29</span>Onboarding Intro</a>
+</div>
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">OTP Verification — email-only variant</span>
+    <div style="display:flex;align-items:center;">
+      <span class="key-hint">← →</span>
+      <div class="topbar-nav">
+        <a class="topbar-btn" href="04-sign-up-email-only.html" aria-label="Previous">‹</a>
+        <span class="topbar-counter">05 / 23</span>
+        <a class="topbar-btn" href="06-name-entry.html" aria-label="Next">›</a>
+      </div>
+    </div>
+  </div>
+  <div class="frame-wrap">
+    <div class="screen-root">
+<div class="page-header">
+  <div>
+    <div class="screen-tag">Screen 05 · Auth · variant</div>
+    <div class="page-title">OTP Verification — email-only</div>
+  </div>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="04-sign-up-email-only.html">← Screen 04 variant</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="06-name-entry.html">Screen 06: Name Entry →</a>
+  </div>
+</div>
+
+<div class="variant-banner">
+  <strong>Proposed variant, pending ios#497.</strong> Replaces Screen 05 if phone OTP is cut from V1. Diff from current 05: the heading no longer switches, "Wrong number?" becomes "Wrong email?", iOS SMS autofill is gone, and the screen gains a background/foreground requirement — reading an emailed code means leaving the app, which SMS autofill never required.
+</div>
+
+<div class="page-desc page-desc-full">6-digit code entry. Auto-advance. Survives app backgrounding. Resend after 30s.</div>
+
+<div class="main-layout">
+
+  <!-- PHONE -->
+  <div class="phone-wrap">
+    <div class="state-tab-row">
+      <button class="state-tab active" id="tab-empty" onclick="showState('empty')">Empty</button>
+      <button class="state-tab" id="tab-partial" onclick="showState('partial')">Partial</button>
+      <button class="state-tab" id="tab-complete" onclick="showState('complete')">Complete</button>
+      <button class="state-tab" id="tab-error" onclick="showState('error')">Error</button>
+    </div>
+
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+
+        <div class="back-btn">
+          <span class="back-chevron">‹</span> Back
+        </div>
+
+        <div class="heading-block">
+          <div class="screen-heading" id="screen-heading">Check your email</div>
+          <div class="screen-subhead">We sent a 6-digit code to<br><strong>alex@gmail.com</strong></div>
+        </div>
+
+        <!-- OTP boxes -->
+        <div class="otp-row" id="otp-row">
+          <!-- populated by JS -->
+        </div>
+
+        <!-- Error message (error state only) -->
+        <div class="error-message" id="error-msg" style="display:none;">That code doesn't match. Try again.</div>
+
+        <!-- Links -->
+        <div class="links-row">
+          <div class="resend-row">
+            <span class="link-text">Didn't get it?</span>
+            <span class="link-action disabled" id="resend-link">Resend code</span>
+            <span class="countdown" id="countdown" style="display:none;">30s</span>
+          </div>
+          <div>
+            <span class="link-text">Wrong email? </span>
+            <span class="link-action">Go back</span>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-primary disabled" id="verify-btn">Verify</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEC PANEL -->
+  <div class="spec-panel">
+
+    <div class="spec-card">
+      <div class="spec-card-title">Diff from current Screen 05</div>
+      <table class="spec-table">
+        <tr><td>Changed</td><td>Heading is fixed at "Check your email" — no phone/email switching</td></tr>
+        <tr><td>Changed</td><td>Sub-text renders an email address, never a formatted phone number</td></tr>
+        <tr><td>Changed</td><td>"Wrong number?" → "Wrong email?"</td></tr>
+        <tr><td>Removed</td><td>iOS SMS autofill — <code>textContentType = .oneTimeCode</code> does not populate from email</td></tr>
+        <tr><td>Added</td><td>State preservation across backgrounding (see below) — the substantive new requirement</td></tr>
+        <tr><td>Unchanged</td><td>All six box states, sizing, auto-advance, error handling, resend timer, Verify button</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Navigation flow</div>
+      <div class="flow-map">
+        <div class="flow-node from">04 Sign Up</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node current">05 OTP</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node dest">06 Name Entry</div>
+      </div>
+      <div class="info-box">
+        Same screen handles both Sign Up and Log In OTP flows. Heading is fixed — email is the only OTP channel. Successful verify → Screen 06 Name Entry for new users, Screen 11 Home for returning users.
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Backgrounding — new requirement</div>
+      <table class="spec-table">
+        <tr><td>Why</td><td>An SMS code arrives as a banner and autofills without leaving the app. An emailed code does not: the user switches to Mail or Gmail, reads six digits, and returns. Leaving the app mid-verification is now the <em>normal</em> path, not an edge case.</td></tr>
+        <tr><td>Requirement</td><td>Entered digits, the resend countdown, and the error state all survive backgrounding and foregrounding. Returning to the app must not reset the screen or re-trigger a send.</td></tr>
+        <tr><td>Requirement</td><td>The code must remain valid for at least as long as a realistic switch-and-return round trip. Confirm the Supabase OTP expiry window is not tuned to SMS-speed assumptions.</td></tr>
+        <tr><td>Requirement</td><td>Paste from clipboard fills all six boxes as one event — the manual equivalent of the autofill that has been removed. Strip whitespace on paste.</td></tr>
+        <tr><td>Open</td><td>30s resend lockout was set against SMS delivery. Email delivery is slower and more variable; consider whether the timer should lengthen, or whether "Didn't get it?" should also suggest checking spam.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Screen copy</div>
+      <table class="spec-table">
+        <tr><td>Heading</td><td>"Check your email" · <code>display-md</code> (Grandstander 24px bold) · <code>text-primary</code> · centered. Fixed — no variant.</td></tr>
+        <tr><td>Sub-text</td><td>"We sent a 6-digit code to [email]" · DM Sans 15px · <code>text-secondary</code> · centered</td></tr>
+        <tr><td>Long addresses</td><td>Wrap rather than truncate. An address the user cannot read in full defeats the purpose of echoing it back.</td></tr>
+        <tr><td>Relay addresses</td><td>Apple Hide My Email produces a long <code>@privaterelay.appleid.com</code> address. Users arriving here came via the email field, so this is rare, but the wrap rule covers it.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">OTP box spec</div>
+      <table class="spec-table">
+        <tr><td>Count</td><td>6 boxes</td></tr>
+        <tr><td>Size</td><td>48×58px each</td></tr>
+        <tr><td>Border radius</td><td><code>radius-md</code> (8px)</td></tr>
+        <tr><td>Background</td><td>White — always</td></tr>
+        <tr><td>Gap</td><td>10px between boxes</td></tr>
+        <tr><td>Font</td><td>Grandstander 26px bold · <code>text-primary</code> — single-character display exception, off-scale by design</td></tr>
+        <tr><td>Empty border</td><td><code>1.5px solid border-default</code></td></tr>
+        <tr><td>Filled border</td><td><code>1.5px solid border-strong</code></td></tr>
+        <tr><td>Active border</td><td><code>1.5px solid border-focus</code> + <code>0 0 0 3px rgba(95,69,242,0.12)</code> ring</td></tr>
+        <tr><td>Error border</td><td><code>1.5px solid border-error</code> · subtle red bg tint</td></tr>
+        <tr><td>Cursor</td><td>2px blinking purple line in active box</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Box states</div>
+      <div class="state-badge default">● Empty</div>
+      <table class="spec-table" style="margin-bottom:14px;">
+        <tr><td>Border</td><td><code>border-default</code></td></tr>
+        <tr><td>Content</td><td>Nothing — no placeholder character</td></tr>
+      </table>
+      <div class="state-badge partial">● Active (cursor)</div>
+      <table class="spec-table" style="margin-bottom:14px;">
+        <tr><td>Border</td><td><code>border-focus</code> + focus ring</td></tr>
+        <tr><td>Content</td><td>Blinking 2px purple cursor</td></tr>
+      </table>
+      <div class="state-badge partial" style="background:rgba(26,26,26,0.07);color:var(--text-secondary);">● Filled</div>
+      <table class="spec-table" style="margin-bottom:14px;">
+        <tr><td>Border</td><td><code>border-strong</code></td></tr>
+        <tr><td>Content</td><td>Digit in Grandstander 26px bold — single-character display exception</td></tr>
+      </table>
+      <div class="state-badge error">● Error</div>
+      <table class="spec-table">
+        <tr><td>All 6 boxes</td><td><code>border-error</code> · red tint bg</td></tr>
+        <tr><td>Content</td><td>Digits shown in <code>text-primary</code> — don't clear on error, let user correct</td></tr>
+        <tr><td>Error message</td><td>"That code doesn't match. Try again." · 13px · <code>status-error-text</code> · centered · above links</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Resend &amp; back links</div>
+      <table class="spec-table">
+        <tr><td>"Resend code"</td><td>14px DM Sans bold · <code>text-link</code> · disabled + countdown for first 30s · re-enables after timer</td></tr>
+        <tr><td>Countdown pill</td><td>13px · <code>text-tertiary</code> · cream pill · shows "30s" counting down · disappears when timer ends</td></tr>
+        <tr><td>"Go back"</td><td>14px DM Sans bold · <code>text-link</code> · always active · returns to Screen 04 Sign Up</td></tr>
+        <tr><td>Countdown behaviour</td><td>Runs against wall-clock time, not elapsed foreground time — a user who backgrounds for 40s to fetch the code returns to an enabled Resend, not a stalled timer.</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">"Verify" button</div>
+      <table class="spec-table">
+        <tr><td>Style</td><td>Primary · 56px · <code>radius-full</code> · <code>purple-500</code></td></tr>
+        <tr><td>Disabled</td><td><code>opacity: 0.4</code> · <code>pointer-events: none</code> · until all 6 digits entered</td></tr>
+        <tr><td>Active</td><td>Full opacity once box 6 is filled</td></tr>
+      </table>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Behavior notes</div>
+      <div class="note-list">
+        <div class="note-item"><div class="note-bullet"></div><span>Each digit auto-advances focus to the next box. Backspace moves focus back.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No SMS autofill — the code arrives by email. Clipboard paste fills all 6 boxes as a single event; strip whitespace.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Backgrounding to read the code is the normal path. Digits, countdown, and error state all persist across foreground/background.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>"Resend code" is disabled for 30 seconds after the screen loads. Countdown pill shows remaining time, disappears at 0.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Wrong code: show error state on all boxes + error message. Don't clear digits. User corrects in place.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>Back button and "Go back" both return to Screen 04 Sign Up.</span></div>
+        <div class="note-item"><div class="note-bullet"></div><span>No bottom nav on this screen.</span></div>
+      </div>
+    </div>
+
+    <div class="spec-card">
+      <div class="spec-card-title">Components on this screen</div>
+      <div class="component-tags">
+        <span class="component-tag">OTP Input (6 boxes)</span>
+        <span class="component-tag">Button — Primary (lg)</span>
+        <span class="component-tag">Screen Header (back)</span>
+        <span class="component-tag">Countdown pill</span>
+        <span class="component-tag">Tertiary links</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page-footer">
+  <span class="footer-label">Daisy's Guide · Designed Screens v4 · Screen 05 variant (email-only)</span>
+  <div class="nav-pills">
+    <a class="nav-pill" style="cursor:pointer;"  href="04-sign-up-email-only.html">← Screen 04 variant</a>
+    <a class="nav-pill next" style="cursor:pointer;"  href="06-name-entry.html">Screen 06: Name Entry →</a>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+<script>
+const states = {
+  empty:    [null, null, null, null, null, null],
+  partial:  ['3', '7', '4', null, null, null],   // box 3 is active (cursor)
+  complete: ['3', '7', '4', '8', '1', '2'],
+  error:    ['3', '7', '4', '8', '1', '9'],
+};
+
+function showState(state) {
+  ['empty','partial','complete','error'].forEach(s => {
+    document.getElementById('tab-' + s).classList.toggle('active', s === state);
+  });
+
+  const digits = states[state];
+  const row = document.getElementById('otp-row');
+  const verifyBtn = document.getElementById('verify-btn');
+  const errorMsg = document.getElementById('error-msg');
+  const resendLink = document.getElementById('resend-link');
+  const countdown = document.getElementById('countdown');
+
+  // Build boxes
+  row.innerHTML = '';
+  digits.forEach((d, i) => {
+    const box = document.createElement('div');
+    box.className = 'otp-box';
+
+    if (state === 'error') {
+      box.classList.add('error');
+      box.textContent = d;
+    } else if (d !== null) {
+      box.classList.add('filled');
+      box.textContent = d;
+    } else if (state === 'partial' && i === 3) {
+      // active box with cursor
+      box.classList.add('active');
+      const cursor = document.createElement('div');
+      cursor.className = 'otp-cursor';
+      box.appendChild(cursor);
+    } else {
+      box.classList.add('empty');
+    }
+    row.appendChild(box);
+  });
+
+  // Verify button
+  const allFilled = digits.every(d => d !== null);
+  verifyBtn.classList.toggle('disabled', !allFilled || state === 'error');
+
+  // Error message
+  errorMsg.style.display = state === 'error' ? 'block' : 'none';
+
+  // Resend
+  if (state === 'empty') {
+    resendLink.classList.add('disabled');
+    countdown.style.display = 'inline';
+    countdown.textContent = '30s';
+  } else {
+    resendLink.classList.remove('disabled');
+    countdown.style.display = 'none';
+  }
+}
+
+showState('empty');
+</script>
+<script src="nav.js"></script>
+</body>
+</html>
