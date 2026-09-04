@@ -31,9 +31,18 @@ Surface the **primary topic of each worry the initiator named**, in the order be
 |---|---|---|
 | Who will handle what | How will we share parental and household duties? | How much parental leave will we take? · What is our postpartum plan? |
 | How we'll get enough sleep | How will we help the baby sleep? | Where will the baby sleep? · How will we handle lack of sleep, hormones, and/or postpartum depression? |
-| Deciding the "right way" to parent | What aspects of our upbringing will we replicate, and what will we avoid? | What are the values we want to pass on? · How will we share our culture and/or religion with our child? |
+| Deciding the "right way" to parent | What aspects of our upbringing will we replicate and what will we avoid? | What are the values we want to pass on? · How will we share our culture and/or religion with our child? |
 | Making time for ourselves | How will we make time for ourselves as a couple? | How will we make time for ourselves as individuals? |
 | All of the above | — (no single worry → Fallback) | — |
+
+> **These titles are matched literally against published content.** The implementation looks
+> each one up in a dictionary keyed on the topic's published `question_name`, so a title that
+> differs by a single character selects nothing and the worry silently falls through to its
+> backup — or, for a curated entry, is skipped. Three titles in this doc drifted exactly that
+> way and shipped broken (daisysguide/ios#865): a comma, a straight apostrophe, and an em dash.
+> When a topic is renamed in Notion, this doc and `PersonalizedResultsView` both have to move
+> with it. Two entries below still name no published topic at all and are pinned as known
+> failures in `PublishedContentTests`.
 
 Rules:
 - **One topic per named worry** (variety), max 2. Two worries → 2 topics; one worry → 1.
@@ -53,13 +62,13 @@ the user's current stage.
 Ranked pool (content owns the final order):
 
 1. Who will be in the delivery room?
-2. What aspects of our upbringing will we replicate, and what will we avoid?
+2. What aspects of our upbringing will we replicate and what will we avoid?
 3. Who will be the legal guardian if something happens to us?
 4. How will we handle lack of sleep, hormones, and/or postpartum depression?
 5. Should we make a will before the baby is born?
-6. How will we respond if there's birth trauma?
+6. How will we respond if there’s birth trauma?
 7. How will we approach spending time with extended family?
-8. Do we want health screenings — even if they reveal something hard?
+8. Do we want health screenings, even if they reveal something hard?
 9. What are the values we want to pass on?
 10. Do we have life insurance, and is it enough?
 
@@ -90,7 +99,7 @@ unchanged.
 **1 · The screenshot user** — Q7 = *who-handles-what* + *making-time*; pre-birth, 45-topic plan
 - **A:** How will we share parental and household duties? · How will we make time for
   ourselves as a couple?
-- **B:** Who will be in the delivery room? · What aspects of our upbringing will we replicate,
+- **B:** Who will be in the delivery room? · What aspects of our upbringing will we replicate
   and what will we avoid?
 - **Footer:** "Plus 41 more."
 
@@ -117,4 +126,7 @@ unchanged.
   and Manage Topics (15); the footer "Plus 41 more" reconciles (45 − 4). The earlier "44" was
   a stale screenshot, not the live file.
 - **Upbringing title** — standardized to canonical ("What aspects of our upbringing will we
-  replicate, and what will we avoid?") on Screen 08, matching this doc and Screens 14/15.
+  replicate and what will we avoid?") on Screen 08, matching this doc and Screens 14/15.
+  Corrected 2026-09-03: this doc previously wrote the title with a comma after "replicate",
+  which published content does not have, and the app copied the comma from here. See the note
+  below on why that mattered.
