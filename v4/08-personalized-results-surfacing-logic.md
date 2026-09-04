@@ -29,8 +29,8 @@ Surface the **primary topic of each worry the initiator named**, in the order be
 
 | Q7 worry | Primary topic surfaced | Backups (if primary is pre-excluded or already shown) |
 |---|---|---|
-| Who will handle what | How will we share parental and household duties? | How much parental leave will we take? · What is our postpartum plan? |
-| How we'll get enough sleep | How will we help the baby sleep? | Where will the baby sleep? · How will we handle lack of sleep, hormones, and/or postpartum depression? |
+| Who will handle what | How will we share parental and household duties? | How much parental leave will we take? · How will we plan for recovery after birth? |
+| How we'll get enough sleep | How will we help the baby sleep? | Where will the baby sleep? · How will we handle postpartum depression and the harder parts of new parenthood? |
 | Deciding the "right way" to parent | What aspects of our upbringing will we replicate and what will we avoid? | What are the values we want to pass on? · How will we share our culture and/or religion with our child? |
 | Making time for ourselves | How will we make time for ourselves as a couple? | How will we make time for ourselves as individuals? |
 | All of the above | — (no single worry → Fallback) | — |
@@ -64,7 +64,7 @@ Ranked pool (content owns the final order):
 1. Who will be in the delivery room?
 2. What aspects of our upbringing will we replicate and what will we avoid?
 3. Who will be the legal guardian if something happens to us?
-4. How will we handle lack of sleep, hormones, and/or postpartum depression?
+4. How will we handle postpartum depression and the harder parts of new parenthood?
 5. Should we make a will before the baby is born?
 6. How will we respond if there’s birth trauma?
 7. How will we approach spending time with extended family?
@@ -120,13 +120,23 @@ unchanged.
 
 ---
 
-## Flags (resolved)
+## Flags
 
-- **Counts** — locked to **51 library / 45 plan / 6 hidden** across Reveal (08), Topics (14),
-  and Manage Topics (15); the footer "Plus 41 more" reconciles (45 − 4). The earlier "44" was
-  a stale screenshot, not the live file.
-- **Upbringing title** — standardized to canonical ("What aspects of our upbringing will we
-  replicate and what will we avoid?") on Screen 08, matching this doc and Screens 14/15.
-  Corrected 2026-09-03: this doc previously wrote the title with a comma after "replicate",
-  which published content does not have, and the app copied the comma from here. See the note
-  below on why that mattered.
+### Resolved
+
+- **Counts** — locked to **51 library / 45 plan / 6 hidden** across Reveal (08), Topics (14), and Manage Topics (15); the footer "Plus 41 more" reconciles (45 − 4). 51 and the 45/6 split are both verifiable against published content: exactly six topics carry a `stage` of `second` or `third`, and 51 − 6 = 45.
+- **Topic titles** — every topic title in this doc and in the Screen 08 / 14 / 15 mocks is now byte-identical to the published `questions.question_name` in production. Until 2026-09-04 they were not. Six were mis-transcribed — a serial comma added to the upbringing title, a straightened apostrophe in the birth-trauma title, a comma written as a dash in the prenatal-screening title, an inserted article in each of the two name titles and in the milestones title, and a truncated babysitters title — and four named topics that do not exist in the library at all. Two of the four were copied into the app's `PersonalizedResultsView`, where a title-keyed lookup matched nothing and the affected cards silently fell through to filler.
+
+  The two that were identified and corrected sat in the ordered "Us" group at exactly the positions of orders 46 and 49, which is what identifies them: "What is our postpartum plan?" stood in for `postpartum-recovery` and "How will we handle lack of sleep, hormones, and/or postpartum depression?" for `postpartum-mental-health`. Both real topics were absent from every mock.
+
+### Open
+
+Recorded rather than fixed, because each needs a decision rather than a transcription.
+
+- **Section A's worry → topic mapping and Section B's ranked order have no recorded owner.** "Content owns the final order" is asserted here with nothing corroborating it. Before building on this mapping, confirm it reflects a decision someone made.
+- **Three titles in Screen 15's hidden lists have no published counterpart** and are left in place: "Will the baby attend a religious school?", "How will we approach religious holidays as a family?", and "How will we co-parent across two households?". Unlike the two above there is no positional evidence identifying what they were meant to be.
+- **`topic-filtering-and-sort-logic.md` does not exist.** The header defers the plan-construction rules to it, and the pre-exclusion rule two of the worked examples turn on is exactly what it was deferring to.
+- **The fallback label contradicts the mock.** This doc says the fallback reuses the "…don't see coming" framing; `08-personalized-results.html` and the shipped app both use a third label, "A few you'll want to sit down for".
+- **Worked examples 1 and 2 surface a pre-excluded topic.** Under the only reading of "45 plan / 6 hidden" the data supports, example 1 surfaces `sharing-duties` (`stage = second`) and example 2 surfaces `sleep-help` (`stage = third`), both of which that plan would hide — against this doc's own opening rule.
+- **The stage-preference rule in Section B cannot run.** Eight of its nine published entries have no `stage` value; 41 of the 51 library topics have none.
+- **"nursery" is not a topic.** The contrast used to justify the pool — "names, nursery, gear" — names one item that has never been in the library.
